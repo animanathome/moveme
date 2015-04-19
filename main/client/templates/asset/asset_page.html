@@ -1,0 +1,39 @@
+<template name="assetPage">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>Asset</h1>
+			<p>Let us know what you think about our assets. Is there something missing or just not behaving the way we would expect. Let us know!</p>		
+		</div>
+	</div>
+
+    <div class="asset-container">
+        <div class="asset-container-content min-height-small">
+			{{> introAssetElement}}
+       	</div>
+    </div>
+
+    <div class="shots-container min-height">
+        <div class="shots-container-content">
+    			
+		<ul class="comments">
+			<h1>Comments</h1>
+			{{#each comments}}
+				{{> commentItem}}
+			{{/each}}
+		</ul>
+		
+		{{#if currentUser}}
+	    	{{> commentSubmit}}
+	  	{{else}}
+	    	<p>Please log in to leave a comment.</p>
+	  	{{/if}}
+	
+
+		</div>
+	</div>
+	{{>footer}}
+
+</template>

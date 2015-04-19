@@ -1,0 +1,37 @@
+<template name="postItem">
+    <div class="post">
+        <a href="#" class="upvote btn btn-default {{upvotedClass}}">⬆</a>
+        
+        <div class="post-content">
+            <h3>
+                <a href="{{pathFor 'postPage'}}">{{title}}</a>
+                <span>{{shortDescription body 50}}</span>
+            </h3>      
+            <p>
+                {{pluralize votes "Vote"}},
+                submitted by {{author}}
+                <a href="{{pathFor 'postPage'}}">{{pluralize commentsCount "comment"}}</a>
+                {{#if ownPost}}
+                <a href="{{pathFor 'postEdit'}}">Edit</a>{{/if}}
+            </p>
+        </div>
+        
+        <!-- <a href="{{pathFor 'postPage'}}" class="discuss btn btn-default">Discuss</a> -->
+
+        <a href="{{pathFor 'postPage'}}" type="button" class="discuss btn btn-md">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 
+            <!-- Discuss -->
+        </a>
+    </div>
+</template>
+
+<template name="postItemForDiscussion">
+    <h1>{{title}}</h1>
+    <p>{{body}}</p>
+
+    <div class="info">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        <span class="badge">{{pluralize commentsCount "comment"}}</span>
+    </div>    
+</template>
+

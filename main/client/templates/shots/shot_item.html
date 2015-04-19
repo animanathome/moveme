@@ -1,0 +1,38 @@
+<template name="prodShotItem">
+    <div class="shot">
+        <div class="shot-content">
+            <h3><a href="{{pathFor 'shotPage'}}">Shot {{shotNumber}}: {{title}}</a></h3>
+            <p>{{shortDescription description 50}}</p>            
+            <h4>{{pluralize versionCount "Version"}}, {{pluralize duration "Frame"}} at {{fps}} fps</h4>
+        </div>
+
+        <a href="{{pathFor 'shotEdit'}}" class="edit btn" role="button">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </a>
+        <!-- <a href="{{pathFor 'shotPage'}}" class="view btn btn-default" role="button">View</a>     -->
+   </div>    
+</template>
+
+<template name="shotElement">
+	<h2>Shot: {{title}}</h2>
+	<p>{{description}}</p>
+
+    <a class="info">
+        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>        
+        <span class="badge">{{versionCount}} versions</span>
+    </a>
+    
+    <a class="info">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>        
+        <span class="badge">{{duration}} frames</span>
+    </a>
+
+    <a class="info">
+        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>        
+        <span class="badge">{{fps}} fps</span>
+    </a>
+    
+    <a href="{{pathFor 'shotEdit'}}" class="edit btn" role="button">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>        
+    </a>
+</template>

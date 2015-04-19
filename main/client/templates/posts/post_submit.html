@@ -1,0 +1,73 @@
+<template name="postSubmit">  
+  {{> header}} 
+
+  <div class="intro-header roadmap">
+    <div class="intro-header-content">
+      <h1>Submit request</h1>
+      <p>Tell us what you would like to see implemented.</p>    
+    </div>
+  </div>
+
+  <div class="container-fluid container-fluid-post-submit">    
+    <form class="main form">      
+     <div class="form-group {{errorClass 'title'}}">
+        <label class="control-label" for="title">Title</label>
+        <div class="controls">
+            <input name="title" id="title" type="text" value="" placeholder="Name your post" class="form-control"/>
+             <span class="help-block">{{errorMessage 'title'}}</span>
+        </div>
+      </div>
+
+      <div class="form-group {{errorClass 'body'}}">
+        <div class="controls">           
+           <label for="body">Describe your request</label>
+            <textarea name="body" id="body" class="form-control" rows="10"></textarea>
+            <span class="help-block">{{errorMessage 'body'}}</span>
+        </div>
+    </div>
+
+
+      <input type="submit" value="Submit" class="btn btn-primary"/>
+    </form>
+
+</div>
+
+  {{> footer}}
+</template>
+
+<template name="postSubmitCollapse">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Add Request</a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="height: 0px;">
+        <div class="panel-body">
+         <form class="form-horizontal">
+           <!-- title -->
+           <div class="form-group">
+           <label class="col-sm-2 control-label" for="suggest">Name</label>    
+            <div class="col-sm-10">
+                  <input name="title" id="title" type="text" value="" placeholder="Give the request a title" class="form-control"/>        
+                </div>
+              </div>
+
+              <!-- description -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="description">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="description" rows="6" placeholder="Describe the shot"></textarea>
+                </div>
+              </div>            
+          <hr/>
+          <!-- add shot -->
+          <input type="submit" value="Add Request" class="btn btn-primary submit-button"/>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>    
+</template>

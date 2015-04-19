@@ -1,0 +1,47 @@
+<template name="projectPage">
+	{{> header}} 
+
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>Project</h1>
+			<p>Any time, any where on any device. Learn, review, collaborate and share your work with the world.</p>		
+		</div>
+	</div>
+
+    <div class="project-container">
+        <div class="project-container-content min-height-small">
+            <ol id="breadcrumb" class="breadcrumb"></ol>
+	        
+	        {{> projectElement}}
+	        
+        </div>
+    </div>
+
+    <div class="shots-container min-height">
+        <div class="shots-container-content">
+			<ol id="breadcrumb" class="breadcrumb"></ol>
+
+			<h2>My shots</h2>
+			<p>Lorem ipsum dolor sit amet, no mel saepe appellantur, ne ius scaevola inimicus. Antiopam incorrupte mei ad, pri illum putent suscipiantur id. Quot putent abhorreant ex sit, simul libris te eam. Quot quodsi ad cum, no sed sale efficiantur.</p>
+			
+			<!-- {{hasShots}} -->
+
+		    {{#each shotList}}
+		      {{> prodShotItem}}
+		    {{/each}}
+			
+				<!-- <div class="shot"> -->
+					<!-- {{> shotSubmit}} -->
+				<!-- </div> -->
+			
+			{{> shotSubmitCollapse}}
+			
+
+			<!-- show images -->
+			<!-- {{> prodImagePage}} -->
+			<!-- {{> prodImageSubmit}} -->		
+		</div>
+	</div>
+
+	{{>footer }}
+</template>	

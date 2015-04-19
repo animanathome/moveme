@@ -1,0 +1,48 @@
+<template name="shotPage">
+    {{> header}} 
+    {{> errors}}
+    
+    <div class="intro-header">
+        <div class="intro-header-content">
+        {{#each projects}} 
+            {{> projectTitleElement}}
+        {{/each}}
+        </div>
+    </div>
+
+    <div class="shot-container">
+        <div class="shot-container-content">
+            <ol id="breadcrumb" class="breadcrumb"></ol>
+            
+            {{#each shots}}    
+                {{> shotElement}}	
+            {{/each}}
+            
+        </div>
+    </div>
+
+    <div class="versions-container">
+        <div class="versions-container-content">
+            <h2>Versions</h2>        
+            <div class="versions">
+                {{#if hasVersions}}
+                    <p>Here you can find all the versions for the current shot.</p>
+                    <a class="continueFromLatest btn btn-primary">Continue from latest version.</a>                    
+                    
+                    {{#each versions}}
+                        {{> prodShotVersionItem}}
+                    {{/each}}   
+
+                    <a class="load-more" href="{{nextPath}}">Load more versions.</a>
+                {{else}}
+                    <div class="version">
+                        No versions yet.
+                    </div>
+                    <a class="start btn btn-primary">Animate</a>
+                {{/if}}
+            </div>        
+	   </div>
+    </div>
+
+    {{>footer}}
+</template>	

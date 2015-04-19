@@ -1,0 +1,78 @@
+<template name="intro">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="intro-header roadmap">
+		<div class="intro-header-content">
+			<h1>Animate</h1>
+			<p>Any time, any where. Learn, review, collaborate and share your work with the world.
+			</p>		
+		</div>
+	</div>
+
+	<div class="intro-assets">
+		<div class="intro-assets-content">	
+			<h2><b>What</b> is Move Me?</h2>
+			<p>Move Me is a unique way to create your own animations wherever you are with no need to install any software or licence. It has all the tools you need to animate, original assets to play with, the possibility to create projects and share them with who you want, anywhere in the world in just a few clicks. Create a all new network of Move Me friends by sharing your work, asking for feedbacks or collaborating on cool projects.</p>
+			<img src="/ui/screenshot.jpg" style='width:100%'>
+		</div>
+	</div>
+
+	<div class="intro-tutorials">
+		<div class="intro-tutorials-content">	
+	    	<h2><b>How</b> to learn Move Me?</h2>	    	
+	    	<p>Picking up a new tool can be a challenge. Whenever you are a newbie in animation or a veteran, take a few moments to watch the <a href="{{pathFor 'toolsLearn'}}">tutorials</a>. They are designed for you to navigate with ease through MoveMe while already concentrating on your new animation ideas! It will not take long until you get a hand on it, we promise!</p>
+	    	{{> tutorialWall}}
+		</div>
+	</div>	
+
+	{{#unless currentUser}}
+	<div class="intro-try">
+		<div class="intro-try-content">	
+			<p>Start working on your own projects right now. It's only one button click away. What are you waiting for? Just click it already!</p>
+			<a class="btn btn-try" href="{{pathFor 'try'}}">Try Me</a>
+		</div>
+	</div>
+	{{/unless}}
+
+	<div class="intro-assets">
+		<div class="intro-assets-content">	
+			<h2><b>What</b> to animate on Move Me?</h2>
+			<p>We created a few <a href="{{pathFor 'assets'}}">assets</a> for you to have fun with! From a sphere to a complete biped character, whatever your level is, pick one or all and start animating! Those assets are free and more are coming soon! Stay put!
+			</p>
+
+			<div class='row'>
+		    	{{#each assetList}}
+		      		{{> rowIntroAssetItem}}
+		    	{{/each}}
+	    	</div>   
+		</div>
+	</div>
+
+	<div class="intro-animation">
+		<div class="intro-animation-content">						
+			<h2><b>How</b> to share your moves on Move Me?</h2>
+			<p>Sign In to MoveMe and start showing your work to the world or share it privately with friends. Have your animations published on Youtube or linked to your Move Me scene. Ask for feedbacks from other users by publishing your animations directly on Move Me or just learn and improve by looking at the work files from others.</p>
+			
+			{{> animWall}}					
+		</div>
+	</div>
+
+<!-- 	<div class="intro-any">
+		<div class="intro-any-content">	
+	    	<h2>Anywhere</h2>
+	    	<p>Work on your projects from any device, desktop, tablet or mobile. Novum legere tacimates ea est, mel oratio veniam aliquam no. Errem quidam gloriatur ne nec, mundi aliquid tacimates nec an. Vix harum iracundia ei.</p>
+		</div>
+	</div> -->
+
+	<div class="intro-any">
+		<div class="intro-any-content">						
+			<h2><b>Shape</b> Move Me!</h2>
+			<p>What would make MoveMe a better home for your creative ideas? What is missing? Technical or creative mind, we want to hear about your ideas. Go to the <a href="{{pathFor 'bestSuggest'}}">requests</a> page and let us know. Post, discuss and vote on suggestions. The ones with the most votes will be implemented next.</p>		
+		</div>
+	</div>	
+
+
+	{{> footer}}
+
+</template>

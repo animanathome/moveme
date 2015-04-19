@@ -1,0 +1,123 @@
+.learnImage {
+	
+}
+
+.learn{
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;  
+  border: 1px solid rgb(225, 225, 225);
+  position: relative;
+}
+  
+  .learn:before, .learn:after {
+    content: "";
+    display: table; 
+  }
+
+  .learn:after {
+    clear: both; 
+  }
+
+  .learn.invisible {
+    opacity: 0; 
+  }
+
+  .learn.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+  }
+
+  .learn.animate{
+    -webkit-transition: all 300ms 0ms ease-in;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in; 
+  }
+
+  .learn .image {
+    display: block;
+    margin: 0px 12px 0 0;
+    
+    @media (min-width:600px){
+    	float: left; 
+		height: 145px;
+    	width: 270px;
+	}
+	@media (min-width:1200px){
+		float: left; 
+		height: 180px;
+    	width: 320px;
+	}
+  }
+
+  .learn .learn-content {    
+    margin-bottom: 20px;  
+    margin-right: 20px;  
+
+    @media (min-width:600px){
+		margin-left: 280px;
+	}
+	@media (min-width:1200px){		
+    	margin-left: 340px;
+	}    
+  }
+
+    .learn .learn-content h2 {
+      	margin: 0;
+      	line-height: 1.4;
+      	font-size: 24px; 
+      	margin-bottom: 14px;
+
+		@media (min-width:600px){
+			font-size: 18px; 
+		}
+		@media (min-width:1200px){		
+	    	font-size: 24px; 
+		}    
+    }
+      .learn .learn-content h2 a {
+        display: inline-block;
+        margin-right: 5px;         
+      }
+
+      .learn .learn-content h2 span {
+        font-weight: normal;
+        font-size: 14px;
+        display: inline-block;
+        color: #aaaaaa; 
+      }
+
+      .learn .learn-content h4 {
+        font-size: 12px;
+        line-height: 1;
+      }
+      
+	.learn .learn-content p {
+		margin: 0; 
+		
+		@media (min-width:600px){
+			font-size: 14px; 
+		}
+		@media (min-width:1200px){		
+			font-size: 18px; 
+		}  
+    }
+
+.learn .learn-action {
+	position: absolute;
+  	bottom: 10px;
+
+	@media (min-width:600px){
+		margin-left: 280px;
+	}
+	@media (min-width:1200px){		
+		margin-left: 340px;
+	} 
+}
+
+.learns {
+  padding-bottom: 40px;
+}

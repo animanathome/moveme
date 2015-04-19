@@ -1,0 +1,37 @@
+<template name="introAssetItem">
+    <div class="asset">        
+        <img class="image" src={{imageSize thumbnail "_sm"}} >        
+        <div class="asset-content">
+            <h3><a href="{{pathFor 'assetTry'}}">{{title}}</a></h3>
+            <p>{{shortDescription description 50}}</p>
+            <h4>{{pluralize votes "Vote"}}, submitted by {{author}}, <a href="{{pathFor 'assetPage'}}">{{pluralize commentsCount "comment"}}</a></h4>
+        </div>
+        <!-- <a href="{{assetCommand title}}" class="try btn btn-default" role="button">Try</a> -->
+        <a href="{{pathFor 'assetPage'}}" class="discuss btn" role="button" data-toggle="tooltip" data-placement="bottom" title="Discuss this asset">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+        </a>
+    </div>
+</template>
+
+<template name="introAssetElement">
+    <h1>{{title}}</h1>
+     <p>{{description}}</p>      
+    <div class="info">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>        
+        <span class="badge">{{pluralize commentsCount "comment"}}</span>
+    </div>
+</template>
+
+<template name="rowIntroAssetItem">
+    <div class="col-xs-6 col-md-4">
+        <div class="asset asset-row">
+            <a href="{{pathFor 'assetPage'}}">
+                <img style="width: 100%;" hrefclass="image" src={{imageSize thumbnail ""}} >  
+            </a>
+            <div class="asset-row-content">
+                <h3><a href="{{pathFor 'assetTry'}}">{{title}}</a></h3>
+                <h4>{{pluralize votes "Vote"}}, <a href="{{pathFor 'assetPage'}}">{{pluralize commentsCount "comment"}}</a></h4>
+            </div>
+        </div>
+    </div>
+</template>

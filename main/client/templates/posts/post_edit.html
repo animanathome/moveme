@@ -1,0 +1,42 @@
+<template name="postEdit">
+  {{> header}} 
+
+  <div class="intro-header roadmap">
+    <div class="intro-header-content">
+      <h1>Edit request</h1>
+      <p>Tell us what you would like to see implemented.</p>    
+    </div>
+  </div>
+
+  <div class="container-fluid container-fluid-edit-submit">   
+
+    <form class="main form">    
+        
+      <!-- title -->
+      <div class="form-group {{errorClass 'title'}}">
+        <label class="control-label" for="title">Title</label>
+        <div class="controls">
+            <input name="title" id="title" type="text" value="{{title}}" placeholder="Name your post" class="form-control"/>
+             <span class="help-block">{{errorMessage 'title'}}</span>
+        </div>
+      </div>
+      
+      <!-- body -->
+      <div class="form-group {{errorClass 'body'}}">
+        <div class="controls">           
+           <label for="body">Describe your request</label>
+            <textarea name="body" id="body" class="form-control" rows="10">{{body}}</textarea>
+            <span class="help-block">{{errorMessage 'body'}}</span>
+        </div>
+      </div>
+
+
+      <input type="submit" value="Submit" class="btn btn-primary submit"/>
+      <hr/>
+      <a class="btn btn-danger delete" href="#">Delete post</a>
+    </form>
+
+  </div>
+
+  {{> footer}}
+</template>

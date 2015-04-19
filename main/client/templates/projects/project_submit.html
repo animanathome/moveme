@@ -1,0 +1,65 @@
+<template name="projectSubmit">  
+  {{> header}} 
+
+  <div class="container-fluid">
+
+  <h2>New Project Details</h2>
+
+  <form class="main form">
+
+   <div class="form-group">
+      <label class="control-label" for="title">Title</label>
+      <div class="controls">
+          <input name="title" id="title" type="text" value="" placeholder="Name your post" class="form-control"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" for="description">Description</label>
+        <div class="controls">
+          <textarea class="form-control" name="description" rows="3" value="{{description}}" placeholder="Describe your project"></textarea>
+        </div>
+    </div>    
+
+    <input type="submit" value="Create project" class="btn btn-primary"/>
+
+  </form>
+	</div>
+</template>
+
+<template name="projectSubmitCollapse">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Add Project</a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="height: 0px;">
+        <div class="panel-body">
+         <form class="form-horizontal">
+           <!-- title -->
+           <div class="form-group">
+           <label class="col-sm-2 control-label" for="shot">Name</label>    
+            <div class="col-sm-10">
+                  <input name="title" id="title" type="text" value="" placeholder="Name the shot" class="form-control"/>        
+                </div>
+              </div>
+
+              <!-- description -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="description">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="description" rows="6" placeholder="Describe the shot"></textarea>
+                </div>
+              </div>            
+          <hr/>
+          <!-- add shot -->
+          <input type="submit" value="Add Project" class="btn btn-primary submit-button"/>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>  
+</template>

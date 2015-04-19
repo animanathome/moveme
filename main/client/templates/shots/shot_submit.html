@@ -1,0 +1,91 @@
+<template name="shotSubmit">
+	 <form class="form-horizontal">		 
+	 	<h3>New Shot Details</h3>
+	 	<p></p>
+		 <!-- title -->
+	 	 <div class="form-group">
+		 <label class="col-sm-2 control-label" for="shot">Name</label>	 	
+		 	<div class="col-sm-10">
+	          <input name="title" id="title" type="text" value="" placeholder="Name the shot" class="form-control"/>        
+	      	</div>
+      	</div>
+
+      	<!-- description -->
+      	<div class="form-group">
+	      	<label class="col-sm-2 control-label" for="description">Description</label>
+	      	<div class="col-sm-10">
+	          <textarea class="form-control" name="description" rows="3" placeholder="Describe the shot"></textarea>
+	      	</div>
+      	</div>
+
+		<!-- duration -->
+		<div class="form-group">
+	      	<label class="col-sm-2 control-label" for="description">Duration</label>
+	      	<div class="col-sm-10">
+	          <input name="duration" id="duration" type="number" value="10" placeholder="Duration of the shot expressed in number of frames" class="form-control"/>	
+	      	</div>
+      	</div>
+
+		<!-- add shot -->
+	 	<input type="submit" value="Add Shot" class="btn btn-primary"/>
+	 </form>	
+</template>
+
+<template name="shotSubmitCollapse">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headingOne">
+				<h4 class="panel-title">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Add Shot</a>
+				</h4>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="height: 0px;">
+				<div class="panel-body">
+				 <form class="form-horizontal">
+					 <!-- title -->
+				 	 <div class="form-group">
+					 <label class="col-sm-2 control-label" for="shot">Name</label>	 	
+					 	<div class="col-sm-10">
+				          <input name="title" id="title" type="text" value="" placeholder="Name the shot" class="form-control"/>        
+				      	</div>
+			      	</div>
+
+			      	<!-- description -->
+			      	<div class="form-group">
+				      	<label class="col-sm-2 control-label" for="description">Description</label>
+				      	<div class="col-sm-10">
+				          <textarea class="form-control" name="description" rows="6" placeholder="Describe the shot"></textarea>
+				      	</div>
+			      	</div>
+
+					<!-- duration -->
+					<div class="form-group">
+				      	<label class="col-sm-2" for="description">Duration</label>
+				      	<div class="col-sm-2">
+				          <input name="duration" id="duration" type="number" value="24" placeholder="Duration of the shot expressed in number of frames" class="form-control"/>	
+				      	</div>				      	
+				      	<div class="col-sm-4">frames</div>
+			      	</div>
+
+			      	<!-- frames per second -->
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="description">FPS</label>
+						<div class="col-sm-2">
+					  		<select name="fps" id="fps" type="number" value="" class="form-control">	
+					  			<option value>24</option>
+					  			<option value>25</option>
+					  			<option value>30</option>
+					  		</select>
+						</div>
+						<div class="col-sm-8">frames per second</div>
+					</div>			      	
+					<hr/>
+					<!-- add shot -->
+				 	<input type="submit" value="Add Shot" class="btn btn-primary submit-button"/>
+				 </form>	
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

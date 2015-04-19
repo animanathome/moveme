@@ -1,0 +1,135 @@
+.asset-container {
+  width: 100%;  
+  padding-top: 10px;
+  padding-bottom: 30px;
+  background: #f9f9f9;
+}
+
+.asset-container-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width:800px){
+    width: 700px;
+  }
+  @media (min-width:1200px){
+    width: 1000px;
+  } 
+}
+
+.asset-container-content h1 {
+  border-bottom: 1px solid #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.asset-container-content p {  
+  //margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.asset-container-content p {
+  min-height: 100px;
+}
+
+.asset {
+  /* For modern browsers */
+  /* For IE 6/7 (trigger hasLayout) */
+  *zoom: 1;
+  position: relative;
+  opacity: 1; 
+}
+  
+  .asset:before, .asset:after {
+    content: "";
+    display: table; 
+  }
+
+  .asset:after {
+    clear: both; 
+  }
+
+  .asset.invisible {
+    opacity: 0; 
+  }
+
+  .asset.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+  }
+
+  .asset.animate{
+    -webkit-transition: all 300ms 0ms ease-in;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in; 
+  }
+
+  .asset .image {
+    display: block;
+    margin: 0px 12px 0 0;
+    height: 64px;
+    width: 64px;
+    float: left; 
+  }
+
+  .asset .asset-content {
+  	//padding-top: 10px;
+    float: left;
+  }
+
+    .asset .asset-content h3 {
+      margin: 0;
+      line-height: 1.4;
+      font-size: 18px; 
+    }
+      .asset .asset-content h3 a {
+        display: inline-block;
+        margin-right: 5px; 
+      }
+
+      .asset .asset-content h3 span {
+        font-weight: normal;
+        font-size: 14px;
+        display: inline-block;
+        color: #aaaaaa; 
+      }
+
+      .asset .asset-content h4 {
+        font-size: 12px;
+        line-height: 1;
+      }
+      
+      .asset .asset-content p {
+        margin: 0; 
+      }
+  
+  .asset .asset-row-content h3 {
+    margin-top: 6px;
+    line-height: 1.4;
+    font-size: 14px; 
+    float: left;
+  }
+
+  .asset .asset-row-content h4 {
+    margin-top: 8px;
+    line-height: 1.4;
+    font-size: 12px; 
+    float: right;
+  }
+
+  .asset .try {
+    display: block;
+    float: right;
+    margin-top: 7px;
+  }
+
+  .asset .discuss {
+    display: block;
+    float: right;
+    margin-top: 7px;
+  }

@@ -1,0 +1,107 @@
+.versions-container {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 30px;  
+}
+
+.versions-container-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width:800px){
+    width: 700px;
+  }
+  @media (min-width:1200px){
+    width: 1000px;
+  } 
+}
+
+.versions-container-content h2 {
+  border-bottom: 1px solid #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.version, .asset, .project, .shot{
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;  
+  border: 1px solid rgb(225, 225, 225);
+}
+  
+  .version:before, .version:after {
+    content: "";
+    display: table; 
+  }
+
+  .version:after {
+    clear: both; 
+  }
+
+  .version.invisible {
+    opacity: 0; 
+  }
+
+  .version.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+  }
+
+  .version.animate{
+    -webkit-transition: all 300ms 0ms ease-in;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in; 
+  }
+
+  .version .image {
+    display: block;
+    margin: 0px 12px 0 0;
+    height: 90px;
+    width: 160px;
+    float: left; 
+  }
+
+  .version .version-content {
+    margin-left: 170px;
+    margin-bottom: 20px;
+  }
+
+    .version .version-content h3 {
+      margin: 0;
+      line-height: 1.4;
+      font-size: 18px; 
+    }
+      .version .version-content h3 a {
+        display: inline-block;
+        margin-right: 5px; 
+      }
+
+      .version .version-content h3 span {
+        font-weight: normal;
+        font-size: 14px;
+        display: inline-block;
+        color: #aaaaaa; 
+      }
+
+      .version .version-content h4 {
+        font-size: 12px;
+        line-height: 1;
+      }
+      
+      .version .version-content p {
+        margin: 0; 
+      }
+
+.version .version-action {
+  margin-left: 170px;
+}
+
+.versions {
+  padding-bottom: 40px;
+}
+  

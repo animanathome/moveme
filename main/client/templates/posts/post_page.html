@@ -1,0 +1,38 @@
+<template name="postPage">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>Request</h1>
+			<p>Not sure what this suggested feature is or will do? Ask the creator about it.</p>	
+		</div>
+	</div>
+
+    <div class="comment-container">
+        <div class="comment-container-content min-height-small">
+			{{> postItemForDiscussion}}
+       	</div>
+    </div>
+
+	<div class="container-fluid container-fluid-post">
+				
+
+
+		<h2>Comments</h2>
+		<ul class="comments">
+			{{#each comments}}
+				{{> commentItem}}
+			{{/each}}
+		</ul>
+
+		{{#if currentUser}}
+	    	{{> commentSubmit}}
+	  	{{else}}
+	    	<p>Please log in to leave a comment.</p>
+	  	{{/if}}
+  	</div>
+
+  	{{>footer}}
+
+</template>

@@ -1,0 +1,25 @@
+<template name="suggest">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>What's missing?</h1>
+			<p>Help us determine what's next by posting a request. And don't forget to vote when you like an idea!</p>	
+		</div>
+	</div>
+
+	<div class="container-fluid container-fluid-post">
+		<h2>What's next?</h2>
+		<p class="post-p">Which request is going to get implemented next?</p>
+		<div id="main" class="row-fluid">
+			{{> postsList}}
+		</div>
+	    	{{#if currentUser}}
+	    		<!-- <a class='btn btn-primary' href="{{pathFor 'postSubmit'}}">Submit Request</a> -->
+	    		{{> postSubmitCollapse}}
+	    	{{/if}}
+	</div>
+
+	{{> footer}}
+</template>

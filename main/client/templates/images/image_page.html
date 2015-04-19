@@ -1,0 +1,10 @@
+<template name="prodImagePage">
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+		{{#each imageList}}
+  			<img src="{{this.url store='thumbs'}}" alt="thumbnail">
+  			<!-- Delete {{this.name}}: {{> FS.DeleteButton class="btn btn-danger btn-xs"}} -->
+		{{/each}}
+		</div>
+	</div>
+</template>

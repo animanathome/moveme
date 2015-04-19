@@ -1,0 +1,46 @@
+<template name="prodProjectItem">
+    <div class="project">
+        <div class="project-content">
+            <h3><a href="{{pathFor 'projectPage'}}">{{title}}</a></h3>
+            <p>{{shortDescription description 50}}</p>            
+            <h4>{{pluralize shotCount "Shot"}}, total of {{pluralize duration "Frame"}} at {{fps}} fps</h4>
+        </div>
+
+        <a href="{{pathFor 'projectEdit'}}" class="edit btn" role="button">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </a>
+   </div>    
+</template>
+
+<template name="projectElement">
+	<h2>{{title}}</h2>
+    <p>{{description}}</p> 
+    
+    <div class="info edit">
+    <a href="{{pathFor 'projectEdit'}}" class="edit btn" role="button">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>        
+    </a>
+    </div>
+
+    <div class="info">
+        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>        
+        <span class="badge">{{shotCount}} shots</span>
+    </div>
+
+
+    <div class="info">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>        
+        <span class="badge">{{duration}} frames</span>
+    </div>
+
+    <div class="info" data-toggle="tooltip" data-placement="bottom" title="Frames Per Shot">
+        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>        
+        <span class="badge">{{fps}} fps</span>
+    </div>
+
+</template>
+
+<template name="projectTitleElement">
+    <h1>Project: {{title}}</h1>
+     <p>{{shortDescription description 100}}</p>  
+</template>

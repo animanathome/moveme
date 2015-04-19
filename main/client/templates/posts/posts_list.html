@@ -1,0 +1,20 @@
+<template name="postsList">
+  <div class="posts">
+    {{#each posts}}
+        {{> postItem}}
+    {{/each}}
+
+    {{#unless currentUser}}
+        <p>Please log in to leave a request.</p>
+    {{/unless}}
+	
+	{{#if nextPath}}
+      	<a class="load-more" href="{{nextPath}}">Load more</a>
+    {{else}}
+		{{#unless ready}}
+			{{> spinner}}
+		{{/unless}}    
+    {{/if}}
+
+  </div>
+</template>

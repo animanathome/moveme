@@ -1,0 +1,163 @@
+//  layout when displaying 1 shot
+.shot-container {
+  width: 100%;  
+  padding-top: 10px;
+  padding-bottom: 30px;
+  background: #f9f9f9;
+}
+
+.shot-container-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width:800px){
+    width: 700px;
+  }
+  @media (min-width:1200px){
+    width: 1000px;
+  } 
+}
+
+.shot-container-content h2 {
+  border-bottom: 1px solid #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.shot-container-content p {
+  min-height: 100px;  
+}
+
+.container-shot-edit-submit {
+  min-height: 600px; 
+}
+
+//  layout when displaying a number of shots within the same page
+.shots-container {
+  width: 100%;  
+  padding-top: 10px;
+  padding-bottom: 30px;
+  //background: #f9f9f9;
+  background: #eeeeee;
+}
+
+.shots-container-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width:800px){
+    width: 700px;
+  }
+  @media (min-width:1200px){
+    width: 1000px;
+  } 
+}
+
+.shots-container-content h2 {
+  border-bottom: 1px solid #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.shots-container-content p {
+  margin-bottom: 10px;
+}
+
+//  shot item 
+.shot {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;  
+  //border: 1px solid rgb(119,119,119);
+}
+  .shot:before, .shot:after {
+    content: "";
+    display: table; 
+  }
+
+  .shot:after {
+    clear: both; 
+  }
+
+  .shot.invisible {
+    opacity: 0; 
+  }
+
+  .shot.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; 
+  }
+
+  .shot.animate{
+    -webkit-transition: all 300ms 0ms ease-in;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in; 
+  }
+
+  .shot .image {
+    display: block;
+    margin: 0px 12px 0 0;
+    height: 64px;
+    width: 64px;
+    float: left; 
+  }
+
+  .shot .shot-content {
+  	//padding-top: 10px;
+    float: left;
+  }
+
+    .shot .shot-content h3 {
+      margin: 0;
+      line-height: 1.4;
+      font-size: 18px; 
+    }
+      .shot .shot-content h3 a {
+        display: inline-block;
+        margin-right: 5px; 
+      }
+
+      .shot .shot-content h3 span {
+        font-weight: normal;
+        font-size: 14px;
+        display: inline-block;
+        color: #aaaaaa; 
+      }
+
+      .shot .shot-content h4 {
+        font-size: 12px;
+        line-height: 1;
+      }
+      
+      .shot .shot-content p {
+        margin: 0; 
+      }
+  
+  .shot .view {
+    display: block;
+    float: right;
+    margin-top: 7px;
+  }
+
+  .shot .edit {
+    display: block;
+    float: right;
+    margin-top: 7px;
+  }
+
+.continueFromLatest{
+  margin-bottom: 10px;
+  padding: 15px;
+}  
+
+.start{
+  margin-bottom: 10px;
+  padding: 15px;
+}  

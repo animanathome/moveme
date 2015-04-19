@@ -1,0 +1,362 @@
+//  these are all anim related css settings
+
+body {
+  //overflow-y: hidden; // hide the vertical scroll 
+  line-height: 1.0;
+  font-size: 16px; //this sets the baseline so we can use multiples of 4 & (r)ems;
+  font-family: "proxima_nova_regular", Helvetica, Arial, sans-serif
+}
+
+//  allows us to have sub menus -> http://www.bootply.com/86684
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 0px 0px 0px;border-radius:0 0px 0px 0px;}
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:0px 0 6px 6px;border-radius:6px 0 6px 6px;}
+
+.breadcrumb {
+  //  overwrite settings doesn't seem to work here
+  //  the !important flag doesn't get read
+  -webkit-padding-start: 0px;
+  padding: 0px 0px;
+  margin-bottom: 30px;
+  border-radius: 0px;
+  background-color: transparent;
+}
+
+hr {
+  border-top: 1px solid #DDD;
+}
+
+.info{
+  padding-left: 10px;
+  padding-bottom: 15px;
+  color: black;
+  opacity: 0.5;
+  cursor: initial;
+  float: left;
+}
+
+.edit{
+  float: right;
+}
+
+.badge{
+  background-color: black;
+  cursor: initial;
+}
+
+.min-height-small {
+  min-height: 200px;
+}
+
+.min-height {
+  min-height: 700px;
+}
+
+.modal {
+  position: absolute;
+  display: block;
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-dialog{
+  margin: 150px auto;
+}
+
+.modal-body{
+  line-height: 20px;
+}
+
+.modal-warning{
+  background: rgb(255, 126, 0);
+  color: #fff;
+}
+
+.panel.panel-default {
+  padding: 10px;
+}
+
+.img-rounded {
+  border-radius: 2px;
+}
+
+.channelbox {
+  margin-left: 5px;
+}
+
+.input-group {
+  padding: 6px 6px;
+}
+
+.input-group-addon {
+  font-size: 12px;
+  padding: 4px 6px;
+  line-height: 1;
+  height: 24px;
+}
+
+.form-control {
+  font-size: 12px;
+  padding: 4px 6px;
+  line-height: 1;
+  height: 24px;
+  border-radius: 0px;
+}
+
+.form-control:focus {
+  border-color: black;
+  box-shadow: none;
+}
+
+.form-horizontal .control-label{
+  text-align: left;
+}
+
+.h3{
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.container {
+  width: auto;
+  padding-right: 0px;
+  padding-left: 0px;
+  height:100vh;
+  //position: relative;
+
+}
+
+input {
+  background-color: #EBEBEA;
+  border-style:solid;
+  border-width:1px;
+  border-color:#EBEBEA; 
+}
+
+input:hover {
+  border-color:#B3B3B3;
+}
+
+.panel {
+  background-color: white;
+  border-style:solid;
+  border-width:0px;
+  border-color:#D9D9D9;
+  padding-top: 6px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
+  border-radius: 0px;
+}
+
+.panel.collapsible {          
+  padding-bottom: 5px;          
+}
+
+.panel.collapsible .static{
+  margin-left: 4px;
+}
+
+.panel.collapsible .static .button{
+  float: left;
+  margin-right: 6px;
+  width: 0px;
+  height: 0px;
+  border: 6px solid transparent;
+  margin-top: 12px;
+  border-top-color: #bbb;
+}
+
+.panel.collapsible .content{
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.panel.collapsed {
+  padding-bottom: 7px;
+}
+
+.panel.collapsed .static .button{
+  float: left;
+  margin-right: 6px;
+  width: 0px;
+  height: 0px;
+  border: 6px solid transparent;
+  margin-top: 6px;
+  border-left-color: #bbb;
+}
+
+.panel.collapsed .content {
+  display: none;
+}         
+
+.panel-group .panel{
+  margin-top: 15px;
+  border-radius: 0px;
+}
+
+.btn-toolbar {
+  padding: 6px 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  //width: 36px;
+  //height: 24px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.0;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  border: 0px;
+  background-color: transparent;
+  border-radius: 0px;
+  color: black;
+}
+
+.btn-default {
+  background-color: transparent;
+  border: 1px solid #D5D5D5;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #d43f3a;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color:#00AB89;
+  border-color:#00AB89;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color:#00AB89;
+  border-color:#00AB89;
+}
+
+.btn-wall{
+  float: right;
+  opacity: 0.5;
+  margin-top: -25px;
+  padding: 5px 5px;
+}
+
+.submit-button {
+  width: 100%;
+}
+
+.delete-button {
+  width: 100%;
+}
+
+.btn-Google {
+  color: #fff;
+  background-color: #d34836;
+}
+
+.input-group-addon {
+  border-radius: 0px;
+}
+
+// ----- DROPDOWN ----------------
+.dropdown-menu {
+  border-radius: 0px;
+}
+
+.dropdown-menu > li > a {
+    position: relative;
+    padding-right: 70px;
+}
+
+.dropdown-menu > li > a > span.kbd {
+    position: absolute;
+    right: 20px;
+    top: 3px;
+}
+
+.dropdown-menu > li > a > span.anim-kbd {
+  padding: 14px;
+}
+
+.dropdown-menu > li > a:after {
+  margin-right: -60px;
+}
+
+//  move me overwrite
+.dropdown-menu span {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  line-height: 20px;
+  color: #bbb;
+  white-space: nowrap; 
+}
+
+.dropdown-menu span {
+  line-height: 0px;
+}
+
+//  ----- NAVBAR ----------------
+.navbar.navbar-default.nav-lower {
+  font-size: 14px;
+  min-height: 35px;
+  //padding: 10px 10px
+}
+
+.navbar {
+  margin-bottom: 10px; 
+}
+
+.navbar {
+  margin-bottom: 0px;
+  border-radius: 0px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 17px;
+  padding-bottom: 15p;
+}
+
+.navbar .navbar-inner {
+  -webkit-border-radius: 0px 0px 3px 3px;
+  -moz-border-radius: 0px 0px 3px 3px;
+  -ms-border-radius: 0px 0px 3px 3px;
+  -o-border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px 3px 3px; 
+}
+
+.nav-pills > li > a {
+  border-radius: 0px;
+}
+
+//  overwriting this to get the right look for the login menu
+.navbar-form {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0;
+}
+
+//  ----- LOGIN ----------------
+#login-dropdown-list input:first-of-type{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+#login-dropdown-list input:last-of-type{
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}

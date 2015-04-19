@@ -1,0 +1,46 @@
+<template name="prod">
+	{{> header}} 
+	
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>Projects</h1>
+			<p>Any time, any where on any device. Learn, review, collaborate and share your work with the world.</p>		
+		</div>
+	</div>
+
+	<div class="intro-container">
+		<div class="intro-container-content min-height-small">
+			<h2>Intro</h2>
+			<p>Welcome to the projects page. It is here where you can create and manage your projects. Lorem ipsum dolor sit amet, at regione urbanitas vis, et dolor lobortis assueverit cum. Vel ludus quodsi ex, his partem conclusionemque ut.<br><br>Instructior consectetuer te his, te vim enim mazim comprehensam. Et sit blandit lucilius, duo ea mazim graece voluptua, te nec tation tollit. Consequat adipiscing ne his, his cu tacimates principes. A project is a collection of shots and each shot is a collection of shot versions.
+			</p>
+
+			<a class="info" style="padding-top: 20px">
+        		<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>        
+        		<span class="badge">{{pluralize numberOfProjects 'project'}}</span>
+    		</a>
+
+		</div>
+	</div>
+
+	<div class="projects-container"> 
+		<div class="projects-container-content min-height"> 		
+			<h2>My projects</h2>
+			<div class="projects">
+
+				<!-- {{hasProjects}} -->
+		  	
+		  		{{#each projectList}}
+		      		{{> prodProjectItem}}
+		    	{{/each}} 	
+			 	    	
+	    	</div>	
+			
+			{{#if currentUser}}
+	    		<!-- <a href="{{pathFor 'projectSubmit'}}">Create New Project</a> -->
+	    		{{> projectSubmitCollapse}}
+	    	{{/if}}
+    	</div>
+  </div>
+
+  {{>footer}}
+</template>
