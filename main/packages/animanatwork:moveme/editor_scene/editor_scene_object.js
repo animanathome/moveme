@@ -195,6 +195,7 @@ MM.Editor.prototype.setupDefaultScene =function(){
     pcam.addChannel('custom', 'frameHeight')
     pcam.addChannel('custom', 'near')
     pcam.addChannel('custom', 'far')
+    pcam.addChannel('custom', 'aspect')
     pcam.setLens( 35, 24 )
     pcam.position.set( 50, 25, 50 );
     pcam.lookAt( new THREE.Vector3(0,0,0) );   

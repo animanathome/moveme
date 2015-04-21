@@ -52,7 +52,7 @@ MM.insertLegs = function( editor ){
 	var sides = ['l', 'r']
 	for( var i = 0; i < sides.length; i++){
 		u.addRigComponent( new MM.LegBlendComponent( {
-				'controlSize' : 0.5, 
+				'controlSize' : 2.5, 
 				'side' : sides[i],
 				'asset' : assetName, 
 				'names' : legNames, 
@@ -76,11 +76,12 @@ MM.insertLegs = function( editor ){
         }
 
 	//	leg
-		u.rigComponents[2].controls['FootIkCtl'].controlScale.x = 0.6;
-		u.rigComponents[2].controls['FootIkCtl'].controlScale.z = 1.2;
+		u.rigComponents[2].controls['FootIkCtl'].controlScale.x = 1.2;
+		u.rigComponents[2].controls['FootIkCtl'].controlScale.z = 2.4;
 		u.rigComponents[2].controls['FootIkCtl'].controlOffset.z = 2.0;
-		u.rigComponents[3].controls['FootIkCtl'].controlScale.x = 0.6;
-		u.rigComponents[3].controls['FootIkCtl'].controlScale.z = 1.2;
+
+		u.rigComponents[3].controls['FootIkCtl'].controlScale.x = 1.2;
+		u.rigComponents[3].controls['FootIkCtl'].controlScale.z = 2.4;
 		u.rigComponents[3].controls['FootIkCtl'].controlOffset.z = 2.0;
 
         u.rigComponents[1].controls['BodyCtl'].controlOffset.y = -1.0;

@@ -69,16 +69,21 @@ MM.Editor.prototype.animate = function(){
 
     if( this.isPlaying ){ 
         var timeOffset;
+
+        // fixed fps or play at set fixed speed
         if( this.playbackMode === 'fixed'){
-            var cd = this.clock.getDelta()
-            // console.log('delta', cd)
+            var cd = this.clock.getDelta();       
             var ed = 1.0 / this.playbackSpeed;
             var offset = cd / ed;
 
-            // console.log('fixed', offset)
+            this._fps = ((1/cd)*offset).toFixed(1);
+
             this.timeAsDouble += offset;
+        
+        //  free or play every frame as fast as possible
         }else{
-            this.timeAsDouble += 1
+            this.timeAsDouble += 1;
+            this._fps = (1/this.clock.getDelta()).toFixed(1);
         }
 
         if( this.timeAsDouble > this.endRange ){

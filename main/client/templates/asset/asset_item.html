@@ -25,12 +25,12 @@
 <template name="rowIntroAssetItem">
     <div class="col-xs-6 col-md-4">
         <div class="asset asset-row">
-            <a href="{{pathFor 'assetPage'}}">
+            <a href="{{pathFor 'assetTry'}}">
                 <img style="width: 100%;" hrefclass="image" src={{imageSize thumbnail ""}} >  
             </a>
             <div class="asset-row-content">
                 <h3><a href="{{pathFor 'assetTry'}}">{{title}}</a></h3>
-                <h4>{{pluralize votes "Vote"}}, <a href="{{pathFor 'assetPage'}}">{{pluralize commentsCount "comment"}}</a></h4>
+                <h4>{{pluralize votes "Vote"}}, <a href="{{pathFor 'assetPage'}}">{{pluralize commentsCount "comment"}}</a>, level {{level}}</h4>
             </div>
         </div>
     </div>

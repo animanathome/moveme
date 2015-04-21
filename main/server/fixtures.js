@@ -35,12 +35,13 @@ if (AssetList.find().count() === 0) {
   var bounceId = AssetList.insert({    
     author: 'manu',
     userId: manuId,
-    title: 'Sphere', // rename to bounce
+    title: 'Ball', // rename to bounce
     description: 'A simple asset, a real base for starting animation. Try our bouncing ball tutorial with this asset to learn more about timing and spacing.',
     submitted: new Date(now - 1 * 3600 * 1000),
-    thumbnail: '/assets/assetSphere.jpg',
+    thumbnail: '/assets/assetBall_000.jpg',
     animation: '/data/sphere/animation/jump.json',
-    commentsCount: 1,
+    level: 1,
+    commentsCount: 1,    
     votes: 0
   });
 
@@ -59,8 +60,9 @@ if (AssetList.find().count() === 0) {
 		title: 'Tail',
 		description: 'This asset is a little more challenging with the addition of the tail. use it for overlapping action as well as squash and stretch.',
 		submitted: new Date(now - 2 * 3600 * 1000),
-		thumbnail: '/assets/assetTails.jpg',
+		thumbnail: '/assets/assetTail_000.jpg',
     animation: '/data/tail/animation/jumping_tail.json',
+    level: 2,
     commentsCount: 0,
     votes: 0	
 	});
@@ -71,7 +73,8 @@ if (AssetList.find().count() === 0) {
 		title: 'Legs',
 		description: 'A simple ball with legs for you to have fun with. Make hip moves and walk cycles for instance. Find out how in the tutorial.',
 		submitted: new Date(now - 3 * 3600 * 1000),
-		thumbnail: '/assets/assetLegs.jpg',		
+		thumbnail: '/assets/assetLegs_000.jpg',		
+    level: 3,
     commentsCount: 0,
     votes: 0
 	});
@@ -79,10 +82,11 @@ if (AssetList.find().count() === 0) {
 	AssetList.insert({
 		author: 'manu',
     userId: manuId,
-		title: 'Midi',
+		title: 'Mini',
 		description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
 		submitted: new Date(now - 4 * 3600 * 1000),
-		thumbnail: '/assets/assetTiny.jpg',
+		thumbnail: '/assets/assetMini_000.jpg',
+    level: 5,
     commentsCount: 0,
     votes: 0	
 	});
@@ -90,10 +94,11 @@ if (AssetList.find().count() === 0) {
   AssetList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Mini',
-    description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
+    title: 'Midi',
+    description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
     submitted: new Date(now - 4 * 3600 * 1000),
-    thumbnail: '/assets/assetMini.jpg',
+    thumbnail: '/assets/assetMidi_000.jpg',
+    level: 5,
     commentsCount: 0,
     votes: 0  
   }); 
@@ -102,9 +107,10 @@ if (AssetList.find().count() === 0) {
     author: 'manu',
     userId: manuId,
     title: 'Maxi',
-    description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
+    description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
     submitted: new Date(now - 4 * 3600 * 1000),
-    thumbnail: '/assets/assetMaxi.jpg',
+    thumbnail: '/assets/assetMaxi_000.jpg',
+    level: 5,
     commentsCount: 0,
     votes: 0  
   }); 

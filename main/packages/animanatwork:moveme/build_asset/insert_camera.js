@@ -11,11 +11,18 @@ MM.insertCamera = function( editor ){
     signals.cameraAdded.dispatch();
 
     pcam.setChannelsTranslateAndRotate();
-    pcam.custom = {'focusLength': 35, 'frameHeight':24, 'aspect':1, 'near':0.1, 'far':2000}
+
+    // NOTE: the aspect ratio get determinend by the dimensions of the panel
+    pcam.custom = {   'focusLength': 35
+                    , 'frameHeight':24                    
+                    // , 'aspect':1
+                    , 'near':0.1
+                    , 'far':2000}
     pcam.addChannel('custom', 'focusLength')
     pcam.addChannel('custom', 'frameHeight')
     pcam.addChannel('custom', 'near')
     pcam.addChannel('custom', 'far')
+    // pcam.addChannel('custom', 'aspect')
     pcam.setLens( 35, 24 )
 
     var namespace = editor.scene.getUniqueNamespace('camera')

@@ -30,6 +30,7 @@ MM.PanelView = function( editor , prefix){
 
 //	SETTINGS
 	this.showFrame = true;
+    this.showFPS = true;
     this.showCamera = true;
     this.menuCamera = undefined;
     this.textCamera = undefined;
@@ -65,6 +66,17 @@ MM.PanelView = function( editor , prefix){
     this.buildCameraDD();
 
     this.children.push( this.cameraDD.dom )
+
+//  FPS
+//  show use the computed frames per second
+    var fpsText = new MMUI.Text('0'); // default starting frame
+    fpsText.setPosition('absolute').setRight('150px').setBottom('10px')
+    fpsText.dom.style.zIndex = this.zIndex;
+    fpsText.setFontSize('24px')
+    this.fpsText = fpsText
+    dom.appendChild( fpsText.dom )
+    
+    this.children.push( this.fpsText.dom )
 
 //  TIME
 //  shows us the current time
@@ -104,11 +116,13 @@ MM.PanelView = function( editor , prefix){
     signals.timeChanged.add( function(){
         console.log('MM.PanelView.onTimeChanged', scope.prefix)
         scope.setTime( scope.editor.time )
+        scope.setFPS( scope.editor._fps)
     });
 
     signals.timeShifted.add( function(){
         console.log('MM.PanelView.onTimeShifted', scope.prefix)
         scope.setTime( scope.editor.time )
+        scope.setFPS( scope.editor._fps)
     })
 
 //  LISTEN TO CHANGE
@@ -184,6 +198,27 @@ MM.PanelView.prototype.setContent = function( contentType ){
     this.resize();
 }
 
+//  FPS
+MM.PanelView.prototype.hideFPS = function(){
+    this.fpsText.dom.style.display = 'none';
+    this.showFPS = false;
+}
+
+MM.PanelView.prototype.showFPS = function(){
+    this.fpsText.dom.style.display = 'block';
+    this.showFPS = true;
+}
+
+MM.PanelView.prototype.setFPS = function( fps ){
+    // console.log('MM.PanelView.setTime', time)
+    if( ! this.showFPS ){
+        console.log('\tfps is not visible')
+        return
+    }
+
+    this.fpsText.setValue(fps+' fps');
+}
+
 //  FRAME
 MM.PanelView.prototype.hideTime = function(){
     this.frameText.dom.style.display = 'none';
@@ -191,7 +226,7 @@ MM.PanelView.prototype.hideTime = function(){
 }
 
 MM.PanelView.prototype.showTime = function(){
-    this.frameText.dom.style.display = '';
+    this.frameText.dom.style.display = 'block';
     this.showFrame = true;
 }
 
@@ -202,7 +237,7 @@ MM.PanelView.prototype.setTime = function( time ){
         return
     }
 
-    this.frameText.setValue(time);
+    this.frameText.setValue('frame '+time);
 }
 
 //  PANEL DROP DOWN
@@ -281,6 +316,17 @@ MM.PanelView.prototype.buildPanelDD = function(){
             scope.panelDD.add( deleteDDD )
         }
     }
+
+    this.panelDD.add( new MMUI.DropdownDivider() )
+    
+    var timeDD = new MMUI.DropdownItem('Show Time')
+    this.panelDD.add( timeDD )
+    
+    var cameraDD = new MMUI.DropdownItem('Show Camera Name')
+    this.panelDD.add( cameraDD )
+    
+    var fpsDD = new MMUI.DropdownItem('Show FPS')
+    this.panelDD.add( fpsDD )
 }
 
 MM.PanelView.prototype.deletePanel = function( panel, direction ){

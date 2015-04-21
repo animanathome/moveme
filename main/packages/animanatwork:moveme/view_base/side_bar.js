@@ -15,7 +15,7 @@ MM.Sidebar = function ( editor, mdom){
     channelBox.onCollapsedChange( function( boolean ){
         console.log('collapsed', boolean)
         if( boolean === false ){
-            channelBox.setHeight('305px');
+            channelBox.setHeight('350px');
         }else{
             channelBox.setHeight(null);
         }
@@ -401,8 +401,9 @@ MM.Sidebar.ChannelBox = function( editor, mdom ){
 
                                 //  pass on the value to the actual object
                                 object.setLens( object.custom.focusLength, ui.getValue())
-                            }else if( channel === 'near' || channel === 'far' || channel === 'aspect'){
+                            }else if( channel === 'near' || channel === 'far'){
                                 thisChannelGroup[channel] = ui.getValue(); 
+                            
                                 object[channel] = ui.getValue();
                                 object.updateProjectionMatrix();
 

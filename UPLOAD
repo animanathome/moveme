@@ -1,0 +1,42 @@
+
+//	user ssh
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-12-04
+
+//	getting meteor up and running
+https://www.digitalocean.com/community/tutorials/how-to-deploy-a-meteor-js-application-on-ubuntu-14-04-with-nginx
+
+ssh root@104.236.211.246
+ia35yoty
+
+npm isntall -g casperjs
+
+http://askubuntu.com/questions/510056/how-to-install-google-chrome-on-ubuntu-14-04
+
+xvfb-run
+
+http://askubuntu.com/questions/125980/how-do-i-install-xulrunner
+
+scp MoveMe.tar.gz root@104.236.211.246:/home/moveme
+
+tar -zxvf filename.tar
+
+cd /home/moveme
+tar -zxvf MoveMe.tar.gz
+rm -r /home/moveme/bundle/programs/server/npm/npm-bcrypt/node_modules/bcrypt/
+cd /home/moveme/bundle/programs/server
+npm install bcrypt
+cp -r /home/moveme/bundle/programs/server/node_modules/bcrypt /home/moveme/bundle/programs/server/npm/npm-bcrypt/node_modules/
+restart moveme
+
+https://github.com/arunoda/meteor-up/blob/master/README.md
+
+
+
+//	server error:
+
+ PUT https://moveme.io/cfs/files/scenes/STXhdzuskvcceWi36?chunk=0&filename=undef…VG9rZW4iOiJmT2t0NWJLUFREc18yZk9zM3g2LUpFQVIyZ1FMLURiRXd5MWc2UnBfZldzIn0%3D 404 (Not Found)
+power-queue.js:486 Error: "Queue" failed [404] Not Found [404] [undefined], Error: failed [404] Not Found [404] [undefined]
+    at upload-http-client.js:33
+    at http-call-client.js:69
+    at _.once (underscore.js:750)
+    at XMLHttpRequest.xhr.onreadystatechange (http-call-client.js:192)

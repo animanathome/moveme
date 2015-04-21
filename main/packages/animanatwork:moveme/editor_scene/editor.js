@@ -178,8 +178,9 @@ MM.Editor = function(){
     this.endTime = 96;    
     this.startRange = 0;
     this.endRange = 48; 
-    this.playbackMode = 'fixed' // or free
+    this.playbackMode = 'fixed'; // or free
     this.playbackSpeed = 24; 
+    this._fps = 0.0;
 
 //  LISTEN
     this.signals.keyframeEditorKeysUpdated.add( function(){

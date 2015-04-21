@@ -242,7 +242,8 @@ MM.App = function( container, options){
     });
 
     //  hide context menu ( when using right mouse button )
-    document.addEventListener( 'contextmenu', function ( event ) { 
+    //  this ensures that we can draw our own menu
+    this.dom.addEventListener( 'contextmenu', function ( event ) { 
         event.preventDefault(); }, false );
 
 	// this.editor.loader.loadLocalStorage();

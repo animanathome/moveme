@@ -16,7 +16,7 @@ Router.configure({
   notFoundTemplate: 'notFound',
   waitOn: function(){
     return [ Meteor.subscribe('notifications')
-           , Meteor.subscribe('numberOfAssets', 4)];
+           , Meteor.subscribe('numberOfAssets', 6)];
   }  
 });
 
