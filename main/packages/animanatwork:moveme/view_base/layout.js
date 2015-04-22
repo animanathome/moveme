@@ -49,6 +49,10 @@ MM.NoLayout = function( dom, editor, options){
 		scope.renderer.render( scope.editor.scene, scope.editor.activeCamera)
 	}
 
+	this.update = function(){
+		console.log('NoLayout.update')
+	}
+
 	onWindowResize();
 
     return this;
@@ -275,7 +279,7 @@ MM.Layout = function( dom, editor, options){
 	//	create timeline if requested
 	var timelinePanel = this.layout.getPanel('timeLine')	
 	if(timelinePanel){
-		this.timeline = new MMUI.Timeline();	
+		this.timeline = new MMUI.Timeline();
 		timelinePanel.dom.appendChild( this.timeline.dom )
 
 		//	hookup timeline related callbacks
@@ -590,9 +594,15 @@ MM.Layout = function( dom, editor, options){
 		}
 	})
 
+	this.update = function(){
+		console.log('Layout.update')
+
+		onTimeRangeChanged();
+	}
+
 //	INIT
 	onWindowResize(); // calcuate the proper size of the different panels	
-	onTimeRangeChanged();
+	// onTimeRangeChanged();
 
 	// console.log('\trange', this.editor.startRange, this.editor.endRange)
 	

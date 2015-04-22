@@ -29,9 +29,11 @@ MM.PanelView = function( editor , prefix){
     this.children = []
 
 //	SETTINGS
-	this.showFrame = true;
-    this.showFPS = true;
-    this.showCamera = true;
+    //  hide our panel HUD options by default
+	this.show_frame = false;
+    this.show_fps = false;
+    this.show_camera = false;
+
     this.menuCamera = undefined;
     this.textCamera = undefined;
     this.usedCamera = undefined;
@@ -39,7 +41,6 @@ MM.PanelView = function( editor , prefix){
     this.showRatio = false;
     this.aspectRatio = [16,10]
     this.lockCamera = false;
-
 
 //  SETTINGS LAYOUT
     this.layoutDD = new MMUI.Dropdown('layout').addClass('dropdown-panelview');
@@ -69,8 +70,8 @@ MM.PanelView = function( editor , prefix){
 
 //  FPS
 //  show use the computed frames per second
-    var fpsText = new MMUI.Text('0'); // default starting frame
-    fpsText.setPosition('absolute').setRight('150px').setBottom('10px')
+    var fpsText = new MMUI.Text('0 fps'); // default starting frame
+    fpsText.setPosition('absolute').setRight('25%').setBottom('10px')
     fpsText.dom.style.zIndex = this.zIndex;
     fpsText.setFontSize('24px')
     this.fpsText = fpsText
@@ -80,7 +81,7 @@ MM.PanelView = function( editor , prefix){
 
 //  TIME
 //  shows us the current time
-    var frameText = new MMUI.Text('0'); // default starting frame
+    var frameText = new MMUI.Text('frame 0'); // default starting frame
     frameText.setPosition('absolute').setRight('10px').setBottom('10px')
     frameText.dom.style.zIndex = this.zIndex;
     frameText.setFontSize('24px')
@@ -114,27 +115,32 @@ MM.PanelView = function( editor , prefix){
 
     var signals = editor.signals;
     signals.timeChanged.add( function(){
-        console.log('MM.PanelView.onTimeChanged', scope.prefix)
+        // console.log('MM.PanelView.onTimeChanged', scope.prefix)
         scope.setTime( scope.editor.time )
         scope.setFPS( scope.editor._fps)
     });
 
     signals.timeShifted.add( function(){
-        console.log('MM.PanelView.onTimeShifted', scope.prefix)
+        // console.log('MM.PanelView.onTimeShifted', scope.prefix)
         scope.setTime( scope.editor.time )
         scope.setFPS( scope.editor._fps)
     })
 
 //  LISTEN TO CHANGE
     signals.cameraAdded.add( function(){
-        console.log('MM.PanelView.onCameraAdded')
+        // console.log('MM.PanelView.onCameraAdded')
         scope.buildCameraDD();
     });
 
     signals.cameraRemoved.add( function(){
-        console.log('MM.PanelView.onCameraRemoved')
+        // console.log('MM.PanelView.onCameraRemoved')
         scope.buildCameraDD();
     });
+
+//  hide HUD elements
+    this.hideCamera();
+    this.hideFPS();
+    this.hideTime();
 }
 
 MM.PanelView.prototype = Object.create( MMUI.Element.prototype );
@@ -198,42 +204,77 @@ MM.PanelView.prototype.setContent = function( contentType ){
     this.resize();
 }
 
+//  CAMERA 
+MM.PanelView.prototype.toggleCamera = function(){
+    if( this.show_camera ){
+        this.hideCamera()
+    }else{
+        this.showCamera()
+    }
+}
+
+MM.PanelView.prototype.showCamera = function(){
+    this.lockText.dom.style.display = 'block';
+    this.show_camera = true;
+    this.lockText.setValue(this.childPanel.camera.name)
+}
+
+MM.PanelView.prototype.hideCamera = function(){
+    this.lockText.dom.style.display = 'none';
+    this.show_camera = false;
+}
+
 //  FPS
+MM.PanelView.prototype.toggleFPS = function(){
+    if( this.show_fps ){
+        this.hideFPS()        
+    }else{
+        this.showFPS()
+    }
+}
+
 MM.PanelView.prototype.hideFPS = function(){
     this.fpsText.dom.style.display = 'none';
-    this.showFPS = false;
+    this.show_fps = false;
 }
 
 MM.PanelView.prototype.showFPS = function(){
     this.fpsText.dom.style.display = 'block';
-    this.showFPS = true;
+    this.show_fps = true;
 }
 
 MM.PanelView.prototype.setFPS = function( fps ){
     // console.log('MM.PanelView.setTime', time)
-    if( ! this.showFPS ){
-        console.log('\tfps is not visible')
+    if( ! this.show_fps ){
+        // console.log('\tfps is not visible')
         return
     }
-
     this.fpsText.setValue(fps+' fps');
 }
 
 //  FRAME
+MM.PanelView.prototype.toggleTime = function(){
+    if( this.show_frame ){
+        this.hideTime()
+    }else{
+        this.showTime()
+    }
+}
+
 MM.PanelView.prototype.hideTime = function(){
     this.frameText.dom.style.display = 'none';
-    this.showFrame = false;
+    this.show_frame = false;
 }
 
 MM.PanelView.prototype.showTime = function(){
     this.frameText.dom.style.display = 'block';
-    this.showFrame = true;
+    this.show_frame = true;
 }
 
 MM.PanelView.prototype.setTime = function( time ){
     // console.log('MM.PanelView.setTime', time)
-    if( ! this.showFrame ){
-        console.log('\ttime is not visible')
+    if( ! this.show_frame ){
+        // console.log('\ttime is not visible')
         return
     }
 
@@ -319,14 +360,26 @@ MM.PanelView.prototype.buildPanelDD = function(){
 
     this.panelDD.add( new MMUI.DropdownDivider() )
     
-    var timeDD = new MMUI.DropdownItem('Show Time')
-    this.panelDD.add( timeDD )
+    // time text
+    timeTxt = ((this.show_frame)?'Hide Time':'Show Time');
+    var timeDDI = new MMUI.DropdownItem(timeTxt).onClick( function(){
+        scope.toggleTime();
+    })
+    this.panelDD.add( timeDDI );
     
-    var cameraDD = new MMUI.DropdownItem('Show Camera Name')
-    this.panelDD.add( cameraDD )
+    // camera text
+    cameraTxt = ((this.show_camera)?'Hide Camera':'Show Camera')
+    var cameraDDI = new MMUI.DropdownItem(cameraTxt).onClick( function(){
+        scope.toggleCamera();
+    });
+    this.panelDD.add( cameraDDI );
     
-    var fpsDD = new MMUI.DropdownItem('Show FPS')
-    this.panelDD.add( fpsDD )
+    //  fps text
+    fpsText = ((this.show_fps)?'Hide FPS':'Show FPS')
+    var fpsDDI = new MMUI.DropdownItem(fpsText).onClick( function(){
+        scope.toggleFPS();
+    })
+    this.panelDD.add( fpsDDI )
 }
 
 MM.PanelView.prototype.deletePanel = function( panel, direction ){
@@ -339,6 +392,8 @@ MM.PanelView.prototype.deletePanel = function( panel, direction ){
 }
 
 //  CAMERA DROP DOWN
+//  Hide the camera display options depending out the type panel content we have. For instance, in case of the key view we don't want to show the camera drop down nor the camera name
+
 MM.PanelView.prototype.hideCameraDD = function(){
     // console.log('MM.PanelView.hideCameraDD')
     this.cameraDD.dom.style.display = 'none';
@@ -347,8 +402,8 @@ MM.PanelView.prototype.hideCameraDD = function(){
 
 MM.PanelView.prototype.showCameraDD = function(){
     // console.log('MM.PanelView.showCameraDD')
-    this.cameraDD.dom.style.display = '';
-    this.lockText.dom.style.display = '';
+    this.cameraDD.dom.style.display = 'block';
+    this.lockText.dom.style.display = 'block';
 }
 
 MM.PanelView.prototype.buildCameraDD = function(){

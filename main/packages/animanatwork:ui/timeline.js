@@ -205,8 +205,8 @@ MMUI.Timeline.prototype.update = function(){
 
 MMUI.Timeline.prototype.clickTime = function(){
 	var scope = this;
-	return function( event ){		
-		if( this.hasOwnProperty('innerHTML')){
+	return function( event ){					
+		// if( this.hasOwnProperty('innerHTML')){
 			scope.setTime( parseInt(this.innerHTML))
 
 			if( event.button == 0 ){	//	 left mouse button
@@ -215,7 +215,7 @@ MMUI.Timeline.prototype.clickTime = function(){
 			if( event.button == 1 ){	//	middle mouse button
 				scope.dom.dispatchEvent(scope.timeShiftEvent)
 			}
-		}
+		// }
 	}
 }
 
@@ -228,7 +228,7 @@ MMUI.Timeline.prototype.dragTime = function(){
 			// console.log('moving', movementX)
 			// console.log(event.target)
 
-			if( event.target.hasOwnProperty('innerHTML')){
+			// if( event.target.hasOwnProperty('innerHTML')){
 				scope.setTime(parseInt(event.target.innerHTML))
 				
 				//	left mouse button drag
@@ -240,7 +240,7 @@ MMUI.Timeline.prototype.dragTime = function(){
 				if( event.button == 1 ){
 					scope.dom.dispatchEvent(scope.timeShiftEvent);
 				}
-			}
+			// }
 		}
 		var onMouseUp = function( event ){
 			document.removeEventListener( 'mousemove', onMouseMove );

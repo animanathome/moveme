@@ -168,6 +168,10 @@ Template.anim.rendered = function(){
 //	LOAD SAVED SCENE SETTINGS
 	moveme.editor.loadSceneSettings();
 
+//	UPDATE LAYOUT
+//	this needs to be done since our scene settings are changed. For example start and end range. This means that the layout is not yet showing the proper range.	
+	moveme.layout.update();
+
 //	ACTIVATE TOOLTIPS
 	//  activate all tooltips for this page
   	$(function (){
