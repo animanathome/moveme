@@ -26,7 +26,8 @@ Router.route('/', {
     waitOn: function(){
         return [
             Meteor.subscribe('numberOfVersions', 6),
-            Meteor.subscribe('tutorials')
+            Meteor.subscribe('tutorials'),
+            Meteor.subscribe('numberOfAssets', 6)
         ];
     },
     onBeforeAction: function(){    
@@ -36,6 +37,7 @@ Router.route('/', {
         return {
               versions: VersionList.find({})
             , tutorials: TutorialList.find({})
+            , assets: AssetList.find({})
         }
     }    
 });

@@ -414,7 +414,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Sphere',
+    title: 'Using Sphere',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
@@ -424,7 +424,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Tail',
+    title: 'Using Tail',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
@@ -434,7 +434,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Legs',
+    title: 'Using Legs',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
@@ -444,7 +444,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Tiny',
+    title: 'Using Midi',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
@@ -485,7 +485,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Interface',
+    title: 'The Interface',
     description: 'What am I looking at? An introduction talking about the different panels that make up the interface. What are all those panels and why are they there?',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
@@ -496,7 +496,7 @@ if( TutorialList.find().count() === 0 ){
   TutorialList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'Workspace',
+    title: 'The Workspace',
     description: 'Workspace and panels. How can I add one more panel? We always seem to run out of space. There is always that one additional panel we would like to add. Learn how we can get the most out of our layout in this tutorial.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',

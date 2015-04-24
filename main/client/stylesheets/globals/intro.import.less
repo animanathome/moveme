@@ -1,4 +1,63 @@
 
+//.animation-keyframes (color-change, yellow, pink, asset-banner-content, ease-in-out, 3s, infinite, alternate);
+
+.animation-keyframes (height-change, 50, 40, asset-banner-content, ease-in, 0.25s, 1, alternate);
+
+.animation-keyframes (height-change1, 40, 50, asset-banner-content-active, ease-in, 0.25s, 1, alternate);
+
+.from (height-change, @height) {
+  height: @height*1px;  
+}
+.to (height-change, @height) {
+  height: @height*1px;
+}
+
+
+// example: reusable "color-change" rules:
+// animation steps for "color-change"
+.from (color-change, @color) {
+  background: @color;
+}
+.to (color-change, @color) {
+  background: @color;
+}
+
+// keyframe rule generator for "color-change"
+.keyframes (@name, @from, @to, @vendor:"", @bind:"") {
+  @keyf: ~"@{bind}@@{vendor}keyframes @{name} { `'\n'`from ";
+  @{keyf} {
+      .from(height-change,@from);
+        }
+      to {
+        .to(height-change,@to);
+      }
+}
+
+// keyframes without any vendor prefix
+.animation-keyframes-novendor (@name, @from, @to, @anim-selector) {
+  .keyframes (@name, @from, @to);
+  @anim: ~"} `'\n'`.@{anim-selector}";
+  @{anim} {
+    animation-name:@name;
+  }
+}
+
+// keyframes with vendor prefix
+.animation-keyframes (@name, @from, @to, @anim-selector, @func, @duration, @iteration-count, @direction) {
+  @bind: "} `'\n'`";
+  .keyframes (@name, @from, @to, "-moz-");
+  .keyframes (@name, @from, @to, "-webkit-", @bind);
+  .keyframes (@name, @from, @to, "-o-", @bind);
+  .keyframes (@name, @from, @to, "", @bind);
+  @anim: ~"} `'\n'`.@{anim-selector}";
+  @{anim} {
+    -moz-animation: @name @func @duration @iteration-count @direction;
+    -webkit-animation: @name @func @duration @iteration-count @direction;
+    -o-animation: @name @func @duration @iteration-count @direction;
+    animation: @name @func @duration @iteration-count @direction;
+  }
+}
+
 @lineHeight: 22px;
 
 .container-fluid {
@@ -15,18 +74,72 @@
 	position: absolute;
 	left: 0px;
 	right: 0px;
-	top: 0px;
-	height: 24px;
+	bottom: 0px;
+	height: 32px;
 	color: white;
-	//background-color: #00AB89;
-	background-color: #e1e1e1;
+	background-color: #e2e2e2;
+	text-align: center;
+	padding: 6px;
 }
 
 .video-banner-title {
-	padding: 5px;
-	position: absolute;
 	color: black;
 }
+
+//	asset banner
+.asset-banner-content {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 40px;
+	color: white;
+	background-color: #f9f9f9;
+	text-align: center;
+	padding: 12px;
+	opacity: 0.95;
+}
+
+.asset-banner-content span {
+	color: black;
+	font-size: 18px;
+}
+
+.asset-banner-content-active {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;	
+	height: 50px;
+	color: white;
+	background-color: #f9f9f9;
+	text-align: center;
+	padding: 12px;
+	opacity: 0.95;
+}
+
+.asset-banner-content-active span {
+	color: black;	
+	font-size: 18px;
+}
+
+//	anim banner
+.anim-banner-content {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	height: 32px;
+	color: white;
+	background-color: #e2e2e2;
+	text-align: center;
+	padding: 6px;
+}
+
+.anim-banner-title {
+	color: black;
+}
+
 
 //	intro banner
 .intro-header {
@@ -72,7 +185,7 @@
   padding-bottom: 70px;
   font-size: 24px;
   color: white;
-  background-color: #EEEEEE;
+  background-color: #e2e2e2;
 }
 
 .outro-footer-content{
@@ -207,7 +320,7 @@
 	}	
 }
 .intro-assets-content img{
-	outline: 1px solid #e1e1e1;
+	//outline: 1px solid #e2e2e2;
 }
 
 .intro-assets-content h2{
@@ -319,8 +432,10 @@
 
 .btn-try{
   color: #fff;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-bottom: -12px;
   background: rgb(255, 126, 0);
   font-size: 32px;
