@@ -99,7 +99,7 @@ MM.Editor = function(){
     this.assets = []
 
 //  SCENE
-    this.sceneBackgroundColor = new THREE.Color().setRGB( 0.5, 0.7, 0.7 );
+    this.sceneBackgroundColor = new THREE.Color().setRGB( 0.5, 0.5, 0.5 );
     this.activeCamera = undefined;    
     this.cameras = [];
 
@@ -143,7 +143,7 @@ MM.Editor = function(){
 
 //  KEY VIEW
     //  ANIMCURVES
-    this.keyBackgroundColor = new THREE.Color().setRGB( 0.5, 0.7, 0.7 );
+    this.keyBackgroundColor = new THREE.Color().setRGB( 0.5, 0.5, 0.5 );
     this.removedKey = false
     this.autoKey = false
     this.keyframeEditorCameraControl = null;

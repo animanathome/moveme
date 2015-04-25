@@ -440,6 +440,27 @@ MM.PanelView.prototype.buildCameraDD = function(){
 MM.PanelView.prototype.buildLayoutDD = function(){
     var scope = this;
 
+    var singleLayout = new MMUI.DropdownItem('Single')
+    singleLayout.onClick(function(){
+        var viewLayout = {
+            panels : {
+                view0: {
+                     h: [0,100]
+                    ,w: [0,100]
+                    ,td: []
+                    ,bd: []
+                    ,rd: ['view1']
+                    ,ld: []
+                    ,dh: 100
+                    ,dw: 100
+                    ,v: true
+                }
+            }   
+        }        
+        scope.parentLayout.rebuild(viewLayout)
+    })
+    this.layoutDD.add( singleLayout )
+
     var verticalLayout = new MMUI.DropdownItem('Vertical')
     verticalLayout.onClick( function(){
         var viewLayout = {

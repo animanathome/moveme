@@ -13,10 +13,8 @@ MM.Menubar = function ( layout, editor , dom, options) {
 	if( options.hasOwnProperty('server_actions')){
 		showSaveVersion = options['server_actions']
 	}	
-	if(showSaveVersion){
-		navigation.add( new MM.Menubar.Files( editor ));
-	}
-	
+	navigation.add( new MM.Menubar.Files( editor, showSaveVersion));
+		
 	//	EDITS
 	navigation.add( new MM.Menubar.Edits( editor ) );
 	

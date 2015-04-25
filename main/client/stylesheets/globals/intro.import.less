@@ -1,9 +1,7 @@
 
-//.animation-keyframes (color-change, yellow, pink, asset-banner-content, ease-in-out, 3s, infinite, alternate);
 
-.animation-keyframes (height-change, 50, 40, asset-banner-content, ease-in, 0.25s, 1, alternate);
-
-.animation-keyframes (height-change1, 40, 50, asset-banner-content-active, ease-in, 0.25s, 1, alternate);
+.animation-keyframes (height-change, 50, 40, banner-content, ease-in, 0.25s, 1, alternate);
+.animation-keyframes (height-change1, 40, 50, banner-content-active, ease-in, 0.25s, 1, alternate);
 
 .from (height-change, @height) {
   height: @height*1px;  
@@ -58,7 +56,7 @@
   }
 }
 
-@lineHeight: 22px;
+@lineHeight: 1.4;
 
 .container-fluid {
 	@media (min-width:800px){
@@ -69,77 +67,96 @@
 	}
 }
 
-//	video banner
-.video-banner-content {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	height: 32px;
-	color: white;
-	background-color: #e2e2e2;
-	text-align: center;
-	padding: 6px;
-}
+//	BANNERS (title overlays for images/videos displayed on the home page)
+//	---------------------------------------------------------------------------
 
-.video-banner-title {
-	color: black;
-}
-
-//	asset banner
-.asset-banner-content {
+.banner-content {
 	position: absolute;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
 	height: 40px;
 	color: white;
-	background-color: #f9f9f9;
 	text-align: center;
 	padding: 12px;
 	opacity: 0.95;
-}
-
-.asset-banner-content span {
-	color: black;
+	cursor: pointer;	
 	font-size: 18px;
 }
 
-.asset-banner-content-active {
+.banner-content-active {
 	position: absolute;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;	
 	height: 50px;
-	color: white;
-	background-color: #f9f9f9;
 	text-align: center;
 	padding: 12px;
 	opacity: 0.95;
+	cursor: pointer;
+	font-size: 18px;	
+}
+
+//	asset banner
+.asset-banner-content {
+	background-color: #f9f9f9;
+}
+
+.asset-banner-content span {
+	color: black;
+}
+
+.asset-banner-content-active {	
+	color: white;
+	background-color: #f9f9f9;
 }
 
 .asset-banner-content-active span {
-	color: black;	
-	font-size: 18px;
+	color: #337ab7;	
+	
 }
 
 //	anim banner
 .anim-banner-content {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	height: 32px;
 	color: white;
 	background-color: #e2e2e2;
-	text-align: center;
-	padding: 6px;
 }
 
-.anim-banner-title {
+.anim-banner-content span {
 	color: black;
 }
 
+.anim-banner-content-active {
+	color: white;
+	background-color: #e2e2e2;
+}
+
+.anim-banner-content-active span {
+	color: #337ab7;	
+}
+
+//	tutorial banner
+.tutorial-banner-content {
+	color: white;
+	background-color: #e2e2e2;
+}
+
+.tutorial-banner-content span {
+	color: black;
+}
+
+.tutorial-banner-content-active {
+	color: white;
+	background-color: #e2e2e2;
+}
+
+.tutorial-banner-content-active span {
+	color: #337ab7;	
+}
+
+
+//	INTRO SECTIONS
+//	---------------------------------------------------------------------------
 
 //	intro banner
 .intro-header {
@@ -167,7 +184,8 @@
 }
 
 .intro-header h1 {
-	font-size: 60px;	
+	font-size: 60px;
+	font-weight: 800;	
 }
 
 .intro-header p {
@@ -224,9 +242,10 @@
 }
 
 .intro-container-content h2 {
-  border-bottom: 1px solid #666;
-  margin-top: 10px;
-  margin-bottom: 20px;
+	line-height: 2.0;
+	border-bottom: 2px solid #00AB89;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 .intro-container-content p {
@@ -257,7 +276,8 @@
 }
 
 .intro-animation-content h2{
-	border-bottom: 1px solid #666;
+	line-height: 2.0;
+	border-bottom: 2px solid #00AB89;
 }
 
 .intro-animation-content p{
@@ -324,7 +344,8 @@
 }
 
 .intro-assets-content h2{
-	border-bottom: 1px solid #666;
+	line-height: 2.0;
+	border-bottom: 2px solid #00AB89;
 }
 
 .intro-assets-content p{
@@ -364,7 +385,8 @@
 }
 
 .intro-tutorials-content h2{
-	border-bottom: 1px solid #666;
+	line-height: 2.0;
+	border-bottom: 2px solid #00AB89;
 }
 
 .intro-tutorials-content p{
@@ -394,7 +416,7 @@
 }
 
 .intro-any-content h2{
-	border-bottom: 1px solid #666;
+	border-bottom: 2px solid #00AB89;
 }
 
 .intro-any-content p{

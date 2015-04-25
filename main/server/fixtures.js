@@ -418,7 +418,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "mWvYSjkYqpE"
+    youTubeVideoId: "mWvYSjkYqpE",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
   TutorialList.insert({
@@ -428,7 +429,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "Zl3sSOL0LtE"
+    youTubeVideoId: "Zl3sSOL0LtE",
+    thumbnail: '/tutorials/asset_tail_screen.png'
   })
 
   TutorialList.insert({
@@ -438,7 +440,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "ll_lStU7Dxg"   
+    youTubeVideoId: "ll_lStU7Dxg",
+    thumbnail: '/tutorials/asset_legs_screen.png'
   })
 
   TutorialList.insert({
@@ -448,7 +451,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "4utrccoVISU"
+    youTubeVideoId: "4utrccoVISU",
+    thumbnail: '/tutorials/asset_midi_screen.png'
   })
 
   // TutorialList.insert({
@@ -489,7 +493,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'What am I looking at? An introduction talking about the different panels that make up the interface. What are all those panels and why are they there?',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "djuOTkqIJ88"
+    youTubeVideoId: "djuOTkqIJ88",
+    thumbnail: '/tutorials/interface_screen.png'
   })
 
   //  done
@@ -500,7 +505,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Workspace and panels. How can I add one more panel? We always seem to run out of space. There is always that one additional panel we would like to add. Learn how we can get the most out of our layout in this tutorial.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "azGY9b87DHE"
+    youTubeVideoId: "azGY9b87DHE",
+    thumbnail: '/tutorials/workspace_screen.png'
   })
 
   //  done
@@ -511,7 +517,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Learn how to use the viewport tools to move around in our scene; rotate, pan and dolly.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "PWOSvVW83mo"
+    youTubeVideoId: "PWOSvVW83mo",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
   //  done
@@ -522,7 +529,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Here we go over the select, move, rotate and scale tools. Different ways to use and activate them.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "TqXQ7TIIAFY"
+    youTubeVideoId: "TqXQ7TIIAFY",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
   //  done
@@ -533,7 +541,8 @@ if( TutorialList.find().count() === 0 ){
     description: 'Where can we find all of the different options or channels for the selected object(s)? That would be the channel box. During this tutorial we are going to see the ',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "076dheRD2nk"
+    youTubeVideoId: "076dheRD2nk",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
 TutorialList.insert({
@@ -543,7 +552,8 @@ TutorialList.insert({
     description: 'When we have a lot of assets into our scene it is sometimes hard to select the right object. This is where the Asset Outliner comes in. It presents us the different objects in a clear and easy to select way.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "FZ7U7THxe_w"
+    youTubeVideoId: "FZ7U7THxe_w",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
 TutorialList.insert({
@@ -553,7 +563,8 @@ TutorialList.insert({
     description: 'Certain Assets are more complex then others. Some have numereous of controls which can be hard to select in the viewport. The Asset Select gives you a different way to select them.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "LQz7akFxrQc"
+    youTubeVideoId: "LQz7akFxrQc",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
   TutorialList.insert({
@@ -563,7 +574,8 @@ TutorialList.insert({
     description: 'This is an introduction on how to create, edit and delete keys.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "aO1Arpzmi7k"
+    youTubeVideoId: "aO1Arpzmi7k",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
   TutorialList.insert({
@@ -573,7 +585,8 @@ TutorialList.insert({
     description: 'During this tutorial we are going to talk about animation curves and interpolation.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "H40hL7xUKJc"
+    youTubeVideoId: "H40hL7xUKJc",
+    thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
 // TutorialList.insert({

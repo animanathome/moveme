@@ -162,15 +162,15 @@ MM.Editor.prototype.resetSceneSettings = function(){
     data.showGrid = true;
     data.showJoints = true;
     data.showControls = true;
-    data.sceneBackgroundColor = new THREE.Color().setRGB( 0.5, 0.7, 0.7 ).toArray();
-    data.keyBackgroundColor = new THREE.Color().setRGB( 0.5, 0.7, 0.7 ).toArray();
+    data.sceneBackgroundColor = new THREE.Color().setRGB( 0.75, 0.75, 0.75 ).toArray();
+    data.keyBackgroundColor = new THREE.Color().setRGB( 0.75, 0.75, 0.75 ).toArray();
 
 //  animation    
     data.time = 0;
     data.startTime = 0;
     data.startRange = 0;
     data.endRange = 24;
-    data.endTime = 24;
+    data.endTime = 48;
 
     return data;
 }
@@ -786,6 +786,10 @@ MM.Editor.prototype.importAnimationData = function( data ){
     }
     
     // console.log(data.animCurves.length)
+    if(!data.hasOwnProperty('animCurves')){
+        console.log('# No animation data found')
+        return
+    }
 
     var object;
     var minTime = 1000;
@@ -794,11 +798,11 @@ MM.Editor.prototype.importAnimationData = function( data ){
         object = this.scene.getObjectByName(data.animCurves[i].driven, true)
         // console.log(object)
         if( object === undefined){
-            // console.log('Unable to find', data.animCurves[i].driven)
+            console.log('Unable to find', data.animCurves[i].driven)
             continue;
         }
-        // console.log('\t', i, data.animCurves[i].driven)
-        // console.log('\t', i, data.animCurves[i].attr)
+        console.log('\t', i, data.animCurves[i].driven)
+        console.log('\t', i, data.animCurves[i].attr)
         
         //  we should only create a new curve if it does not exist yet
         var thisAnimCurve = new MM.AnimCurve( object, data.animCurves[i].attr);

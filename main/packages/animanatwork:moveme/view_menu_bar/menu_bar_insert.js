@@ -47,16 +47,27 @@ MM.Menubar.Inserts = function( editor ){
 	primitiveSubMenu.add( primitiveSphere );
 	
 //	prop
-	var propSubMenu = new MMUI.SubMenuGrp('Prop')
-	menuGrp.add( propSubMenu )
+	// var propSubMenu = new MMUI.SubMenuGrp('Prop')
+	// menuGrp.add( propSubMenu )
 
-	var propChair = new MMUI.MenuItem('Chair');
-	// propChair.onClick( insertChair )
-	propSubMenu.add( propChair )
+	// var propChair = new MMUI.MenuItem('Chair');
+	// // propChair.onClick( insertChair )
+	// propSubMenu.add( propChair )
 
 //	character
 	var characterSubMenu = new MMUI.SubMenuGrp('Character')
 	menuGrp.add( characterSubMenu )
+
+	var characterTail = new MMUI.MenuItem('Ball');
+	characterTail.onClick( function(){
+		console.log('Insert Ball')
+		MM.insertSphere( editor )
+	})
+	characterSubMenu.add( characterTail )	
+
+	//	Separator
+	var sepItem1 = new MMUI.MenuDivider();
+	characterSubMenu.add( sepItem1 )
 
 	var characterTail = new MMUI.MenuItem('Tail');
 	characterTail.onClick( function(){
@@ -65,6 +76,10 @@ MM.Menubar.Inserts = function( editor ){
 	})
 	characterSubMenu.add( characterTail )	
 
+	//	Separator
+	var sepItem1 = new MMUI.MenuDivider();
+	characterSubMenu.add( sepItem1 )
+
 	var characterDrone = new MMUI.MenuItem('Legs');
 	characterDrone.onClick( function(){
 		console.log('Insert Legs')
@@ -72,19 +87,23 @@ MM.Menubar.Inserts = function( editor ){
 	})
 	characterSubMenu.add( characterDrone )	
 
-	var characterTiny = new MMUI.MenuItem('Tiny');
-	characterSubMenu.add( characterTiny )	
-	characterTiny.onClick( function(){
-		console.log('Insert Tiny')
-		MM.insertTiny( editor )
-	})
+	//	Separator
+	var sepItem1 = new MMUI.MenuDivider();
+	characterSubMenu.add( sepItem1 )	
 
-	var characterBaby = new MMUI.MenuItem('Baby');
+	var characterBaby = new MMUI.MenuItem('Mini');
 	characterSubMenu.add( characterBaby )	
 	characterBaby.onClick( function(){
 		console.log('Insert Baby')
 		MM.insertBaby( editor )
 	})
+
+	var characterTiny = new MMUI.MenuItem('Midi');
+	characterSubMenu.add( characterTiny )	
+	characterTiny.onClick( function(){
+		console.log('Insert Tiny')
+		MM.insertTiny( editor )
+	})	
 
 	var characterMaxi = new MMUI.MenuItem('Maxi');
 	characterSubMenu.add( characterMaxi )	

@@ -107,18 +107,13 @@ Template.animWall.rendered = function(){
 	var counter = 0;
 	var cursor = this.data.versions;
 	cursor.forEach(function(item){
-		// console.log('\tcounter', counter)
-		// console.log('\tversion', item._id)
-		// console.log('\turl', item.youTubeVideoId)
-		// console.log('\timage', item.youTubeImageUrlHigh)
-
 		var panelName = 'view'+counter;
 		var panelItem = wallPanel.getPanel(panelName)				
 
 	//	image
 		// var srci = item.youTubeImageUrlHigh;
 		var srci = '/ui/imagePlaceHolder.png'			
-		var image = new MMUI.A().setImage(srci)
+		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
@@ -143,16 +138,34 @@ Template.animWall.rendered = function(){
 
 	// 	iframe.src = srcs;
 	// 	panelItem.dom.appendChild( iframe )
+	
+	//	Add banner
+	//	start
+		var banner = new MMUI.Panel()
 
-		var banner = document.createElement('div')
-		banner.className = 'anim-banner-content'
-		panelItem.dom.appendChild( banner )
+		//	Attach mouse over and out css animations for the banner to the image.
+		image.onMouseOver(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content-active anim-banner-content-active"
+				}
+			}(banner)
+		)
+		image.onMouseOut(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content anim-banner-content"
+				}
+			}(banner)
+		)
+		banner.setClass('banner-content anim-banner-content')
+		panelItem.dom.appendChild( banner.dom )
 
 		var title = document.createElement('span')
 		title.className = 'anim-banner-title'
-		// title.textContent = item.title;
-		title.textContent = 'Temp';
-		banner.appendChild( title )
+		title.textContent = 'Temp';//item.title;
+		banner.dom.appendChild( title )
+	//	end
 
 		counter += 1;
 	})	
@@ -168,14 +181,14 @@ Template.animWall.rendered = function(){
 }
 
 Template.assetWall.rendered = function(){ 
-	console.log('Done building assetWall')
-	console.log('\tdata', this.data)
+	// console.log('Done building assetWall')
+	// console.log('\tdata', this.data)
 
-//	build wall
+	//	build wall
 	var wallBase = this.find("#assetWall")
 	wallBase.style.position = 'relative'
 
-//	set the height of the wall (based on 16/9 ratio)
+	//	set the height of the wall (based on 16/9 ratio)
 	setWallHeight(wallBase)
 
 	//	build panel layout
@@ -189,38 +202,39 @@ Template.assetWall.rendered = function(){
 
 		var srci = '/ui/imagePlaceHolder.png'
 		var srci = item.thumbnail;
-		var image = new MMUI.A().setImage(srci)
+		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
 		panelItem.dom.appendChild( image.dom )
 
+	//	Add banner
+	//	start
 		var banner = new MMUI.Panel()
-		banner.onMouseOver(
-			function(banner){
-				return function(){
-					banner.dom.className = "asset-banner-content-active"
-				}
-			}(banner)
-		)
-		banner.onMouseOut(
-			function(banner){
-				return function(){
-					banner.dom.className = "asset-banner-content"
-				}
-			}(banner)
-		)
-		banner.setClass('asset-banner-content')
-		panelItem.dom.appendChild( banner.dom )
 
-		// var banner = document.createElement('div')
-		// banner.className = 'asset-banner-content'
-		// panelItem.dom.appendChild( banner )
+		//	Attach mouse over and out css animations for the banner to the image.
+		image.onMouseOver(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content-active asset-banner-content-active"
+				}
+			}(banner)
+		)
+		image.onMouseOut(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content asset-banner-content"
+				}
+			}(banner)
+		)
+		banner.setClass('banner-content asset-banner-content')
+		panelItem.dom.appendChild( banner.dom )
 
 		var title = document.createElement('span')
 		title.className = 'asset-banner-title'
 		title.textContent = item.title;
 		banner.dom.appendChild( title )
+	//	end
 
 		counter += 1;
 	})
@@ -239,7 +253,7 @@ Template.tutorialWall.rendered = function(){
 	// console.log('tutorialWall', this)
 	// console.log('\tdata', this.data)
 
-//	build wall
+	//	build wall
 	var wallBase = this.find("#tutorialWall")
 	wallBase.style.position = 'relative'
 	// console.log('wallBase', wallBase)
@@ -267,10 +281,11 @@ Template.tutorialWall.rendered = function(){
 		var panelItem = wallPanel.getPanel(panelName)	
 
 	//	image		
-		var srci = 'https://img.youtube.com/vi/'+item.youTubeVideoId+'/maxresdefault.jpg';
-		var srci = '/ui/imagePlaceHolder.png'
+		// var srci = 'https://img.youtube.com/vi/'+item.youTubeVideoId+'/maxresdefault.jpg';
+		// var srci = '/ui/imagePlaceHolder.png'
+		var srci = item.thumbnail
 
-		var image = new MMUI.A().setImage(srci)
+		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
@@ -278,14 +293,33 @@ Template.tutorialWall.rendered = function(){
 		image.onClick(showMovie(wallBase, item.title, item.youTubeVideoId))
 		// image.dom.style.outline='1px solid #e1e1e1'
 
-		var banner = document.createElement('div')
-		banner.className = 'video-banner-content'
-		panelItem.dom.appendChild( banner )
+	//	Add banner
+	//	start
+		var banner = new MMUI.Panel()
+
+		//	Attach mouse over and out css animations for the banner to the image.
+		image.onMouseOver(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content-active tutorial-banner-content-active"
+				}
+			}(banner)
+		)
+		image.onMouseOut(
+			function(banner){
+				return function(){
+					banner.dom.className = "banner-content tutorial-banner-content"
+				}
+			}(banner)
+		)
+		banner.setClass('banner-content tutorial-banner-content')
+		panelItem.dom.appendChild( banner.dom )
 
 		var title = document.createElement('span')
-		title.className = 'video-banner-title'
+		title.className = 'tutorial-banner-title'
 		title.textContent = item.title;
-		banner.appendChild( title )
+		banner.dom.appendChild( title )
+	//	end
 
 		counter += 1;
 	})		

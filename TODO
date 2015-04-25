@@ -131,22 +131,26 @@ DONE? - make sure we properly destroy the moveme when changing page
 - add min - max limit to channel box
 	- this is for stretch or ik/fk switch
 - make sure we don't loose the selection when changing the camera
-- add display for cameras (so we can more easily see where they are positioned)
+DONE - add display for cameras (so we can more easily see where they are positioned)
 ON HOLD - add camera aspect ratio frame 
 - inherit builders -> insert_tiny, insert_default, insert_maxi
-- fix soft ik ankle rotation
+DONE - fix soft ik ankle rotation
 DONE - add stretch joints
 DONE - fix naming for joints
-- show FPS in panel as overlay
+DONE - show FPS in panel as overlay
 - seperate out the camera and transform control
 	- just so it's like maya 
 DONE - fix right foot from baby
-- intro
+DONE - intro
 	- make sure we all have the same spacing and style between the different canvases
-- time slider - click select move doesn't work anymore???
-- make sure we can see the name of hte camera 
-- finish implementing the show, hide fps, camera and time
+DONE - time slider - click select move doesn't work anymore???
+DONE - make sure we can see the name of hte camera 
+DONE - finish implementing the show, hide fps, camera and time
 
+- for some reason we get to have 2 transform manipulators when moving from the horizontal layout to single scene view
+- maximize screen size
+	http://stackoverflow.com/questions/1125084/how-to-make-in-javascript-full-screen-windows-stretching-all-over-the-screen
+- add hip control
 
 UX:
 http://alistapart.com/blog/post/designing-social-tools-for-tweens
@@ -158,5 +162,6 @@ http://alistapart.com/blog/post/designing-social-tools-for-tweens
 	- maybe add a read more or learn more link to the individual videos/sections?
 - simplify the project/shots/versions context
 	- replace with was google documents have but allow the use to sort by project
+
 
 

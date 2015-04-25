@@ -1,4 +1,8 @@
-MM.Menubar.Files = function( editor){
+MM.Menubar.Files = function( editor, showSaveVersion){
+	if(showSaveVersion === undefined){
+		showSaveVersion = true;
+	}
+
 	var signals = editor.signals;
 	var menuGrp = new MMUI.MenuGrp('File');
 
@@ -39,25 +43,26 @@ MM.Menubar.Files = function( editor){
 	}).addShortcut('Ctrl+s');
 	menuGrp.add(saveLocalItem)
 	
-	var saveItem = new MMUI.MenuItem('Save Version').onClick( function(){
-		
-		//	disable to use of hotkeys
-		editor.useHotKeys = false;
+	if(showSaveVersion){
+		var saveItem = new MMUI.MenuItem('Save Version').onClick( function(){
+			
+			//	disable to use of hotkeys
+			editor.useHotKeys = false;
 
-		var parent = document.getElementById("movemeanim");
-		var dialog = new MMUI.Dialog('Save Version As', 'Scene Description...', 'Save Version');
-		parent.appendChild( dialog.dom )
-		
-		dialog.onAction = function(){
-			// console.log('my test', dialog.getValue())
-			editor.useHotKeys = true;
-			editor.saveScene( dialog.getValue() );
-			dialog.deleteUI();
-			dialog = null;
-		}
-	})
-	menuGrp.add( saveItem )
-
+			var parent = document.getElementById("movemeanim");
+			var dialog = new MMUI.Dialog('Save Version As', 'Scene Description...', 'Save Version');
+			parent.appendChild( dialog.dom )
+			
+			dialog.onAction = function(){
+				// console.log('my test', dialog.getValue())
+				editor.useHotKeys = true;
+				editor.saveScene( dialog.getValue() );
+				dialog.deleteUI();
+				dialog = null;
+			}
+		})
+		menuGrp.add( saveItem )
+	}
 
 	var saveAsItem = new MMUI.MenuItem('Export File').onClick( function(){
 		console.log('MM.Menubar.saveFile')
