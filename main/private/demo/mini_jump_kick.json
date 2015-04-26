@@ -1,0 +1,371 @@
+{
+	"metadata": {
+		"version": 0.1,
+		"type": "pose"
+	},
+	"pose": {
+		"baby:cGlobalCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,8.048874547143207,
+					"XYZ"]]],
+		"baby:cHeadCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0.14093769910263942,-0.012789936432937687,1.0226383347664778]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[19.32587716728236,-4.812480813325659,-0.6487959870012544,
+					"XYZ"]],[
+				"custom",[
+					"spaceSwitch"],[2]]],
+		"baby:lHipFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lKneeFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lAnkleFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lBallFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lLegSwitch": [[
+				"custom",[
+					"globalScale",
+					"ikFkBlend",
+					"scaleBone1",
+					"scaleBone2",
+					"slide",
+					"soft",
+					"stretch",
+					"useSoft"],[1,0,1,1,0.5,0,1,
+					true]]],
+		"baby:lShoulderFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lElbowFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lWristFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:lArmSwitch": [[
+				"custom",[
+					"globalScale",
+					"ikFkBlend",
+					"scaleBone1",
+					"scaleBone2",
+					"slide",
+					"soft",
+					"stretch",
+					"useSoft"],[1,0,1,1,0.5,0,1,
+					true]]],
+		"baby:lElbowCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"custom",[
+					"spaceSwitch"],[2]]],
+		"baby:lHandCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[-5.060510189042659,-1.4467345786319823,6.160787206589819]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[-69.4533520502086,-79.27177618400958,9.279354767430835,
+					"XYZ"]],[
+				"custom",[
+					"spaceSwitch"],[2]]],
+		"baby:rHipFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rKneeFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rAnkleFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rBallFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rLegSwitch": [[
+				"custom",[
+					"globalScale",
+					"ikFkBlend",
+					"scaleBone1",
+					"scaleBone2",
+					"slide",
+					"soft",
+					"stretch",
+					"useSoft"],[1,0,1,1,0.5,0,1,
+					true]]],
+		"baby:rShoulderFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rElbowFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rWristFkCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]]],
+		"baby:rArmSwitch": [[
+				"custom",[
+					"globalScale",
+					"ikFkBlend",
+					"scaleBone1",
+					"scaleBone2",
+					"slide",
+					"soft",
+					"stretch",
+					"useSoft"],[1,0,1,1,0.5,0,1,
+					true]]],
+		"baby:rElbowCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"custom",[
+					"spaceSwitch"],[2]]],
+		"baby:rHandCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[4.641108733238395,-3.0384116696105488,1.969817113348684]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[-92.70509913699657,-0.03698071438383388,92.28355303975752,
+					"XYZ"]],[
+				"custom",[
+					"spaceSwitch"],[2]]],
+		"baby:lEyeCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]],[
+				"scale",[
+					"x",
+					"y",
+					"z"],[1,1,1]]],
+		"baby:lFingerCtl": [[
+				"rotation",[
+					"z"],[-97.2620083468505]]],
+		"baby:lThumbCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[98.50272800462356,50.21905751429354,-24.35206059927098,
+					"XYZ"]]],
+		"baby:rEyeCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,0,
+					"XYZ"]],[
+				"scale",[
+					"x",
+					"y",
+					"z"],[1,1,1]]],
+		"baby:rFingerCtl": [[
+				"rotation",[
+					"z"],[131.72233059565997]]],
+		"baby:rThumbCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[32.51648285710116,-87.06465882414889,9.629178713747535,
+					"XYZ"]]],
+		"baby:cJawCtl": [[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[8.98747632960725,-0.2093792058714628,0.4013032436118224,
+					"XYZ"]]],
+		"baby:CcBodyCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[0,0,32.196037856951655,
+					"XYZ"]],[
+				"scale",[
+					"x",
+					"y",
+					"z"],[1,1,1]]],
+		"baby:cHipCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[12.923251363085358,28.204750764560906,-4.16882411925765,
+					"XYZ"]]],
+		"baby:cBChestCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[-0.15195741559378345,0.12861829751590706,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[17.52672257133316,41.51404768934743,-11.773211799599467,
+					"XYZ"]]],
+		"baby:cTChestCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0,0,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[17.008762800280174,28.335928019539207,-14.79623872653641,
+					"XYZ"]]],
+		"baby:lShoulderCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[0.5551454778469865,0.2411668828898869,2.143863724781106]]],
+		"baby:rShoulderCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[-0.3749364581962567,-0.2203162254327866,-1.4173145259080067]]],
+		"baby:lFootIkCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[10.366828803516967,10.63328484750756,-2.0738002642055147]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[-71.27158379715326,1.1720572095704127,89.08528595185815,
+					"XYZ"]],[
+				"custom",[
+					"ballRoll",
+					"heelRoll",
+					"toeRoll",
+					"toeRotate"],[-2.86,0,-0.78,-35.08]]],
+		"baby:lKneeIkCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[6.30844459332371,6.37154933148256,-18.289352260766055]]],
+		"baby:rFootIkCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[2.068700402873249,6.0883054270857455,0]],[
+				"rotation",[
+					"x",
+					"y",
+					"z",
+					"order"],[80.35641772531628,70.79219914896602,89.9632366429289,
+					"XYZ"]],[
+				"custom",[
+					"ballRoll",
+					"heelRoll",
+					"toeRoll",
+					"toeRotate"],[0,0,0,-28.34]]],
+		"baby:rKneeIkCtl": [[
+				"position",[
+					"x",
+					"y",
+					"z"],[-8.405796958422448,4.952734136818382,-12.19279618482365]]]
+	}
+}

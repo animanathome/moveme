@@ -7,12 +7,24 @@ if ( Meteor.users.find().count() === 0 ) {
         email: 'animanatwork@me.com',
         password: 'moveme',
         profile: {
-            first_name: 'fname',
-            last_name: 'lname',
-            company: 'company',
+            first_name: 'Emmanuel',
+            last_name: 'Seynaeve',
+            company: 'MoveMe',
         }
     });
     console.log('manu', manuId)
+
+    ambreId = Accounts.createUser({
+        username: 'ambre',
+        email: 'ambre.maurin@gmail.com',
+        password: 'moveme',
+        profile: {
+            first_name: 'Ambre',
+            last_name: 'Maurin',
+            company: 'MoveMe',
+        }
+    });
+    console.log('Ambre', ambreId)
 
   // create two users
     tomId = Meteor.users.insert({
@@ -73,7 +85,7 @@ if (AssetList.find().count() === 0) {
 		title: 'Legs',
 		description: 'A simple ball with legs for you to have fun with. Make hip moves and walk cycles for instance. Find out how in the tutorial.',
 		submitted: new Date(now - 3 * 3600 * 1000),
-		thumbnail: '/assets/assetLegs_000.jpg',		
+		thumbnail: '/assets/assetLegs_000.jpg',
     level: 3,
     commentsCount: 0,
     votes: 0
@@ -115,16 +127,16 @@ if (AssetList.find().count() === 0) {
     votes: 0  
   }); 
 
-  AssetList.insert({
-    author: 'manu',
-    userId: manuId,
-    title: 'Dino',
-    description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
-    submitted: new Date(now - 4 * 3600 * 1000),
-    thumbnail: '/assets/assetDino.jpg',
-    commentsCount: 0,
-    votes: 0  
-  }); 
+  // AssetList.insert({
+  //   author: 'manu',
+  //   userId: manuId,
+  //   title: 'Dino',
+  //   description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
+  //   submitted: new Date(now - 4 * 3600 * 1000),
+  //   thumbnail: '/assets/assetDino.jpg',
+  //   commentsCount: 0,
+  //   votes: 0  
+  // }); 
 }	
 
 //  Project
@@ -133,180 +145,253 @@ if (AssetList.find().count() === 0) {
 //        + Comment
 
 if( ProjectList.find().count() === 0 ){
+  function str2ab(str) {
+    var buf = new ArrayBuffer(str.length);
+    var bufView = new Uint8Array(buf);
+    for (var i=0, strLen=str.length; i<strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+  }
+
 	var now = new Date().getTime();
 
-  //  project 1
-	var projectId = ProjectList.insert({
-		author: 'manu',
-    userId: manuId,
-		title: 'Jumping around',
-		description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
-		submitted: new Date(now - 1 * 3600 * 1000),
-		shotCount: 2,
-    fps: 24,
-    duration: 48
-	})
-
-  //  shot 1 
-  var shotId = ShotList.insert({
-    projectId: projectId,
+  //  -------------------------------------------------------------------------
+  //  Front page demo project
+  var front_page_project_id = ProjectList.insert({
     author: 'manu',
     userId: manuId,
-    title: 'The beginning',
-    description: 'Modus maluisset et mei, no mel audire veritus. Mel no melius timeam, soleat prompta est ad. Has ipsum elitr ea, vis apeirian petentium cu. Civibus referrentur pro at, sit ei aliquip tractatos salutandi. Possit gloriatur ullamcorper cu nam, ei wisi bonorum est. Nonumes deserunt quo cu, delectus corrumpit quo eu.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 0,
-    versionCount: 3,
-    fps: 24,
-    duration: 24
-  })
-
-  //  version 1
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'Blocking',
-    submitted: new Date(now - 10 * 3600 * 1000),
-    versionNumber: 0,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'ZTRpfllQ5-A',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })
-
-  //  version 2
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'Adding detail',
-    submitted: new Date(now - 11 * 3600 * 1000),
-    versionNumber: 1,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'iRyrTYxFSeU',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })
-
-  //  version 3
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'Done!',
-    submitted: new Date(now - 12 * 3600 * 1000),
-    versionNumber: 2,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'f8E1c2gAIDc',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })
-
-  //  version 4
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'Directors tweak',
-    submitted: new Date(now - 13 * 3600 * 1000),
-    versionNumber: 2,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })  
-
-//  version 5
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'More directors tweaks',
-    submitted: new Date(now - 13 * 3600 * 1000),
-    versionNumber: 2,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })  
-
-//  version 6
-  VersionList.insert({
-    projectId: projectId,
-    shotId: shotId,
-    author: 'manu',
-    userId: manuId,
-    description: 'Final directors tweaks',
-    submitted: new Date(now - 13 * 3600 * 1000),
-    versionNumber: 2,
-    fps: 24,
-    duration: 24,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    youTubeImageUrlDef: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlMed: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/',
-    youTubeImageUrlHigh: 'https://i.ytimg.com/s_vi/ZTRpfllQ5-A/'
-  })    
-
-  //  shot 2
-  ShotList.insert({
-    projectId: projectId,
-    author: 'manu',
-    userId: manuId,
-    title: 'The end',
-    description: 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 0,
-    fps: 24,
-    duration: 24
-  })
-
-  //  project 2
-  ProjectList.insert({
-    author: 'manu',
-    userId: manuId,
-    title: 'Falling down',
-    description: 'Id mei honestatis cotidieque. Ad assum aliquid ullamcorper qui, laoreet inermis qui at, invenire accommodare id cum. Appetere deterruisset necessitatibus id vix, no pri graeci quidam reprehendunt. Ad vis iisque neglegentur, molestie inciderint interpretaris vix eu. Quo ne lorem dicat errem, est ut nonumes comprehensam. Mel sale utamur consetetur ne, ea eius debet pericula his.',
+    title: 'Homepage examples',
+    description: 'This project contains all of the animation examples we see  on the front page.',
     submitted: new Date(now - 3 * 3600 * 1000),
     shotCount: 0,
     fps: 24,
     duration: 0
   })
 
+  //  -----------------------------------------
+  //  Jumping ball shot
+  var jumping_ball_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Jumping ball',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Create a shot version scene file
+  var sceneData = Assets.getText('demo/ball_jumping.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
+
+  //  Jumping ball version 1
+  var versionId = VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: jumping_ball_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'What is up there?',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    fileId: fileId._id,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetBall_000.jpg'
+  })
+
+  FileList.update({
+    _id: fileId._id
+  }, { versionId:versionId})
+
+  //  -----------------------------------------
+  //  Jumping tail shot
+  var jumping_tail_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Jumping tail',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Create a shot version scene file
+  var sceneData = Assets.getText('demo/tail_jumping.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
+
+  //  Jumping tail version 1
+  var versionId = VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: jumping_tail_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'I can go higher',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    fileId: fileId._id,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetTail_000.jpg'
+  })
+
+  FileList.update({
+    _id: fileId._id
+  }, { versionId:versionId})  
+
+  //  -----------------------------------------
+  //  Running legs shot
+  var running_legs_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Running legs',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Running legs version 1
+  VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: running_legs_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'Faster! Faster!',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetLegs_000.jpg'
+  }) 
+
+  //  -----------------------------------------
+  //  Mini jumping kick shot
+  var jumping_kick_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Running legs',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Mini jumping kick version 1
+  VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: jumping_kick_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'Aaaaaaahhhh!',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetMini_000.jpg'
+  })  
+
+  //  -----------------------------------------
+  //  Midi reflection shot
+  var midi_reflection_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Midi reflection shot',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Mini reflection shot version 1
+  VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: midi_reflection_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'But why?',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetMidi_000.jpg'
+  })  
+
+  //  -----------------------------------------
+  //  Maxi jump run shot
+  var maxi_jump_run_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: 'manu',
+    userId: manuId,
+    title: 'Midi reflection shot',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48
+  })
+
+  //  Maxi jump run version 1
+  VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: maxi_jump_run_shot_id,
+    author: 'manu',
+    userId: manuId,
+    description: 'I can make it?!',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetMaxi_000.jpg',
+  })  
 }
 
 //  Post

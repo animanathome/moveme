@@ -1,3 +1,5 @@
+moveme = {};
+
 Template.anim.rendered = function(){ 
 	// console.log('anim', this)
 	// console.log('data', this.data)	
@@ -176,5 +178,8 @@ Template.anim.rendered = function(){
 	//  activate all tooltips for this page
   	$(function (){
     	$('[data-toggle="tooltip"]').tooltip()
-  	})	
+  	})
+
+  	$(window).bind('keydown', moveme.shortcutEvents)
+
 }

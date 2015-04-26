@@ -26,5 +26,5 @@ Template.try.rendered = function(){
 	// 		message.header.className="modal-header modal-warning";
 	// 		panel.appendChild( message.dom );
 	// 	}, 3000);
-	// }
+	// }	
 }

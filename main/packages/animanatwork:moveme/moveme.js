@@ -122,8 +122,7 @@ MM.App = function( container, options){
     	return false;
     }
 
-    document.addEventListener( 'keydown', function( event ){
-
+    this.shortcutEvents = function( event ){
         if( scope.editor.useHotKeys !== true){
             console.log('Hotkeys are disabled')
             return
@@ -221,25 +220,20 @@ MM.App = function( container, options){
         }      
 
         if( eventMatchesHotkey( event, scope.hotkeys['frame'])){
-        	//	determine if we have a viewport or keyview active
             if( scope.layout.viewportLayout.activePanel !== undefined ){
-            	// var activePanel = scope.layout.viewportLayout.layoutElements['view'][scope.layout.viewportLayout.activePanel];				
-
                 scope.layout.viewportLayout.focus();
-                
-      //       	switch( activePanel.contentType){
-      //       		case "KeyView":
-						// scope.editor.signals.keyFramed.dispatch();	
-      //       		break;
-
-      //       		case "SceneView":
-      //                   scope.editor.signals.objectFramed.dispatch();
-      //       		break;
-      //       	}
-
         	}
         }
-    });
+    };
+
+    // document.addEventListener( 'keydown', this.shortcutEvents)
+
+    // $(window).on('unload', function(){
+    //     document.removeEventListener('keydown', shortcutEvents)
+    // })
+    // $(window).bind("beforeunload", function(){
+    //     document.removeEventListener('keydown', shortcutEvents)
+    // })
 
     //  hide context menu ( when using right mouse button )
     //  this ensures that we can draw our own menu

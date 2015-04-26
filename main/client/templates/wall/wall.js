@@ -112,12 +112,20 @@ Template.animWall.rendered = function(){
 
 	//	image
 		// var srci = item.youTubeImageUrlHigh;
-		var srci = '/ui/imagePlaceHolder.png'			
+		// var srci = '/ui/imagePlaceHolder.png'
+		var srci = item.thumbnail			
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
 		panelItem.dom.appendChild( image.dom )
+
+		//	let's currently link to the animated scene. Might be better to link to the rendered animation? scene?
+		image.dom.href = Router.routes['anim'].url({
+			  'projectId': item.projectId
+			, 'shotId': item.shotId
+			, '_id':item._id
+		})
 
 	// //	movie
 	// 	var iframe = document.createElement('iframe');
@@ -163,7 +171,7 @@ Template.animWall.rendered = function(){
 
 		var title = document.createElement('span')
 		title.className = 'anim-banner-title'
-		title.textContent = 'Temp';//item.title;
+		title.textContent = item.description;
 		banner.dom.appendChild( title )
 	//	end
 
@@ -207,6 +215,8 @@ Template.assetWall.rendered = function(){
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
 		panelItem.dom.appendChild( image.dom )
+
+		image.dom.href = Router.routes['assetTry'].url({_id:item._id})
 
 	//	Add banner
 	//	start

@@ -31,7 +31,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 
 //	MANIPULATOR
     // console.log('manipulator', this.camera, this.canvas)
-	var manipulator = new THREE.TransformControls( this.camera, this.parentPanel.dom );
+	var manipulator = new THREE.TransformControls( this.camera, this.parentPanel.dom , this.parentPanel.dom);
     manipulator.scale = 1;
     manipulator.space = this.editor.activeSpace;
     manipulator.mode = this.editor.activeTool; 

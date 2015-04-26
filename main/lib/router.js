@@ -14,6 +14,16 @@ Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
+  onBeforeAction: function(){
+    if(moveme !== undefined ){
+        if(moveme.hasOwnProperty('shortcutEvents')){
+            $(window).unbind('keydown', moveme.shortcutEvents)    
+        }        
+        delete moveme;
+        moveme = {};
+    }
+    this.next()
+  },
   waitOn: function(){
     return [ Meteor.subscribe('notifications')
            , Meteor.subscribe('numberOfAssets', 6)];
@@ -30,7 +40,7 @@ Router.route('/', {
             Meteor.subscribe('numberOfAssets', 6)
         ];
     },
-    onBeforeAction: function(){    
+    onBeforeAction: function(){
         this.next();
     },
     data: function(){
@@ -149,13 +159,13 @@ Router.route('/render/project/:projectId/shot/:shotId/version/:_id',{
     }
 })
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 //  TRY
 Router.route('/try', {
-    name: 'try'
+      name: 'try'
 });
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 //  ASSETS
 //  asset discussion page
 Router.route('/asset/:_id', {
@@ -182,7 +192,7 @@ Router.route('/assetsTry/:_id', {
     } 
 });
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 //	SUGGESTIONS/REQUESTS/POSTS
 
 SuggestController = RouteController.extend({
