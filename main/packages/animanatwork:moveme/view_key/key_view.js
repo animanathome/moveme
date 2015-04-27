@@ -14,9 +14,6 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 
 	this.prefix = prefix;
 	this.parentPanel = parentPanel // dom        
-    // this.backgroundColor = new THREE.Color().setRGB( 0.5, 0.7, 0.7 );
-    // this.oSOColor = 'rgb(179,179,179)'; // selected object background color
-    // this.oSGColor = 'rgb(179,179,179)'; // selected group background color
 
     this.width = 0;
     this.height = 0;
@@ -130,21 +127,12 @@ MM.KeyView = function ( editor, prefix, parentPanel){
         globalDistanceInX = 0.0;
         globalDistanceInY = 0.0;
 
-        // console.log('button', event.button)
         if(event.button === 0)	// left mouse button
         {     
         //	selection logic
 			selectionBoxStartPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
 			selectionBoxStartPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
 			selectionBoxStartPosition.z = 0.5;
-
-			// console.log('width', graph.dom.offsetWidth)
-			// console.log('mouse', event.layerX)
-
-			// console.log('height', graph.dom.offsetHeight)
-			// console.log('mouse', event.layerY)
-
-			// console.log('screen space:', selectionBoxStartPosition.x, selectionBoxStartPosition.y)
 	 
 			projector.unprojectVector( selectionBoxStartPosition, camera );
 

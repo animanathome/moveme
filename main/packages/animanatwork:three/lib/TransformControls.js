@@ -509,7 +509,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 				var name = object.name;
 
 				if ( name.search('E') != -1 ){
-					console.log('\tE')
+					// console.log('\tE')
 
 					lookAtMatrix.lookAt( camPosition, worldPosition, tempVector.set( 0, 1, 0 ));
 					object.rotation.setFromRotationMatrix( lookAtMatrix );
@@ -901,10 +901,6 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						oldRotationMatrices.push( new THREE.Matrix4().extractRotation( scope.objects[i].matrix ) );
 						worldRotationMatrices.push( new THREE.Matrix4().extractRotation( scope.objects[i].matrixWorld));
 
-						console.log('\t--------------------------')
-						console.log('\tor', scope.objects[i].matrixWorld.elements)
-						console.log('\tme', worldRotationMatrices[i].elements)
-
 						parentRotationMatrices.push( new THREE.Matrix4().extractRotation( scope.objects[i].parent.matrixWorld))
 						parentScales.push( new THREE.Vector3().getScaleFromMatrix( tempMatrix.getInverse( scope.objects[i].parent.matrixWorld)))
 					}
@@ -922,7 +918,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 	function onMouseMove( event ) {
 		// console.log('----------------')
-		console.log('TransformControls.onMouseMove')
+		// console.log('TransformControls.onMouseMove')
 		// console.log('\tisMoving', scope.isMoving)
 		// console.log('\tisActive', scope.active)
 		if ( scope.active ) {
@@ -963,7 +959,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 					point.multiply(parentScale);
 
 					if ( scope.space == 'local' ) {
-						console.log('\tlocal translate')
+						// console.log('\tlocal translate')
 						point.applyMatrix4( tempMatrix.getInverse( worldRotationMatrix ) );
 
 						if ( !(isActive("X")) || scope.modifierAxis.x != 1 ) point.x = 0;
@@ -982,7 +978,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						var nPos = new THREE.Vector3().copy( objectsToUse[indexToUse].position );
 						var dPos = new THREE.Vector3().subVectors( nPos, oPos )
 
-						console.log('\tvector', dPos.x, dPos.y, dPos.z)
+						// console.log('\tvector', dPos.x, dPos.y, dPos.z)
 
 						//	now apply the transformation on all other selected objects
 						if( objectsToUse.length > 1){
@@ -1019,7 +1015,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						}
 					}
 				} else if ( ( scope.mode == 'rotate' ) && isActive("R") ){
-					console.log('\tRotate')
+					// console.log('\tRotate')
 
 					point.sub( worldPosition );
 					point.multiply(parentScale);
@@ -1056,7 +1052,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						}
 
 					} else if ( scope.active == "RXYZE" ) {
-						console.log('\t\tRXYZE')
+						// console.log('\t\tRXYZE')
 
 						// console.log( 'test ', point.clone().cross(tempVector).normalize())
 
@@ -1176,27 +1172,27 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 					}
 				// }
 				} else if ( ( scope.mode == 'scale') && isActive("S") ) {
-					console.log('\tScale')
+					// console.log('\tScale')
 
 					point.sub( offset );
 					point.multiply(parentScale);
 
 					if ( scope.space == 'local' ) {
-						console.log('\t\tLocal')
+						// console.log('\t\tLocal')
 						if ( isActive("XYZ")) {
-							console.log('\t\t\tXYZ')
+							// console.log('\t\t\tXYZ')
 
 							scale = 1 + ( ( point.y ) / 50 );
 
-							console.log('\t\t\tscale value:', scale)
+							// console.log('\t\t\tscale value:', scale)
 
 							var oScale = new THREE.Vector3().copy( objectsToUse[indexToUse].scale );
 							if( objectsToUse[indexToUse].hasChannelGroup("scale") ){
 								objectsToUse[indexToUse].scale.x = oldScale.x * scale;
 								objectsToUse[indexToUse].scale.y = oldScale.y * scale;
 								objectsToUse[indexToUse].scale.z = oldScale.z * scale;
-							}else{
-								console.log('\t\t\tUnable to scale', objectsToUse[indexToUse])
+							// }else{
+							// 	console.log('\t\t\tUnable to scale', objectsToUse[indexToUse])
 							}
 							var nScale = new THREE.Vector3().copy( objectsToUse[indexToUse].scale );
 							var dScale = new THREE.Vector3().subVectors( nScale, oScale );
@@ -1209,7 +1205,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 								}
 							}
 						} else {
-							console.log('\t\t\tIndividual axis')
+							// console.log('\t\t\tIndividual axis')
 
 							point.applyMatrix4( tempMatrix.getInverse( worldRotationMatrix ) );
 

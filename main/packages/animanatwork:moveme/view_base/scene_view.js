@@ -60,30 +60,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 
     //  NOTE: since we can only see the change when we have something selected (since on then the manipulator is displayed) we can't put this here. We have a to place it on a lower (more general) level.
 
-    // manipulator.addEventListener( 'toolchange', function(){
-    //     console.log('SceneView.onToolChange')
-
-    //     scope.editor.activeTool = manipulator.mode;
-    //     scope.editor.activeSpace = manipulator.space;
-
-    //     signals.manipChange.dispatch();
-    // })
-
     var viewportCameraControl = new THREE.EditorControls(this.camera, this.parentPanel.dom, this.prefix);
-    viewportCameraControl.addEventListener('change', function(value)
-    {
-        // console.log('---------------------------')
-        // console.log('camera change', scope.prefix)
-        // console.log('active', scope.isActive)
-        // // console.log('camera', scope.camera.name)
-        // console.log('control', viewportCameraControl.enabled)
-        // console.log('control', scope.viewportCameraControl.enabled)
-        // console.log('value', value)
-        // console.log('camera.enabled', editor.viewportCameraControl.enabled)
-        //  re-draw the scene as we're moving the camera around 
-        // if(editor.viewportCameraControl.enabled === true){
-        // signals.objectChanged.dispatch();
-
+    viewportCameraControl.addEventListener('change', function(value){
         //  NOTE: changed this from object to scene graph change. This is to ensure we don't create a key by accident since it is triggered during object changed.        
         signals.sceneGraphChanged.dispatch();        
         // }
@@ -126,26 +104,10 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     }
     this.parentPanel.dom.addEventListener( 'mousedown', this.onMouseDown, false );
 
-    // this.resetEvents = function(){
-    //     if( scope.addedEvent === true){
-    //         scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp, false );
-    //         scope.addedEvent = false;
-    //     }
-    // }
-
-    // var onMouseMove = function ( event ){
-    //     // console.log('SceneView.onMouseMove')
-    //     event.preventDefault();
-    // }
-
     var onMouseUp = function ( event ){
         // console.log('SceneView.onMouseUp')
-        
 
-        // event.preventDefault();
-
-        //  determine the selection mode
-        //  are we resetting, adding our removing objects from the selection list
+        //  Determine the selection mode. Are we resetting, adding our removing objects from the selection list
         var mode = 'reset'
         if( event.shiftKey === true ){
             mode = 'add'
@@ -153,17 +115,9 @@ MM.SceneView = function( editor, prefix, parentPanel ){
             mode = 'remove'
         }
 
-        // console.log('\tselection mode:', mode)
-
         onMouseUpPosition.set( event.layerX, event.layerY );
-
-        // editor.viewportCameraControl.enabled = true; 
-        // editor.keyframeEditorCameraControl.enabled = false;
-        // console.log('camera.enabled', editor.viewportCameraControl.enabled)  
-
         if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) < 1 ) {
             var intersects = getIntersects( event, scope.editor.selectableObjects );
-            // console.log('Selecting one of', scope.editor.selectableObjects)
 
             if ( intersects.length > 0 ){
                 var object = intersects[ 0 ].object;
@@ -173,9 +127,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
                     //  if so, only allow the objects with the given tag to be
                     //  selected
                     if(object.tag === selectionTag ){
-                        scope.editor.select( object, false, mode );    
-                    }else{
-                        console.log('\t', object.name, 'does not have the proper tag. Skipping selection...')
+                        scope.editor.select( object, false, mode );
                     }
                 }else{
                     scope.editor.select( object, false, mode );
@@ -183,25 +135,13 @@ MM.SceneView = function( editor, prefix, parentPanel ){
             }else{
                 scope.editor.deselect();
             }
-            //	refresh
-            // render();
         }
         
-        scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp ); 
-        // scope.parentPanel.dom.removeEventListener( 'mousemove', onMouseMove );    
+        scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp );  
     }
 
     var getIntersects = function ( event, object ) {
         // console.log('getIntersects', object)
-        
-        // console.log('\tmouseX', event.layerX)
-        // console.log('\tmouseY', event.layerY)
-        // console.log('\twidth', scope.width)
-        // console.log('\theigth', scope.height)
-        // console.log('\tobjects', object)
-        // this.camera = scope.editor.cameras[0]
-        // console.log('\tcamera', this.camera)
-
         if( scope.camera instanceof THREE.OrthographicCamera ){
             var vector = new THREE.Vector3(
                                 ( event.layerX / scope.width ) * 2 - 1,
@@ -244,20 +184,14 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     });
 
     signals.manipModeChange.add( function ( mode ){
-        // console.log('Viewport: manipModeChange', mode)
-
-        // if( mode === "select")
-        // {
-        //     manipulator.hide();
-        // }else{                    
-            manipulator.setMode( mode )
-        // }
-        
+        // console.log('Viewport: manipModeChange', mode)                
+        manipulator.setMode( mode )
+                
         signals.objectChanged.dispatch();
     });    
 
     signals.objectSelected.add( function (){
-        console.log('Viewport: objectSelected')
+        // console.log('Viewport: objectSelected')
 
         manipulator.detach();
 
@@ -270,9 +204,6 @@ MM.SceneView = function( editor, prefix, parentPanel ){
                 manipulator.multiAttach( editor.selectedObjects );
             }
         }
-
-        //  change the color of the selected control
-        //  run the new setSelected and setDeslected methods on control
     });
 
     signals.objectSelected.add( function( object ){
@@ -291,14 +222,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     signals.timeChanged.add( function(){
         manipulator.update();
     })
-
-    signals.windowResize.add( function () {
-        // console.log('viewport resize window')
-        // console.log(editor.activeCamera)        
-        // resize();
-    });      
-
-
+  
     return this;
 }   
 
@@ -306,23 +230,12 @@ MM.SceneView.prototype = Object.create( MM.SceneView.prototype );
 
 MM.SceneView.prototype.resize = function(){
 	// console.log('MM.SceneView.resize', this.prefix)
-	// console.log('\t', this.parentPanel)
-	// console.log('\tparentPanel', this.parentPanel)
-
-    // var layout = this.parentPanel.parentLayout;
-    // var totalHeight = layout.dom.offsetHeight
-    // console.log('\tlheight', totalHeight)
 
 	var panel = this.parentPanel.parentPanel.dom
 	this.width = panel.offsetWidth
 	this.height = panel.offsetHeight
 	this.left = parseInt(panel.style.left)
 	this.top = parseInt(panel.style.bottom);
-	
-	// console.log('\twidth', this.width)
-	// console.log('\theight', this.height)
-	// console.log('\tleft', this.left)
-	// console.log('\ttop', this.top)
 
     if(this.camera instanceof THREE.OrthographicCamera){
         this.camera.left = this.width/-2;
@@ -339,7 +252,6 @@ MM.SceneView.prototype.resize = function(){
 
 MM.SceneView.prototype.activate = function(){
     // console.log('MM.SceneView.activate', this.prefix)
-    // console.log('\tcurrent active tool', this.editor.activeTool)
 
     this.isActive = true;
     if ( this.manipulator.hovered === false ){        
@@ -360,10 +272,6 @@ MM.SceneView.prototype.deactivate = function(){
 
     this.isActive = false;
     this.viewportCameraControl.enabled = false;
-    // this.resetEvents();
-    // this.manipulator.hide();
-
-    // console.log('\tcontrol', this.viewportCameraControl.enabled)
 }
 
 MM.SceneView.prototype.setCamera = function( camera ){
@@ -389,13 +297,13 @@ MM.SceneView.prototype.setCamera = function( camera ){
 }
 
 MM.SceneView.prototype.focus = function(){
-    console.log('SceneView.focus')
+    // console.log('SceneView.focus')
     //  http://answers.unity3d.com/questions/13267/how-can-i-mimic-the-frame-selected-f-camera-move-z.html
 
     var no = this.editor.selectedObjects.length;
 
     if(no === 0 ){
-        console.log('\tNeed to have something selected to focus on.')
+        // console.log('\tNeed to have something selected to focus on.')
         return;
     }
 
@@ -444,20 +352,14 @@ MM.SceneView.prototype.focus = function(){
         var dtt = -1 * (dto - dist);
         this.camera.translateZ(dtt)
     }        
-    // console.log('\tsetting center to', center)
 
     //  update camera controls
     this.viewportCameraControl.focusOnPoint( center)
 }
 
 MM.SceneView.prototype.render = function(){
-    // console.log('MM.SceneView.render')
-	// console.log('MM.SceneView.render', this.prefix, this.camera.name)
-	// console.log('\tdimensions', this.width, this.height)
-
-	/*
-	NOTE: the actuall renderer get defined in the panelViewLayout ( 2 levels up) as it there where the canvas gets created. Here we just specify which area within the canvas we want to render.
-	*/
+    // console.log('MM.SceneView.render')	
+	// NOTE: the actuall renderer get defined in the panelViewLayout ( 2 levels up) as it there where the canvas gets created. Here we just specify which area within the canvas we want to render.
 	
     this.renderer.setViewport( this.left, this.top, this.width, this.height);
     this.renderer.setScissor( this.left, this.top, this.width, this.height);
@@ -480,8 +382,6 @@ MM.SceneView.prototype.clear = function(){
     //  remove any lingering events
     this.viewportCameraControl.clear();
     this.parentPanel.dom.removeEventListener( 'mousemove', this.onMouseDown );
-    // console.log('\tdom', this.parentPanel.dom)    
-    // console.log('\tremoving', this.viewportCameraControl.prefix)
 
     delete this.viewportCameraControl;
 

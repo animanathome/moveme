@@ -1,37 +1,15 @@
-- local / version file
-- window size:
-	- make sure all elements align
-- share intro content to
-	- intro
-	- learn
-	- asset
-	- share
-- intro information
-	- talk about what the tool can do
-	- same tools as the professional tools you love
-	- no need to install
-	- work anywhere
-- click on image to launch link
 
-MOVE ME
-- shortcuts not working by default!
-	- DONE
-- manipulator not working by default!
-	- TEMP PATCH
-- make sure we update the timeline when creating keys!
-	- DONE
-- tutorial on how to move keys!
-- channel box - set value on all selected objects! + when when keyed
+DONE - click on image to launch link
+DONE - shortcuts not working by default!
+DONE - manipulator not working by default!
+DONE - make sure we update the timeline when creating keys!
+DONE - channel box - set value on all selected objects! + when when keyed
 	- Doesn't seem to be an issue
-- key value change - set value on all selected objects
-	- DONE
-- needs settings menu 
+DONE - key value change - set value on all selected objects
+DONE - needs settings menu 
 	- so we can change default tangent time
-		- DONE + color
 	- show fps!
 		- ON HOLD untill we get further control over fps
-- auto key is still making keys at unwanted times!
-- add option which aligns the keys
 DONE - provide hotkeys for all buttons!!!
 DONE - add tooltips for all buttons
 DONE - add info dialog!!
@@ -40,28 +18,24 @@ DONE - file new? file local save?
 DONE - fixed css conflict with firefox
 DONE - zerod out body control for tiny
 DONE - add spaceswitch to knees
-
 DONE - http://answers.unity3d.com/questions/13267/how-can-i-mimic-the-frame-selected-f-camera-move-z.html
 	- even though it doesn't seem to give the best of results
 DONE - start at 10 even though time is set to 0?
 	- setting was part of scene settings put we weren't triggering a timechange when loading that data. 
-- update undo so it can keep track of multiple changes at once!!
+DONE - update undo so it can keep track of multiple changes at once!!
 DONE - reorder edit menu and move undo/redo up!
-- update group_scroll_list to make the difference between shift and control select
+DONE - update group_scroll_list to make the difference between shift and control select
 	- shift select should select the items inbetween the new and the previously selected item where ctrl should remain as the current behaviour
 FIXED - display joints don't seem to work when reloading a scene
 DONE - need an option do toggle the rotation axis
 DONE - stretching
-	- added an additional joint in the asset data which we're driving in the rig. This seems to be the simplest solution.
-	
+	- added an additional joint in the asset data which we're driving in the rig. This seems to be the simplest solution.	
 DONE - setup mail -> free for 30 days ($5-10 per user, per month)
 	- google apps -> https://www.digitalocean.com/community/tutorials/how-to-set-up-gmail-with-your-domain-on-digitalocean
-IN PROGRESS - setup ssl -> $50 per year
+DONE - setup ssl -> $50 per year
 	- https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority
-- create a floating box/window collecting the different tools
 - fix toolbar height - currenlty it sticks to the workspace 
 DONE - Add select all
-- add maya anim export
 DONE - Copy/paste a number of keys
 	- added 3 different functionalities
 		- copy past and x amount of keys or animation curves one to one based on their attribute name
@@ -71,40 +45,26 @@ DONE - Copy/paste a number of keys
 		- changed behaviour
 			- now allows copy/past keys of all selected animation curves, looking at object, channel group and channel. Previsously we were just looking at channel group and channel).
 			- we no longer create a animation curve when is doesn't exist
-
-- remove document connect events ( to ensure moveme is killed when we leave its page)
-
+DONE - remove document connect events ( to ensure moveme is killed when we leave its page)
 - look at the spaceSwitch and spineControl['zero'] for the spineComponent
-
 DONE - look at edge selection for controls ( don't just base it on bb )
-- look at the matrix.compose to see how the transformations are combined
-	-> animating scale
-- cleanup scene evaluation 
-	-> look on how often we run update matrixWorld
-	-> come up with a cleaner shema of evaluating things
-	-> make sure the ik leg doesn't continuesly evaluates as it does now!
-
 MAYBE - undo keys doesn't remove the keys from the graph editor!!!
 	- showstopper
 		- now we delete the display (if present) when removing an anim curve. This seems to solve the particular issue we had.
-- can we globally scale a character?
 ON HOLD - disable front and back browser button
 	- NOT RECOMMANDED: http://stackoverflow.com/questions/12381563/how-to-stop-browser-back-button-using-javascript
 DONE - make sure we don't put letters in the side bar
 DONE - make sure we can copy paste the keys of multiple objects at the same time
 DONE - make sure we can select all anim curves using shift select
 	- start and end ( selects all anim curves inbetween )
-- add and remove options from the file menu depending on the file mode
-- do not update the position of the manipulator when updating scene...
-	- rotating the tail freaks out!!!
-- stretch keys
+DONE - add and remove options from the file menu depending on the file mode
 DONE - shift select keys in key view
 DONE - btn-anim-home is undefined
 DONE - Include edges when selected controls (makes selecting controls easier).
 Add vertical lines to the controls (makes selecting them easier)
 Add a visual button (gmail style) to toggle between horizontal and vertial mode
 
-- object3D.keyAll needs to be moved to the editor level since we currently can't track the undo behavior
+DONE - object3D.keyAll needs to be moved to the editor level since we currently can't track the undo behavior
 	- it needs to be moved or we need to return more information
 		- did we created new keys? if so which ones... this might be a clear implementation
 DONE - frame camera doesn't center the pivot of the camera. Moving the camera afterwards pops the camera
@@ -114,32 +74,19 @@ DONE - side view still doesn't behave properly
 DONE - key view un-uniform scale is to senitive
 DONE - add focus/frame to orthographic view
 DONE - keyview... focus only on the selected keys
-- all key view related methods need to be moved into this object
 DONE - moving keys from multiple anim curves which have their keys on the same position give a strange double transformation type of effect
 DONE - when multiple curve are displayed, one of them will have some type of double transformation going on when moving the individual keys
 	- this only happens when using shift select in the key view outliner
 DONE - make sure we don't can't set text in the time and range slider
 DONE? - non-uniform scale + zoom doesn't work ( zoom seems to cancel out the non-uniform scale)
 	- this seem to be fixed?
-BETTER - fix rotation manipulator!!!
-	- seems to rotate in the wrong direction at some point
-
-
-NEW
-- since we can have multiple scene view panels we can have multiple active cameras. Since this is currently a single object we'll have to convert it into a list.
 DONE? - make sure we properly destroy the moveme when changing page
-- add min - max limit to channel box
-	- this is for stretch or ik/fk switch
-- make sure we don't loose the selection when changing the camera
 DONE - add display for cameras (so we can more easily see where they are positioned)
 ON HOLD - add camera aspect ratio frame 
-- inherit builders -> insert_tiny, insert_default, insert_maxi
 DONE - fix soft ik ankle rotation
 DONE - add stretch joints
 DONE - fix naming for joints
 DONE - show FPS in panel as overlay
-- seperate out the camera and transform control
-	- just so it's like maya 
 DONE - fix right foot from baby
 DONE - intro
 	- make sure we all have the same spacing and style between the different canvases
@@ -147,10 +94,37 @@ DONE - time slider - click select move doesn't work anymore???
 DONE - make sure we can see the name of hte camera 
 DONE - finish implementing the show, hide fps, camera and time
 
+NEW
+- auto key is still making keys at unwanted times!
+	- need to be able to reproduce the problem
+- add option which aligns the keys
+- inherit builders -> insert_tiny, insert_default, insert_maxi
+- add min - max limit to channel box
+	- this is for stretch or ik/fk switch
+- make sure we don't loose the selection when changing the camera
+- seperate out the camera and transform control
+	- just so it's like maya 
+- look at the matrix.compose to see how the transformations are combined
+	-> animating scale
+- cleanup scene evaluation 
+	-> look on how often we run update matrixWorld
+	-> come up with a cleaner shema of evaluating things
+	-> make sure the ik leg doesn't continuesly evaluates as it does now!
+- can we globally scale a character?
+- do not update the position of the manipulator when updating scene...
+	- rotating the tail freaks out!!!
+- stretch keys
+- all key view related methods need to be moved into this object
+- since we can have multiple scene view panels we can have multiple active cameras. Since this is currently a single object we'll have to convert it into a list.
+BETTER - fix rotation manipulator!!!
+	- seems to rotate in the wrong direction at some point
 - for some reason we get to have 2 transform manipulators when moving from the horizontal layout to single scene view
 - maximize screen size
 	http://stackoverflow.com/questions/1125084/how-to-make-in-javascript-full-screen-windows-stretching-all-over-the-screen
 - add hip control
+- since we change the dom parent for the transform control we can't change the space by double clicking the mode.
+- add maya anim export
+- make sure we have the info line updated each time we do something!
 
 UX:
 http://alistapart.com/blog/post/designing-social-tools-for-tweens
