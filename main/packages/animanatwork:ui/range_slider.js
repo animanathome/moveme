@@ -283,7 +283,7 @@ MMUI.RangeSlider.prototype.check = function(){
 	/*
 	Ensures the values are within the proper range
 	*/
-	console.log('check')
+	// console.log('check')
 
 	if( this.startRange < this.startTime ){
 		this.startRange = this.startTime;
@@ -291,8 +291,8 @@ MMUI.RangeSlider.prototype.check = function(){
 	if( this.endRange > this.endTime ){
 		this.endRange = this.endTime;
 	}
-	console.log('\tfull range', this.startTime, this.endTime)
-	console.log('\tsoft range', this.startRange, this.endRange)
+	// console.log('\tfull range', this.startTime, this.endTime)
+	// console.log('\tsoft range', this.startRange, this.endRange)
 }
 
 MMUI.RangeSlider.prototype.uiToObject = function(){

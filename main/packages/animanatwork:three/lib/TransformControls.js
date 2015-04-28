@@ -594,6 +594,16 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		// console.log('TransformControls: setMode', value)
 		// console.log('\tobject', this.object)
 		// console.log('\tobjects', this.objects)
+		
+		//	Toggle space
+		if(scope.mode === value){
+			if(scope.space === 'local'){
+				scope.space = 'world'
+			}else{
+				scope.space = 'local'
+			}
+		}
+
 		scope.mode = value;
 
 		//	hide all display axes ( scale, rotate and translate )

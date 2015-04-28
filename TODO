@@ -95,6 +95,7 @@ DONE - make sure we can see the name of hte camera
 DONE - finish implementing the show, hide fps, camera and time
 
 NEW
+- make 3 resolutions for each image and only load the smallest possible resolution
 - auto key is still making keys at unwanted times!
 	- need to be able to reproduce the problem
 - add option which aligns the keys
@@ -118,7 +119,8 @@ NEW
 - since we can have multiple scene view panels we can have multiple active cameras. Since this is currently a single object we'll have to convert it into a list.
 BETTER - fix rotation manipulator!!!
 	- seems to rotate in the wrong direction at some point
-- for some reason we get to have 2 transform manipulators when moving from the horizontal layout to single scene view
+FIXED? - for some reason we get to have 2 transform manipulators when moving from the horizontal layout to single scene view
+	- cleaning up panel content before building new ones
 - maximize screen size
 	http://stackoverflow.com/questions/1125084/how-to-make-in-javascript-full-screen-windows-stretching-all-over-the-screen
 - add hip control

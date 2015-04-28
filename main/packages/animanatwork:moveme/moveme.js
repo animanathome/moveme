@@ -55,10 +55,12 @@ MM.App = function( container, options){
         , deleteSelected: [{'keyCode':8}, 	// delete ( backspace)
         				   {'keyCode':46}]		// delete ( > )
         , frame: [{'keyCode':70}]         			// f
+        
         , undo: [{'shiftKey':true,'altKey':false,'ctrlKey':false,
                     'keyCode':90}]     // shift + z
         , redo: [{'shiftKey':false,'altKey':true,'ctrlKey':false,
                     'keyCode':90}]        // alt + z
+        
         , play: [{'shiftKey':false,'altKey':true,'ctrlKey':false,
                   'keyCode': 86}]   // alt + v
         , previousFrame: [{'shiftKey':false,'altKey':true,'ctrlKey':false,
@@ -69,6 +71,7 @@ MM.App = function( container, options){
                         'keyCode':190}] // alt + >
         , endFrame: [{'shiftKey':true,'altKey':true,'ctrlKey':false,
                       'keyCode':190}]   // shift + alt + >
+        
         , keyAll: [{'keyCode':83}]					// s
         , keyTranslation:[{'shiftKey':true,'altKey':false,'ctrlKey':false,
                            'keyCode':87}]   // shift + w
@@ -76,6 +79,7 @@ MM.App = function( container, options){
                            'keyCode':69}]   // shift + e
         , keyScale:[{'shiftKey':true,'altKey':false,'ctrlKey':false,
                            'keyCode':82}]   // shift + r
+        
         , fileNew: [{'shiftKey':false,'altKey':false,'ctrlKey':true,
                            'keyCode':78}]
         , fileOpen: [{'shiftKey':false,'altKey':false,'ctrlKey':true,
