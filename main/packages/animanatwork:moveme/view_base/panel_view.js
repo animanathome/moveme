@@ -441,7 +441,17 @@ MM.PanelView.prototype.buildLayoutDD = function(){
     var scope = this;
 
     var singleLayout = new MMUI.DropdownItem('Single')
-    singleLayout.onClick(function(){
+    singleLayout.onClick(function(){  
+        
+        //  cleanup existing panels
+        for( space in scope.parentLayout.layoutElements['view']){
+            var tPanel = scope.parentLayout.layoutElements['view'][space]
+            tPanel.childPanel.clear()
+            delete tPanel.childPanel
+            tPanel.deletePanel()
+        }
+        
+        //  define new configuration
         var viewLayout = {
             panels : {
                 view0: {
@@ -449,7 +459,7 @@ MM.PanelView.prototype.buildLayoutDD = function(){
                     ,w: [0,100]
                     ,td: []
                     ,bd: []
-                    ,rd: ['view1']
+                    ,rd: []
                     ,ld: []
                     ,dh: 100
                     ,dw: 100
@@ -463,6 +473,16 @@ MM.PanelView.prototype.buildLayoutDD = function(){
 
     var verticalLayout = new MMUI.DropdownItem('Vertical')
     verticalLayout.onClick( function(){
+        
+        //  cleanup existing panels
+        for( space in scope.parentLayout.layoutElements['view']){              
+            var tPanel = scope.parentLayout.layoutElements['view'][space]
+            tPanel.childPanel.clear()
+            delete tPanel.childPanel
+            tPanel.deletePanel()
+        }
+
+        //  define new configuration
         var viewLayout = {
             panels : {
                 view0: {
@@ -506,10 +526,16 @@ MM.PanelView.prototype.buildLayoutDD = function(){
 
     var horizontalLayout = new MMUI.DropdownItem('Horizontal')
     horizontalLayout.onClick( function(){
-        // scope.setContent('SceneView')
+        
+        //  cleanup existing panels
+        for( space in scope.parentLayout.layoutElements['view']){ 
+            var tPanel = scope.parentLayout.layoutElements['view'][space]
+            tPanel.childPanel.clear()
+            delete tPanel.childPanel
+            tPanel.deletePanel()
+        }
 
-        console.log('parent layout', scope.parentLayout)
-
+        //  define new configuration
         var viewLayout = {
             panels : {
                 view0: {

@@ -65,6 +65,7 @@ MMUI.RangeSlider = function(){
 		scope.startTime = startTime.getValue();
 		scope.check();
 		scope.objectToUI();
+		startTime.setValue(scope.startTime);
 		scope.dom.dispatchEvent( scope.timeRangeChangeEvent );
 	});
 	lArea.dom.appendChild( startTime.dom );	
@@ -79,6 +80,7 @@ MMUI.RangeSlider = function(){
 		scope.startRange = startRangeNumber.getValue();
 		scope.check();
 		scope.objectToUI();
+		startRangeNumber.setValue(scope.startRange);
 		scope.dom.dispatchEvent( scope.timeRangeChangeEvent )
 	})
 	lArea.dom.appendChild( startRangeNumber.dom );	
@@ -206,6 +208,7 @@ MMUI.RangeSlider = function(){
 		scope.endRange = endRangeNumber.getValue();
 		scope.check();
 		scope.objectToUI();
+		endRangeNumber.setValue(scope.endRange);
 		scope.dom.dispatchEvent( scope.timeRangeChangeEvent )
 	})		
 	rArea.dom.appendChild( endRangeNumber.dom );
@@ -221,6 +224,7 @@ MMUI.RangeSlider = function(){
 		scope.endTime = endTime.getValue();
 		scope.check();
 		scope.objectToUI();
+		endTime.setValue(scope.endTime);
 		scope.dom.dispatchEvent( scope.timeRangeChangeEvent )
 	})		
 	rArea.dom.appendChild( endTime.dom );	

@@ -22,3 +22,5 @@ main/.meteor/packages
 main/.meteor/.id
 
 main/.meteor/.finished-upgraders
+
+*.gz
