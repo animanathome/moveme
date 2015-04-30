@@ -127,6 +127,7 @@ FIXED? - for some reason we get to have 2 transform manipulators when moving fro
 - since we change the dom parent for the transform control we can't change the space by double clicking the mode.
 - add maya anim export
 - make sure we have the info line updated each time we do something!
+- make sure we can reload scenes with our new node type (stretch joints... ball offset fo the foot)
 
 UX:
 http://alistapart.com/blog/post/designing-social-tools-for-tweens

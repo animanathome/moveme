@@ -103,17 +103,36 @@ Template.animWall.rendered = function(){
 	var wallPanel = buildWall(wallBase);
 
 //	populate wall with video
-//	https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
+	//	https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
 	var counter = 0;
 	var cursor = this.data.versions;
+	var panelItem, panelItem, image_size, image_extension, width;
 	cursor.forEach(function(item){
-		var panelName = 'view'+counter;
-		var panelItem = wallPanel.getPanel(panelName)				
+		panelName = 'view'+counter;
+		panelItem = wallPanel.getPanel(panelName)	
 
+		console.log('width:', panelItem.dom.offsetWidth)
+	
 	//	image
-		// var srci = item.youTubeImageUrlHigh;
-		// var srci = '/ui/imagePlaceHolder.png'
-		var srci = item.thumbnail			
+		width = panelItem.dom.offsetWidth;
+		
+		image_size = ''
+		image_extension = 'png'
+		if(width < 80){
+			image_size = '_r125'
+		}else if(width < 160){
+			image_size = '_r25'
+		}else if(width < 320){
+			image_size = '_r50'
+		}else if(width < 640){
+			image_size = '_r75'
+		}else{
+			image_extension = 'jpg'
+		}
+	
+		var split = item.thumbnail.split('.')
+		var srci = split[0]+image_size+'.'+image_extension
+
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
@@ -127,28 +146,7 @@ Template.animWall.rendered = function(){
 			, '_id':item._id
 		})
 
-	// //	movie
-	// 	var iframe = document.createElement('iframe');
-	// 	iframe.setAttribute('id','player');
-	// 	iframe.setAttribute('type','text/html');
-	// 	iframe.style.border = '0px'
-	// 	iframe.width = panelItem.dom.offsetWidth;
-	// 	iframe.height = panelItem.dom.offsetHeight;
-
-	// 	var srcs = 'http://www.youtube.com/embed/'+item.youTubeVideoId+'?'
-	// 	srcs += 'loop=1&playlist='+item.youTubeVideoId
-	// 	// srcs += '&autoplay=1'
-	// 	srcs += '&fs=0'
-	// 	srcs += '&showinfo=0'
-	// 	srcs += '&enablejsapi=1'
-	// 	srcs += '&modestbranding'
-	// 	srcs += '&controls=0'		
-
-	// 	iframe.src = srcs;
-	// 	panelItem.dom.appendChild( iframe )
-	
-	//	Add banner
-	//	start
+	//	banner
 		var banner = new MMUI.Panel()
 
 		//	Attach mouse over and out css animations for the banner to the image.
@@ -173,7 +171,6 @@ Template.animWall.rendered = function(){
 		title.className = 'anim-banner-title'
 		title.textContent = item.description;
 		banner.dom.appendChild( title )
-	//	end
 
 		counter += 1;
 	})	
@@ -204,12 +201,31 @@ Template.assetWall.rendered = function(){
 
 	var counter = 0;
 	var cursor = this.data.assets;
+	var panelItem, panelItem, image_size, image_extension, width;
 	cursor.forEach(function(item){
 		var panelName = 'view'+counter;
 		var panelItem = wallPanel.getPanel(panelName)
 
-		var srci = '/ui/imagePlaceHolder.png'
-		var srci = item.thumbnail;
+	//	image
+		width = panelItem.dom.offsetWidth;
+		
+		image_size = ''
+		image_extension = 'png'
+		if(width < 80){
+			image_size = '_r125'
+		}else if(width < 160){
+			image_size = '_r25'
+		}else if(width < 320){
+			image_size = '_r50'
+		}else if(width < 640){
+			image_size = '_r75'
+		}else{
+			image_extension = 'jpg'
+		}
+	
+		var split = item.thumbnail.split('.')
+		var srci = split[0]+image_size+'.'+image_extension
+
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')
 		image.setHeight('100%')
@@ -285,15 +301,30 @@ Template.tutorialWall.rendered = function(){
 	//	NOTE: make sure we only get 6 tutorials here, equal to the number of panels
 	var counter = 0;
 	var cursor = this.data.tutorials;
+	var panelItem, panelItem, image_size, image_extension, width;
 	cursor.forEach(function(item){
-
-		var panelName = 'view'+counter;
-		var panelItem = wallPanel.getPanel(panelName)	
-
-	//	image		
-		// var srci = 'https://img.youtube.com/vi/'+item.youTubeVideoId+'/maxresdefault.jpg';
-		// var srci = '/ui/imagePlaceHolder.png'
-		var srci = item.thumbnail
+		panelName = 'view'+counter;
+		panelItem = wallPanel.getPanel(panelName)	
+		
+	//	image
+		width = panelItem.dom.offsetWidth;
+		
+		image_size = ''
+		image_extension = 'png'
+		if(width < 80){
+			image_size = '_r125'
+		}else if(width < 160){
+			image_size = '_r25'
+		}else if(width < 320){
+			image_size = '_r50'
+		}else if(width < 640){
+			image_size = '_r75'
+		}else{
+			image_extension = 'png'
+		}
+	
+		var split = item.thumbnail.split('.')
+		var srci = split[0]+image_size+'.'+image_extension
 
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')

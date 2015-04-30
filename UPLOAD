@@ -5,8 +5,12 @@ https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubunt
 //	getting meteor up and running
 https://www.digitalocean.com/community/tutorials/how-to-deploy-a-meteor-js-application-on-ubuntu-14-04-with-nginx
 
+//	build without minif
+$ meteor build --debug .
+
 ssh root@104.236.211.246
 ia35yoty
+moveme
 
 npm isntall -g casperjs
 
@@ -40,3 +44,11 @@ power-queue.js:486 Error: "Queue" failed [404] Not Found [404] [undefined], Erro
     at http-call-client.js:69
     at _.once (underscore.js:750)
     at XMLHttpRequest.xhr.onreadystatechange (http-call-client.js:192)
+
+
+
+// resetting serves side database
+
+mongo
+use moveme
+db.dropDatabase()
