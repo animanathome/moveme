@@ -120,6 +120,7 @@ Package.onUse(function(api) {
           ,"build_asset/insert_ramp.js"
           ,"build_asset/insert_sphere.js"
           ,"build_asset/insert_tail.js"
+          ,"build_asset/insert_simple_biped.js"
           ,"build_asset/insert_tiny.js"
           ,"build_asset/insert_baby.js"
           ,"build_asset/insert_maxi.js"
