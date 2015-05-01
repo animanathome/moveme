@@ -55,30 +55,21 @@ MM.insertTiny = function( editor ){
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.125
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.4
 
-		// u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
+		var sides = ['l', 'r']
+		for( i = 0; i < 2; i++){
+			var shoulder = u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl']
+			shoulder.controlOffset.y = 1.25;
+			shoulder.controlScale.x = 0.2;
+			shoulder.controlScale.z = 0.4;
 
-		//	shoulder
-		u.getRigComponent('lShoulder').controls['ShoulderCtl'].controlOffset.y = 1.25;
-		u.getRigComponent('rShoulder').controls['ShoulderCtl'].controlOffset.y = 1.25;
-		u.getRigComponent('lShoulder').controls['ShoulderCtl'].controlScale.z = 0.4
-		u.getRigComponent('rShoulder').controls['ShoulderCtl'].controlScale.z = 0.4
-		u.getRigComponent('lShoulder').controls['ShoulderCtl'].controlScale.x = 0.2
-		u.getRigComponent('rShoulder').controls['ShoulderCtl'].controlScale.x = 0.2
+			var foot = u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl']
+			foot.controlScale.x = 1.2;
+			foot.controlScale.z = 2.5;
+			foot.controlOffset.z = 2.0;
 
-		//	leg
-		u.getRigComponent('lLeg').controls['FootIkCtl'].controlScale.x = 1.2;
-		u.getRigComponent('lLeg').controls['FootIkCtl'].controlScale.z = 2.5;
-		u.getRigComponent('lLeg').controls['FootIkCtl'].controlOffset.z = 2.0;
-
-		u.getRigComponent('rLeg').controls['FootIkCtl'].controlScale.x = 1.2;
-		u.getRigComponent('rLeg').controls['FootIkCtl'].controlScale.z = 2.5;
-		u.getRigComponent('rLeg').controls['FootIkCtl'].controlOffset.z = 2.0;
-
-		//	arm
-		u.getRigComponent('lArm').controls['HandCtl'].controlShape = 'planeX'
-		u.getRigComponent('rArm').controls['HandCtl'].controlShape = 'planeX'
-		u.getRigComponent('lArm').controls['ArmSwitch'].controlOffset.z = -10;
-		u.getRigComponent('rArm').controls['ArmSwitch'].controlOffset.z = -10;
+			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].controlShape = 'planeX'
+			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -10;
+		}		
 	})
 	u.build()
 
