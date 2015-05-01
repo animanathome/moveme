@@ -49,6 +49,13 @@ MM.AssetBuild.prototype = {
 	addControls : function( controls ){
 		this.controls = MM.extendArrayWithArray(this.controls, controls)
 	},
+	getControl : function( control_name ){
+		for( i = 0, j = this.controls.length; i < j; i++){
+			if( this.controls[i].name === this.namespace+control_name ){
+				return this.controls[i]
+			}
+		}
+	},
 	addModel : function( fileName ){
 		this.modelFiles.push( fileName )
 		this.nTasks += 1
@@ -272,8 +279,6 @@ MM.AssetBuild.prototype = {
 			scope.assetObject = assetObject;
 
 			scope._editor.addAssetObject( assetObject )	
-
-			console.log('done building')
 		})
 		this.nTasks += 1
 	},
@@ -281,6 +286,16 @@ MM.AssetBuild.prototype = {
 		this._build.addDataProcess({			
 			'onFinished' : this.lastFunction
 		})	
+	},
+	addPost : function( postFunction ){
+		var scope = this;
+		this.postFunction = postFunction
+		// this.nTasks += 1;
+	},
+	loadPost : function(){
+		this._build.addDataProcess({
+			'onFinished' : this.postFunction
+		})
 	},
 	build : function(){
 		//	build task list so one task chains into the next
@@ -314,18 +329,13 @@ MM.AssetBuild.prototype = {
 
 		this.loadLast();
 
+		this.loadPost();
+
 		this._build.run()		
 	},	
 	showProgress : function(){
 		var dom = document.createElement( 'div' ); 
 		dom.className = 'asset-progress'
-		// dom.style.backgroundColor = '#F0F0F0'  
-		// dom.style.position = 'absolute'
-		// dom.style.padding = '6px'
-		// dom.style.left = '40%'
-		// dom.style.top = '25%'
-		// dom.style.height = '45px'
-		// dom.style.width = '250px'
 		document.body.appendChild( dom )
 		this.win = dom;
 
@@ -335,26 +345,16 @@ MM.AssetBuild.prototype = {
 		var pnl = new MMUI.Panel()
 		pnl.dom.className='asset-progress-content'
 		pnl.dom.style.backgroundColor = '#B3B3B3'	
-		// pnl.dom.style.marginTop = '6px'		
-		// pnl.dom.style.height = '20px'
-		// pnl.dom.style.left = '25px'
-		// pnl.dom.style.right = '25px'
 		dom.appendChild( pnl.dom )
 
 		this.progressBar = new MMUI.Panel();
 		this.progressBar.dom.className='asset-progress-bar'
-		// this.progressBar.dom.style.backgroundColor = '#999'
-		// this.progressBar.dom.style.left = '0px'
-		// this.progressBar.dom.style.height = '16px'
-		// this.progressBar.dom.style.width = '10px'
-		// this.progressBar.dom.style.padding = '2px'
 		pnl.add ( this.progressBar )		
 
 		var progressTxt = '0/'+this.nTasks
 		this.progressTxt = new MMUI.Text( progressTxt )
 		this.progressTxt.className = 'asset-progress-text'
 		this.progressBar.add( this.progressTxt )
-		// this.progressTxt.dom.style.left = '5px'
 	},
 	updateProgress : function(){		
 		this.fTasks += 1

@@ -2,12 +2,11 @@ MM.Control = function(){
     THREE.Object3D.call(this);
     this.type = 'control'
 
-    //  shape     
+    //  shape control properties 
     this.controlColor = new THREE.Color( 0xffff00);
     this.controlSize = 10; 
     this.controlScale = new THREE.Vector3(1,1,1);  
     this.controlOffset = new THREE.Vector3(0,0,0);
-    this.controlSide = 'C'
 
     //  different type of controls:
     //  0 = default
@@ -21,15 +20,17 @@ MM.Control = function(){
     this.controlShape = undefined;
     this.displayRotationAxis = false;
 
-    //  asset
+    this.controlSide = 'C'
+
+    //  defines to which asset this control belong to
     this.asset = undefined
 
     //  visualisation
-    this.cd = undefined         // control display  
-    this.boundingBox = null;    //  bounding box for selection
-    this.isFull = false;        //  is it a line or full shape?
-    this.isFacing = false;      // is the control face the camera
-    this.facingCamera = undefined; // the camera we need to be looking at
+    this.cd = undefined             // control display  
+    this.boundingBox = null;        //  bounding box for selection
+    this.isFull = false;            //  is it a line or full shape?
+    this.isFacing = false;          // is the control face the camera
+    this.facingCamera = undefined;  // the camera we need to be looking at
 
     this.computeBoundingBox();
 };
