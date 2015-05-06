@@ -190,6 +190,14 @@ MM.SceneView = function( editor, prefix, parentPanel ){
         signals.objectChanged.dispatch();
     });    
 
+    signals.manipScaleChange.add( function( value ){
+        console.log('SceneView.manipScaleChange', value)
+        manipulator.scale += value;
+        manipulator.scale = Math.max( manipulator.scale, 0.1 );
+
+        signals.objectChanged.dispatch();
+    })
+
     signals.objectSelected.add( function (){
         // console.log('Viewport: objectSelected')
 

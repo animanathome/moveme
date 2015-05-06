@@ -25,6 +25,7 @@ MM.Editor = function(){
 
         , manipSpaceChange: new SIGNAL()
         , manipModeChange: new SIGNAL()
+        , manipScaleChange: new SIGNAL()
         
         , cameraChange: new SIGNAL()
         , cameraAdded: new SIGNAL()

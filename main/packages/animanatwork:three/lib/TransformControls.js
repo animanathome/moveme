@@ -396,7 +396,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		this.domElement.addEventListener( 'mousedown', onMouseDown, false );
 		this.domElement.addEventListener( 'mousemove', onMouseHover, false );
-		this.document.addEventListener( 'keydown', onKeyDown, false );
+		// this.document.addEventListener( 'keydown', onKeyDown, false );
 
 	}
 
@@ -409,7 +409,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		this.domElement.addEventListener( 'mousedown', onMouseDown, false );
 		this.domElement.addEventListener( 'mousemove', onMouseHover, false );
-		this.document.addEventListener( 'keydown', onKeyDown, false );
+		// this.document.addEventListener( 'keydown', onKeyDown, false );
 	}
 
 	this.detach = function ( object ) {
@@ -423,7 +423,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		this.domElement.removeEventListener( 'mousedown', onMouseDown, false );
 		this.domElement.removeEventListener( 'mousemove', onMouseHover, false );
-		this.document.removeEventListener( 'keydown', onKeyDown, false );
+		// this.document.removeEventListener( 'keydown', onKeyDown, false );
 
 	}
 
@@ -1268,61 +1268,61 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 	}
 
-	function onKeyDown( event ) {
+	// function onKeyDown( event ) {
 
-		// console.log( 'TransformControls.onKeyDown', event.keyCode)
+	// 	console.log( 'TransformControls.onKeyDown', event.keyCode)
 
-		var currentMode = scope.mode;
-		var currentSpace = scope.space;
-		var currentScale = scope.scale;
+	// 	var currentMode = scope.mode;
+	// 	var currentSpace = scope.space;
+	// 	var currentScale = scope.scale;
 
-		if ( event.keyCode == 81 ) { // Q
-			scope.mode = 'select';	
-		}
+	// 	if ( event.keyCode == 81 ) { // Q
+	// 		scope.mode = 'select';	
+	// 	}
 
-		if ( event.keyCode == 87 ) { // W
+	// 	if ( event.keyCode == 87 ) { // W
 
-			if ( scope.mode == 'translate' ) scope.space = ( scope.space == 'world' ) ? 'local' : 'world';
-			scope.mode = 'translate';
+	// 		if ( scope.mode == 'translate' ) scope.space = ( scope.space == 'world' ) ? 'local' : 'world';
+	// 		scope.mode = 'translate';
 
-		}
+	// 	}
 
-		if ( event.keyCode == 69 ) { // E
+	// 	if ( event.keyCode == 69 ) { // E
 
-			if ( scope.mode == 'rotate' ) scope.space = ( scope.space == 'world' ) ? 'local' : 'world';
-			scope.mode = 'rotate';
+	// 		if ( scope.mode == 'rotate' ) scope.space = ( scope.space == 'world' ) ? 'local' : 'world';
+	// 		scope.mode = 'rotate';
 
-		}
+	// 	}
 
-		if ( event.keyCode == 82 ) { // R
+	// 	if ( event.keyCode == 82 ) { // R
 
-			scope.mode = 'scale';
-			scope.space = 'local';
+	// 		scope.mode = 'scale';
+	// 		scope.space = 'local';
 
-		}
+	// 	}
 
-		if ( event.keyCode == 187 || event.keyCode == 107 ) { // +,=,num+
+	// 	if ( event.keyCode == 187 || event.keyCode == 107 ) { // +,=,num+
 
-			scope.scale += 0.1
+	// 		scope.scale += 0.1
 
-		}
+	// 	}
 
-		if ( event.keyCode == 189 || event.keyCode == 109) { // -,_,num-
+	// 	if ( event.keyCode == 189 || event.keyCode == 109) { // -,_,num-
 
-			scope.scale -= 0.1
-			scope.scale = Math.max( scope.scale, 0.1 );
+	// 		scope.scale -= 0.1
+	// 		scope.scale = Math.max( scope.scale, 0.1 );
 
-		}
+	// 	}
 
-		if ( scope.mode !== currentMode || scope.space !== currentSpace || scope.scale !== currentScale ) {
-			console.log('\tupdating mode')
+	// 	if ( scope.mode !== currentMode || scope.space !== currentSpace || scope.scale !== currentScale ) {
+	// 		console.log('\tupdating mode')
 
-			scope.setMode( scope.mode );
-			scope.dispatchEvent( changeEvent );
-			// scope.dispatchEvent( toolChangeEvent );
-		}
+	// 		scope.setMode( scope.mode );
+	// 		scope.dispatchEvent( changeEvent );
+	// 		// scope.dispatchEvent( toolChangeEvent );
+	// 	}
 
-	}
+	// }
 
 	function intersectObjects( event, objects ) {
 		// console.log('TransformControls: intersectObjects', objects)

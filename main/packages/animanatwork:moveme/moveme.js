@@ -199,6 +199,16 @@ MM.App = function( container, options){
             scope.editor.signals.manipModeChange.dispatch('scale')
         }
 
+        if( eventMatchesHotkey( event, scope.hotkeys['bigger'])){
+            console.log('\tbigger')
+            scope.editor.signals.manipScaleChange.dispatch(0.1)
+        }
+
+        if( eventMatchesHotkey( event, scope.hotkeys['smaller'])){
+            console.log('\tsmaller')
+            scope.editor.signals.manipScaleChange.dispatch(-0.1)
+        }
+
         if( eventMatchesHotkey( event, scope.hotkeys['keyTranslation'])){
             scope.editor.keySelectedObjects(['rotation', 'scale'])
         }
