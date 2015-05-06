@@ -93,13 +93,18 @@ DONE - intro
 DONE - time slider - click select move doesn't work anymore???
 DONE - make sure we can see the name of hte camera 
 DONE - finish implementing the show, hide fps, camera and time
+DONE - inherit builders -> insert_tiny, insert_default, insert_maxi
+DONE - make 3 resolutions for each image and only load the smallest possible 
+DONE from the horizontal layout to single scene view
+	- cleaning up panel content before building new ones
+DONE - make sure we can reload scenes with our new node type (stretch joints... ball offset fo the foot)
+DONE - since we change the dom parent for the transform control we can't change the space by double clicking the mode.
 
 NEW
-- make 3 resolutions for each image and only load the smallest possible resolution
+resolution
 - auto key is still making keys at unwanted times!
 	- need to be able to reproduce the problem
 - add option which aligns the keys
-- inherit builders -> insert_tiny, insert_default, insert_maxi
 - add min - max limit to channel box
 	- this is for stretch or ik/fk switch
 - make sure we don't loose the selection when changing the camera
@@ -119,20 +124,23 @@ NEW
 - since we can have multiple scene view panels we can have multiple active cameras. Since this is currently a single object we'll have to convert it into a list.
 BETTER - fix rotation manipulator!!!
 	- seems to rotate in the wrong direction at some point
-FIXED? - for some reason we get to have 2 transform manipulators when moving from the horizontal layout to single scene view
-	- cleaning up panel content before building new ones
+FIXED? - for some reason we get to have 2 transform manipulators when moving 
 - maximize screen size
 	http://stackoverflow.com/questions/1125084/how-to-make-in-javascript-full-screen-windows-stretching-all-over-the-screen
-- add hip control
-- since we change the dom parent for the transform control we can't change the space by double clicking the mode.
+- add secondary hip control
 - add maya anim export
 - make sure we have the info line updated each time we do something!
-- make sure we can reload scenes with our new node type (stretch joints... ball offset fo the foot)
+- update time slider
+	- keyframe is 1 pixel wide
+	- add the ability to select and move keys
+- add a skin weight export check ( to ensure we only have 3 influences)	
+- simplify project view
 
 UX:
 http://alistapart.com/blog/post/designing-social-tools-for-tweens
 - make it simple and add rewards ( be positive when publishing or sharing something)
 	- try to reduce the projects to a single page experience where once can view all projects and shots at the same time.
+	- another character becomes available the moment they've published a movie to facebook...
 - only show many views a movie has	
 - only accept people that are logged in to leave a message
 - add text documentation
