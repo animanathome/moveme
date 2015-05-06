@@ -4,6 +4,7 @@ MM.insertTiny = function( editor ){
 	config = {
 		  namespace: 'tiny:'
 		, name : 'tiny'
+		, control_scale : 1.0
 		//	root data directory
 		,  root_path : '/data/tiny2/'		
 		// model files

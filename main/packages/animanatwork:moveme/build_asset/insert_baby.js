@@ -4,6 +4,7 @@ MM.insertBaby = function( editor ){
 	config = {
 		  namespace: 'baby:'
 		, name : 'baby'
+		, control_scale : 0.5
 		//	root data directory
 		,  root_path : '/data/baby/'		
 		// model files

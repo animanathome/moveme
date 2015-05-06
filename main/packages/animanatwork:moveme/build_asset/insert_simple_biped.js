@@ -49,17 +49,25 @@ MM.insertBiped = function( editor, config ){
 // COMPONENTS
 	//	Rigging components
 	u.addRigComponent( new MM.GlobalComponent({
-		controlSize: 10, controlShape: 'plane', asset: config['name'], side: 'c',
-		names: ['GlobalCtl'], joints: ['Root']
+		controlSize: config['control_scale']*10, 
+		controlShape: 'plane', 
+		asset: config['name'], 
+		side: 'c',
+		names: ['GlobalCtl'], 
+		joints: ['Root']
 	} ), 'global' )
 	
 	//	Back
-	u.addRigComponent( new MM.SpineComponent( 
-		{controlSize: 0.5, asset: config['name'], names: ['cBodyCtl', 'cHipCtl', 'cBChestCtl'], joints: ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']}), 'back' )
+	u.addRigComponent( new MM.SpineComponent({
+		controlSize: config['control_scale']*1, 
+		asset: config['name'], 
+		names: ['cBodyCtl', 'cHipCtl', 'cBChestCtl'], 
+		joints: ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']}
+	), 'back' )
 	
 	//	Neck
 	u.addRigComponent( new MM.SpineComponent({
-		'controlSize' : 0.5, 
+		'controlSize' : config['control_scale']*1, 
 		'globalControl' : false, 
 		'asset' : config['name'],
 		'names' : ['', 'cTChestCtl', 'cHeadCtl'],
@@ -81,7 +89,7 @@ MM.insertBiped = function( editor, config ){
 		
 		//	Leg
 		u.addRigComponent( new MM.LegBlendComponent( {
-			controlSize : 2.5, 
+			controlSize : config['control_scale']*2, 
 			side : sides[i], 
 			stretchAxis: 'y', 
 			asset : config['name'], 
@@ -91,7 +99,7 @@ MM.insertBiped = function( editor, config ){
 		
 		//	Shoulder
 		u.addRigComponent( new MM.ShoulderComponent( {
-			controlSize: 0.5, 
+			controlSize: config['control_scale']*1, 
 			side: sides[i], 
 			parentJoint: 'cSpine4', 
 			asset: config['name'], 
@@ -101,7 +109,7 @@ MM.insertBiped = function( editor, config ){
 		
 		//	Arm
 		u.addRigComponent( new MM.LimbComponent({
-			controlSize:2.5, 
+			controlSize: config['control_scale']*2, 
 			asset:config['name'], 
 			side:sides[i], 
 			fkControlShape: 'circleX', 

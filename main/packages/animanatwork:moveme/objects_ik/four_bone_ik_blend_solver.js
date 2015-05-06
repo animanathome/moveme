@@ -50,7 +50,10 @@ MM.FourBoneIkBlendSolver.prototype.importSetup = function(scene, data){
     this.toeChannel=data.toeChannel;
     this.ballChannel=data.ballChannel;
     this.heelChannel=data.heelChannel;
-    this.toeRotateChannel=data.toeRotateChannel;    
+    this.toeRotateChannel=data.toeRotateChannel;  
+
+    //  joint offset
+    this.ballJointRotationOffset = new THREE.Matrix4().fromArray(data.ballJointRotationOffset)  
 };
 
 MM.FourBoneIkBlendSolver.prototype.exportSetup = function(){
@@ -76,6 +79,9 @@ MM.FourBoneIkBlendSolver.prototype.exportSetup = function(){
     data.ballChannel = this.ballChannel;
     data.heelChannel = this.heelChannel;
     data.toeRotateChannel = this.toeRotateChannel;
+
+    //  joint offset
+    data.ballJointRotationOffset = this.ballJointRotationOffset.toArray()
 
     return data;
 }
