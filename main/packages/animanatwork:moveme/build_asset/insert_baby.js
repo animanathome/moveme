@@ -1,10 +1,11 @@
-MM.insertBaby = function( editor ){
-	console.log('insertBaby')
+MM.insertMini = function( editor ){
+	console.log('insertMini')
 
 	config = {
-		  namespace: 'baby:'
-		, name : 'baby'
+		  namespace: 'mini:'
+		, name : 'mini'
 		, control_scale : 0.5
+		, control_distance : 0.5
 		//	root data directory
 		,  root_path : '/data/baby/'		
 		// model files
@@ -55,10 +56,14 @@ MM.insertBaby = function( editor ){
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.125
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.25
 
-		u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
+		// u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
 		u.getRigComponent('back').controls['cBodyCtl'].controlScale.x = 0.5
 		u.getRigComponent('back').controls['cBodyCtl'].controlScale.y = 0.5
 		u.getRigComponent('back').controls['cBodyCtl'].controlScale.z = 0.5
+
+		u.getRigComponent('global').controls['GlobalCtl'].controlScale.x = 1.5
+		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.5
+		u.getRigComponent('global').controls['GlobalCtl'].controlOffset.z = 0.75
 
 		var sides = ['l', 'r']
 		for( i = 0; i < 2; i++){
@@ -68,8 +73,8 @@ MM.insertBaby = function( editor ){
 			shoulder.controlScale.z = 0.1
 
 			var foot = u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl']
-			foot.controlScale.x = 1;
-			foot.controlScale.z = 2.1;
+			foot.controlScale.x = 2;
+			foot.controlScale.z = 4.2;
 			foot.controlOffset.z = 2.0;
 
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].controlShape = 'planeX'
@@ -79,4 +84,19 @@ MM.insertBaby = function( editor ){
 	u.build()
 
 	return u;
+}
+
+MM.miniSelect = function( namespace, container , editor){
+	console.log('miniSelect', namespace, container, editor)
+
+    var space = MM.bipedSelect( namespace, container, editor )
+    return space;
+}  
+
+MM.miniKeyAll = function( namespace, container , editor){
+	console.log('miniKeyAll', namespace, container, editor)
+ 
+	var container = MM.bipedKeyAll( namespace, container, editor )
+
+    return container;
 }

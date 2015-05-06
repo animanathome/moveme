@@ -145,8 +145,7 @@ Template.anim.rendered = function(){
 
 //	OPEN ASSET
 	if( this.data.hasOwnProperty('asset')){
-		// console.log('loading asset', this.data.asset.title)
-
+		console.log('Loading asset', this.data.asset.title)
 		moveme.importAsset(this.data.asset.title)
 
 		//	load in the animation sample scene, if specified
