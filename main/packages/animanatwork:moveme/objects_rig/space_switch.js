@@ -8,7 +8,7 @@ MM.Spaceswitch = function(){
     this.objectType = 'Spaceswitch'
     this.channelName = 'spaceSwitch'
 
-    this.addChannel( 'custom' , this.channelName )
+    this.addChannel( 'custom' , this.channelName, [], 'enum')
     this.custom = {'spaceSwitch' : 0} 
 
     //  The object which actually controls the state of the channel
@@ -156,6 +156,8 @@ MM.Spaceswitch.prototype.addSpace = function( object ){
     this.custom[this.channelName] = this.spaces.length - 1;
     // console.log('\tthis', this)
 
+    this.addToChannelRange('custom' , this.channelName, object.name)
+
 
 	var parentInverse = new THREE.Matrix4().getInverse( object.matrixWorld );
 	// console.log('\tspace inverse', parentInverse.getPosition())
@@ -183,9 +185,9 @@ MM.Spaceswitch.prototype.updateSpace = function( object ){
 
 MM.Spaceswitch.prototype.setChannelsTranslateAndRotate = function(){
 	this.animChannels = [
-							["position", ["x", "y", "z"]],
-							["rotation", ["x", "y", "z", "order"]],
-							["custom", [this.channelName]]
+                            this._getChannelsTranslate(), 
+                            this._getChannelsRotate()
+							["custom", [this.channelName], [], 'enum']
 						]
 }
 
@@ -225,7 +227,7 @@ MM.Spaceswitch.prototype.addSpaceswitchChannel = function( object ){
 	//	interact with this driven object
 	
 	//	adds this ability to animate the channel
-	object.addChannel( 'custom' , this.channelName )       
+	object.addChannel( 'custom', this.channelName, this.spaceNames, 'enum')
     object.custom = this.custom;   
     object.spaces = this.spaces;
     object.spaceNames = this.spaceNames;

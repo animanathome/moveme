@@ -138,14 +138,6 @@ MM.LegBlendComponent.prototype.build = function(){
     this.addControl( blndCtrl, this.controlNames[4]) 
 
     blndCtrl.setChannelsEmpty();
-    // blndCtrl.addChannel( 'custom' , 'ikFkBlend' )
-    // blndCtrl.addChannel( 'custom' , 'stretchFactor' )
-    // blndCtrl.addChannel( 'custom' , 'stretchAuto' )
-    // blndCtrl.addChannel( 'custom' , 'stretchMin' )
-    // blndCtrl.addChannel( 'custom' , 'stretchMax' )
-    // blndCtrl.custom={'ikFkBlend' : 0.0 , 'stretchFactor': 1.0 , 
-    //                  'stretchAuto': 1.0, 'stretchMin' : 0.5, 
-    //                  'stretchMax' : 1.5 }    
 
 //  ik creation and setup
     var ik = new MM.FourBoneIkBlendSolver();
@@ -159,83 +151,6 @@ MM.LegBlendComponent.prototype.build = function(){
         jointPositions[this.joints[2]].y, jointPositions[this.joints[2]].z);
     this.editor.addObject( ik )
     ankleObject.setParent( ik )
-
-    // // debugging
-    // editor.addGroupContent( this.assetGroup, [ ik , ankleObject, ballObject, 
-    //     toeObject, heelObject, joints[this.joints[0]], joints[this.joints[1]], joints[this.joints[2]], joints[this.joints[4]] ])
-    
-
-    // //  DEBUG start
-    // //  temp setup for debugging
-    // showPos = new THREE.Control()
-    // showPos.name = this.getName('ShowPosition')
-    // showPos.setControlShape( 'R', 'cube', 0.5)
-    // ik.showPos = showPos
-    // this.editor.addObject( showPos )
-
-    // showSide = new THREE.Control()
-    // showSide.name = this.getName('ShowSide')
-    // showSide.setControlShape( 'R', 'cube', 0.5)
-    // ik.showSide = showSide
-    // this.editor.addObject( showSide )    
-
-    // showUp = new THREE.Control()
-    // showUp.name = this.getName('ShowUp')
-    // showUp.setControlShape( 'R', 'cube', 0.5)
-    // ik.showUp = showUp
-    // this.editor.addObject( showUp )    
-
-    // showAim = new THREE.Control()
-    // showAim.name = this.getName('ShowAim')
-    // showAim.setControlShape( 'R', 'cube', 0.5)
-    // ik.showAim = showAim
-    // this.editor.addObject( showAim ) 
-    // showPos.add( showSide )  
-    // showPos.add( showUp )
-
-    // //  parent dag under end joint to visualize local transformation
-    // showEndJoint = new THREE.Control()    
-    // showEndJoint.name = this.getName('ShowEndJointAxis')
-    // showEndJoint.setControlShape( 'L', '', 5)
-    // showEndJoint.controlColor = new THREE.Color('green')
-    // showEndJoint.displayRotationAxis = true
-    // joints[this.joints[1]].add( showEndJoint )
-    // ik.showEndJoint = showEndJoint
-    // editor.addGroupContent( this.assetGroup, [ showEndJoint ] )
-
-    // //  visualize local aim
-    // showLocalAim = new THREE.Control()
-    // showLocalAim.name = this.getName('ShowLocalAim')
-    // showLocalAim.setControlShape( 'L', '', 5)
-    // ik.showLocalAim = showLocalAim
-    // ik.showLocalAim.displayRotationAxis = true
-    // ik.showLocalAim.controlColor = new THREE.Color('blue')
-    // ik.showLocalAim.rotation.order = 'YXZ'
-    // joints[this.joints[1]].add( showLocalAim )
-    // editor.addGroupContent( this.assetGroup, [ showLocalAim ] )
-
-    // //  visualize local aim with offset
-    // showLocalAimOffset = new THREE.Control()
-    // showLocalAimOffset.name = this.getName('ShowLocalAimOffset')
-    // showLocalAimOffset.setControlShape( 'L', '', 5)
-    // ik.showLocalAimOffset = showLocalAimOffset
-    // ik.showLocalAimOffset.displayRotationAxis = true
-    // ik.showLocalAimOffset.controlColor = new THREE.Color('red')
-    // ik.showLocalAimOffset.rotation.order = 'YXZ'
-    // joints[this.joints[1]].add( showLocalAimOffset )
-    // editor.addGroupContent( this.assetGroup, [ showLocalAimOffset ] )
-    
-
-    // //  visualize world aim
-    // showNew = new THREE.Control()
-    // showNew.name = this.getName('ShowWorldAim')
-    // showNew.setControlShape( 'L', '', 5)
-    // ik.showNew = showNew
-    // ik.showNew.displayRotationAxis = true
-    // ik.showNew.rotation.order = 'YXZ'
-    // this.editor.addObject( showNew ) 
-    // editor.addGroupContent( this.assetGroup, [ showNew ] )
-    // //  DEBUG end
 
     //  setup ik fk blend variables
     ik.setStartJoint(joints[this.joints[0]]);
@@ -261,16 +176,6 @@ MM.LegBlendComponent.prototype.build = function(){
 
     ik.poleVector = poleControl['control'] 
     ik.handleControl = footControl['control']
-
-    // //  setup stretch variables
-    // ik.stretchAxis = 'y'
-    // ik.stretchGroup = 'custom'
-    // ik.stretchChannel = 'stretchFactor'
-
-    // ik.autoStretchGroup = 'custom'
-    // ik.autoStretchChannel = 'stretchAuto'
-    // ik.autoMinChannel = 'stretchMin'
-    // ik.autoMaxChannel = 'stretchMax' 
 
     blndCtrl['custom']['stretchMax'] = 2.0
     

@@ -56,13 +56,13 @@ MM.TwoBoneSoftIkSolver.prototype.setSoftControl=function(control){
 	
 	this.softControl = control;
 
-	this.softControl.addChannel( 'custom' , 'useSoft')
-    this.softControl.addChannel( 'custom' , 'globalScale' )
-    this.softControl.addChannel( 'custom' , 'scaleBone1' )
-    this.softControl.addChannel( 'custom' , 'scaleBone2' )
-    this.softControl.addChannel( 'custom' , 'stretch' )
-    this.softControl.addChannel( 'custom' , 'soft' )
-    this.softControl.addChannel( 'custom' , 'slide' )
+	this.softControl.addChannel( 'custom', 'useSoft', [], 'boolean')
+    this.softControl.addChannel( 'custom', 'globalScale', [0.1, 2.0])
+    this.softControl.addChannel( 'custom', 'scaleBone1', [0.01, 5.0])
+    this.softControl.addChannel( 'custom', 'scaleBone2', [0.01, 5.0])
+    this.softControl.addChannel( 'custom', 'stretch', [0.01, 5.0])
+    this.softControl.addChannel( 'custom', 'soft', [0.0, 1.0])
+    this.softControl.addChannel( 'custom', 'slide', [0.0, 1.0])
 
     if(!this.softControl.hasOwnProperty('custom')){
     	this.softControl.custom = {};

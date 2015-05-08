@@ -75,14 +75,6 @@ MM.LimbComponent.prototype.build = function(){
     this.addControl( blndCtrl, this.controlNames[3]) 
 
     blndCtrl.setChannelsEmpty();
-    // blndCtrl.addChannel( 'custom' , 'ikFkBlend' )
-    // blndCtrl.addChannel( 'custom' , 'stretchFactor' )
-    // blndCtrl.addChannel( 'custom' , 'stretchAuto' )
-    // blndCtrl.addChannel( 'custom' , 'stretchMin' )
-    // blndCtrl.addChannel( 'custom' , 'stretchMax' )
-    // blndCtrl.custom={'ikFkBlend' : 0.0 , 'stretchFactor': 1.0 , 
-    //                  'stretchAuto': 1.0, 'stretchMin' : 0.5, 
-    //                  'stretchMax' : 1.5 }
 
 //  foot transform
     var footControl = MM.createControlGroup( this.side, 
@@ -145,18 +137,7 @@ MM.LimbComponent.prototype.build = function(){
 
     legIk.poleVector = poleControl['control']   
     legIk.handleControl = footControl['control']
-
-    //  setup stretch variables
-    // legIk.stretchAxis = 'y'
-    // legIk.stretchGroup = 'custom'
-    // legIk.stretchChannel = 'stretchFactor'
-
-    // legIk.autoStretchGroup = 'custom'
-    // legIk.autoStretchChannel = 'stretchAuto'
-    // legIk.autoMinChannel = 'stretchMin'
-    // legIk.autoMaxChannel = 'stretchMax'
     
-
 //  groups
     var controls = [ legIk.customCtrl, legIk.startFkCtrl, legIk.middleFkCtrl, legIk.endFkCtrl, legIk.poleVector, legIk.handleControl]
     this.editor.addGroupContent( this.assetGroup, controls)

@@ -211,10 +211,15 @@ MM.Sidebar.ChannelBox = function( editor, mdom ){
                     var ChannelValueUI;
                     var valueGroup;                
                     // console.log('\tChannel Type', object.getChannelType( channelGroup, channels[j] ))
-                    switch( object.getChannelType( channelGroup, channels[j] )){
+                    switch(object.getChannelType( channelGroup, channels[j])){
                         case "number": 
                             // console.log('\tCreating number ui element')
                             ChannelValueUI = new MMUI.Number(0); 
+
+                            range = object.getChannelRange(channelGroup,channels[j])
+                            ChannelValueUI.min = range[0]
+                            ChannelValueUI.max = range[1]
+
                             valueGroup = object[channelGroup]
                             // console.log('\tUI Element', ChannelValueUI)
                         break;

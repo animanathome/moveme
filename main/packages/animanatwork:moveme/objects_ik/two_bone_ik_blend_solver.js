@@ -12,27 +12,7 @@ MM.TwoBoneIkBlendSolver = function(){
     //  define fk controls
     this.startFkCtrl = undefined;
     this.middleFkCtrl = undefined;
-    this.endFkCtrl = undefined;
-
-    //  stretch 
-    // //  stretch factor - global scale value
-    // this.stretchGroup = undefined; // can this be different then custom?
-    // this.stretchChannel = undefined;
-
-    // //  auto stretch 
-    // this.autoStretchGroup = undefined; // can this be different then custom?
-    // this.autoStretchChannel = undefined;
-    // this.autoMinChannel = undefined;
-    // this.autoMaxChannel = undefined;
-
-    // this.stretchAxis = undefined
-    // this.startLength = undefined;
-    // this.endLength = undefined;   
-    // this.previousStretch = 1.0; 
-
-    //  Regarding: can this be different then custom?
-    //  Will be less code if we make this assumption/rule. Since these solver 
-    //  require a fixed setup anyway I guess it can't hurt to setup this rule. 
+    this.endFkCtrl = undefined; 
 }
 
 MM.TwoBoneIkBlendSolver.prototype=Object.create(MM.TwoBoneSoftIkSolver.prototype);
@@ -78,7 +58,7 @@ MM.TwoBoneIkBlendSolver.prototype.exportSetup = function(){
 MM.TwoBoneIkBlendSolver.prototype.setBlendControl=function(control){
     this.customCtrl = control;
 
-    this.customCtrl.addChannel( 'custom' , 'ikFkBlend' )
+    this.customCtrl.addChannel( 'custom' , 'ikFkBlend', [0,1])
 
     if(!this.customCtrl.hasOwnProperty('custom')){
         this.customCtrl.custom = {};
@@ -105,100 +85,6 @@ MM.TwoBoneIkBlendSolver.prototype.solveSoftIk=function(){
 }
 
 MM.TwoBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ) {
-
-    // //  init stretch
-    // if( this.startLength === undefined && this.endLength === undefined ){
-    //     if( this.startJoint !== undefined && this.middleJoint !== undefined 
-    //         && this.endJoint !== undefined && this.stretchAxis !== undefined ){
-            
-    //         var startPos = this.startJoint.getWorldPosition();      
-    //         var midPos = this.middleJoint.getWorldPosition();
-    //         var endPos = this.endJoint.getWorldPosition();
-
-    //         this.startLength = this.middleJoint.position[this.stretchAxis]
-    //         this.endLength = this.endJoint.position[this.stretchAxis]            
-
-    //         // console.log('\tinit stretch:', this.startLength, this.endLength)
-    //     }
-    // }
-
-    // // solve stretch factor
-    // var forceSolve = false;
-    // if( this.stretchGroup !== undefined && this.stretchChannel !== undefined ){
-    //     var stretchFactorObjectGroup = this.customCtrl[this.stretchGroup]
-    //     var stretchFactor = stretchFactorObjectGroup[this.stretchChannel]
-    //     // console.log('\tstretch factor:', stretchFactor)
-    //     if( this.stretchAxis !== undefined ){
-            
-    //         this.middleJoint.position[this.stretchAxis] = stretchFactor * this.startLength;
-    //         this.endJoint.position[this.stretchAxis] = stretchFactor * this.endLength;                    
-
-    //         //  here we need localized scaling for this to work
-    //         //this.startJoint.scale[this.stretchAxis] = stretchFactor;
-    //         //this.middleJoint.scale[this.stretchAxis] = stretchFactor;
-    //         //console.log('\tstart joint:', this.startJoint)
-    //         //this.endJoint.scale[this.stretchAxis] = 1.0/stretchFactor;
-
-    //         // console.log('\tmiddle joint:', this.middleJoint)
-    //         // console.log('\tend joint:', this.endJoint) 
-
-    //         this.updateJoints();   
-
-    //         //  make sure we re-solve the ik solution whenever we change the 
-    //         //  length of our joints
-    //         if( this.previousStretch !== stretchFactor ){
-    //             this.previousStretch = stretchFactor
-    //             forceSolve = true;
-    //         }     
-    //     }
-    // }
-
-    // //  solve auto stretch
-    // if( this.autoStretchGroup !== undefined && this.autoStretchChannel !== undefined){
-    //     var autoStretchFactorObjectGroup = this.customCtrl[this.autoStretchGroup]
-    //     // console.log('stretchFactorGroup',autoStretchFactorObjectGroup)
-    //     var autoStretch = autoStretchFactorObjectGroup[this.autoStretchChannel]        
-    //     // console.log('\tauto stretch:', autoStretch)
-    //     if( autoStretch > 0.0 ){
-    //         var startPos = this.startJoint.getWorldPosition(); 
-    //         var hanlePos = this.getWorldPosition(); 
-
-    //         var curLength = new THREE.Vector3().subVectors(startPos, hanlePos).length()            
-    //         var length = Math.abs(this.startLength) + Math.abs(this.endLength)
-    //         if( this.stretchAxis !== undefined ){
-    //             length *= this.customCtrl[this.stretchGroup][this.stretchChannel]
-    //         }
-    //         // console.log('\tcur length:', curLength)
-    //         // console.log('\tchain length:', length)
-
-    //         var stretchValue = MM.roundToFive(curLength / length);
-
-    //         // console.log('\tstretch value', stretchValue)
-
-    //         //  remap stretch values ( in percent )
-    //         if( stretchValue < this.customCtrl[this.autoStretchGroup][this.autoMinChannel] ){
-    //             stretchValue = this.customCtrl[this.autoStretchGroup][this.autoMinChannel]
-    //         }
-    //         if( stretchValue > this.customCtrl[this.autoStretchGroup][this.autoMaxChannel] ){
-    //             stretchValue = this.customCtrl[this.autoStretchGroup][this.autoMaxChannel]  
-    //         }
-            
-    //         // console.log('\tstretch value:', stretchValue)
-    //         if( stretchValue > 1.0 ){
-    //             // console.log('\tevaluating stretch value')
-    //             this.middleJoint.position[this.stretchAxis] = stretchValue * this.startLength;
-    //             this.endJoint.position[this.stretchAxis] = stretchValue * this.endLength;
-
-    //             // this.startJoint.scale[this.stretchAxis] = stretchValue;
-    //             //this.middleJoint.scale[this.stretchAxis] = stretchValue;
-    //         //console.log('\tstart joint:', this.startJoint)
-    //             // this.endJoint.scale[this.stretchAxis] = 1.0/stretchValue;
-    //             // console.log('\tend joint', this.endJoint.scale[this.stretchAxis])
-    //             forceSolve = true;
-    //         }
-    //     }
-    // }
-
     //  ik
     MM.TwoBoneSoftIkSolver.prototype.updateMatrixWorld.call(this, force);
 

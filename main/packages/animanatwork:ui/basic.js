@@ -191,7 +191,7 @@ MMUI.Number = function ( number ) {
 
     }, false );
 
-    this.min = - Infinity;
+    this.min = -Infinity;
     this.max = Infinity;
 
     this.precision = 2;

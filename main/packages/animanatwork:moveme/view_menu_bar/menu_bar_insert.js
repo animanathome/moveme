@@ -94,15 +94,15 @@ MM.Menubar.Inserts = function( editor ){
 	var characterBaby = new MMUI.MenuItem('Mini');
 	characterSubMenu.add( characterBaby )	
 	characterBaby.onClick( function(){
-		console.log('Insert Baby')
-		MM.insertBaby( editor )
+		console.log('Insert Mini')
+		MM.insertMini( editor )
 	})
 
 	var characterTiny = new MMUI.MenuItem('Midi');
 	characterSubMenu.add( characterTiny )	
 	characterTiny.onClick( function(){
-		console.log('Insert Tiny')
-		MM.insertTiny( editor )
+		console.log('Insert Midi')
+		MM.insertMidi( editor )
 	})	
 
 	var characterMaxi = new MMUI.MenuItem('Maxi');

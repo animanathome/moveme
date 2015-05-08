@@ -172,26 +172,21 @@ THREE.Object3D.prototype.getObjectOfType = function ( objectType, array ){
 	return array;
 }
 
-// Channels define our animatable or keyable attributes
-// note that each channel is a direct link to the actual value 
-// channel ['position', ['x']] links to object.position.x
 
-// The following channel groups don't get the group name displayed
-// 1. shapes
-// 2. custom	
-// 
-// WARNING:
-// We really should add the animChannels to the base Object3D object
-// as they are define a core functionality for enabling the use of 
-// animation channels
 THREE.Object3D.prototype.getChannels = function (){
+	/**
+	* Initializes the animChannels property if it has not yet been defined. It * initializes it with the 3 default animatable channel groups; position,
+	* rotation and scale.
+	*
+	* An animation channel follows the following structure
+	* - channel group
+	*	+- channel name
+	*	+- channel range [min, max]
+	*	+- channel type 
+	*/
 	if(this.animChannels === undefined){
 		//	add default animation channels
-		this.animChannels = [
-								["position", ["x", "y", "z"]], 
-								["rotation", ["x", "y", "z", "order"]], 
-								["scale", ["x", "y", "z"]]
-							]
+		this.setDefaultChannels();
 	}
 	return this.animChannels
 }
@@ -243,10 +238,7 @@ THREE.Object3D.prototype.getNiceName = function( channelGroup, channelName ){
 
 	var niceName;
 	switch( channelGroup ){
-		case "position": 
-			niceName = 'translate'+channelName.toUpperCase(); 
-        break;			
-        
+		case "position": niceName='translate'+channelName.toUpperCase(); break;
         case "rotation": 
         	if( channelName === 'order'){
         		niceName = 'rotateOrder'; 
@@ -255,61 +247,134 @@ THREE.Object3D.prototype.getNiceName = function( channelGroup, channelName ){
         	}
         break;			
         
-        case "scale": 
-        	niceName = 'scale'+channelName.toUpperCase(); 
-        break;			
-        
-        case "shapes":  case "custom": 
-        	niceName = channelName; 
-        break;
-		
-		default: 
-			niceName = (channelGroup + '-' + channelName).toCamel(); 
-        break;
+        case "scale": niceName = 'scale'+channelName.toUpperCase(); break;
+        case "shapes": case "custom": niceName = channelName; break;	
+		default: niceName=(channelGroup+'-'+channelName).toCamel(); break;
 	} 
 	return _.str.titleize(_.str.humanize(niceName));
 }
 
-THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
-	// console.log('getChannelType', channelGroup, channelName)
-	// console.log('\ttype:',typeof this[channelGroup][channelName])
+// THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
+// 	// console.log('getChannelType', channelGroup, channelName)
+// 	// console.log('\ttype:',typeof this[channelGroup][channelName])
 
-	var channelType = typeof this[channelGroup][channelName];
-	switch(channelType) {
-		case 'string': // rotateOrder 
-			channelType = 'enum'; 
-		break;			
-	}
+// 	var channelType = typeof this[channelGroup][channelName];
+// 	switch(channelType) {
+// 		case 'string': // rotateOrder 
+// 			channelType = 'enum'; 
+// 		break;			
+// 	}
 
-	//	we need to come up with a better way to deal with enums
-	if(channelGroup === 'custom'){
-		if( channelName === 'parentMaster' || channelName === 'spaceSwitch'){
-			channelType = 'enum';
+// 	//	we need to come up with a better way to deal with enums
+// 	if(channelGroup === 'custom'){
+// 		if( channelName === 'parentMaster' || channelName === 'spaceSwitch'){
+// 			channelType = 'enum';
+// 		}
+// 		if( channelName === 'color'){
+// 			channelType = 'color';
+// 		}
+// 	}
+
+// 	// console.log('\tresult', channelType)
+// 	return channelType
+// }
+
+
+THREE.Object3D.prototype.getChannelGroupIndex = function( channelGroup ){
+	ng = this.animChannels.length;
+	for( i = 0; i < ng; i++){
+		if(this.animChannels[i][0] === channelGroup ){
+			return i;
 		}
-		if( channelName === 'color'){
-			channelType = 'color';
-		}
 	}
-
-	// console.log('\tresult', channelType)
-	return channelType
+	return -1;
 }
+
+THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelName){
+	console.log('getChannelNameIndex', channelGroup, channelName)
+
+	gi = this.getChannelGroupIndex(channelGroup)
+	nc = this.animChannels[gi][1].length
+	for( i = 0; i < nc; i++){
+		if( this.animChannels[gi][1][i] === channelName ){
+			return i;
+		}
+	}
+	return -1;
+}
+
 
 THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName ){
-	// console.log('getChannelRange', channelGroup, channelName)
-
-	//	NOTE: not very happy with this implementation 
-	//	very dirty and not very scalable
-	if( channelGroup === 'rotation' && channelName === 'order'){
-		return MM.getArrayAsDictionary( THREE.Euler.RotationOrders )
+	gi = this.getChannelGroupIndex(channelGroup)
+	index = this.getChannelNameIndex( channelGroup, channelName )
+	if( index == -1 ){
+		console.log('Unable to find channel name')
+		return;
 	}
-	if( channelGroup === 'custom'){
-		if( channelName === 'spaceSwitch' || channelName === 'parentMaster'){
-			console.log('\tresult', MM.getArrayAsDictionary( this.spaceNames ))
-			return MM.getArrayAsDictionary( this.spaceNames )
-		}
-	}
+	return this.animChannels[gi][2][index]
 }
+
+THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, channelRange ){
+
+	gi = this.getChannelGroupIndex(channelGroup)
+	index = this.getChannelNameIndex( channelGroup, channelName )
+	if( index == -1 ){
+		console.log('Unable to find channel name')
+		return;
+	}
+	this.animChannels[gi][2][index] = channelRange
+}
+
+THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName, channelRange ){
+
+	gi = this.getChannelGroupIndex(channelGroup)
+	index = this.getChannelNameIndex( channelGroup, channelName )
+	if( index == -1 ){
+		console.log('Unable to find channel name')
+		return;
+	}
+	this.animChannels[gi][2][index].push(channelRange)
+}
+
+THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
+	console.log('getChannelRange', channelGroup, channelName)
+
+	gi = this.getChannelGroupIndex(channelGroup)
+	ni = this.getChannelNameIndex( channelGroup, channelName )
+	if( ni == -1 ){
+		console.log('Unable to find channel name')
+		return;
+	}
+	return this.animChannels[gi][3][ni]
+}
+
+THREE.Object3D.prototype.setChannelType = function( channelGroup, channelName, channelType ){
+	console.log('setChannelRange', channelGroup, channelName, channelType)
+
+	gi = this.getChannelGroupIndex(channelGroup)
+	ni = this.getChannelNameIndex( channelGroup, channelName )
+	if( ni == -1 ){
+		console.log('Unable to find channel name')
+		return;
+	}
+	this.animChannels[gi][3][ni] = channelType
+}
+
+// THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName ){
+// 	// console.log('getChannelRange', channelGroup, channelName)
+
+// 	//	NOTE: not very happy with this implementation 
+// 	//	very dirty and not very scalable
+// 	if( channelGroup === 'rotation' && channelName === 'order'){
+// 		return MM.getArrayAsDictionary( THREE.Euler.RotationOrders )
+// 	}
+// 	if( channelGroup === 'custom'){
+// 		if( channelName === 'spaceSwitch' || channelName === 'parentMaster'){
+// 			console.log('\tresult', MM.getArrayAsDictionary( this.spaceNames ))
+// 			return MM.getArrayAsDictionary( this.spaceNames )
+// 		}
+// 	}
+// }
 
 THREE.Object3D.prototype.getChannelValues = function(){
 	// console.log('getChannelValues')
@@ -372,31 +437,72 @@ THREE.Object3D.prototype.setChannelsEmpty = function (){
 	this.animChannels = [];
 }
 
-THREE.Object3D.prototype.setChannelsTranslate = function (){
-	this.animChannels = [["position", ["x", "y", "z"]]]
+THREE.Object3D.prototype._getChannelsTranslate = function (){
+	return [
+		 "position"
+		,["x", "y", "z"]
+		,[
+			[-Infinity, Infinity],
+	  		[-Infinity, Infinity],
+	  		[-Infinity, Infinity]
+	  	 ]
+		,["number", "number", "number"]
+	] 
 }
 
-THREE.Object3D.prototype.setChannelsRotate =function (){
-	this.animChannels = [["rotation", ["x", "y", "z", "order"]]]
+THREE.Object3D.prototype._getChannelsRotate =function (){
+	return [
+		 "rotation"
+		,["x", "y", "z", "order"]
+		,[
+			[-Infinity, Infinity],
+			[-Infinity, Infinity],
+			[-Infinity, Infinity],
+			['XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX']
+		  ]
+		,["number", "number", "number", "enum"]
+	]
+}
+
+THREE.Object3D.prototype._getChannelsScale = function (){
+	return [
+		 "scale"
+		,["x", "y", "z"]
+		,[
+			[-Infinity, Infinity],
+	  		[-Infinity, Infinity],
+	  		[-Infinity, Infinity]
+	  	 ]
+		,["number", "number", "number"]
+	] 
+}
+
+THREE.Object3D.prototype.setChannelsTranslate = function (){
+	this.animChannels = [this._getChannelsTranslate()]
+}
+
+THREE.Object3D.prototype.setChannelsRotate = function (){
+	this.animChannels = [this._getChannelsRotate()]
 }
 
 THREE.Object3D.prototype.setChannelsTranslateAndRotate = function (){
 	this.animChannels = [
-						["position", ["x", "y", "z"]],
-						["rotation", ["x", "y", "z", "order"]]
-						]
-}
-
-THREE.Object3D.prototype.setDefaultChannels =function(){
-	this.animChannels = [
-							["position", ["x", "y", "z"]], 
-							["rotation", ["x", "y", "z", "order"]], 
-							["scale", ["x", "y", "z"]]
-						]
+		this._getChannelsTranslate(), 
+		this._getChannelsRotate()
+	]
 }
 
 THREE.Object3D.prototype.setChannelsScale = function (){
-	this.animChannels = [["scale", ["x", "y", "z"]]]
+	this.animChannels = [this._getChannelsScale()]
+}
+
+
+THREE.Object3D.prototype.setDefaultChannels =function(){
+	this.animChannels = [
+		this._getChannelsTranslate(), 
+		this._getChannelsRotate(),
+		this._getChannelsScale()
+	]
 }
 
 THREE.Object3D.prototype.hasChannelGroup = function( channelGroup ){
@@ -488,7 +594,7 @@ THREE.Object3D.prototype.removeChannel = function( channelGroup, channelName ){
 	}
 }
 
-THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName ){
+THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, channelRange, channelType ){
 	/*
 	Add animatable channel
 	*/
@@ -497,6 +603,14 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName ){
 
 	if(this.animChannels === undefined){
 		this.animChannels = []
+	}
+
+	if(channelRange === undefined ){
+		channelRange = [-Infinity, Infinity]
+	}
+
+	if(channelType === undefined){
+		channelType = "number"
 	}
 
 	//	determine if the group exists		
@@ -511,7 +625,7 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName ){
 	//	if not, add channel group with channel
 	if( channelIndex === -1 ){
 		// console.log('\tChannelGroup does not exist. Adding', channelGroup)
-		this.animChannels.push([channelGroup, [channelName]])
+		this.animChannels.push([channelGroup, [channelName], [channelRange], [channelType]])
 	}else{
 		//	determine if we already have the channel within the group
 		var index = -1;
@@ -525,7 +639,12 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName ){
 		if( index === -1 ){
 			// console.log('\tChannel does not exist in', this.animChannels[channelIndex][1],'. Adding', channelName)
 			this.animChannels[channelIndex][1].push( channelName )
-			this.animChannels[channelIndex][1].sort();
+			
+			//	CHANGE: not going to sort here anymore since we've added type and range which would otherwise add the risk of messing up there relationship
+			// this.animChannels[channelIndex][1].sort();
+
+			this.animChannels[channelIndex][2].push( channelRange )
+			this.animChannels[channelIndex][3].push( channelType )
 		}
 	}
 }
@@ -966,14 +1085,6 @@ THREE.Object3D.prototype.setRotationFromEuler = function ( euler ) {
 	this.quaternion.setFromEuler( euler, false );
 
 }
-
-// lookAtPosition: function ( positionAsVector ) {
-
-// 	// This routine does not support objects with rotated and/or translated parent(s)
-// 	var m1 = new THREE.Matrix4().copy( this.matrix );
-// 	m1.lookAt( positionAsVector, this.position, this.up );
-// 	this.quaternion.setFromRotationMatrix( m1 );
-// },
 
 THREE.Object3D.prototype.setChild = function( child ){
     //  adds one object to another while maintaining it's
