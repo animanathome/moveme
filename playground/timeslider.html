@@ -1,0 +1,79 @@
+<html>
+	<head>	
+	<title>
+		Time Slider
+	</title>
+	<style>
+		.timeline{
+			-webkit-user-select: none;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			bottom: 0px;
+			cursor: default;
+		}
+
+		.timeline-bar{
+			position:absolute;
+			width:1px;
+			top:0px;
+			bottom:0px;			
+			background-color:#000;
+			cursor: default;
+		}
+
+		.timeline-frame{
+			position:absolute;			
+			top:0px;
+			bottom:0px;
+			font-size: 10;
+			text-indent: 1px;
+			cursor: default;
+		}
+
+		.timeline-key{
+			position:absolute;
+			top:10px;
+			width:2px;
+			bottom:0px;
+			font-size: 1.4vmin;
+			text-indent: 1px;
+			cursor: default;
+			background-color:#900;	
+		}
+
+		.timeline-key-selection{
+			position:absolute;
+			bottom:0px;
+			top:0px;
+			background-color:#900;
+			opacity: 0.25;
+		}
+	</style>
+	</head>
+	
+	<body>
+	<script src="../main/packages/animanatwork:ui/main.js"></script>
+	<script src="../main/packages/animanatwork:ui/basic.js"></script>
+	<script src="../main/packages/animanatwork:ui/panel.js"></script>
+	<script src="../main/packages/animanatwork:ui/timeline.js"></script>
+	<script src="../main/packages/animanatwork:ui/range_slider.js"></script>
+	<script src="../main/packages/animanatwork:ui/panel_layout.js"></script>
+	<script src="../main/packages/animanatwork:ui/tab.js"></script>
+	<script src="../main/packages/animanatwork:ui/group_scroll_list.js"></script>
+	<script src="../main/packages/animanatwork:ui/menu_bar.js"></script>
+	<script src="../main/packages/animanatwork:ui/select.js"></script>
+	<script src="../main/packages/animanatwork:ui/drop_down.js"></script>
+	<script src="../main/packages/animanatwork:ui/input.js"></script>
+	<script src="../main/packages/animanatwork:ui/dialog.js"></script>
+	<script src="underscore.js"></script>
+
+	<script>
+	timeline = new MMUI.Timeline();
+	// timeline.dom.style.setAttribute('-webkit-user-select', 'none')
+	document.body.appendChild( timeline.dom )
+	timeline.setRange(2, 26);
+	</script>
+
+	</body>
+</html>
