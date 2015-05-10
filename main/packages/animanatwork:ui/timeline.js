@@ -9,32 +9,31 @@ MMUI.Timeline = function(){
 	this.timeControlsWidth = 230
 
 	var scope = this;
-	var dom = document.createElement( 'div' );  		
-	dom.style.position = 'absolute'
-	dom.style.left = '0px'
-	dom.style.right = '0px'
-	dom.style.top = '0px'
-	dom.style.bottom = '0px'
+	var dom = document.createElement( 'div' );  
+	dom.className = 'timeline';
 	this.dom = dom;
 
 	this.time = 18;
-	this.startTime = 0;
+	this.startTime = 2;
 	this.endTime = 24;
-	this.keyframes = [0,6,12,18,24];
+	this.keyframes = [1,2,6,12,18,24];
 	this.uiElements = {}
 
+	// private selection variables
+	this._start = -1;
+	this._end = -1;
+	this._drag_selection = 0;
+	this._frame_width = -1;
+	this._key_indices = []
+
+	//	color variables
 	this.bgFrameColor = '#999';
 	this.keyFrameColor = '#900';
 	this.timeFrameColor = '#666';
 
 //	TIMELINE
 	var timeLine = new MMUI.Panel()	
-	timeLine.setClass('timeLine');
-	timeLine.dom.style.cursor = 'default'
-	timeLine.setPosition('absolute')
-	timeLine.setLeft('0px')
-	timeLine.setTop('0px')
-	timeLine.setBottom('0px')
+	timeLine.setClass('timeline-content');
 	timeLine.setRight(this.timeControlsWidth+'px')
 	this.timeLine = timeLine
 
@@ -42,11 +41,7 @@ MMUI.Timeline = function(){
 
 //	CONTROLS
 	var timeLineControls = new MMUI.Panel()
-	timeLineControls.setClass('timeLineControls')
-	timeLineControls.dom.style.position = 'absolute';
-	timeLineControls.dom.style.right = '0px';
-	timeLineControls.dom.style.top = '0px';
-	timeLineControls.dom.style.bottom = '0px';
+	timeLineControls.setClass('timeline-controls')
 	timeLineControls.dom.style.width = this.timeControlsWidth + 'px';
 	
 	dom.appendChild( timeLineControls.dom );	
@@ -139,6 +134,9 @@ MMUI.Timeline = function(){
 	this.timeReleaseEvent = document.createEvent('HTMLEvents');
     this.timeReleaseEvent.initEvent('timerelease', true, true)
 
+    this.moveKeysEvent = document.createEvent('HTMLEvents')
+    this.moveKeysEvent.initEvent('movekeys', true, true)
+
 	return this;
 }
 
@@ -186,13 +184,6 @@ MMUI.Timeline.prototype.update = function(){
 	for( frame in this.uiElements['frame']){
 		this.uiElements['frame'][frame].style.backgroundColor = this.bgFrameColor;
 	}
-	
-	var scope = this;
-	_.each( this.keyframes, function( frame ){	
-		if( scope.uiElements['frame'].hasOwnProperty( frame ) ){
-			scope.uiElements['frame'][frame].style.backgroundColor = scope.keyFrameColor;	
-		}
-	})
 
 	if( this.uiElements['frame'].hasOwnProperty(this.time)){
 		this.uiElements['frame'][this.time].style.backgroundColor = this.timeFrameColor;
@@ -219,6 +210,58 @@ MMUI.Timeline.prototype.clickTime = function(){
 	}
 }
 
+MMUI.Timeline.prototype.dragSelection = function(){
+	var scope = this;
+	return function(){
+		var onMouseMove = function( event ){
+			console.log('dragSelection.onMouseMove')
+			var movementX = event.movementX | event.webkitMovementX | event.mozMovementX | 0;
+			console.log('\tmove', movementX)
+
+			scope._drag_selection += movementX;
+
+			var offset_keys = undefined;
+
+			//	dragging to the right
+			if(scope._drag_selection >= scope._frame_width){
+				scope._drag_selection = 0;
+				scope._start += 1;
+				scope._end += 1;
+
+				offset_keys = 1;
+			}
+
+			if(scope._drag_selection <= -1 * scope._frame_width){
+				scope._drag_selection = 0;
+				scope._start -= 1;
+				scope._end -= 1;
+
+				offset_keys = -1;				
+			}
+
+			if(offset_keys !== undefined){
+				scope._updateSelection();
+				scope._moveKeys(offset_keys)
+				scope._removeKeys()
+				scope._buildKeys()
+				scope.dom.dispatchEvent(scope.moveKeysEvent);
+			}
+
+		}
+
+		var onMouseUp = function( event ){
+			console.log('dragSelection.onMouseUp')
+			console.log('\tevent', event)
+
+			document.removeEventListener( 'mousemove', onMouseMove );
+			document.removeEventListener( 'mouseup', onMouseUp );
+		}
+
+		document.addEventListener( 'mousemove', onMouseMove, false );
+		document.addEventListener( 'mouseup', onMouseUp, false );
+	}
+}
+
 MMUI.Timeline.prototype.dragTime = function(){
 	var scope = this;
 	return function(){
@@ -227,9 +270,28 @@ MMUI.Timeline.prototype.dragTime = function(){
 
 			// console.log('moving', movementX)
 			// console.log(event.target)
+				var stime = parseInt(event.target.innerHTML);
+				
+				if(!isNaN(stime)){
+					if(event.shiftKey === true){
+						if(scope._start === -1){
+							scope._start = stime;
+							console.log('_start', scope._start)
+						}else{
+							scope._end = stime;
+							console.log('_end', scope._end)
+						}
+						scope._updateSelection()
+						scope._getKeysWithinSelection()
+					}else{
+						console.log('resetting')
+						scope._start = -1;
+						scope._end = -1;
+					}
+				}
 
 			// if( event.target.hasOwnProperty('innerHTML')){
-				scope.setTime(parseInt(event.target.innerHTML))
+				scope.setTime(stime)
 				
 				//	left mouse button drag
 				if( event.button == 0 ){
@@ -243,13 +305,125 @@ MMUI.Timeline.prototype.dragTime = function(){
 			// }
 		}
 		var onMouseUp = function( event ){
+			console.log('dragTime.onMouseUp')
+			console.log('\tevent', event)
+
+			//	reset the selection when we click on a frame while no longer holding down the shift key
+			if(event.shiftKey === false){
+				scope._resetSelection();
+			}			
+
 			document.removeEventListener( 'mousemove', onMouseMove );
 			document.removeEventListener( 'mouseup', onMouseUp );	
 
 			scope.dom.dispatchEvent(scope.timeReleaseEvent);
 		}
 		document.addEventListener( 'mousemove', onMouseMove, false );
-		document.addEventListener( 'mouseup', onMouseUp, false );		
+		document.addEventListener( 'mouseup', onMouseUp, false );
+	}
+}
+
+MMUI.Timeline.prototype._updateSelection = function(){	
+	console.log('_updateSelection')
+	
+	if(this._start === -1 ){
+		return
+	}
+	if(this._end === -1 ){
+		return
+	}
+	
+	var start = this._start;
+	var end = this._end;
+	if( this._start > this._end){
+		start = this._end;
+		end = this._start;
+	}
+	console.log('\tindex start', start, 'end', end)
+	// console.log(this.uiElements['frame'][start])
+	// console.log(this.uiElements['frame'][end])
+
+	var start_pos = parseInt(this.uiElements['frame'][start].style.left)
+	var end_pos = parseInt(this.uiElements['frame'][end].style.left)
+	end_pos += parseInt(this.uiElements['frame'][end].style.width)
+
+	console.log('\tposition start', start_pos, 'end', end_pos)
+
+	// display selection panel
+	var panel = this.uiElements['selection'].style
+	panel.display='block';
+	panel.left = start_pos+'px'
+	panel.width = ((end_pos - start_pos)+2)+'px'
+}
+
+MMUI.Timeline.prototype._resetSelection = function(){
+	console.log('_resetSelection')
+
+	//	reset selection reference frames
+	this._start = -1;
+	this._end = -1;
+
+	//	hide selection
+	if(this.uiElements.hasOwnProperty('selection')){
+		this.uiElements['selection'].style.display='none';
+	}
+}
+
+MMUI.Timeline.prototype._getKeysWithinSelection = function(){
+	/**
+	 * Get the indices of the displayed keys the fall with the current selection area.
+	 */	
+	console.log('_getKeysWithinSelection')
+	console.log('\tstart', this._start, 'end', this._end)
+	this._key_indices = []
+	for(i = 0, j = this.keyframes.length; i<j; i++){
+		// console.log('\tkey time value', this.keyframes[i])
+		if(this.keyframes[i] >= this._start && this.keyframes[i] <= this._end){
+			this._key_indices.push(i)
+		}
+	}
+	console.log('\tkey indices:', this._key_indices)
+}
+
+MMUI.Timeline.prototype._moveKeys = function( value ){
+	/**
+	 * Add the given value to the active keyframe indicies. This allows us to move them through time.
+	 * @param  {Number} value [The amount we want to move the key indices]
+	 */
+	console.log('_moveKeys', value)
+	for(i = 0, j = this._key_indices.length; i < j; i++){
+		this.keyframes[this._key_indices[i]] += value;
+	}
+	console.log('\tkeyframes', this.keyframes)
+}
+
+MMUI.Timeline.prototype._removeKeys = function(){
+	console.log('_removeKeys')
+	for(key in this.uiElements['key']){
+		console.log('\tkey', this.uiElements['key'][key])
+
+		this.uiElements['key'][key].parentNode.removeChild(this.uiElements['key'][key])
+	}
+}
+
+MMUI.Timeline.prototype._buildKeys = function(){
+	this.uiElements['key'] = {}
+
+	//	keys
+	for(i = 0, j = this.keyframes.length; i < j; i++){
+		if(!this.uiElements['bar'].hasOwnProperty(this.keyframes[i])){
+			console.log('\tskipping keyframe', this.keyframes[i])
+			continue;
+		}
+		position = parseInt(this.uiElements['bar'][this.keyframes[i]].style.left)
+
+		console.log('\tadding keyframe', this.keyframes[i])
+		var key = document.createElement('span');		
+		key.className = 'timeline-key'
+		key.style.cssText = 'left:'+(position+2)+'px;'
+		this.timeLine.dom.appendChild( key );
+
+		this.uiElements['key'][i] = key
 	}
 }
 
@@ -260,7 +434,11 @@ MMUI.Timeline.prototype.rebuild = function(){
 	Rebuilds the entire timeline
 	NOTE: we should only run this one when the time range has changed
 	*/
-	this.uiElements = {bar:{}, frame:{}};
+	this.uiElements = {
+						  bar:{}
+						, frame:{}
+						, key:{}
+					};
 
 	while (this.timeLine.dom.firstChild) {
 		this.timeLine.dom.removeChild(this.timeLine.dom.firstChild);
@@ -272,7 +450,9 @@ MMUI.Timeline.prototype.rebuild = function(){
 	var offset = Math.floor(((this.timeLine.dom.offsetWidth) / numberOfLines) - 1); // 1 pixel representing the actual frame
 	// console.log('\toffset', offset)	
 	// console.log('\ttotal', (offset + 1) * numberOfLines )
+	this._frame_width = offset;
 
+	console.log('start', this.startTime)
 	var number = this.startTime
 	var increment = 0;
 	var position = 0;
@@ -284,39 +464,47 @@ MMUI.Timeline.prototype.rebuild = function(){
 		// console.log('\tposition', position )
 
 	//	bar
-		var bar = document.createElement( 'span' );			
-		bar.style.cssText = 'position:absolute;width:1px;top:0px;bottom:0px;left:'+position+'px;background-color:#000';
-		bar.style.cursor = 'default'
+		var bar = document.createElement('span');			
+		bar.className = 'timeline-bar'
+		bar.style.cssText = 'left:'+position+'px;';
 
 		this.timeLine.dom.appendChild( bar );
 		this.uiElements['bar'][number] = bar
 
 	//	frame
-		var frame = document.createElement( 'span' );		
+		var frame = document.createElement('span');
+		frame.className = 'timeline-frame'
 		if( this.time === number ){
-			frame.style.cssText = 'position:absolute;width:'+ offset +'px;top:0px;bottom:0px;left:'+(position+1)+'px;background-color:'+this.timeFrameColor;	
-		}else{
-			if( this.keyframes.indexOf( number ) !== -1){
-				frame.style.cssText = 'position:absolute;width:'+ offset +'px;top:0px;bottom:0px;left:'+(position+1)+'px;background-color:'+this.keyFrameColor;
-			}else{
-				frame.style.cssText = 'position:absolute;width:'+ offset +'px;top:0px;bottom:0px;left:'+(position+1)+'px;background-color:'+this.bgFrameColor;
-			}
+			frame.style.cssText = 'width:'+ offset +'px;left:'+(position+1)+'px;background-color:'+this.timeFrameColor;	
+		}else{			
+			frame.style.cssText = 'width:'+ offset +'px;left:'+(position+1)+'px;background-color:'+this.bgFrameColor;
 		}
 
 		frame.addEventListener( 'mousedown', this.dragTime());
 		frame.addEventListener( 'click', this.clickTime());
 
-		frame.style.fontSize = '1.4vmin'; // http://css-tricks.com/viewport-sized-typography			
 		frame.textContent = number;
-		frame.style.textIndent = '1px'
-		frame.style.cursor = 'default'
 		
-		this.timeLine.dom.appendChild( frame );		
+		this.timeLine.dom.appendChild( frame );
 		this.uiElements['frame'][number] = frame
 
 		number += 1;
 		increment += 1;
 	}
+
+	//	keys
+	this._buildKeys()
+
+	//	selection
+	var selection = document.createElement('span');
+	selection.className = 'timeline-key-selection'
+	selection.style.cssText = 'left:100px;width:100px;';
+	this.timeLine.dom.appendChild( selection );
+
+	selection.addEventListener( 'mousedown', this.dragSelection());
+
+	this.uiElements['selection'] = selection
+
 	return this;
 }
 
@@ -327,7 +515,8 @@ var events = [
 				'Nextframe', 
 				'Endframe',
 				'Timechange',
-				'Timeshift',
+				'Timeshift', // change time without evaluating it
+				'Movekeys',
 				'Timerelease'
 				];
 events.forEach( function ( event ) {
