@@ -113,8 +113,9 @@ MM.Loader = function ( editor ) {
 	};
 
 	this.resetLayout = function(){
-		console.log('Loader.resetLayout')
-		allData['settings'] = editor.resetSceneSettings()	
+		console.log('Loader.resetLayout');
+		var allData = {};
+		allData['settings'] = editor.resetSceneSettings();
 		localStorage.threejsEditor = JSON.stringify( allData );
 	}
 

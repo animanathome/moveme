@@ -281,7 +281,8 @@ THREE.Object3D.prototype.getNiceName = function( channelGroup, channelName ){
 
 
 THREE.Object3D.prototype.getChannelGroupIndex = function( channelGroup ){
-	ng = this.animChannels.length;
+	var ng = this.animChannels.length;
+	var i;
 	for( i = 0; i < ng; i++){
 		if(this.animChannels[i][0] === channelGroup ){
 			return i;
@@ -293,8 +294,9 @@ THREE.Object3D.prototype.getChannelGroupIndex = function( channelGroup ){
 THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelName){
 	console.log('getChannelNameIndex', channelGroup, channelName)
 
-	gi = this.getChannelGroupIndex(channelGroup)
-	nc = this.animChannels[gi][1].length
+	var gi = this.getChannelGroupIndex(channelGroup);
+	var nc = this.animChannels[gi][1].length;
+	var i;
 	for( i = 0; i < nc; i++){
 		if( this.animChannels[gi][1][i] === channelName ){
 			return i;
@@ -305,8 +307,8 @@ THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelNa
 
 
 THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName ){
-	gi = this.getChannelGroupIndex(channelGroup)
-	index = this.getChannelNameIndex( channelGroup, channelName )
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var index = this.getChannelNameIndex( channelGroup, channelName )
 	if( index == -1 ){
 		console.log('Unable to find channel name')
 		return;
@@ -316,8 +318,8 @@ THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName )
 
 THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, channelRange ){
 
-	gi = this.getChannelGroupIndex(channelGroup)
-	index = this.getChannelNameIndex( channelGroup, channelName )
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var index = this.getChannelNameIndex( channelGroup, channelName )
 	if( index == -1 ){
 		console.log('Unable to find channel name')
 		return;
@@ -327,8 +329,8 @@ THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, 
 
 THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName, channelRange ){
 
-	gi = this.getChannelGroupIndex(channelGroup)
-	index = this.getChannelNameIndex( channelGroup, channelName )
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var index = this.getChannelNameIndex( channelGroup, channelName )
 	if( index == -1 ){
 		console.log('Unable to find channel name')
 		return;
@@ -339,8 +341,8 @@ THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName
 THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
 	console.log('getChannelRange', channelGroup, channelName)
 
-	gi = this.getChannelGroupIndex(channelGroup)
-	ni = this.getChannelNameIndex( channelGroup, channelName )
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var ni = this.getChannelNameIndex( channelGroup, channelName )
 	if( ni == -1 ){
 		console.log('Unable to find channel name')
 		return;
@@ -351,8 +353,8 @@ THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
 THREE.Object3D.prototype.setChannelType = function( channelGroup, channelName, channelType ){
 	console.log('setChannelRange', channelGroup, channelName, channelType)
 
-	gi = this.getChannelGroupIndex(channelGroup)
-	ni = this.getChannelNameIndex( channelGroup, channelName )
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var ni = this.getChannelNameIndex( channelGroup, channelName )
 	if( ni == -1 ){
 		console.log('Unable to find channel name')
 		return;

@@ -83,7 +83,7 @@ MM.Menubar.Views = function( layout, editor ){
 
 
 //	panels
-	var sepItem3 = new MMUI.MenuDivider()
+	sepItem3 = new MMUI.MenuDivider()
 	menuGrp.add( sepItem3 )
 
 	var panelSubMenu = new MMUI.SubMenuGrp('Panels');

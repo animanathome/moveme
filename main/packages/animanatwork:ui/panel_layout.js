@@ -186,33 +186,33 @@ MMUI.PanelLayout = function( editor, mdom){
 MMUI.PanelLayout.prototype = Object.create( MMUI.Element.prototype );
 
 MMUI.PanelLayout.prototype.getConnectedSliders = function( panels, ui){
-	console.log('PanelLayout.getConnectedSliders', panels, ui)
+	// console.log('PanelLayout.getConnectedSliders', panels, ui)
 
 	//	determines which sliders are driving the given panels
 	//	example: ['view1', 'view2'] 'v'
-	var i, tdir;
+	var i, tdir, slider;
 	var possibleDirs = ['ld', 'rd', 'td', 'bd']
 	var connected = []
 	for( slider in this.layoutObject[ui]){
-		console.log('\tslider', slider)
+		// console.log('\tslider', slider)
 		for( i = 0; i < possibleDirs.length; i++){
 			//	get the dependend panels in the current direction
 			tdir = this.layoutObject[ui][slider][possibleDirs[i]]
-			console.log('\t\t', possibleDirs[i], tdir)
+			// console.log('\t\t', possibleDirs[i], tdir)
 			if( MM.arrayContainsAElementFromArray(tdir, panels)){
 				// console.log('\t\tyes')
 				connected.push(slider); break;
 			}
 		}	
 	}
-	console.log('\tresult', connected)
+	// console.log('\tresult', connected)
 	return connected;
 }
 
 
 MMUI.PanelLayout.prototype.updateSliderConnections = function( dir ){
-	console.log('updateSliderConnections', dir)
-	console.log('\tlayoutObject', this.layoutObject)
+	// console.log('updateSliderConnections', dir)
+	// console.log('\tlayoutObject', this.layoutObject)
 	//	as we add sliders to the layout we have to make sure all sliders keep driving the proper panels
 	// options: hsliders or vsliders
 
@@ -223,12 +223,13 @@ MMUI.PanelLayout.prototype.updateSliderConnections = function( dir ){
 	, 	tsp // this slider position
 	, 	tp 	// this panel
 	, 	tpp0 // this panel position bottom
-	,	tpp1; // this panel position top
+	,	tpp1 // this panel position top
+	, 	slider;
 
 	for( slider in this.layoutObject[dir]){
-		console.log('\t', slider)
+		// console.log('\t', slider)
 
-		ts = this.layoutObject[dir][slider] 
+		ts = this.layoutObject[dir][slider];
 		
 		//	reset dependencies
 		if( dir === 'hsliders'){
@@ -242,15 +243,16 @@ MMUI.PanelLayout.prototype.updateSliderConnections = function( dir ){
 		//	get the line dimensions of the slider y, x1, x2				
 		// console.log('\t', tsp)
 
+		var panel;
 		for( panel in this.layoutObject['panels']){
-			tp = this.layoutObject['panels'][panel]
+			tp = this.layoutObject['panels'][panel];
 			
 			if( dir === 'hsliders'){
-				tpp0 = [tp.h[0], tp.w[0], tp.w[1]]
-				tpp1 = [tp.h[1], tp.w[0], tp.w[1]]
+				tpp0 = [tp.h[0], tp.w[0], tp.w[1]];
+				tpp1 = [tp.h[1], tp.w[0], tp.w[1]];
 			}else{
-				tpp0 = [tp.w[0], tp.h[0], tp.h[1]]
-				tpp1 = [tp.w[1], tp.h[0], tp.h[1]]
+				tpp0 = [tp.w[0], tp.h[0], tp.h[1]];
+				tpp1 = [tp.w[1], tp.h[0], tp.h[1]];
 			}
 			
 			// console.log('\t\t', panel)
@@ -262,19 +264,19 @@ MMUI.PanelLayout.prototype.updateSliderConnections = function( dir ){
 			|| MMUI.lineWithinRange( tsp, tpp1 )){
 				if( MMUI.lineWithinRange( tsp, tpp0 ) ){
 					if( dir === 'hsliders'){
-						console.log('\t\tabove', panel)
-						ts.td.push(panel)
+						// console.log('\t\tabove', panel)
+						ts.td.push(panel);
 					}else{
-						console.log('\t\tright', panel)
-						ts.rd.push(panel)
+						// console.log('\t\tright', panel)
+						ts.rd.push(panel);
 					}
 				}else{
 					if( dir === 'hsliders'){
-						console.log('\t\tbelow', panel)
-						ts.bd.push(panel)
+						// console.log('\t\tbelow', panel)
+						ts.bd.push(panel);
 					}else{
-						console.log('\t\tleft', panel)
-						ts.ld.push(panel)
+						// console.log('\t\tleft', panel)
+						ts.ld.push(panel);
 					}
 				}
 			}
@@ -287,7 +289,7 @@ MMUI.PanelLayout.prototype.replaceDependencies = function(ui, dirs, cpd, npd){
 	console.log('\tobj', this.layoutObject)
 	//	replaces the current panel dependency with the new one
 	//	example: view0, view2, [ld, td]
-	var i, index;
+	var i, index, panel;
 	for( i = 0; i < dirs.length; i++){
 		for( panel in this.layoutObject[ui]){
 			//	if the current panel has a dependency to the given panel
@@ -305,7 +307,7 @@ MMUI.PanelLayout.prototype.addDependencies = function(ui, dirs, cpd, npd ){
 	// console.log('addDependencies', ui, dirs, cpd, npd)
 	//	adds the new panel dependency to each one which already has our current panel dependency
 	//	example: vslider [ld, td] view0, view2
-	var i, index;
+	var i, index, panel;
 	for( i = 0; i < dirs.length; i++){
 		for( panel in this.layoutObject[ui]){
 			//	if the current panel has a dependency to the given panel
@@ -324,7 +326,7 @@ MMUI.PanelLayout.prototype.removeDependencies = function(ui, dirs, pd ){
 	// console.log('\tobject', this.layoutObject)
 	//	removes the current panel dependency from the given directions
 	//	example: vslider ['ld', 'rd'] view0
-	var i, index;
+	var i, index, panel;
 	for( i = 0; i < dirs.length; i++){
 		for( panel in this.layoutObject[ui]){
 			//	if the current panel has a dependency to the given panel
@@ -356,6 +358,8 @@ MMUI.PanelLayout.prototype.getNeighourDirections = function( panel ){
 	var dirs = [];
 	var tdom; //	this dom
 	var tngb; //	this neighour
+
+	var i, j;
 	for( i = 0, j = possibleDirs.length; i < j; i++){
 		//	if we have a dependency in the given direction
 		tngb = this.layoutObject.panels[panel][possibleDirs[i]]
@@ -400,6 +404,7 @@ MMUI.PanelLayout.prototype.getDrivingSlider = function( ui, dirs, panel ){
 	
 	//	determines which slider drives the given panel
 	//	example: movesPanel vsliders ['ld', 'rd'] view0	
+	var cpanel;
 	for( cpanel in this.layoutObject[ui]){
 		// console.log('\tpanel', cpanel)
 		// console.log('\tcontent', this.layoutObject[ui][cpanel][dir])		
@@ -466,6 +471,7 @@ MMUI.PanelLayout.prototype.resetLayout = function(){
     // }
 
 //	remove containers
+	var container;
 	for(container in this.layoutElements['container']){
 		console.log('\t', this.layoutElements['container'][container])
 		container = this.layoutElements['container'][container].dom
@@ -473,7 +479,8 @@ MMUI.PanelLayout.prototype.resetLayout = function(){
 	}
 
 //	remove horizontal sliders
-    this.layoutElements['hsliders']	
+    // this.layoutElements['hsliders']	
+    var hslider;
     for(hslider in this.layoutElements['hsliders']){
 		console.log('\t', this.layoutElements['hsliders'][hslider])
 		hslider = this.layoutElements['hsliders'][hslider].dom
@@ -481,7 +488,7 @@ MMUI.PanelLayout.prototype.resetLayout = function(){
 	}
 
 //	remove vertical sliders    
-    this.layoutElements['vsliders']	
+    // this.layoutElements['vsliders']	
     for(hslider in this.layoutElements['vsliders']){
 		console.log('\t', this.layoutElements['vsliders'][hslider])
 		hslider = this.layoutElements['vsliders'][hslider].dom
@@ -506,9 +513,9 @@ MMUI.PanelLayout.prototype.deletePanel = function( panel, direction){
 		//	determine what happens with the white space
 		//	if direction is defined, pass on the current dimensions to the neighours from the given direction
 		if( direction !== "nd"){
-			var i, tp, cp, minw, maxw, minh, maxh;
-			var tp = this.layoutObject['panels'][panel]
-			var nb = tp[direction];
+			var i, tp, nb, cp, minw, maxw, minh, maxh;
+			tp = this.layoutObject['panels'][panel];
+			nb = tp[direction];
 			for( i = 0; i < nb.length; i++){
 				// console.log('\t', nb[i])				
 				cp = this.layoutObject['panels'][nb[i]]
@@ -969,6 +976,7 @@ MMUI.PanelLayout.prototype.showPanel = function( panel ){
 	//	pull left panels to the right 
 	// var ld = this.getNextVisiblePanels( panel, 'ld' )
 	var ld = this.getVisibleConnected('panels', panel, 'ld')//, true)
+	var lc;
 	for( i = 0, j = ld.length; i < j; i++ ){
 		console.log('\tupdating width for', ld[i])
 		lc = this.layoutElements['container'][ld[i]].dom	
@@ -1055,6 +1063,7 @@ MMUI.PanelLayout.prototype.updateLayoutObject = function(){
 
 //	PANELS UPDATE
 	var tempValue = {}
+	var space;
 	for( space in this.layoutElements['container']){
 		tempValue[space] = {h:[], w:[]}
 
@@ -1076,7 +1085,7 @@ MMUI.PanelLayout.prototype.updateLayoutObject = function(){
 		tempValue[space]['w'] = [left, right]
 	}
 
-	var dif;
+	var dif, ospace;
 	for( space in this.layoutElements['container']){
 		for( ospace in this.layoutElements['container']){
 			if( space === ospace ) continue;
@@ -1172,7 +1181,7 @@ MMUI.PanelLayout.prototype.getRandomColor = function() {
 
 MMUI.PanelLayout.prototype.getPixelPosition = function( uiElement , inOrOut ){
 	// console.log('getPixelPosition', uiElement, inOrOut)
-	value = this.layoutObject[uiElement[0]][uiElement[1]][uiElement[2]][inOrOut];
+	var value = this.layoutObject[uiElement[0]][uiElement[1]][uiElement[2]][inOrOut];
 	// console.log('\tvalue', value)
 
 	value /= 100
@@ -1386,14 +1395,14 @@ MMUI.PanelLayout.prototype.createContainer = function( panel ){
 }
 
 MMUI.PanelLayout.prototype.buildContainers = function(){
-	console.log('buildContainers')
-	console.log('\tpanels', this.layoutObject['panels'])
+	// console.log('buildContainers')
+	// console.log('\tpanels', this.layoutObject['panels'])
 
-	// var container;
 	this.layoutElements['container'] = {}
-	// var top, left;
+	
+	var space;
 	for( space in this.layoutObject['panels'] ){
-		console.log('\tsetting up', space, 'container')
+		// console.log('\tsetting up', space, 'container')
 		this.createContainer(space)
 	}
 }
@@ -1404,17 +1413,18 @@ MMUI.PanelLayout.prototype.updateContainer = function( panel ){
 
 	//	bottom
 	container.bottom=this.getPixelPosition(['panels',panel,'h'],0)+'px'
-	top = this.getPixelPosition(['panels', panel, 'h'], 1);
+	var top = this.getPixelPosition(['panels', panel, 'h'], 1);
 	if( top > 0 ) top += this.sliderThickness;
 	container.top = top+'px'	
 	
-	left = this.getPixelPosition(['panels', panel, 'w'], 0);
+	var left = this.getPixelPosition(['panels', panel, 'w'], 0);
 	if( left > 0) left += this.sliderThickness;
 	container.left = left+"px"
 	container.right = this.getPixelPosition(['panels', panel, 'w'], 1)+"px"	
 }
 
 MMUI.PanelLayout.prototype.updateContainers = function(){
+	var space;
 	for( space in this.layoutElements['container'] ){
 		this.updateContainer(space)
 	}	
@@ -1444,6 +1454,7 @@ MMUI.PanelLayout.prototype.buildHSlider = function( space ){
 MMUI.PanelLayout.prototype.buildHSliders = function(){
 	// var sep;
 	this.layoutElements['hsliders'] = {}
+	var space;
 	for( space in this.layoutObject['hsliders'] ){
 		// console.log('\tsetting up', space, 'hslider')
 		this.buildHSlider( space )
@@ -1451,7 +1462,7 @@ MMUI.PanelLayout.prototype.buildHSliders = function(){
 }
 
 MMUI.PanelLayout.prototype.updateHSliders = function(){
-	var sep;
+	var sep, space;
 	for( space in this.layoutElements['hsliders'] ){
 		sep = this.layoutElements['hsliders'][space]
 		sep.setTop(this.getPixelPosition(['hsliders', space, 'h'], 1)+'px')	
@@ -1461,30 +1472,32 @@ MMUI.PanelLayout.prototype.updateHSliders = function(){
 }
 
 MMUI.PanelLayout.prototype.buildVSlider = function( space ){
-	console.log('PanelLayout.buildVSlider', space)
+	// console.log('PanelLayout.buildVSlider', space)
 
-	var sep = new MMUI.Panel()
-	sep.dom.id = this.prefix+_.str.classify(space)+'VSlider'
-	sep.setPosition('absolute').setWidth(this.sliderThickness+'px')
-	sep.setBottom(this.getPixelPosition(['vsliders', space, 'h'], 0)+'px')	
-	sep.setTop(this.getPixelPosition(['vsliders', space, 'h'], 1)+'px')	
-	sep.setLeft((this.getPixelPosition(['vsliders', space, 'w'], 0)+"px"))		
-	sep.dom.style.zIndex = '10'		
-	this.dom.appendChild( sep.dom )
+	var sep = new MMUI.Panel();
+	sep.dom.id = this.prefix+_.str.classify(space)+'VSlider';
+	sep.setPosition('absolute').setWidth(this.sliderThickness+'px');
+	sep.setBottom(this.getPixelPosition(['vsliders', space, 'h'], 0)+'px');
+	sep.setTop(this.getPixelPosition(['vsliders', space, 'h'], 1)+'px');
+	sep.setLeft((this.getPixelPosition(['vsliders', space, 'w'], 0)+"px"));
+
+	sep.dom.style.zIndex = '10';
+	this.dom.appendChild( sep.dom );
 
 	sep.dom.addEventListener( 'mouseenter', this.showSlider());
 	sep.dom.addEventListener( 'mouseout', this.hideSlider());
 	sep.dom.addEventListener( 'mousedown', this.moveVSlider( space, this.layoutElements, this.dom));
 
 	this.layoutElements['vsliders'][space] = sep;	
-	this.layoutElements['vsliders'][space]['ld'] = this.layoutObject['vsliders'][space]['ld']
-	this.layoutElements['vsliders'][space]['rd'] = this.layoutObject['vsliders'][space]['rd']		
+	this.layoutElements['vsliders'][space]['ld'] = this.layoutObject['vsliders'][space]['ld'];
+	this.layoutElements['vsliders'][space]['rd'] = this.layoutObject['vsliders'][space]['rd'];		
 
-	console.log('\tresult', sep)
+	// console.log('\tresult', sep)
 }
 
 MMUI.PanelLayout.prototype.buildVSliders = function(){
-	this.layoutElements['vsliders'] = {}
+	this.layoutElements['vsliders'] = {};
+	var space;
 	for( space in this.layoutObject['vsliders'] ){
 		// console.log('\tsetting up', space, 'vslider')
 		this.buildVSlider(space);	
@@ -1493,7 +1506,7 @@ MMUI.PanelLayout.prototype.buildVSliders = function(){
 
 MMUI.PanelLayout.prototype.updateVSliders = function(){
 	// console.log('-> updateVSliders')
-	var sep;
+	var sep, space;
 	for( space in this.layoutElements['vsliders'] ){
 		sep = this.layoutElements['vsliders'][space]
 		sep.setBottom(this.getPixelPosition(['vsliders', space, 'h'], 0) +'px')
@@ -1517,8 +1530,8 @@ MMUI.PanelLayout.prototype.init = function(){
 	// console.log('\tresult', this.layoutElements)
 }
 
-var events = [ 'Resizelayout'];
-events.forEach( function ( event ) {
+var pl_events = [ 'Resizelayout'];
+pl_events.forEach( function ( event ) {
     var method = 'on' + event;
     MMUI.PanelLayout.prototype[ method ] = function ( callback ) {
         this.dom.addEventListener( event.toLowerCase(), callback, false );

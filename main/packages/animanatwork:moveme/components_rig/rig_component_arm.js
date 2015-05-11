@@ -1,5 +1,5 @@
 MM.ArmComponent = function( parameters ){   
-    RigComponent.call( this );
+    MM.RigComponent.call( this );
 
     this.joints = []
     this.parentJoint = undefined

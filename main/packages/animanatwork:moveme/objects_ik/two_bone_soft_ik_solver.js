@@ -201,7 +201,7 @@ MM.TwoBoneSoftIkSolver.prototype.solveSoftIk=function(){
 	// console.log('\tstretch', this.stretch)
 
 	if(dist>da && this.stretch>0){
-		shortd = softNew_F*(1-Math.exp(-1*(dist-da)/softNew_F))+da;
+		var shortd = softNew_F*(1-Math.exp(-1*(dist-da)/softNew_F))+da;
 		finalScale=dist/shortd;
 	}else{
 		finalScale=1;

@@ -173,7 +173,7 @@ MM.Editor.prototype.initSimpleScene = function(){
 
      var geometry = new THREE.CubeGeometry( 10, 20, 10);
      var material = new THREE.MeshPhongMaterial( { ambient: 0x050505, color: 0x0033ff, specular: 0x555555, shininess: 30 } );
-     mesh = new THREE.Mesh(geometry, material );
+     var mesh = new THREE.Mesh(geometry, material );
      mesh.name = 'cube1'
      mesh.tag = 'control'
      this.addObject( mesh );        
@@ -628,6 +628,7 @@ MM.Editor.prototype.deselect = function ( isUndo ) {
     }
 
     //  reset color
+    var i, j;
     for( i = 0, j = this.prevSelectedObjects.length; i < j; i++ ){
         if( this.prevSelectedObjects[i] instanceof MM.Control ){
             this.prevSelectedObjects[i].updateDisplayColor( this.prevSelectedObjects[i].controlColor )

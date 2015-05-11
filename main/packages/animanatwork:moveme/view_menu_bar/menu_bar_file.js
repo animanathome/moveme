@@ -72,7 +72,7 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	})
 	menuGrp.add( saveAsItem )	
 
-	var divider = new MMUI.MenuDivider();
+	divider = new MMUI.MenuDivider();
 	menuGrp.add( divider )		
 
 //	ANIMATION

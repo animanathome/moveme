@@ -45,14 +45,14 @@ MM.Joint.prototype.importData=function(data){
 
 MM.Joint.prototype.exportData=function(){
 	
-	data={}
-	data.radius = this.radius
-	data.controlSize = this.controlSize
-	data.showRotationAxis = this.showRotationAxis
-	data.showHierarchy = this.showHierarchy
-	data.showControl = this.showControl
+	var data={};
+	data.radius = this.radius;
+	data.controlSize = this.controlSize;
+	data.showRotationAxis = this.showRotationAxis;
+	data.showHierarchy = this.showHierarchy;
+	data.showControl = this.showControl;
 	data.skinMatrix = this.skinMatrix.toArray();
-	data.preferedAngle = this.preferedAngle
+	data.preferedAngle = this.preferedAngle;
 
 	return data;
 }

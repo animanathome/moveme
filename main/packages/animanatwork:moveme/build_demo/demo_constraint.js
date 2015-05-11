@@ -215,7 +215,7 @@ MM.ParentMasterDemo1 = function( editor ){
     b.translateY(-10)
     editor.addObject( b )
 
-    parentMaster = a.addInbetween(a.name+'PM', 'ParentMaster')
+    var parentMaster = a.addInbetween(a.name+'PM', 'ParentMaster')
     parentMaster.addSpace( b )
     parentMaster.addSpaceswitchChannel( a )
 
@@ -254,7 +254,7 @@ MM.ParentMasterDemo2 = function( editor ){
     c.setChannelsTranslateAndRotate()   
     editor.addObject( c )   
 
-    parentMaster = c.addInbetween(c.name+'PM', 'ParentMaster')
+    var parentMaster = c.addInbetween(c.name+'PM', 'ParentMaster')
     parentMaster.addSpace( a )
     parentMaster.addSpace( b )
     parentMaster.addSpaceswitchChannel( c )

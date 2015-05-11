@@ -20,7 +20,8 @@ MM.insertBiped = function( editor, config ){
 
 // DATA
 	//	Add model paths
-	console.log('Defining models')
+	// console.log('Defining models')
+	var model;
 	if(config.hasOwnProperty('models')){
 		for(model in config.models){
 			console.log('\tmodel ', config.models[model])
@@ -29,7 +30,8 @@ MM.insertBiped = function( editor, config ){
 	}
 
 	//	Add joint paths
-	console.log('Defining joints')
+	// console.log('Defining joints')
+	var joint;
 	if(config.hasOwnProperty('joints')){
 		for(joint in config.joints){
 			console.log('\tjoint ', config.joints[joint])
@@ -38,7 +40,8 @@ MM.insertBiped = function( editor, config ){
 	}
 
 	//	Add skin paths
-	console.log('Defining skins')
+	// console.log('Defining skins')
+	var skin;
 	if(config.hasOwnProperty('skins')){
 		for(skin in config.skins){
 			console.log('\tskin ', config.skins[skin])
@@ -306,7 +309,7 @@ MM.insertBiped = function( editor, config ){
 		// editor.jointsVisibility()
 
 	//	color geometry		
-		var i, j;
+		var i, j, material;
 		for( i = 0, j = u.models.length; i < j; i++){
 			// expose color attribute to user
 			u.models[i].addChannel( 'custom', 'color' )

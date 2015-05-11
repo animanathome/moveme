@@ -50,6 +50,7 @@ MM.AssetBuild.prototype = {
 		this.controls = MM.extendArrayWithArray(this.controls, controls)
 	},
 	getControl : function( control_name ){
+		var i, j;
 		for( i = 0, j = this.controls.length; i < j; i++){
 			if( this.controls[i].name === this.namespace+control_name ){
 				return this.controls[i]

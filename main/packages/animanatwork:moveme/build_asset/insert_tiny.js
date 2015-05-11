@@ -1,7 +1,7 @@
 MM.insertMidi = function( editor ){
 	console.log('insertMidi')
 
-	config = {
+	var config = {
 		  namespace: 'midi:'
 		, name : 'midi'
 		, control_scale : 1.0
@@ -32,11 +32,11 @@ MM.insertMidi = function( editor ){
 		}
 	}
 	//	Pass on the configuration to the pre-defined asset build
-	u = MM.insertBiped(editor, config);
+	var u = MM.insertBiped(editor, config);
 
 	//	Add a asset specific post function. This will just scale the control shapes to match the dimensions of the asset.
 	u.addPost(function(){
-		jaw_ctl = u.getControl('cJawCtl')
+		var jaw_ctl = u.getControl('cJawCtl')
 		jaw_ctl.controlOffset.y = -2.5
 		jaw_ctl.controlOffset.z = 1.5
 		jaw_ctl.controlScale.y = 0.3
@@ -60,6 +60,7 @@ MM.insertMidi = function( editor ){
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.625
 
 		var sides = ['l', 'r']
+		var i;
 		for( i = 0; i < 2; i++){
 			var shoulder = u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl']
 			shoulder.controlOffset.y = 1.25;
@@ -91,8 +92,7 @@ MM.midiSelect = function( namespace, container , editor){
 MM.midiKeyAll = function( namespace, container , editor){
 	console.log('midiKeyAll', namespace, container, editor)
  
-	var container = MM.bipedKeyAll( namespace, container, editor )
-
-    return container;
+	var key_container = MM.bipedKeyAll( namespace, container, editor );
+    return key_container;
 }
 

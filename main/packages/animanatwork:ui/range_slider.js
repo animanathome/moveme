@@ -366,8 +366,8 @@ MMUI.RangeSlider.prototype.setRange = function( start, end ){
 	this.updateUI();
 }
 
-var events = ['Timerangechange', 'Autokeychange'];
-events.forEach( function ( event ) {
+var rs_events = ['Timerangechange', 'Autokeychange'];
+rs_events.forEach( function ( event ) {
     var method = 'on' + event;
     MMUI.RangeSlider.prototype[ method ] = function ( callback ) {
         this.dom.addEventListener( event.toLowerCase(), callback, false );

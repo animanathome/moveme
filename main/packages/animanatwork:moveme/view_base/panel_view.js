@@ -113,7 +113,7 @@ MM.PanelView = function( editor , prefix){
 
     this.children.push( this.lockText.dom )
 
-    var signals = editor.signals;
+    // var signals = editor.signals;
     signals.timeChanged.add( function(){
         // console.log('MM.PanelView.onTimeChanged', scope.prefix)
         scope.setTime( scope.editor.time )
@@ -361,21 +361,21 @@ MM.PanelView.prototype.buildPanelDD = function(){
     this.panelDD.add( new MMUI.DropdownDivider() )
     
     // time text
-    timeTxt = ((this.show_frame)?'Hide Time':'Show Time');
+    var timeTxt = ((this.show_frame)?'Hide Time':'Show Time');
     var timeDDI = new MMUI.DropdownItem(timeTxt).onClick( function(){
         scope.toggleTime();
     })
     this.panelDD.add( timeDDI );
     
     // camera text
-    cameraTxt = ((this.show_camera)?'Hide Camera':'Show Camera')
+    var cameraTxt = ((this.show_camera)?'Hide Camera':'Show Camera')
     var cameraDDI = new MMUI.DropdownItem(cameraTxt).onClick( function(){
         scope.toggleCamera();
     });
     this.panelDD.add( cameraDDI );
     
     //  fps text
-    fpsText = ((this.show_fps)?'Hide FPS':'Show FPS')
+    var fpsText = ((this.show_fps)?'Hide FPS':'Show FPS')
     var fpsDDI = new MMUI.DropdownItem(fpsText).onClick( function(){
         scope.toggleFPS();
     })
@@ -444,6 +444,7 @@ MM.PanelView.prototype.buildLayoutDD = function(){
     singleLayout.onClick(function(){  
         
         //  cleanup existing panels
+        var space;
         for( space in scope.parentLayout.layoutElements['view']){
             var tPanel = scope.parentLayout.layoutElements['view'][space]
             tPanel.childPanel.clear()
@@ -475,6 +476,7 @@ MM.PanelView.prototype.buildLayoutDD = function(){
     verticalLayout.onClick( function(){
         
         //  cleanup existing panels
+        var space;
         for( space in scope.parentLayout.layoutElements['view']){              
             var tPanel = scope.parentLayout.layoutElements['view'][space]
             tPanel.childPanel.clear()
@@ -528,6 +530,7 @@ MM.PanelView.prototype.buildLayoutDD = function(){
     horizontalLayout.onClick( function(){
         
         //  cleanup existing panels
+        var space;
         for( space in scope.parentLayout.layoutElements['view']){ 
             var tPanel = scope.parentLayout.layoutElements['view'][space]
             tPanel.childPanel.clear()

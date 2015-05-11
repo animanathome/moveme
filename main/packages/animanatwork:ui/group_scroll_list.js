@@ -111,7 +111,7 @@ MMUI.GroupScrollList = function(){
             }
 
             if( event.target.id.indexOf('$O') !== -1){
-                gi = parseFloat(event.target.getAttribute('gi'))
+                var gi = parseFloat(event.target.getAttribute('gi'))
 
                 var mode = 'reset'
                 if( event.ctrlKey === true ){
@@ -420,6 +420,7 @@ MMUI.GroupScrollList.prototype.selectObject = function ( object, mode, index){
         }else{
             // console.log('select object from', this.psi, 'to', index)
             if((this.psi + 1) < index){
+                var i;
                 // console.log(this.psi, 'is smaller then', index)
                 for( i = (this.psi +1); i <= index; i++){
                     // console.log('\t', i)

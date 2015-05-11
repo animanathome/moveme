@@ -53,6 +53,7 @@ MM.PanelViewLayout = function( editor, mdom ){
 		scope.activeLayout = false;
 
 		// event.preventDefault();
+		var panelName;
 		for(panelName in scope.layoutObject['panels']){
 			if( event.target.id !== null ){
 				if( event.target.id.indexOf( panelName ) !== -1 ){
@@ -195,7 +196,7 @@ MM.PanelViewLayout.prototype.init = function(){
 
 //	PANEL VIEWS
 	//	now for each container, add a viewpanel
-	var viewportPanel, container;
+	var viewportPanel, container, space;
 	this.layoutElements['view'] = {}
 	for( space in this.layoutObject['panels'] ){
 		console.log('\tcreating panel view for', space)
@@ -210,7 +211,7 @@ MM.PanelViewLayout.prototype.init = function(){
 
 	//	scene view
 		if( space === 'view0'){
-			sceneView = new MM.SceneView( this.editor, space, viewportPanel, this.canvas, this.renderer)			
+			var sceneView = new MM.SceneView( this.editor, space, viewportPanel, this.canvas, this.renderer)			
 			viewportPanel.setChildPanel( sceneView )
 			viewportPanel.contentType = 'SceneView'
 			//	default to persp view
@@ -218,7 +219,7 @@ MM.PanelViewLayout.prototype.init = function(){
 		}
 		if( space === 'view1'){
 			//	since new elements get created during it's initialization we need to be sure we pass on the prefix during the object init
-			keyView = new MM.KeyView( this.editor, space, viewportPanel, this.canvas, this.renderer)
+			var keyView = new MM.KeyView( this.editor, space, viewportPanel, this.canvas, this.renderer)
 			viewportPanel.dom.appendChild( keyView.dom )
 
 
@@ -245,6 +246,7 @@ MM.PanelViewLayout.prototype.rebuild = function( newLayout ){
 }
 
 MM.PanelViewLayout.prototype.deactivatePanels = function(){
+	var space;
 	for( space in this.layoutElements['view'] ){
 		this.layoutElements['view'][space].deactivate();		
 	}	
@@ -284,6 +286,7 @@ MM.PanelViewLayout.prototype.update = function(){
 	this.canvas.height = this.dom.offsetHeight;
 	this.renderer.setSize( this.dom.offsetWidth , this.dom.offsetHeight)
 
+	var space;
 	for( space in this.layoutElements['view'] ){
 		this.layoutElements['view'][space].resize();		
 	}		
@@ -302,6 +305,7 @@ MM.PanelViewLayout.prototype.resize = function(){
 	this.canvas.height = this.dom.offsetHeight;
 	this.renderer.setSize( this.dom.offsetWidth , this.dom.offsetHeight)
 
+	var space;
 	for( space in this.layoutElements['view'] ){
 		this.layoutElements['view'][space].resize();		
 	}	
@@ -312,6 +316,7 @@ MM.PanelViewLayout.prototype.resize = function(){
 //	http://stackoverflow.com/questions/1959040/is-it-possible-to-send-a-variable-number-of-arguments-to-a-javascript-function
 MM.PanelViewLayout.prototype.render = function(){
 	// console.log('MM.PanelViewLayout.render')	
+	var space;
 	for( space in this.layoutElements['view'] ){
 		// console.log('\trendering', space)
 		this.layoutElements['view'][space].render();

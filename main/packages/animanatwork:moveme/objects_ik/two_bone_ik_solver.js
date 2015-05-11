@@ -91,14 +91,14 @@ MM.TwoBoneIkSolver.prototype.exportData = function(){
 
 MM.TwoBoneIkSolver.prototype.exportSetup = function(){
 
-    data={}
+    var data={};
     data.type = 'TwoBoneIkSolver';
     data.name = this.name;
-    data.startMatrix = this.startMatrix.toArray() 
-    data.startJoint = this.startJoint.name
-    data.middleJoint = this.middleJoint.name
-    data.endJoint = this.endJoint.name
-    data.poleVector = this.poleVector.name
+    data.startMatrix = this.startMatrix.toArray();
+    data.startJoint = this.startJoint.name;
+    data.middleJoint = this.middleJoint.name;
+    data.endJoint = this.endJoint.name;
+    data.poleVector = this.poleVector.name;
 
     if(this.handleControl !== undefined ){
         data.handleControl = this.handleControl.name;

@@ -10,6 +10,7 @@ if (Meteor.isServer) {
 }
 
 // browserify support
+var module;
 if ( typeof module === 'object' ) {
 
 	module.exports = THREE;

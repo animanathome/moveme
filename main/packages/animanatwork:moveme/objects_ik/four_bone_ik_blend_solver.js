@@ -215,7 +215,7 @@ MM.FourBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ){
         if(this.ballJointRotationOffset === undefined){
             this.ballJointRotationOffset = new THREE.Matrix4().getInverse(m1);
         }else{
-            temp = new THREE.Matrix4().copy(m1)
+            var temp = new THREE.Matrix4().copy(m1)
             m1 = new THREE.Matrix4().multiplyMatrices( temp, this.ballJointRotationOffset)
         }
 

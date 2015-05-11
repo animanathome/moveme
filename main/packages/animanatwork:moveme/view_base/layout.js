@@ -118,7 +118,7 @@ MM.Layout = function( dom, editor, options){
 	}
 
 //	HOME BUTTON
-	home = new MMUI.A().setImage('/ui/brand.gif').setClass('btn-anim-home')
+	var home = new MMUI.A().setImage('/ui/brand.gif').setClass('btn-anim-home')
 	home.dom.href='/'
 	this.dom.appendChild( home.dom )
 
@@ -130,7 +130,7 @@ MM.Layout = function( dom, editor, options){
 
 //	MENUBAR
 	if(options.hasMenuBar === true){
-		menuOptions = {}
+		var menuOptions = {}
 		if( options.hasOwnProperty('menu')){
 			menuOptions = options['menu']
 		}
@@ -140,12 +140,12 @@ MM.Layout = function( dom, editor, options){
 	}
 
 //	SETTINGS BUTTON
-	settings = new MMUI.Button().addGlyphicon('cog').addClass('btn-anim-settings')
+	var settings = new MMUI.Button().addGlyphicon('cog').addClass('btn-anim-settings')
 	this.dom.appendChild( settings.dom)
 
 //	TOOLBAR
 	if(options.hasToolBar === true){
-		toolbarOptions = {}
+		var toolbarOptions = {}
 		if( options.hasOwnProperty('toolbar')){
 			toolbarOptions = options['toolbar']
 		}
@@ -490,7 +490,7 @@ MM.Layout = function( dom, editor, options){
 	})
 
 	this.editor.signals.manipSpaceChange.dispatch(function(mode){
-		scope.editor.signals.showInfo.dispatch('Setting tool in '+tool+' mode')
+		scope.editor.signals.showInfo.dispatch('Setting tool in '+mode+' mode')
 	})
 
 //	LISTEN

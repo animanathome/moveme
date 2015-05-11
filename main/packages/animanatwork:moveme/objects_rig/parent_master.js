@@ -122,13 +122,13 @@ MM.ParentMasterView = function( editor )
 		console.log('\tdriven control:', dnControl)
 
 		//	get the objects
-		driver = editor.scene.getObjectByName( drControl , true );
+		var driver = editor.scene.getObjectByName( drControl , true );
 		if( driver === undefined ){
 			console.log('\tunable to find', drControl)
 			return 
 		}
 
-		driven = editor.scene.getObjectByName( dnControl, true );
+		var driven = editor.scene.getObjectByName( dnControl, true );
 		if( driven === undefined ){
 			console.log('\tunable to find', dnControl)
 			return 
@@ -139,7 +139,7 @@ MM.ParentMasterView = function( editor )
 		if( driven.parent instanceof THREE.ParentMaster ){
 			console.log('\tdriven already has a parentMaster node')
 
-			parentMaster = driven.parent;
+			var parentMaster = driven.parent;
 			if(!parentMaster.hasSpace( driver )){
 				parentMaster.addSpace( driver )
 			}

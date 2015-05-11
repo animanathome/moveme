@@ -7,7 +7,7 @@ MM.Toolbar = function( editor, parent, options){
 	container.setClass( 'toolbar')
 	parent.appendChild( container.dom );
 
-	showFile = true
+	var showFile = true
 	if( options.hasOwnProperty('server_actions')){
 		showFile = options['server_actions']
 	}

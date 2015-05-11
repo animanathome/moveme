@@ -83,7 +83,7 @@ MM.AssetSelect = function( editor ){
         }
 
         var data = [];
-        var i, j, element, tdata, value;
+        var i, j, k, element, tdata, value;
         var edits = ['left', 'right', 'top', 'bottom']
         for( i = 0, j = selectPanel.dom.childNodes.length; i < j; i++){
             console.log('\t', selectPanel.dom.childNodes[i])
@@ -124,7 +124,7 @@ MM.AssetSelect = function( editor ){
         
         var multi = selectPanel.dom.parentNode.offsetWidth/selectBindData[0].width;
 
-        var i, j, element;
+        var i, j, k, element;
         for( i = 0, j = selectPanel.dom.childNodes.length; i < j; i++){
             element = selectPanel.dom.childNodes[i]
             

@@ -732,21 +732,21 @@ MM.AnimCurve.prototype = {
         
         return this;
     },    
-    hasSelection: function(){
-        // returns true when we have a key selected
-        // console.log(this.name, 'has selection?')
+    // hasSelection: function(){
+    //     // returns true when we have a key selected
+    //     // console.log(this.name, 'has selection?')
 
-        for(var i = 0; i < this.s.length; i++)
-        {
-            if( this.s[i] === true )
-            {
-                // console.log('\tyes')
-                return true
-            }
-        }
-        // console.log('\tno')
-        return false
-    },
+    //     for(var i = 0; i < this.s.length; i++)
+    //     {
+    //         if( this.s[i] === true )
+    //         {
+    //             // console.log('\tyes')
+    //             return true
+    //         }
+    //     }
+    //     // console.log('\tno')
+    //     return false
+    // },
     hasKeyOrTangentSelection: function(){
         //  do we have a key or tangent selected?
         if( this.hasSelection() === true ){

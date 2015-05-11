@@ -405,7 +405,7 @@ MM.jointsConvert = function( data , editor, namespace, asset)
         // editor.parent(newJoint)         
     } 
 
-	addedGroup = editor.addGroup( namespace , 'asset')
+	var addedGroup = editor.addGroup( namespace , 'asset')
 	editor.addGroupContent( addedGroup, createdJoints )		
 
     return createdJoints

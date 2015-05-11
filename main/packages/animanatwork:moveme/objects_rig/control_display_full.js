@@ -150,9 +150,9 @@ MM.ControlDisplayFull.prototype = {
 
 				var segment, xValue, yValue;
 				for (var i = 0; i <= segments; i ++ ){
-					var segment = thetaStart + i / segments * thetaLength;
-					var xValue = radius * Math.cos( segment );
-					var yValue = radius * Math.sin( segment );
+					segment = thetaStart + i / segments * thetaLength;
+					xValue = radius * Math.cos( segment );
+					yValue = radius * Math.sin( segment );
 					this.geometry.vertices.push( new THREE.Vector3( xValue, yValue, 0.0 ));
 				}
 

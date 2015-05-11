@@ -121,7 +121,7 @@ MM.simpleBlendLeg = function( editor ){
 		// console.log('build component:')
 		// console.log( u.rigComponents[0])		
 		// 
-		thisIk = editor.scene.getObjectByName('blend:lIkSolver', true)
+		var thisIk = editor.scene.getObjectByName('blend:lIkSolver', true)
 		editor.addGroupContent( u.assetGroup, [thisIk]);
 
 		editor.jointsVisibility()
@@ -155,7 +155,7 @@ MM.twoStepBlendIk = function( editor ){
 	u.setNamespace(assetName)
 	u.addSkeleton('/data/spaceTunny/skeleton/cRoot_skeleton.json')
 
-	u.addRigComponent( new TwoStepLegBlendComponent({
+	u.addRigComponent( new MM.TwoStepLegBlendComponent({
 		'asset' : assetName, 'side' : 'l'
 	}))
 
@@ -222,11 +222,11 @@ MM.splineIk = function( editor ){
 
 	var assetName = 'spline'
 	var namespace = 'spline:'
-	var u = new Asset( editor );
+	var u = new MM.Asset( editor );
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
 
-	u.addRigComponent( new SpineComponent( 
+	u.addRigComponent( new MM.SpineComponent( 
 	{'controlSize' : 0.5, 'asset' : assetName, 
 	'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
 	'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
@@ -258,11 +258,11 @@ MM.splineIkPlus = function( editor ){
 	// console.log('Building spline IK plus')
 	var assetName = 'spline'
 	var namespace = 'spline:'
-	var u = new Asset( editor );
+	var u = new MM.Asset( editor );
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/tiny/skeleton/cRoot_skeleton.json')
 
-	u.addRigComponent( new SpineComponent( 
+	u.addRigComponent( new MM.SpineComponent( 
 	{'controlSize' : 0.5, 'asset' : assetName, 
 	'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
 	'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
@@ -273,12 +273,12 @@ MM.splineIkPlus = function( editor ){
 	var armJoints = ['Shoulder', 'Elbow', 'Wrist']		
 	for( var i = 0; i < sides.length; i++){
 	//	Shoulder
-		u.addRigComponent( new ShoulderComponent( 
+		u.addRigComponent( new MM.ShoulderComponent( 
 			{'controlSize' : 0.5, 'side' : sides[i], 'parentJoint' : 'cSpine4', 
 			'asset' : assetName, 'names' : ['ShoulderCtl'], 
 			'joints' : shoulderJoints}))
 	//	Arm
-		u.addRigComponent( new ArmComponent( {'controlSize' : 0.5, 
+		u.addRigComponent( new MM.ArmComponent( {'controlSize' : 0.5, 
 			'asset' : assetName, 'side' : sides[i],
 			'names' : armNames, 'joints' : armJoints }))			
 	}				
@@ -360,18 +360,18 @@ MM.stackedSplines = function( editor ){
 	var assetName = 'sSpline'
 	var namespace = 'sSpline'
 
-	var u = new Asset( editor );
+	var u = new MM.Asset( editor );
 	u.setNamespace( namespace );		
 	u.addSkeleton('/data/tiny/skeleton/cRoot_skeleton.json')
 
 	//	Back
-	u.addRigComponent( new SpineComponent( 
+	u.addRigComponent( new MM.SpineComponent( 
 		{'controlSize' : 0.5, 'asset' : assetName, 
 		'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
 		'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
 	
 	//	Neck
-	u.addRigComponent( new SpineComponent( 
+	u.addRigComponent( new MM.SpineComponent( 
 		{'controlSize' : 0.5, 'globalControl' : false, 'asset' : assetName,
 		'names' : ['', 'cTChestCtl', 'cHeadCtl'],
 		'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']} ) )

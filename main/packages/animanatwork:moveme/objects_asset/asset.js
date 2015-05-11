@@ -36,7 +36,7 @@ MM.Asset.prototype = {
 		return controlNames
 	},
 	addControls : function( controls ){
-		this.controls = extendArrayWithArray( this.controls, controls );
+		this.controls = MM.extendArrayWithArray( this.controls, controls );
 		return this;
 	},
 	exportData: function(){

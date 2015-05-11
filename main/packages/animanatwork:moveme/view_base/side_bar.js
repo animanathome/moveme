@@ -71,7 +71,7 @@ MM.Sidebar = function ( editor, mdom){
 MM.Sidebar.ChannelBox = function( editor, mdom ){
     
     var signals = editor.signals;
-    var mdom = mdom; // master dom - replaces document
+    // var mdom = mdom; // master dom - replaces document
 	
     var scope = this;
     this.channelValueUIs = []
@@ -208,8 +208,7 @@ MM.Sidebar.ChannelBox = function( editor, mdom ){
 
 				    channelRow.add(channelText);
 
-                    var ChannelValueUI;
-                    var valueGroup;                
+                    var ChannelValueUI, valueGroup, range;
                     // console.log('\tChannel Type', object.getChannelType( channelGroup, channels[j] ))
                     switch(object.getChannelType( channelGroup, channels[j])){
                         case "number": 

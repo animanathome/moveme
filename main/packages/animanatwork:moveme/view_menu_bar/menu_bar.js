@@ -9,7 +9,7 @@ MM.Menubar = function ( layout, editor , dom, options) {
 	navigationBar.add( navigation )
 
 	//	FILE
-	showSaveVersion = true
+	var showSaveVersion = true
 	if( options.hasOwnProperty('server_actions')){
 		showSaveVersion = options['server_actions']
 	}	
@@ -28,7 +28,7 @@ MM.Menubar = function ( layout, editor , dom, options) {
 	navigation.add( new MM.Menubar.Animates( editor ) );
 	
 	// DEMO
-	show_demo = true
+	var show_demo = true
 	if( options.hasOwnProperty('demo_actions')){
 		show_demo = options['demo_actions']
 	}

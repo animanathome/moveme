@@ -352,7 +352,8 @@ MM.Editor.prototype.getUndoDataForSelectedObjects = function( mode ){
         mode = 'undo'
     }
 
-    var thisSelection = []
+    var thisSelection = [];
+    var i, j;
     for( i = 0, j = this.selectedObjects.length; i < j; i++){
         console.log('\tAdding', this.selectedObjects[i])
         thisSelection.push(this.selectedObjects[i])
@@ -402,7 +403,8 @@ MM.Editor.prototype.getUndoDataForObjectValue = function( object, channelGroup, 
     var channel = undoData[3];
 
     var thisChannelGroup;
-    var values = [];        
+    var values = [];
+    var i, j;
     for( i = 0, j = this.selectedObjects.length; i < j; i++){
         thisChannelGroup = objects[i][channelGroup]
         values.push(thisChannelGroup[channel]);
@@ -429,7 +431,7 @@ MM.Editor.prototype.getUndoDataForObjectValue = function( object, channelGroup, 
     var thisChannelGroup;        
 
     for(i = 0, j = objects.length; i < j; i++){
-        var thisChannelGroup = objects[i][channelGroup]
+        thisChannelGroup = objects[i][channelGroup]
         thisChannelGroup[channel] = values[i];
     }
 
@@ -477,6 +479,7 @@ MM.Editor.prototype.getUndoDataFromAddAnimCurve = function( animCurves, mode ){
     // console.log('setUndoDataFromRemoveAnimCurve', undoData)
 
     //  undo the added animCurve ( this means removing one )
+    var i, j;
     for( i = 0, j = undoData.length; i < j; i++){
         this.removeAnimCurve( undoData[i], true)
         undoData[i].driven.removeAnimCurve( undoData[i] )
@@ -494,6 +497,7 @@ MM.Editor.prototype.setUndoDataFromRemoveAnimCurve = function( undoData ){
     // console.log('setUndoDataFromRemoveAnimCurve', undoData)
 
     //  undo the remove animCurve ( this means adding one )
+    var i, j;
     for( i = 0, j = undoData.length; i < j; i++){
         this.addAnimCurve( undoData[i] , true)
 
@@ -509,9 +513,10 @@ MM.Editor.prototype.getUndoDataFromRemoveKey = function( animCurves, indices, mo
         mode = 'undo'
     }
 
-    var keyData = []
+    var keyData = [];
+    var i, j, k, l;
     for( i = 0, j = animCurves.length; i < j; i++){
-        tKeyData = []
+        var tKeyData = []
         for( k = 0, l = indices[i].length; k < l; k++){
             tKeyData.push(animCurves[i].getTransformDataFromIndex(indices[i][k]))
         }        
@@ -540,6 +545,7 @@ MM.Editor.prototype.setUndoDataFromRemoveKey = function( undoData ){
     var animCurves = undoData[0];
     var keyData = undoData[1];
 
+    var i, j, k, l;
     for( i = 0, j = animCurves.length; i < j; i++){
         for( k = 0, l = keyData[i].length; k < l; k++){
             animCurves[i].addFromList(keyData[i][k])
@@ -568,9 +574,10 @@ MM.Editor.prototype.getRedoDataFromAddKeyUndoData = function( undoData, mode ){
     var animCurves = undoData[0]
     var keyData = undoData[1]
 
-    indices = []
+    var indices = [];
+    var i, j, k, l;
     for( i = 0, j = animCurves.length; i < j; i++){
-        tIndices = []
+        var tIndices = []
         for( k = 0, l = keyData[i].length; k < l; k++){
             tIndices.push([animCurves[i].getIndexAtTime(keyData[i][k][0])]);
         }
@@ -587,6 +594,7 @@ MM.Editor.prototype.setUndoDataFromAddKey = function( undoData ){
     var animCurves = undoData[0];
     var keyData = undoData[1];
 
+    var i, j, k, l;
     for( i = 0, j = animCurves.length; i < j; i++){
         for( k = 0, l = keyData[i].length; k < l; k++){
             animCurves[i].removeKeyAtTime(keyData[i][k][0]);
@@ -618,7 +626,7 @@ MM.Editor.prototype.getUndoTransformDataFromSelectedKeys = function( mode ){
     }
 
     var count = 0;
-    thisData = {}
+    var thisData = {};
     var thisCurve, lData, theseIndices, ni;
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         //  Add an entry for the current animation curve
@@ -647,6 +655,7 @@ MM.Editor.prototype.getUndoTransformDataFromSelectedKeys = function( mode ){
 
 MM.Editor.prototype.setUndoTransformDataToSelectedKeys = function( keyData ){
     // console.log('setUndoTransformDataToSelectedKeys', keyData)
+    var curve, tCurve, nde, i;
     for(curve in keyData){
         // number of data entries
         nde = keyData[curve].length; 
@@ -766,6 +775,7 @@ MM.Editor.prototype.getUndoSelectionDataFromKeysForSelection = function( mode ){
 
 MM.Editor.prototype.setUndoSelectionDataFromKeysForSelection = function( animCurves, selectionData ){
     // console.log('setUndoSelectionDataFromKeysForSelection', animCurves, selectionData)
+    var i, j;
     for( i = 0, j = animCurves.length; i < j; i++){
         animCurves[i].setSelectionData( selectionData[i] );
     }

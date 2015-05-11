@@ -61,7 +61,7 @@ MM.Control.prototype.computeBoundingBox = function ()
         this.boundingBox = new THREE.Box3();
     }
 
-    wpos = new THREE.Vector3().getPositionFromMatrix(this.matrixWorld);
+    var wpos = new THREE.Vector3().getPositionFromMatrix(this.matrixWorld);
 
     var mnHalfX = (-1 * this.controlScale.x * (this.controlSize / 2.0)) + this.controlOffset.x + wpos.x;
     var mnHalfY = (-1 * this.controlScale.y * (this.controlSize / 2.0)) + this.controlOffset.y + wpos.y;

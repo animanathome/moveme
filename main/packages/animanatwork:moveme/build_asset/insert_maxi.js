@@ -1,7 +1,7 @@
 MM.insertMaxi = function( editor ){
 	console.log('insertMaxi')
 
-	config = {
+	var config = {
 		  namespace: 'maxi:'
 		, name : 'maxi'
 		, control_scale : 2.0
@@ -32,12 +32,12 @@ MM.insertMaxi = function( editor ){
 		}
 	}
 	//	Pass on the configuration to the pre-defined asset build
-	u = MM.insertBiped(editor, config);
+	var u = MM.insertBiped(editor, config);
 
 
 	//	Add a asset specific post function. This will just scale the control shapes to match the dimensions of the asset.
 	u.addPost(function(){
-		jaw_ctl = u.getControl('cJawCtl')
+		var jaw_ctl = u.getControl('cJawCtl')
 		jaw_ctl.controlOffset.y = -2.0
 		jaw_ctl.controlOffset.z = 5.0
 		jaw_ctl.controlScale.y = 0.25
@@ -71,7 +71,8 @@ MM.insertMaxi = function( editor ){
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.x = 1.0;
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.0;
 
-		var sides = ['l', 'r']
+		var sides = ['l', 'r']; 
+		var i;
 		for( i = 0; i < 2; i++){
 			var shoulder = u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl']
 			shoulder.controlOffset.y = 8
@@ -106,7 +107,6 @@ MM.maxiSelect = function( namespace, container , editor){
 MM.maxiKeyAll = function( namespace, container , editor){
 	console.log('maxiKeyAll', namespace, container, editor)
  
-	var container = MM.bipedKeyAll( namespace, container, editor )
-
-    return container;
+	var key_container = MM.bipedKeyAll( namespace, container, editor );
+    return key_container;
 }

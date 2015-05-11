@@ -182,13 +182,13 @@ MM.SettingsWindow.prototype.viewportSettings = function(){
 	this.sceneColor = colorInput;
 
 	//	change default key view color
-	var colorContent = new MMUI.Panel().setClass('modal-section-content');
+	colorContent = new MMUI.Panel().setClass('modal-section-content');
 	viewportContent.add(colorContent)
 
-	var colorText = new MMUI.Text('Key View Color').setClass('modal-section-text')
+	colorText = new MMUI.Text('Key View Color').setClass('modal-section-text')
 	colorContent.add(colorText)
 
-	var colorInput = new MMUI.Color().setClass('modal-section-input')
+	colorInput = new MMUI.Color().setClass('modal-section-input')
 	colorContent.add(colorInput);
 	this.keyColor = colorInput;	
 

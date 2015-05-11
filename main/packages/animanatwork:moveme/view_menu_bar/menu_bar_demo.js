@@ -121,7 +121,7 @@ MM.Menubar.Demos = function( editor ){
 	});
 	ikSubMenu.add( demo8Item )
 
-	var demo9Item = new MMUI.MenuItem('Custom Leg Ik').onClick( function(){
+	demo9Item = new MMUI.MenuItem('Custom Leg Ik').onClick( function(){
 		MM.simpleIkLeg( editor, true , undefined);
 	});
 	ikSubMenu.add( demo9Item )
@@ -141,7 +141,7 @@ MM.Menubar.Demos = function( editor ){
 	});
 	ikSubMenu.add( demo9bItem )
 
-	var sepItem1 = new MMUI.MenuDivider();
+	sepItem1 = new MMUI.MenuDivider();
 	ikSubMenu.add( sepItem1 );	
 
 //	blend leg ik

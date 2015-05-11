@@ -97,7 +97,7 @@ MM.Editor.prototype.animate = function(){
         //  let eveyone know who's listening that time has changed
         this.signals.timeChanged.dispatch();
     }else{
-        totalTime = this.time;
+        var totalTime = this.time;
     } 
 }
 
@@ -128,7 +128,8 @@ MM.Editor.prototype.evaluateScene = function( evalAnim ){
 
 MM.Editor.prototype.getAnimCurveByName = function(name){
     console.log('getAnimCurveByName', name)
-    nc = this.animCurves.length;
+    var nc = this.animCurves.length;
+    var i;
     for( i = 0; i < nc; i++){        
         if(this.animCurves[i].name === name ){
             console.log('\t', this.animCurves[i].name, 'matches')
@@ -188,9 +189,9 @@ MM.Editor.prototype.autoKeySelectedObjects = function (){
             addedKeys = true;
         }
     }
-    if(addedKeys){
-        //  update interface
-    }
+    // if(addedKeys){
+    //     //  update interface
+    // }
 }
 
 MM.Editor.prototype.hasKeysOrTangentsSelected = function(){
@@ -312,7 +313,7 @@ MM.Editor.prototype.keySelectedObjects = function (skipList){
     var allAnimCurves = [];
     var undoKeyData = [];
     for( i = 0, j = this.selectedObjects.length; i < j; i++){
-        var addedAnimCurves = this.selectedObjects[i].keyAll( this.time, 
+        addedAnimCurves = this.selectedObjects[i].keyAll( this.time, 
             this.defaultTangentType, this.defaultTangentType, 
             skipList );
 
@@ -457,7 +458,7 @@ MM.Editor.prototype.displayAnimCurves = function( animCurves ){
     // if(this.selectedAnimCurves.length === 0 ){
     //     console.log('\tnothing to display')
     // }
-
+    var line;
     for(var i = 0; i < this.selectedAnimCurves.length; i++){ 
         // console.log('\t', i, 'adding display to', this.selectedAnimCurves[i].name)
         this.selectedAnimCurves[i].addDisplay();
@@ -498,7 +499,7 @@ MM.Editor.prototype.removeDisplayAnimCurvesFromPrevisouslySelected = function(){
     // console.log('removeDisplayAnimCurvesFromPrevisouslySelected')
     // console.log('\tpreviously', this.prevSelectedObjects)
 
-    var i,j,k,l;
+    var i,j,k,l, theseAnimCurves;
     for( i = 0, j = this.prevSelectedObjects.length; i < j; i++){
         theseAnimCurves = this.prevSelectedObjects[i].getAnimCurves()
         // console.log('\tremoving display from', theseAnimCurves)
@@ -567,9 +568,11 @@ MM.Editor.prototype.removeKey = function(){
     //  undo
     var undoAnimCurves = []
     var undoIndicies = []
+    var thisAnimCurve;
+    var removedIndices = [];
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         thisAnimCurve = this.selectedAnimCurves[i];
-        removedIndices = []
+        removedIndices = [];
         for(var j = 0; j < thisAnimCurve.getNumberOfKeys(); j++){
             if(thisAnimCurve.s[j] === true){
                 removedIndices.push(j)
@@ -597,7 +600,7 @@ MM.Editor.prototype.removeKey = function(){
 
 MM.Editor.prototype.copyKeys = function(){
     var i, j, tv, tc;
-    data = {}    
+    var data = {};
     for( i = 0, j = this.selectedAnimCurves.length; i<j; i++){
         // console.log(i, this.selectedAnimCurves[i].nattr)
         tc = this.selectedAnimCurves[i]
@@ -633,7 +636,6 @@ MM.Editor.prototype.pasteKeys = function(){
 
     //  apply the stored anim curve keys to the selected anim curves, one to one by object, channel group, channel name ( in that order )
     var keysAdded = false;
-    var cAttr;
     for( i = 0, j = animCurves.length; i<j; i++){
         tCurve=animCurves[i];
         //  check if we have any values stored for the given attributes

@@ -66,10 +66,10 @@ MM.Menubar.Inserts = function( editor ){
 	characterSubMenu.add( characterTail )	
 
 	//	Separator
-	var sepItem1 = new MMUI.MenuDivider();
+	sepItem1 = new MMUI.MenuDivider();
 	characterSubMenu.add( sepItem1 )
 
-	var characterTail = new MMUI.MenuItem('Tail');
+	characterTail = new MMUI.MenuItem('Tail');
 	characterTail.onClick( function(){
 		console.log('Insert Tail')
 		MM.insertTail( editor )
@@ -77,7 +77,7 @@ MM.Menubar.Inserts = function( editor ){
 	characterSubMenu.add( characterTail )	
 
 	//	Separator
-	var sepItem1 = new MMUI.MenuDivider();
+	sepItem1 = new MMUI.MenuDivider();
 	characterSubMenu.add( sepItem1 )
 
 	var characterDrone = new MMUI.MenuItem('Legs');
@@ -88,7 +88,7 @@ MM.Menubar.Inserts = function( editor ){
 	characterSubMenu.add( characterDrone )	
 
 	//	Separator
-	var sepItem1 = new MMUI.MenuDivider();
+	sepItem1 = new MMUI.MenuDivider();
 	characterSubMenu.add( sepItem1 )	
 
 	var characterBaby = new MMUI.MenuItem('Mini');

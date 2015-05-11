@@ -2,7 +2,7 @@ MM.Editor.prototype.setupDefaultKeyScene = function(){
 	var scope = this;
 
 //	selection box
-	selectionBox = new THREE.PlaneHelper();
+	var selectionBox = new THREE.PlaneHelper();
 	selectionBox.material.depthTest = false;
 	selectionBox.material.transparent = true;
 	selectionBox.visible = false;

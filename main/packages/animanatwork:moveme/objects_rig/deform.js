@@ -362,7 +362,7 @@ MM.FFD1.prototype.moveControlPoint = function( index, offset ){
 MM.FFD1.prototype.calculateNewPoints = function(){
 	console.log('calculateNewPoints')
 	var i, stu, b, c;
-	var b = 0;
+	// var b = 0;
 	var pos = new THREE.Vector3();
 	for( i = 0; i < this.dg.vertices.length; i++){
 		pos.x = 0;

@@ -181,6 +181,7 @@ MMUI.Timeline.prototype.update = function(){
 	NOTE: this will only work when we're within range!
 	*/
 	// console.log('MMUI.Timeline update')
+	var frame;
 	for( frame in this.uiElements['frame']){
 		this.uiElements['frame'][frame].style.backgroundColor = this.bgFrameColor;
 	}
@@ -373,9 +374,11 @@ MMUI.Timeline.prototype._getKeysWithinSelection = function(){
 	/**
 	 * Get the indices of the displayed keys the fall with the current selection area.
 	 */	
-	console.log('_getKeysWithinSelection')
-	console.log('\tstart', this._start, 'end', this._end)
-	this._key_indices = []
+	// console.log('_getKeysWithinSelection')
+	// console.log('\tstart', this._start, 'end', this._end)
+	this._key_indices = []; 
+
+	var i, j;
 	for(i = 0, j = this.keyframes.length; i<j; i++){
 		// console.log('\tkey time value', this.keyframes[i])
 		if(this.keyframes[i] >= this._start && this.keyframes[i] <= this._end){
@@ -390,15 +393,17 @@ MMUI.Timeline.prototype._moveKeys = function( value ){
 	 * Add the given value to the active keyframe indicies. This allows us to move them through time.
 	 * @param  {Number} value [The amount we want to move the key indices]
 	 */
-	console.log('_moveKeys', value)
+	// console.log('_moveKeys', value)
+	var i, j;
 	for(i = 0, j = this._key_indices.length; i < j; i++){
 		this.keyframes[this._key_indices[i]] += value;
 	}
-	console.log('\tkeyframes', this.keyframes)
+	// console.log('\tkeyframes', this.keyframes)
 }
 
 MMUI.Timeline.prototype._removeKeys = function(){
-	console.log('_removeKeys')
+	// console.log('_removeKeys')
+	var key;
 	for(key in this.uiElements['key']){
 		console.log('\tkey', this.uiElements['key'][key])
 
@@ -410,9 +415,10 @@ MMUI.Timeline.prototype._buildKeys = function(){
 	this.uiElements['key'] = {}
 
 	//	keys
+	var position, i, j;
 	for(i = 0, j = this.keyframes.length; i < j; i++){
 		if(!this.uiElements['bar'].hasOwnProperty(this.keyframes[i])){
-			console.log('\tskipping keyframe', this.keyframes[i])
+			// console.log('\tskipping keyframe', this.keyframes[i])
 			continue;
 		}
 		position = parseInt(this.uiElements['bar'][this.keyframes[i]].style.left)

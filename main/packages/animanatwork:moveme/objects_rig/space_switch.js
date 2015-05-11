@@ -186,7 +186,7 @@ MM.Spaceswitch.prototype.updateSpace = function( object ){
 MM.Spaceswitch.prototype.setChannelsTranslateAndRotate = function(){
 	this.animChannels = [
                             this._getChannelsTranslate(), 
-                            this._getChannelsRotate()
+                            this._getChannelsRotate(),
 							["custom", [this.channelName], [], 'enum']
 						]
 }

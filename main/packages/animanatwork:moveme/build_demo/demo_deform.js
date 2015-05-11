@@ -18,7 +18,7 @@ MM.FFDDemo = function( editor ){
 	// console.log(ffd)
 
 
-	ffd = new MM.FFD1();
+	var ffd = new MM.FFD1();
 	ffd.initControlPoints();	
 	ffd.addDisplay();
 	ffd.setGeometry( mesh.geometry )

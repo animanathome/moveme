@@ -131,6 +131,7 @@ MM.KeyViewToolBar = function ( editor, parent){
 			valueSnapUI.setDisplay( "block")
 		}
 
+		var sep1, sep2, sep3, sep4, sep5, sep6;
 		if( width < 300 ){
 			sep1.setDisplay("none")
 		}else{

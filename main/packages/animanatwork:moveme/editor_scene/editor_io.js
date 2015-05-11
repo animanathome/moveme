@@ -239,7 +239,7 @@ MM.Editor.prototype.importAssetObjects = function( data ){
     //  reset asset list ( since we run this when loading a fresh new scene )
     this.assets = [];
 
-    var thisAsset;
+    var thisAsset, assetData;
     for(assetData in data){
         //  create new instance
         thisAsset = new MM.Asset();

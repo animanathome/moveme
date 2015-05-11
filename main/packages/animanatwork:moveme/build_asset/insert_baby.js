@@ -1,7 +1,7 @@
 MM.insertMini = function( editor ){
 	console.log('insertMini')
 
-	config = {
+	var config = {
 		  namespace: 'mini:'
 		, name : 'mini'
 		, control_scale : 0.5
@@ -32,9 +32,9 @@ MM.insertMini = function( editor ){
 		}
 	}
 	//	Pass on the configuration to the pre-defined asset build
-	u = MM.insertBiped(editor, config);
+	var u = MM.insertBiped(editor, config);
 	u.addPost(function(){
-		jaw_ctl = u.getControl('cJawCtl')
+		var jaw_ctl = u.getControl('cJawCtl')
 		jaw_ctl.controlOffset.y = -1.25
 		jaw_ctl.controlOffset.z = 1.5
 		jaw_ctl.controlScale.y = 0.15
@@ -65,7 +65,8 @@ MM.insertMini = function( editor ){
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.5
 		u.getRigComponent('global').controls['GlobalCtl'].controlOffset.z = 0.75
 
-		var sides = ['l', 'r']
+		var sides = ['l', 'r'];
+		var i;
 		for( i = 0; i < 2; i++){
 			var shoulder = u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl']
 			shoulder.controlOffset.y = 1;
@@ -96,7 +97,6 @@ MM.miniSelect = function( namespace, container , editor){
 MM.miniKeyAll = function( namespace, container , editor){
 	console.log('miniKeyAll', namespace, container, editor)
  
-	var container = MM.bipedKeyAll( namespace, container, editor )
-
-    return container;
+	var key_container = MM.bipedKeyAll( namespace, container, editor );
+    return key_container;
 }
