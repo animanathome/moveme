@@ -6066,7 +6066,6 @@ THREE.Plane.prototype = {
 THREE.Math = {
 
 	PI2: Math.PI * 2,
-
 	generateUUID: function () {
 
 		// http://www.broofa.com/Tools/Math.uuid.htm

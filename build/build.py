@@ -1,6 +1,26 @@
 #!/usr/bin/env python
 import os
+import shutil
+
+'''
+run python build.py from /Users/manu/GitHub/moveme/build
+'''
+
+# MINIFY
 def minify_ui():
+	print '# minify_ui'
+
+	if not os.path.exists('minified'):
+		os.mkdir('minified')
+
+	os.mkdir('minified/animanatwork:ui')
+
+	# copy over package file
+	src = 'packages/ui.js'
+	dst = 'minified/animanatwork:ui/package.js'
+	shutil.copyfile(src, dst)
+
+	# minify package
 	root = '../main/packages/animanatwork:ui/'
 	jfiles = [
 	  'main.js'
@@ -23,16 +43,46 @@ def minify_ui():
 
 	externs = 'externs/ui.js'
 
-	output = 'ui.min.js'
+	output = 'minified/animanatwork:ui/ui.min.js'
 
 	cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs '+externs+' --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT --js '+source+' --js_output_file '+output
 	os.system(cmd)
+
+	return 'minified/animanatwork:ui'
+
+def backup_ui():
+	print '# backup_ui'
+
+	if not os.path.exists('backup'):
+		os.mkdir('backup')	
+
+	src = "../main/packages/animanatwork:ui"
+	dst = "backup/animanatwork:ui"
+	shutil.copytree(src, dst)
+
+	shutil.rmtree(src)	
+
+def move_ui(src):
+	shutil.copytree(src, '../main/packages/animanatwork:ui')
+	shutil.rmtree(src)
 
 def minify_moveme():
 	'''
 	Strange variables that are missing. They are defined in TransformControls but don't have the proper namespace!!!
 	THREErad and THREEPi -> two_bone_ik_solver
 	'''
+
+	if not os.path.exists('minified'):
+		os.mkdir('minified')
+
+	os.mkdir('minified/animanatwork:moveme')
+
+	# copy over package file
+	src = 'packages/moveme.js'
+	dst = 'minified/animanatwork:moveme/package.js'
+	shutil.copyfile(src, dst)
+
+	# minify package
 	root = '../main/packages/animanatwork:moveme/'
 	jfiles = [
   		"moveme.js"
@@ -153,13 +203,42 @@ def minify_moveme():
 
 	externs = 'externs/moveme.js'
 
-	output = 'moveme.min.js'
+	output = 'minified/animanatwork:moveme/moveme.min.js'
 
 	cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs '+externs+' --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT --js '+source+' --js_output_file '+output
 	os.system(cmd)
 
-def minify_three():
+	return 'minified/animanatwork:moveme'
 
+def backup_moveme():
+	print '# backup_moveme'
+
+	if not os.path.exists('backup'):
+		os.mkdir('backup')	
+
+	src = "../main/packages/animanatwork:moveme"
+	dst = "backup/animanatwork:moveme"
+	shutil.copytree(src, dst)	
+
+	shutil.rmtree(src)
+
+def move_moveme(src):
+	shutil.copytree(src, '../main/packages/animanatwork:moveme')	
+	shutil.rmtree(src)
+
+def minify_three():
+	
+	if not os.path.exists('minified'):
+		os.mkdir('minified')
+
+	os.mkdir('minified/animanatwork:three')
+
+	# copy over package file
+	src = 'packages/three.js'
+	dst = 'minified/animanatwork:three/package.js'
+	shutil.copyfile(src, dst)
+
+	# minify package
 	root = '../main/packages/animanatwork:three/'
 	jfiles = [
 			 "src/three_r60.js"
@@ -197,15 +276,81 @@ def minify_three():
 
 	externs = 'externs/three.js'
 
-	output = 'three.min.js'
+	output = 'minified/animanatwork:three/three.min.js'
 
 	cmd = 'java -jar compiler/compiler.jar --warning_level=VERBOSE --jscomp_off=globalThis --externs '+externs+' --jscomp_off=checkTypes --language_in=ECMASCRIPT5_STRICT --js '+source+' --js_output_file '+output
 	os.system(cmd)
 
+	return 'minified/animanatwork:three'
+
+def backup_three():
+	print '# backup_three'
+
+	if not os.path.exists('backup'):
+		os.mkdir('backup')	
+
+	src = "../main/packages/animanatwork:three"
+	dst = "backup/animanatwork:three"
+	shutil.copytree(src, dst)
+	
+	shutil.rmtree(src)
+
+def move_three(src):
+	shutil.copytree(src, '../main/packages/animanatwork:three')
+	shutil.rmtree(src)
+
 def minify_all():
-	# minify_ui()
-	# minify_moveme()
-	minify_three()
+	print 'minify_all'
+
+	mini_ui = minify_ui()
+	mini_moveme = minify_moveme()
+	mini_three = minify_three()
+
+	backup_ui();
+	backup_moveme();
+	backup_three();	
+
+	move_ui(mini_ui);
+	move_moveme(mini_moveme);
+	move_three(mini_three);
+
+	shutil.rmtree('minified')
+
+	print '\tdone'
+
+# RESTORE
+def restore_all():
+	print 'restore_all'
+
+	#	remove minified packages 
+	shutil.rmtree("../main/packages/animanatwork:three")
+	shutil.rmtree("../main/packages/animanatwork:ui")
+	shutil.rmtree("../main/packages/animanatwork:moveme")
+
+	# 	restore all packages
+	#	three
+	dst = "../main/packages/animanatwork:three"
+	src = "backup/animanatwork:three"
+	shutil.copytree(src, dst)
+
+	#	moveme
+	dst = "../main/packages/animanatwork:moveme"
+	src = "backup/animanatwork:moveme"
+	shutil.copytree(src, dst)
+
+	#	ui
+	dst = "../main/packages/animanatwork:ui"
+	src = "backup/animanatwork:ui"
+	shutil.copytree(src, dst)
+
+	shutil.rmtree('backup')
+
+	print '\tdone'
 
 if __name__ == "__main__":
-	minify_all()
+	# minify all packages
+	if not os.path.exists('backup'):
+		minify_all()
+	# restore packages
+	else:
+		restore_all()

@@ -398,7 +398,8 @@ MM.TwoBoneIkSolver.prototype.ikSolve = function( startJointPos, midJointPos, eff
             // console.log('exception')
 
             var qNP1 = new THREE.Quaternion()
-            qNP1.setFromAxisAngle(vectorH, THREEkPi * THREErad)
+            // qNP1.setFromAxisAngle(vectorH, THREEkPi * THREE.Math.rad)
+            qNP1.setFromAxisAngle(vectorH, THREE.Math.rad)
             qNP1.normalize()
             qNP = qNP1;
         }else{

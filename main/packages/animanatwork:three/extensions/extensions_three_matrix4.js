@@ -30,9 +30,9 @@ THREE.Matrix4.prototype.makeRotationFromEuler = function ( euler ) {
 
 	var te = this.elements;
 
-	var x = euler.x / THREErad;
-	var y = euler.y / THREErad;
-	var z = euler.z / THREErad;
+	var x = euler.x / THREE.Math.rad;
+	var y = euler.y / THREE.Math.rad;
+	var z = euler.z / THREE.Math.rad;
 	var a = Math.cos( x ), b = Math.sin( x );
 	var c = Math.cos( y ), d = Math.sin( y );
 	var e = Math.cos( z ), f = Math.sin( z );

@@ -25,6 +25,7 @@ MMUI.Timeline = function(){
 	this._drag_selection = 0;
 	this._frame_width = -1;
 	this._key_indices = []
+	this._key_offset = 0;
 
 	//	color variables
 	this.bgFrameColor = '#999';
@@ -215,13 +216,13 @@ MMUI.Timeline.prototype.dragSelection = function(){
 	var scope = this;
 	return function(){
 		var onMouseMove = function( event ){
-			console.log('dragSelection.onMouseMove')
+			// console.log('dragSelection.onMouseMove')
 			var movementX = event.movementX | event.webkitMovementX | event.mozMovementX | 0;
-			console.log('\tmove', movementX)
+			// console.log('\tmove', movementX)
 
 			scope._drag_selection += movementX;
 
-			var offset_keys = undefined;
+			scope._key_offset = 0;
 
 			//	dragging to the right
 			if(scope._drag_selection >= scope._frame_width){
@@ -229,7 +230,7 @@ MMUI.Timeline.prototype.dragSelection = function(){
 				scope._start += 1;
 				scope._end += 1;
 
-				offset_keys = 1;
+				scope._key_offset = 1;
 			}
 
 			if(scope._drag_selection <= -1 * scope._frame_width){
@@ -237,12 +238,12 @@ MMUI.Timeline.prototype.dragSelection = function(){
 				scope._start -= 1;
 				scope._end -= 1;
 
-				offset_keys = -1;				
+				scope._key_offset = -1;				
 			}
 
-			if(offset_keys !== undefined){
+			if(scope._key_offset !== 0){
 				scope._updateSelection();
-				scope._moveKeys(offset_keys)
+				scope._moveKeys(scope._key_offset)
 				scope._removeKeys()
 				scope._buildKeys()
 				scope.dom.dispatchEvent(scope.moveKeysEvent);
@@ -251,9 +252,8 @@ MMUI.Timeline.prototype.dragSelection = function(){
 		}
 
 		var onMouseUp = function( event ){
-			console.log('dragSelection.onMouseUp')
-			console.log('\tevent', event)
-
+			// console.log('dragSelection.onMouseUp')
+			// console.log('\tevent', event)
 			document.removeEventListener( 'mousemove', onMouseMove );
 			document.removeEventListener( 'mouseup', onMouseUp );
 		}
@@ -306,8 +306,8 @@ MMUI.Timeline.prototype.dragTime = function(){
 			// }
 		}
 		var onMouseUp = function( event ){
-			console.log('dragTime.onMouseUp')
-			console.log('\tevent', event)
+			// console.log('dragTime.onMouseUp')
+			// console.log('\tevent', event)
 
 			//	reset the selection when we click on a frame while no longer holding down the shift key
 			if(event.shiftKey === false){
@@ -325,7 +325,7 @@ MMUI.Timeline.prototype.dragTime = function(){
 }
 
 MMUI.Timeline.prototype._updateSelection = function(){	
-	console.log('_updateSelection')
+	// console.log('_updateSelection')
 	
 	if(this._start === -1 ){
 		return
@@ -340,7 +340,7 @@ MMUI.Timeline.prototype._updateSelection = function(){
 		start = this._end;
 		end = this._start;
 	}
-	console.log('\tindex start', start, 'end', end)
+	// console.log('\tindex start', start, 'end', end)
 	// console.log(this.uiElements['frame'][start])
 	// console.log(this.uiElements['frame'][end])
 
@@ -348,7 +348,7 @@ MMUI.Timeline.prototype._updateSelection = function(){
 	var end_pos = parseInt(this.uiElements['frame'][end].style.left)
 	end_pos += parseInt(this.uiElements['frame'][end].style.width)
 
-	console.log('\tposition start', start_pos, 'end', end_pos)
+	// console.log('\tposition start', start_pos, 'end', end_pos)
 
 	// display selection panel
 	var panel = this.uiElements['selection'].style
@@ -358,7 +358,7 @@ MMUI.Timeline.prototype._updateSelection = function(){
 }
 
 MMUI.Timeline.prototype._resetSelection = function(){
-	console.log('_resetSelection')
+	// console.log('_resetSelection')
 
 	//	reset selection reference frames
 	this._start = -1;

@@ -307,6 +307,8 @@ MM.Layout = function( dom, editor, options){
 		}).onTimerelease( function(){
 			console.log('time release')
 			scope.editor.signals.objectRefresh.dispatch();
+		}).onMovekeys( function(){
+			console.log('layout.moveKeys', scope.timeline._key_offset, 'for', scope.timeline._key_indices)
 		})
 	}
 
@@ -588,7 +590,7 @@ MM.Layout = function( dom, editor, options){
 
 
 	this.editor.signals.showInfo.add( function(info){
-		console.log('showInfo', info)
+		// console.log('showInfo', info)
 		if(scope.infoLine){
 			scope.infoLine.textContent=info;
 		}

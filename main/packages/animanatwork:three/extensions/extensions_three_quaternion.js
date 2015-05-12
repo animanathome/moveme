@@ -18,9 +18,9 @@ THREE.Quaternion.prototype.mSetFromAxisAngle = function(axis, theta) {
 		var commonFactor = Math.sin(tTheta)
 
 		// console.log('commonFactor', commonFactor)
-		if(! boolEquivalent(sumOfSquares, 1.0, kDoubleEpsilon)){
-			commonFactor /= Math.sqrt(sumOfSquares)
-		}
+		// if(! boolEquivalent(sumOfSquares, 1.0, kDoubleEpsilon)){
+		// 	commonFactor /= Math.sqrt(sumOfSquares)
+		// }
 		// console.log('commonFactor', commonFactor)
 
 		this.x = commonFactor * axis.x

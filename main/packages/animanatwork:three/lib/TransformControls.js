@@ -3,7 +3,7 @@
  */
 
  //"use strict";
-var THREErad = 57.29577951308232;
+// var THREE.Math.rad = 57.29577951308232;
 
 THREE.TransformControls = function ( camera, domElement, doc ) {
 
@@ -528,17 +528,17 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 							eye.applyProjection( tempMatrix );
 
 							if ( name == 'RX' ) {
-								quaternionX.setFromAxisAngle( unitX, Math.atan2( -eye.y, eye.z ) * THREErad);
+								quaternionX.setFromAxisAngle( unitX, Math.atan2( -eye.y, eye.z ) * THREE.Math.rad);
 								tempQuaternion.multiplyQuaternions( tempQuaternion, quaternionX );
 							}
 
 							if ( name == 'RY' ) {
-								quaternionY.setFromAxisAngle( unitY, Math.atan2( eye.x, eye.z ) * THREErad);
+								quaternionY.setFromAxisAngle( unitY, Math.atan2( eye.x, eye.z ) * THREE.Math.rad);
 								tempQuaternion.multiplyQuaternions( tempQuaternion, quaternionY );
 							}
 
 							if ( name == 'RZ' ) {
-								quaternionZ.setFromAxisAngle( unitZ, Math.atan2( eye.y, eye.x ) * THREErad);
+								quaternionZ.setFromAxisAngle( unitZ, Math.atan2( eye.y, eye.x ) * THREE.Math.rad);
 								tempQuaternion.multiplyQuaternions( tempQuaternion, quaternionZ );
 							}
 
@@ -552,9 +552,9 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						// if ( name == 'RY' ) object.rotation.y = Math.atan2(  eye.x, eye.z );
 						// if ( name == 'RZ' ) object.rotation.z = Math.atan2(  eye.y, eye.x );
 
-						if ( name == 'RX' ) object.rotation.x = Math.atan2( -eye.y, eye.z ) * THREErad;
-						if ( name == 'RY' ) object.rotation.y = Math.atan2(  eye.x, eye.z ) * THREErad;
-						if ( name == 'RZ' ) object.rotation.z = Math.atan2(  eye.y, eye.x ) * THREErad;
+						if ( name == 'RX' ) object.rotation.x = Math.atan2( -eye.y, eye.z ) * THREE.Math.rad;
+						if ( name == 'RY' ) object.rotation.y = Math.atan2(  eye.x, eye.z ) * THREE.Math.rad;
+						if ( name == 'RZ' ) object.rotation.z = Math.atan2(  eye.y, eye.x ) * THREE.Math.rad;
 
 					}
 
@@ -1038,13 +1038,13 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						point.applyMatrix4( tempMatrix.getInverse( lookAtMatrix ) );
 						tempVector.applyMatrix4( tempMatrix.getInverse( lookAtMatrix ) );
 
-						rotation.set( Math.atan2( point.z, point.y ) * THREErad, 
-							Math.atan2( point.x, point.z ) * THREErad, 
-							Math.atan2( point.y, point.x ) * THREErad);
+						rotation.set( Math.atan2( point.z, point.y ) * THREE.Math.rad, 
+							Math.atan2( point.x, point.z ) * THREE.Math.rad, 
+							Math.atan2( point.y, point.x ) * THREE.Math.rad);
 						
-						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREErad, 
-							Math.atan2( tempVector.x, tempVector.z ) * THREErad, 
-							Math.atan2( tempVector.y, tempVector.x ) * THREErad);
+						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREE.Math.rad, 
+							Math.atan2( tempVector.x, tempVector.z ) * THREE.Math.rad, 
+							Math.atan2( tempVector.y, tempVector.x ) * THREE.Math.rad);
 
 						tempQuaternion.setFromRotationMatrix( tempMatrix.getInverse( parentRotationMatrix ) );
 
@@ -1067,11 +1067,11 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 						// console.log( 'test ', point.clone().cross(tempVector).normalize())
 
 						var temp = point.clone().cross(tempVector).normalize()
-						var tempEuler = new THREE.Euler( temp.x * THREErad, temp.y * THREErad, temp.z * THREErad)
+						var tempEuler = new THREE.Euler( temp.x * THREE.Math.rad, temp.y * THREE.Math.rad, temp.z * THREE.Math.rad)
 						quaternionE.setFromEuler( tempEuler ); // rotation axis
 
 						tempQuaternion.setFromRotationMatrix( tempMatrix.getInverse( parentRotationMatrix ) );
-						quaternionX.setFromAxisAngle( quaternionE, - point.clone().angleTo(tempVector) * THREErad);
+						quaternionX.setFromAxisAngle( quaternionE, - point.clone().angleTo(tempVector) * THREE.Math.rad);
 						quaternionXYZ.setFromRotationMatrix( worldRotationMatrix );
 
 						tempQuaternion.multiplyQuaternions( tempQuaternion, quaternionX );
@@ -1091,13 +1091,13 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 						tempVector.applyMatrix4( tempMatrix.getInverse( worldRotationMatrix ) );
 
-						rotation.set( Math.atan2( point.z, point.y ) * THREErad, 
-							Math.atan2( point.x, point.z ) * THREErad, 
-							Math.atan2( point.y, point.x ) * THREErad);
+						rotation.set( Math.atan2( point.z, point.y ) * THREE.Math.rad, 
+							Math.atan2( point.x, point.z ) * THREE.Math.rad, 
+							Math.atan2( point.y, point.x ) * THREE.Math.rad);
 						
-						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREErad, 
-							Math.atan2( tempVector.x, tempVector.z ) * THREErad, 
-							Math.atan2( tempVector.y, tempVector.x ) * THREErad);
+						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREE.Math.rad, 
+							Math.atan2( tempVector.x, tempVector.z ) * THREE.Math.rad, 
+							Math.atan2( tempVector.y, tempVector.x ) * THREE.Math.rad);
 
 						quaternionXYZ.setFromRotationMatrix( oldRotationMatrix );
 						quaternionX.setFromAxisAngle( unitX, rotation.x - offsetRotation.x );
@@ -1131,12 +1131,12 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 					} else if ( scope.space == 'world' ) {
 
-						rotation.set( Math.atan2( point.z, point.y ) * THREErad, 
-							Math.atan2( point.x, point.z ) * THREErad, 
-							Math.atan2( point.y, point.x ) * THREErad);
-						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREErad, 
-							Math.atan2( tempVector.x, tempVector.z ) * THREErad, 
-							Math.atan2( tempVector.y, tempVector.x ) * THREErad);
+						rotation.set( Math.atan2( point.z, point.y ) * THREE.Math.rad, 
+							Math.atan2( point.x, point.z ) * THREE.Math.rad, 
+							Math.atan2( point.y, point.x ) * THREE.Math.rad);
+						offsetRotation.set( Math.atan2( tempVector.z, tempVector.y ) * THREE.Math.rad, 
+							Math.atan2( tempVector.x, tempVector.z ) * THREE.Math.rad, 
+							Math.atan2( tempVector.y, tempVector.x ) * THREE.Math.rad);
 
 						// tempQuaternion.setFromRotationMatrix( tempMatrix.getInverse( parentRotationMatrix ) );
 

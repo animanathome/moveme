@@ -22,7 +22,8 @@ THREE.Vector3.prototype.angle = function(b){
 	if(cosine >= 1.0){
 		angle = 0.0;
 	}else if(cosine <= -1.0){
-		angle = THREEkPi;
+		// angle = THREEkPi;
+		angle = 0;
 	}else{
 		angle = Math.acos(cosine);
 	}
