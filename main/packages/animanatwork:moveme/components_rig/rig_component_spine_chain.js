@@ -82,6 +82,7 @@ MM.SpineComponent.prototype.build = function(){
     if( this.createGlobalControl === true ){
         var spinePos = spineJoint.matrixWorld.getPosition();
 
+        // create main global control
         var spineControl = MM.createControlGroup(this.side, 
             this.getName(this.controlNames[0]));
         spineControl['zero'].setChannelsTranslateAndRotate()
@@ -90,11 +91,23 @@ MM.SpineComponent.prototype.build = function(){
         this.editor.addObject(spineControl['zero'])
 
         this.addControl( spineControl['control'], this.controlNames[0])
+
+        //  create sub global control
+        var globalSubControl = MM.createControlGroup(this.side, 
+            this.getName('test'));
+        globalSubControl['zero'].setChannelsTranslateAndRotate()        
+        spineControl['control'].setParent( globalSubControl['zero'] )
         
+        this.editor.addSelectables([globalSubControl.control])
+        globalSubControl.zero.position.set(0, 0, 0)
+        
+
+        //  parent the spline controls to the sub global control
+
         spineControl['control'].setParent( bottomZero)
         spineControl['control'].setParent( topZero)
 
-        this.editor.addGroupContent( this.assetGroup,[spineControl['control'], spineSetup.topControl, spineSetup.bottomControl ] )  
+        this.editor.addGroupContent( this.assetGroup, [spineControl['control'], spineSetup.topControl, spineSetup.bottomControl ] )  
 
         this.editor.addSelectables([spineControl.control])
     }else{

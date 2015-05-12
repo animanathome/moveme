@@ -63,6 +63,7 @@ MM.insertBiped = function( editor, config ){
 	//	Back
 	u.addRigComponent( new MM.SpineComponent({
 		controlSize: config['control_scale']*1, 
+		'globalControl' : true,
 		asset: config['name'], 
 		names: ['cBodyCtl', 'cHipCtl', 'cBChestCtl'], 
 		joints: ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']}
@@ -71,7 +72,7 @@ MM.insertBiped = function( editor, config ){
 	//	Neck
 	u.addRigComponent( new MM.SpineComponent({
 		'controlSize' : config['control_scale']*1, 
-		'globalControl' : false, 
+		'globalControl' : false,
 		'asset' : config['name'],
 		'names' : ['', 'cTChestCtl', 'cHeadCtl'],
 		'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
