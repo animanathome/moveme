@@ -1,5 +1,5 @@
-MM.insertSphere = function( editor ){
-	var asset = 'sphere'
+MM.insertBall = function( editor ){
+	var asset = 'ball'
 	var namespace = editor.scene.getUniqueNamespace(asset)
 
 	var geometry = new THREE.SphereGeometry( 5, 16, 16 );
@@ -49,8 +49,8 @@ MM.insertSphere = function( editor ){
 	editor.controlsVisibility()
 }	
 
-MM.sphereSelect = function( namespace, container, editor ){
-	console.log('MM.sphereSelect', namespace, container, editor)
+MM.ballSelect = function( namespace, container, editor ){
+	console.log('MM.ballSelect', namespace, container, editor)
 	container.setHeight('180px')
 
     //  GLOBAL

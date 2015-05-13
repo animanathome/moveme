@@ -61,7 +61,7 @@ MM.Menubar.Inserts = function( editor ){
 	var characterTail = new MMUI.MenuItem('Ball');
 	characterTail.onClick( function(){
 		console.log('Insert Ball')
-		MM.insertSphere( editor )
+		MM.insertBall( editor )
 	})
 	characterSubMenu.add( characterTail )	
 
