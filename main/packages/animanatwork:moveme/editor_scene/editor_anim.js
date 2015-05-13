@@ -564,6 +564,25 @@ MM.Editor.prototype.addKey = function(){
     this.signals.keyframeEditorChanged.dispatch()
 }
 
+MM.Editor.prototype.moveKeys = function(start_time, end_time, value){
+    console.log('moveKeys', start_time, end_time, value)
+    /*
+    Move the keys inbetween start and end time from the currently active animation curves by the given value
+    */
+    var i, j, thisAnimCurve;
+    for(i = 0; i < this.selectedAnimCurves.length; i++){
+        thisAnimCurve = this.selectedAnimCurves[i];
+        for(j = 0; j < thisAnimCurve.getNumberOfKeys(); j++){
+            if(thisAnimCurve.t[j] >= start_time && thisAnimCurve.t[j] <= end_time){
+                thisAnimCurve.t[j] += value;
+            }
+
+        }
+    }
+
+    this.signals.keyframeEditorChanged.dispatch()
+}
+
 MM.Editor.prototype.removeKey = function(){
     //  undo
     var undoAnimCurves = []

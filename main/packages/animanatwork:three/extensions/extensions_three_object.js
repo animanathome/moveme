@@ -292,7 +292,7 @@ THREE.Object3D.prototype.getChannelGroupIndex = function( channelGroup ){
 }
 
 THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelName){
-	console.log('getChannelNameIndex', channelGroup, channelName)
+	// console.log('getChannelNameIndex', channelGroup, channelName)
 
 	var gi = this.getChannelGroupIndex(channelGroup);
 	var nc = this.animChannels[gi][1].length;
@@ -339,7 +339,7 @@ THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName
 }
 
 THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
-	console.log('getChannelRange', channelGroup, channelName)
+	// console.log('getChannelRange', channelGroup, channelName)
 
 	var gi = this.getChannelGroupIndex(channelGroup)
 	var ni = this.getChannelNameIndex( channelGroup, channelName )
@@ -351,7 +351,7 @@ THREE.Object3D.prototype.getChannelType = function( channelGroup, channelName ){
 }
 
 THREE.Object3D.prototype.setChannelType = function( channelGroup, channelName, channelType ){
-	console.log('setChannelRange', channelGroup, channelName, channelType)
+	// console.log('setChannelRange', channelGroup, channelName, channelType)
 
 	var gi = this.getChannelGroupIndex(channelGroup)
 	var ni = this.getChannelNameIndex( channelGroup, channelName )

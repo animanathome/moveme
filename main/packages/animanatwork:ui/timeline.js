@@ -26,6 +26,7 @@ MMUI.Timeline = function(){
 	this._frame_width = -1;
 	this._key_indices = []
 	this._key_offset = 0;
+	this._drag_selection_mode = false;
 
 	//	color variables
 	this.bgFrameColor = '#999';
@@ -135,8 +136,15 @@ MMUI.Timeline = function(){
 	this.timeReleaseEvent = document.createEvent('HTMLEvents');
     this.timeReleaseEvent.initEvent('timerelease', true, true)
 
+    //	move event
+    this.moveKeysStartEvent = document.createEvent('HTMLEvents')
+    this.moveKeysStartEvent.initEvent('movekeysstart', true, true)
+
     this.moveKeysEvent = document.createEvent('HTMLEvents')
     this.moveKeysEvent.initEvent('movekeys', true, true)
+
+    this.moveKeysEndEvent = document.createEvent('HTMLEvents')
+    this.moveKeysEndEvent.initEvent('movekeysend', true, true)
 
 	return this;
 }
@@ -145,8 +153,16 @@ MMUI.Timeline = function(){
 MMUI.Timeline.prototype = Object.create( MMUI.Element.prototype );
 
 MMUI.Timeline.prototype.setActiveKeys = function( activeKeys ){
+	console.log('Timeline.setActiveKeys', activeKeys)
+	
+	if(this._drag_selection_mode === true){
+		console.log('\tdrag selection mode')
+		return;
+	}
+
 	this.keyframes = activeKeys;
-	this.update();
+	
+	this.rebuild();
 
 	return this;
 }
@@ -216,6 +232,8 @@ MMUI.Timeline.prototype.dragSelection = function(){
 	var scope = this;
 	return function(){
 		var onMouseMove = function( event ){
+			scope._drag_selection_mode = true;
+
 			// console.log('dragSelection.onMouseMove')
 			var movementX = event.movementX | event.webkitMovementX | event.mozMovementX | 0;
 			// console.log('\tmove', movementX)
@@ -227,26 +245,31 @@ MMUI.Timeline.prototype.dragSelection = function(){
 			//	dragging to the right
 			if(scope._drag_selection >= scope._frame_width){
 				scope._drag_selection = 0;
+
+				//	send signal before changing internal data				
+				scope._key_offset = 1;
+				scope.dom.dispatchEvent(scope.moveKeysEvent);
+
 				scope._start += 1;
 				scope._end += 1;
-
-				scope._key_offset = 1;
 			}
 
 			if(scope._drag_selection <= -1 * scope._frame_width){
-				scope._drag_selection = 0;
+				scope._drag_selection = 0;				
+
+				//	send signal before changing internal data
+				scope._key_offset = -1;
+				scope.dom.dispatchEvent(scope.moveKeysEvent);
+
 				scope._start -= 1;
 				scope._end -= 1;
-
-				scope._key_offset = -1;				
 			}
 
 			if(scope._key_offset !== 0){
 				scope._updateSelection();
 				scope._moveKeys(scope._key_offset)
 				scope._removeKeys()
-				scope._buildKeys()
-				scope.dom.dispatchEvent(scope.moveKeysEvent);
+				scope._buildKeys()				
 			}
 
 		}
@@ -254,12 +277,32 @@ MMUI.Timeline.prototype.dragSelection = function(){
 		var onMouseUp = function( event ){
 			// console.log('dragSelection.onMouseUp')
 			// console.log('\tevent', event)
+			scope._drag_selection_mode = false;
+
 			document.removeEventListener( 'mousemove', onMouseMove );
 			document.removeEventListener( 'mouseup', onMouseUp );
+
+			//	end drag selection event 
+			scope.dom.dispatchEvent(scope.moveKeysEndEvent)
 		}
 
 		document.addEventListener( 'mousemove', onMouseMove, false );
 		document.addEventListener( 'mouseup', onMouseUp, false );
+
+		//	start drag selection event
+		scope.dom.dispatchEvent(scope.moveKeysStartEvent)
+
+		console.log('dragSelection.mousedown')
+		
+		if( event.button == 2 ){	//	right mouse		
+			scope._drag_selection_mode = false;
+
+			document.removeEventListener( 'mousemove', onMouseMove );
+			document.removeEventListener( 'mouseup', onMouseUp );
+
+			scope._resetSelection();
+		}
+
 	}
 }
 
@@ -285,7 +328,7 @@ MMUI.Timeline.prototype.dragTime = function(){
 						scope._updateSelection()
 						scope._getKeysWithinSelection()
 					}else{
-						console.log('resetting')
+						// console.log('resetting')
 						scope._start = -1;
 						scope._end = -1;
 					}
@@ -504,7 +547,7 @@ MMUI.Timeline.prototype.rebuild = function(){
 	//	selection
 	var selection = document.createElement('span');
 	selection.className = 'timeline-key-selection'
-	selection.style.cssText = 'left:100px;width:100px;';
+	selection.style.cssText = 'left:100px;width:100px;display:none;';
 	this.timeLine.dom.appendChild( selection );
 
 	selection.addEventListener( 'mousedown', this.dragSelection());
@@ -522,7 +565,9 @@ var events = [
 				'Endframe',
 				'Timechange',
 				'Timeshift', // change time without evaluating it
+				'Movekeysstart',
 				'Movekeys',
+				'Movekeysend',
 				'Timerelease'
 				];
 events.forEach( function ( event ) {

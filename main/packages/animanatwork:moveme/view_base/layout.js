@@ -248,17 +248,9 @@ MM.Layout = function( dom, editor, options){
 			  sidebar: {
 				 h: [0,100]
 				,w: [80, 100]
-				,ld: ['workspace', 'timeLine', 'rangeSlider'] // left dependency
-				,rd: ['sidebar']  // right dependency
-				// ,bi: ['timeLine'] // bottom influence
+				,ld: ['workspace', 'timeLine', 'rangeSlider']
+				,rd: ['sidebar']
 			}
-			// , assetbar:{
-			// 	 h: [0,100]
-			// 	,w: [20, 80]
-			// 	,rd: ['workspace', 'timeLine', 'infoLine', 'rangeSlider'] // left dependency
-			// 	,ld: ['assetbar']  // right dependency
-			// 	// ,bi: ['timeLine'] // bottom influence
-			// }
 		}
 	}
 
@@ -307,8 +299,14 @@ MM.Layout = function( dom, editor, options){
 		}).onTimerelease( function(){
 			console.log('time release')
 			scope.editor.signals.objectRefresh.dispatch();
+		}).onMovekeysstart(function(){
+			console.log('layout.moveKeysstart')
+			scope.editor.getUndoTransformDataFromMovedKeys();
 		}).onMovekeys( function(){
-			console.log('layout.moveKeys', scope.timeline._key_offset, 'for', scope.timeline._key_indices)
+			console.log('layout.moveKeys', scope.timeline._key_offset, 'for', scope.timeline._start, 'to', scope.timeline._end)
+			scope.editor.moveKeys(scope.timeline._start, scope.timeline._end, scope.timeline._key_offset)
+		}).onMovekeysend(function(){
+			console.log('layout.onMovekeysend')
 		})
 	}
 
@@ -355,15 +353,6 @@ MM.Layout = function( dom, editor, options){
 		this.infoLine.textContent='finished startup';
 		infoLinePanel.dom.appendChild(this.infoLine)	
 	}
-
-	// var parent = document.getElementById("movemeanim");
-	// var dialog = new MMUI.Dialog('Save Version As', 'Scene Description...', 'Save Version');
-	// parent.appendChild( dialog.dom )
-	// dialog.onAction = function(){
-	// 	console.log('my test', dialog.getValue())
-	// 	dialog.deleteUI();
-	// 	dialog = null;
-	// }
 
 //	WORKSPACE
 	//	define the default workspace layout
@@ -544,7 +533,7 @@ MM.Layout = function( dom, editor, options){
 	//	NOTE: try to the different types of signals contained
 	//	In this case the is a keyframe editor related signal which shouldn't have any influence outside of it's scope. Something to look into as it will make debugging and updating the different modules easier.
 	this.editor.signals.keyframeEditorKeysUpdated.add( function(){
-		// console.log('Layout.keyframeEditorKeysUpdated')
+		console.log('Layout.keyframeEditorKeysUpdated')
 		if(scope.timeline){
 			// console.log('\tactive time value:', scope.editor.activeTimeValue )
 			scope.timeline.setActiveKeys( scope.editor.activeTimeValue )
@@ -554,7 +543,7 @@ MM.Layout = function( dom, editor, options){
 	});
 
 	this.editor.signals.keyframeEditorChanged.add( function(){
-		// console.log('MM.Layout.onKeyframeEditorChanged')
+		console.log('MM.Layout.onKeyframeEditorChanged')
 		/*
 		Every time the key view changes we want to make sure we show the active keyframes to the user.
 		*/

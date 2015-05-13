@@ -124,6 +124,7 @@ MM.Editor.prototype.undo = function(){
             break;
 
             case "setKey":
+                //  NOTE: this only works on selected or active keys/tangents
                 //  set key positions
                 //  set tangent positions
                 //  change tangent mode                    
@@ -132,6 +133,13 @@ MM.Editor.prototype.undo = function(){
                 this.getUndoTransformDataFromSelectedKeys('redo')
 
                 this.setUndoTransformDataToSelectedKeys( commandData[1] )
+                this.signals.keyframeEditorChanged.dispatch()
+            break;
+
+            case "moveKey":
+                this.getUndoTransformDataFromMovedKeys('redo')
+
+                this.setUndoTransformDataToMovedKeys( commandData[1] )
                 this.signals.keyframeEditorChanged.dispatch()
             break;
 
@@ -281,6 +289,13 @@ MM.Editor.prototype.redo = function(){
                 this.getUndoTransformDataFromSelectedKeys('undo')
 
                 this.setUndoTransformDataToSelectedKeys( commandData[1] )
+                this.signals.keyframeEditorChanged.dispatch()
+            break;
+
+            case "moveKey":
+                this.getUndoTransformDataFromMovedKeys('undo')
+
+                this.setUndoTransformDataToMovedKeys( commandData[1] )
                 this.signals.keyframeEditorChanged.dispatch()
             break;
 
@@ -654,6 +669,71 @@ MM.Editor.prototype.getUndoTransformDataFromSelectedKeys = function( mode ){
 }
 
 MM.Editor.prototype.setUndoTransformDataToSelectedKeys = function( keyData ){
+    // console.log('setUndoTransformDataToSelectedKeys', keyData)
+    var curve, tCurve, nde, i;
+    for(curve in keyData){
+        // number of data entries
+        nde = keyData[curve].length; 
+        
+        //  get the curve
+        tCurve = this.getAnimCurveByName(curve)
+
+        //  set the data
+        for(i=0; i < nde; i++){
+            console.log('\t', keyData[curve][i][0], keyData[curve][i][1])
+            tCurve.setTransformDataToIndex( keyData[curve][i][0], keyData[curve][i][1] );  
+        }
+    }
+}
+
+MM.Editor.prototype.getUndoTransformDataFromMovedKeys = function( mode ){
+    /*    
+    Get undo move data for keyframes
+
+    Data format:
+    data = {
+        animCurve1: [            
+              [0, [0, 0, 2, 2, -2, 0, 2, 0, false, true]]
+            , [1, [1, 0, 2, 2, -2, 0, 2, 0, false, true]]
+            , [2, [2, 0, 2, 2, -2, 0, 2, 0, false, true]]
+        ],
+        animCurve2: [            
+              [0, [0, 0, 2, 2, -2, 0, 2, 0, false, true]]
+            , [1, [1, 0, 2, 2, -2, 0, 2, 0, false, true]]
+            , [2, [2, 0, 2, 2, -2, 0, 2, 0, false, true]]
+        ]
+    }
+    */
+    
+    if( mode === undefined ){
+        mode = 'undo'
+    }
+
+    var count = 0;
+    var thisData = {};
+    var thisCurve, lData, theseIndices, ni;
+    for(var i = 0; i < this.selectedAnimCurves.length; i++){
+        //  Add an entry for the current animation curve
+        thisCurve = this.selectedAnimCurves[i];
+        thisData[thisCurve.name] = [];
+
+        // Collect data for each selected key/tangent
+        ni = thisCurve.getNumberOfKeys();
+        lData = [];
+        for(var j = 0; j < ni; j++){
+            lData.push( [j, thisCurve.getTransformDataFromIndex(j)])
+        }
+
+        // Associate the data with the animation curve
+        thisData[thisCurve.name] = lData;
+    }
+
+    this.addToUndoStack(['moveKey', thisData], mode)
+
+    return count;
+}
+
+MM.Editor.prototype.setUndoTransformDataToMovedKeys = function( keyData ){
     // console.log('setUndoTransformDataToSelectedKeys', keyData)
     var curve, tCurve, nde, i;
     for(curve in keyData){
