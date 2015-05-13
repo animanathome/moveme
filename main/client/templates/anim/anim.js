@@ -164,6 +164,9 @@ Template.anim.rendered = function(){
 //	TRY
 	if( this.data.hasOwnProperty('try') ){
 		moveme.layout.projectbar.setTryData()
+
+		console.log('Loading local cache.')
+		moveme.editor.loadSceneLocal();
 	}
 
 //	LOAD SAVED SCENE SETTINGS
