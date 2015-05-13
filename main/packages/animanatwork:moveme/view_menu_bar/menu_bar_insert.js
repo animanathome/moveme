@@ -21,10 +21,10 @@ MM.Menubar.Inserts = function( editor ){
 	var primitiveSubMenu = new MMUI.SubMenuGrp('Primitive')
 	menuGrp.add( primitiveSubMenu )
 
-	var primitiveGround = new MMUI.MenuItem('Ground').onClick( function(){
-		MM.insertGround( editor );
-	})
-	primitiveSubMenu.add( primitiveGround )	
+	// var primitiveGround = new MMUI.MenuItem('Ground').onClick( function(){
+	// 	MM.insertGround( editor );
+	// })
+	// primitiveSubMenu.add( primitiveGround )	
 
 	var primitivePlane = new MMUI.MenuItem('Plane').onClick( function(){
 		MM.insertPlane( editor);
