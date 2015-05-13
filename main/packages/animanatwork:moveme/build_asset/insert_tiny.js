@@ -55,9 +55,13 @@ MM.insertMidi = function( editor ){
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.125
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.z = 0.4
 
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.625
+		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.4
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.125
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.625
+		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.4
+
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.x = 0.7
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.y = 0.7
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.z = 0.7
 
 		var sides = ['l', 'r']
 		var i;

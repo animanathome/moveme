@@ -82,34 +82,35 @@ MM.SpineComponent.prototype.build = function(){
     if( this.createGlobalControl === true ){
         var spinePos = spineJoint.matrixWorld.getPosition();
 
-        // create main global control
-        var spineControl = MM.createControlGroup(this.side, 
-            this.getName(this.controlNames[0]));
-        spineControl['zero'].setChannelsTranslateAndRotate()
+    // create main global control
+        var globalControl = MM.createControlGroup(this.side, 
+            this.namespace+this.controlNames[0]);
+        globalControl['zero'].setChannelsTranslateAndRotate()
 
-        spineControl['zero'].position.set(spinePos.x, spinePos.y, spinePos.z)
-        this.editor.addObject(spineControl['zero'])
+        globalControl['zero'].position.set(spinePos.x, spinePos.y, spinePos.z)
+        this.editor.addObject(globalControl['zero'])
 
-        this.addControl( spineControl['control'], this.controlNames[0])
+        this.addControl( globalControl['control'], this.controlNames[0])
 
-        //  create sub global control
+    //  create sub global control
         var globalSubControl = MM.createControlGroup(this.side, 
-            this.getName('test'));
-        globalSubControl['zero'].setChannelsTranslateAndRotate()        
-        spineControl['control'].setParent( globalSubControl['zero'] )
+            this.namespace+'cBodySubCtl');
+        globalSubControl['zero'].setChannelsTranslateAndRotate()
+                    
+        globalSubControl.zero.position.set(spinePos.x, spinePos.y, spinePos.z)
+        this.editor.addObject(globalSubControl.zero)
         
-        this.editor.addSelectables([globalSubControl.control])
-        globalSubControl.zero.position.set(0, 0, 0)
-        
+        globalControl['control'].setParent( globalSubControl['zero'] )
 
-        //  parent the spline controls to the sub global control
+        this.addControl( globalSubControl['control'], 'cBodySubCtl')
 
-        spineControl['control'].setParent( bottomZero)
-        spineControl['control'].setParent( topZero)
+    //  parent the spline controls to the sub global control
+        globalSubControl['control'].setParent( bottomZero)
+        globalSubControl['control'].setParent( topZero)
 
-        this.editor.addGroupContent( this.assetGroup, [spineControl['control'], spineSetup.topControl, spineSetup.bottomControl ] )  
+        this.editor.addGroupContent( this.assetGroup, [globalControl.control, globalSubControl.control, spineSetup.topControl, spineSetup.bottomControl])
 
-        this.editor.addSelectables([spineControl.control])
+        this.editor.addSelectables([globalControl.control, globalSubControl.control])
     }else{
         // this.addControl( spineSetup.topControl )
         // this.addControl( spineSetup.bottomControl )

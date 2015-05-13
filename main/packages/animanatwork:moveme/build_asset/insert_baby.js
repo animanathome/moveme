@@ -57,9 +57,13 @@ MM.insertMini = function( editor ){
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.25
 
 		// u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.x = 0.5
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.y = 0.5
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.z = 0.5
+		u.getRigComponent('back').controls['cBodyCtl'].controlScale.x = 0.65
+		u.getRigComponent('back').controls['cBodyCtl'].controlScale.y = 0.65
+		u.getRigComponent('back').controls['cBodyCtl'].controlScale.z = 0.65
+
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.x = 0.45
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.y = 0.45
+		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.z = 0.45
 
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.x = 1.5
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.5
