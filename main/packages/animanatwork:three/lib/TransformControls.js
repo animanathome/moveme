@@ -451,7 +451,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	}
 
 	this.update = function () {
-		// console.log('TransformControls: update')
+		console.log('TransformControls: update')
 		// console.log('\tcamera', this.camera)
 
 	//	SINGLE SELECTION
@@ -771,6 +771,11 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	function onMouseHover( event ) {
 		// console.log('TransformControls: onMouseHover')
 
+		if(event.altKey === true){
+			console.log('\talt pressed')
+			return;
+		}
+
 		if(scope.mode === 'select'){
 			// console.log('\tSelect mode. Nothing to do.')
 			return;
@@ -927,6 +932,11 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	};
 
 	function onMouseMove( event ) {
+
+		if( event.altKey === true ){
+			return
+		}
+
 		// console.log('----------------')
 		// console.log('TransformControls.onMouseMove')
 		// console.log('\tisMoving', scope.isMoving)

@@ -75,32 +75,22 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     
     // this.addedEvent = false;
     this.onMouseDown = function ( event ){
-        // console.log('SceneView.onMouseDown')
-        // console.log('\tmanipulator', manipulator)
-
-        // event.preventDefault();
-
         onMouseDownPosition.set( event.layerX, event.layerY );
-        // viewportCameraControl.enabled = true;
-        // editor.keyframeEditorCameraControl.enabled = false
-
-        // console.log('camera.enabled', viewportCameraControl.enabled)
-
         
-        if ( manipulator.hovered === false ){
-            // console.log('Cursor is NOT over manipulator')
-            manipulator.enabled = false;
-            viewportCameraControl.enabled = true; 
+        console.log('SceneView.onMouseDown')
+
+        if(event.altKey === true){
+            viewportCameraControl.enabled = true;
         }else{
-            // console.log('Cursor is over manipulator')
-            manipulator.enabled = true;
+            if(manipulator.hovered === true){
+                manipulator.enabled = true;                
+            }            
             viewportCameraControl.enabled = false; 
+
         }
+        manipulator.enabled = false; 
 
-
-        // scope.parentPanel.dom.addEventListener( 'mousemove', onMouseMove, false );
         scope.parentPanel.dom.addEventListener( 'mouseup', onMouseUp, false );
-        // scope.addedEvent = true;        
     }
     this.parentPanel.dom.addEventListener( 'mousedown', this.onMouseDown, false );
 
