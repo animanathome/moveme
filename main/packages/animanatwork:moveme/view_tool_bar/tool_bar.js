@@ -7,13 +7,7 @@ MM.Toolbar = function( editor, parent, options){
 	container.setClass( 'toolbar')
 	parent.appendChild( container.dom );
 
-	var showFile = true
-	if( options.hasOwnProperty('server_actions')){
-		showFile = options['server_actions']
-	}
-	if(showFile){
-		var File = new MM.FileToolBar( editor, container )
-	}
+	var File = new MM.FileToolBar( editor, container, options )
 	
 	var SceneView = new MM.SceneViewToolBar( editor, container )
 	
@@ -24,32 +18,55 @@ MM.Toolbar = function( editor, parent, options){
 	return container;
 }
 
-MM.FileToolBar = function( editor, parent ){
+MM.FileToolBar = function( editor, parent, options){
+	console.log('FileToolBar', editor, parent, options)
+
+	var showFile = true
+	if( options.hasOwnProperty('server_actions')){
+		showFile = options['server_actions']
+	}
+
 	var signals = editor.signals;
 
-	var options = new MMUI.Panel();
-	options.setClass( "file-toolbar");
-	parent.add( options )
+//	build base layout
+	var panel = new MMUI.Panel();
+	panel.setClass( "file-toolbar");
+	
+	if(showFile){
+		panel.setWidth('170px')	
+	}else{
+		panel.setWidth('135px')	
+	}
+
+	parent.add( panel )
 
 	var intro = new MMUI.Text().setValue('File').setClass('toolbar-intro')
-	options.add( intro )	
+	panel.add( intro )	
 
 //	FILE IO
 	var toolbar = new MMUI.ButtonToolBar;
-	options.add( toolbar )
+	panel.add( toolbar )
 
 	var snapGroup = new MMUI.ButtonGroup;
 	toolbar.add( snapGroup )
 
-	// var timeSnapUI = new MMUI.Button().setImage('/ui/file_open.png').addToolTip('File Open').onClick( function(){
-	// 		console.log('File Open, yet to be implemented')
-	// })
-	// snapGroup.add(timeSnapUI)
+	if(showFile){
+		var valueSnapUI = new MMUI.Button().setImage('/ui/file_save.png').addToolTip('File Save').onClick( function(){
+				editor.saveSceneLocal();
+		} );	
+		snapGroup.add(valueSnapUI)
+	}
 
-	var valueSnapUI = new MMUI.Button().setImage('/ui/file_save.png').addToolTip('File Save').onClick( function(){
-			editor.saveSceneLocal();
+//	UNDO - REDO
+	var undoUI = new MMUI.Button().setImage('/ui/undo.gif').addToolTip('Undo Action').onClick( function(){
+			editor.undo();
 	} );	
-	snapGroup.add(valueSnapUI)
+	snapGroup.add(undoUI)
 
-	return options;
+	var redoUI = new MMUI.Button().setImage('/ui/redo.gif').addToolTip('Undo Action').onClick( function(){
+			editor.redo();
+	} );	
+	snapGroup.add(redoUI)
+
+	return panel;
 }
