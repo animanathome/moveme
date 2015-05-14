@@ -6,7 +6,15 @@
 	width: 100%;
 	min-height: 250px;
 	background-color: #302e34;
-	font-size: 16px;
+
+
+	@media (min-width:800px){
+		font-size: 12px;
+	}
+	@media (min-width:1200px){
+		font-size: 16px;
+	}	
+
 }
 
 .global-content{
@@ -27,7 +35,21 @@
 	width: 100%;
 	margin: 0px;
 	padding: 40px 0px 0px 0px;
-	padding-right: 350px;
+	//padding-right: 350px;
+
+
+	@media (min-width:600px){
+		padding-right: 200px;
+	}
+
+	@media (min-width:800px){
+		padding-right: 250px;
+	}
+
+	@media (min-width:1200px){
+		padding-right: 350px;
+	}
+
 }
 
 .global-footer .footer-menu ul{
@@ -46,6 +68,18 @@
 
 .global-footer .footer-menu ul>li h4{
 	margin: 0 0 10px 0;
+
+	@media (min-width:400px){
+		font-size: 12px;
+	}
+
+	@media (min-width:800px){
+		font-size: 14px;
+	}
+
+	@media (min-width:1200px){
+		font-size: 16px;
+	}
 }
 
 .global-footer .footer-menu ul>li>ul{
@@ -64,6 +98,18 @@
 
 .global-footer .footer-menu ul>li> a{
 	color: white;
+
+	@media (min-width:400px){
+		font-size: 12px;
+	}
+
+	@media (min-width:800px){
+		font-size: 14px;
+	}
+
+	@media (min-width:1200px){
+		font-size: 16px;
+	}
 }
 
 .global-footer .footer-menu ul>li> a:hover{
@@ -73,10 +119,21 @@
 .global-footer .footer-contact{
 	padding: 40px;
 	height: 250px;
-	margin-top: -40px;	
-	width: 350px;
+	margin-top: -40px;		
 	float: right;
 	background-color: black;
+
+	@media (min-width:600px){
+		width: 200px;
+	}
+
+	@media (min-width:800px){
+		width: 250px;
+	}
+
+	@media (min-width:1200px){
+		width: 350px;
+	}
 }
 
 .global-footer .footer-contact h4{
@@ -84,6 +141,21 @@
 	color: white;
 	font-size: 1.125em;
 	line-height: 1.22222em;
+
+	@media (min-width:600px){
+		font-size: 16px;
+		line-height: 16px;
+	}
+
+	@media (min-width:800px){
+		font-size: 18px;
+		line-height: 18px;
+	}
+
+	@media (min-width:1200px){
+		font-size: 20px;
+		line-height: 20px;
+	}
 }
 
 .global-footer .footer-contact p{	
@@ -92,6 +164,20 @@
 	font-weight: 100;
 	margin-bottom: 1.5em;
 	margin-top: 0.5em;
+}
+
+.global-footer .footer-contact p a{
+	@media (min-width:600px){
+		font-size: 12px;
+	}
+
+	@media (min-width:800px){
+		font-size: 14px;
+	}
+
+	@media (min-width:1200px){
+		font-size: 16px;
+	}
 }
 
 .global-footer .footer-contact p a:hover{
