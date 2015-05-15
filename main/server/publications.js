@@ -20,6 +20,14 @@ Meteor.publish('singleProject', function(id){
   return ProjectList.find(id);
 });
 
+
+//  -------------------------------------------------------------------------
+//  SHOTS
+
+Meteor.publish('numberOfShots', function( number_of_shots ){
+  return ShotList.find({}, {limit:number_of_shots})  
+})
+
 Meteor.publish('shots', function(projectId){
     //  return all shots that belong to the given project
     return ShotList.find({

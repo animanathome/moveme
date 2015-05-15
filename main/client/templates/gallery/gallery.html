@@ -1,0 +1,25 @@
+<template name="gallery">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="gallery-container">
+        <div class="gallery-container-content">
+        	<ul class="gallery-item-list">
+			{{#each shots}}
+				{{> galleryItem}}
+			{{/each}}
+			</ul>
+       	</div>
+    </div>
+
+	<!-- {{>footer}} -->
+</template>
+
+<template name="galleryItem">
+	<li class="gallery-item-container">		
+		<img src="/ui/imagePlaceHolder.png">
+		<span class="gallery-item">
+			{{title}}			
+		</span>
+	</li>
+</template>

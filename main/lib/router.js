@@ -52,6 +52,19 @@ Router.route('/', {
     }    
 });
 
+//  gallery
+Router.route('/gallery',{
+    name: 'gallery',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('numberOfShots', 20)
+            ];
+    },
+    data: function(){
+        return ShotList.find({})
+    }
+})    
+
 //  assets
 Router.route('/assets',{
     name: 'assets',
