@@ -17,9 +17,11 @@
 
 <template name="galleryItem">
 	<li class="gallery-item-container">		
-		<img src="/ui/imagePlaceHolder.png">
-		<span class="gallery-item">
-			{{title}}			
-		</span>
+		<img class="anim" src={{latestVersionThumbnail}}>
+		<div>
+			<span>
+				{{title}} by {{author}}
+			</span>
+		</div>
 	</li>
 </template>

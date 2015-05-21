@@ -1,7 +1,24 @@
 //	pre-populate collections when they are empty
 //	this is for testing
-var tomId, sachaId, manuId;
+var adminId, ambreId, manuId;
 if ( Meteor.users.find().count() === 0 ) {
+    var now = new Date().getTime();
+
+    // create admin logins
+    adminId = Accounts.createUser({
+        username: 'admin',
+        email: 'animanatwork@gmail.com',
+        password: 'admin',
+        profile: {
+            first_name: 'admin',
+            last_name: 'admin',
+            company: 'MoveMe',
+        }
+    });
+    console.log('Admin', adminId)
+
+    // create personal logins
+    // manu
     manuId = Accounts.createUser({
         username: 'manu',
         email: 'animanatwork@me.com',
@@ -14,6 +31,7 @@ if ( Meteor.users.find().count() === 0 ) {
     });
     console.log('manu', manuId)
 
+    //  ambre
     ambreId = Accounts.createUser({
         username: 'ambre',
         email: 'ambre.maurin@gmail.com',
@@ -26,23 +44,9 @@ if ( Meteor.users.find().count() === 0 ) {
     });
     console.log('Ambre', ambreId)
 
-  // create two users
-    tomId = Meteor.users.insert({
-      profile: { name: 'Tom Coleman' }
-    });
-    
-    sachaId = Meteor.users.insert({
-      profile: { name: 'Sacha Greif' }
-    });
-}
-
-
-//  Assets
-//    + Comment
-
-if (AssetList.find().count() === 0) {
-	var now = new Date().getTime();
-  tom = Meteor.users.findOne(tomId);
+//  ---------------------------------------------------------------------------
+//  create asset entries
+//  
 
   var bounceId = AssetList.insert({    
     author: 'manu',
@@ -60,8 +64,8 @@ if (AssetList.find().count() === 0) {
   Comments.insert({
     postId: bounceId, // maybe we need to generalize the name postId?
     postType: 'asset',
-    userId: tom._id,
-    author: tom.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     submitted: new Date(now - 5 * 3600 * 1000),
     body: 'Love this bounce asset. It is a great way to get started!'
   });
@@ -127,24 +131,11 @@ if (AssetList.find().count() === 0) {
     votes: 0  
   }); 
 
-  // AssetList.insert({
-  //   author: 'manu',
-  //   userId: manuId,
-  //   title: 'Dino',
-  //   description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
-  //   submitted: new Date(now - 4 * 3600 * 1000),
-  //   thumbnail: '/assets/assetDino.jpg',
-  //   commentsCount: 0,
-  //   votes: 0  
-  // }); 
-}	
 
-//  Project
-//    + Shots
-//      + Versions
-//        + Comment
+//  ---------------------------------------------------------------------------
+//  create project, shot and version entries
+//  
 
-if( ProjectList.find().count() === 0 ){
   function str2ab(str) {
     var buf = new ArrayBuffer(str.length);
     var bufView = new Uint8Array(buf);
@@ -154,13 +145,13 @@ if( ProjectList.find().count() === 0 ){
     return buf;
   }
 
-	var now = new Date().getTime();
+//  ADMIN submissions
 
   //  -------------------------------------------------------------------------
   //  Front page demo project
   var front_page_project_id = ProjectList.insert({
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     title: 'Homepage examples',
     description: 'This project contains all of the animation examples we see  on the front page.',
     submitted: new Date(now - 3 * 3600 * 1000),
@@ -173,15 +164,20 @@ if( ProjectList.find().count() === 0 ){
   //  Jumping ball shot
   var jumping_ball_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     title: 'Jumping ball',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 0,
     fps: 24,
-    duration: 48
+    duration: 48,
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: ''
+
+    , isPublic: true
   })
 
   //  Create a shot version scene file
@@ -193,11 +189,11 @@ if( ProjectList.find().count() === 0 ){
   var fileId = FileList.insert(newFile);
 
   //  Jumping ball version 1
-  var versionId = VersionList.insert({
+  var jumping_ball_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: jumping_ball_shot_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     description: 'What is up there?',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -211,23 +207,43 @@ if( ProjectList.find().count() === 0 ){
     thumbnail: '/assets/assetBall_000.jpg'
   })
 
+  //  Update file to link to shot version
   FileList.update({
     _id: fileId._id
-  }, { versionId:versionId})
+  }, { versionId:jumping_ball_shot_version_id})
+
+  //  Update the shot to link to the latest shot version
+  //  NOTE: need to use set instead of just update as the latter will replace all of the data of the document
+  ShotList.update(
+    { _id: jumping_ball_shot_id}, 
+    { $set:
+      {
+        latestVersionId: jumping_ball_shot_version_id,
+        latestVersionVideoId: 'CJRDYr7TJYo',
+        latestVersionThumbnail: '/assets/assetBall_000.jpg'
+      }
+    }
+  ) 
 
   //  -----------------------------------------
   //  Jumping tail shot
   var jumping_tail_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     title: 'Jumping tail',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 0,
     fps: 24,
-    duration: 48
+    duration: 48,
+
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: ''
+
+    , isPublic: true
   })
 
   //  Create a shot version scene file
@@ -239,11 +255,11 @@ if( ProjectList.find().count() === 0 ){
   var fileId = FileList.insert(newFile);
 
   //  Jumping tail version 1
-  var versionId = VersionList.insert({
+  var jumping_tail_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: jumping_tail_shot_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     description: 'I can go higher',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -257,31 +273,48 @@ if( ProjectList.find().count() === 0 ){
     thumbnail: '/assets/assetTail_000.jpg'
   })
 
+  //  Link scene file to version
   FileList.update({
     _id: fileId._id
-  }, { versionId:versionId})  
+  }, { versionId:jumping_tail_shot_version_id})
+
+  //  Update the shot to link to the latest shot version
+  ShotList.update({
+    _id: jumping_tail_shot_id
+  }, { $set:{
+      latestVersionId: jumping_tail_shot_version_id,
+      latestVersionVideoId: 'CJRDYr7TJYo',
+      latestVersionThumbnail: '/assets/assetTail_000.jpg'
+    }
+  }) 
 
   //  -----------------------------------------
   //  Running legs shot
   var running_legs_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     title: 'Running legs',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 0,
     fps: 24,
-    duration: 48
+    duration: 48,
+
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: ''
+
+    , isPublic: true
   })
 
   //  Running legs version 1
-  VersionList.insert({
+  var running_legs_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: running_legs_shot_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     description: 'Faster! Faster!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -294,60 +327,43 @@ if( ProjectList.find().count() === 0 ){
     thumbnail: '/assets/assetLegs_000.jpg'
   }) 
 
-  //  -----------------------------------------
-  //  Mini jumping kick shot
-  var jumping_kick_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
-    title: 'Running legs',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 0,
-    fps: 24,
-    duration: 48
+  //  Update the shot to link to the latest version
+  ShotList.update({
+    _id: running_legs_shot_id
+  }, {$set:{
+      latestVersionId: running_legs_shot_version_id,
+      latestVersionVideoId: 'CJRDYr7TJYo',
+      latestVersionThumbnail: '/assets/assetLegs_000.jpg'
+    }
   })
-
-  //  Mini jumping kick version 1
-  VersionList.insert({
-    projectId: front_page_project_id,
-    shotId: jumping_kick_shot_id,
-    author: 'manu',
-    userId: manuId,
-    description: 'Aaaaaaahhhh!',
-    submitted: new Date(now - 13 * 3600 * 1000),
-    versionNumber: 2,
-    fps: 24,
-    duration: 48,
-    commentsCount: 0,
-    upvoters: [],
-    votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetMini_000.jpg'
-  })  
 
   //  -----------------------------------------
   //  Midi reflection shot
   var midi_reflection_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     title: 'Midi reflection shot',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 0,
     fps: 24,
-    duration: 48
+    duration: 48,
+
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: '' 
+
+    , isPublic: true   
   })
 
   //  Mini reflection shot version 1
-  VersionList.insert({
+  var midi_reflection_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: midi_reflection_shot_id,
-    author: 'manu',
-    userId: manuId,
+    author: adminId.username,
+    userId: adminId._id,
     description: 'But why?',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -360,27 +376,107 @@ if( ProjectList.find().count() === 0 ){
     thumbnail: '/assets/assetMidi_000.jpg'
   })  
 
+  //  Update the shot to link to the latest version
+  ShotList.update({
+    _id: midi_reflection_shot_id
+  }, {$set:{
+      latestVersionId: midi_reflection_shot_version_id,
+      latestVersionVideoId: 'CJRDYr7TJYo',
+      latestVersionThumbnail: '/assets/assetMidi_000.jpg'
+    }
+  })
+
+//  MANU submissions
+  
+  //  -------------------------------------------------------------------------
+  //  Front page demo project
+  var front_page_project_id = ProjectList.insert({
+    author: manuId.username,
+    userId: manuId._id,
+    title: 'Homepage examples',
+    description: 'This project contains all of the animation examples we see  on the front page.',
+    submitted: new Date(now - 3 * 3600 * 1000),
+    shotCount: 0,
+    fps: 24,
+    duration: 0
+  })
+
+  //  -----------------------------------------
+  //  Mini jumping kick shot
+  var jumping_kick_shot_id = ShotList.insert({
+    projectId: front_page_project_id,
+    author: manuId.username,
+    userId: manuId._id,    
+    title: 'Jumping kick',
+    description: 'No description yet.',
+    submitted: new Date(now - 2 * 3600 * 1000),
+    shotNumber: 1,
+    versionCount: 0,
+    fps: 24,
+    duration: 48,
+
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: ''
+
+    , isPublic: true
+  })
+
+  //  Mini jumping kick version 1
+  var jumping_kick_shot_version_id = VersionList.insert({
+    projectId: front_page_project_id,
+    shotId: jumping_kick_shot_id,
+    author: manuId.username,
+    userId: manuId._id,
+    description: 'Aaaaaaahhhh!',
+    submitted: new Date(now - 13 * 3600 * 1000),
+    versionNumber: 2,
+    fps: 24,
+    duration: 48,
+    commentsCount: 0,
+    upvoters: [],
+    votes: 0,
+    youTubeVideoId: 'CJRDYr7TJYo',
+    thumbnail: '/assets/assetMini_000.jpg'
+  })  
+
+  //  Update the shot to link to the latest version
+  ShotList.update({
+    _id: jumping_kick_shot_id
+  }, { $set:{
+      latestVersionId: jumping_kick_shot_version_id,
+      latestVersionVideoId: 'CJRDYr7TJYo',
+      latestVersionThumbnail: '/assets/assetMini_000.jpg'
+    }
+  })
+
   //  -----------------------------------------
   //  Maxi jump run shot
   var maxi_jump_run_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: 'manu',
-    userId: manuId,
+    author: manuId.username,
+    userId: manuId._id,
     title: 'Midi reflection shot',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 0,
     fps: 24,
-    duration: 48
+    duration: 48,
+
+    latestVersionId: 0,
+    latestVersionVideoId: '',
+    latestVersionThumbnail: ''
+
+    , isPublic: true
   })
 
   //  Maxi jump run version 1
-  VersionList.insert({
+  var maxi_jump_run_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: maxi_jump_run_shot_id,
-    author: 'manu',
-    userId: manuId,
+    author: manuId.username,
+    userId: manuId._id,
     description: 'I can make it?!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -392,45 +488,29 @@ if( ProjectList.find().count() === 0 ){
     youTubeVideoId: 'CJRDYr7TJYo',
     thumbnail: '/assets/assetMaxi_000.jpg',
   })  
-}
 
-//  Post
-//    + Comment
-if (Posts.find().count() === 0) {
+//  Update the shot to link to the latest version
+  ShotList.update({
+    _id: maxi_jump_run_shot_id
+  }, {$set:{
+      latestVersionId: maxi_jump_run_shot_version_id,
+      latestVersionVideoId: 'CJRDYr7TJYo',
+      latestVersionThumbnail: '/assets/assetMaxi_000.jpg'
+    }
+  })  
+
+//  ---------------------------------------------------------------------------
+//  create posts entries
+//  
+
   var now = new Date().getTime();
-
-  // create two users
-  var tomId = Meteor.users.insert({
-    profile: { name: 'Tom Coleman' }
-  });
-  
-  var sachaId = Meteor.users.insert({
-    profile: { name: 'Sacha Greif' }
-  });
-  
-  var tom = Meteor.users.findOne(tomId);  
-  var sacha = Meteor.users.findOne(sachaId);
-
-  // for (var i = 0; i < 10; i++) {
-  //   Posts.insert({
-  //     title: 'Test post #' + i,
-  //     body: 'Random text',
-  //     author: sacha.profile.name,
-  //     userId: sacha._id,
-  //     // url: 'http://google.com/?q=test-' + i,
-  //     submitted: new Date(now - i * 3600 * 1000),
-  //     commentsCount: 0,
-  //     upvoters: [],
-  //     votes: 0
-  //   });
-  //  }
 
   //  create posts  
   var addAudioId = Posts.insert({
     title: 'Add audio support',
     body: 'Would be nice to have support for audio',
-    userId: sacha._id,
-    author: sacha.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 7 * 3600 * 1000),
     commentsCount: 2,
@@ -441,8 +521,8 @@ if (Posts.find().count() === 0) {
   var addQuadrupedId = Posts.insert({
     title: 'Add quadruped asset',
     body: 'Can we have a quadruped please? Pretty please?',
-    userId: sacha._id,
-    author: sacha.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 7 * 3600 * 1000),
     commentsCount: 0,
@@ -453,8 +533,8 @@ if (Posts.find().count() === 0) {
   var addDrawId = Posts.insert({
     title: 'Add the ability to draw',
     body: 'Would be nice if we could draw on top of the viewport. We could use it better communicate corrections or to even animate particle effects.',
-    userId: sacha._id,
-    author: sacha.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 6 * 3600 * 1000),
     commentsCount: 0,
@@ -465,8 +545,8 @@ if (Posts.find().count() === 0) {
   var addRigId = Posts.insert({
     title: 'Create custom rigs',
     body: 'It would be nice if we could rig custom models. Right now we can only use pre-build rigs.',
-    userId: sacha._id,
-    author: sacha.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 4 * 3600 * 1000),
     commentsCount: 0,
@@ -477,8 +557,8 @@ if (Posts.find().count() === 0) {
   Comments.insert({
     postId: addAudioId,
     postType: 'suggest',
-    userId: tom._id,
-    author: tom.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     submitted: new Date(now - 5 * 3600 * 1000),
     body: 'Interesting project, can I get involved?'
     // ,type: 'suggest'
@@ -487,15 +567,17 @@ if (Posts.find().count() === 0) {
   Comments.insert({
     postId: addAudioId,
     postType: 'suggest',
-    userId: sacha._id,
-    author: sacha.profile.name,
+    userId: ambreId._id,
+    author: ambreId.username,
     submitted: new Date(now - 3 * 3600 * 1000),
     body: 'You sure can Tom!'
     // ,type: 'suggest'
   });
-}
 
-if( TutorialList.find().count() === 0 ){
+//  ---------------------------------------------------------------------------
+//  create tutorial entries
+//  
+
   TutorialList.insert({
     author: 'manu',
     userId: manuId,

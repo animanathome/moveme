@@ -57,7 +57,7 @@ Router.route('/gallery',{
     name: 'gallery',
     waitOn: function(){
         return [
-            Meteor.subscribe('numberOfShots', 20)
+            Meteor.subscribe('numberOfPublicShots', 20)
             ];
     },
     data: function(){

@@ -24,8 +24,8 @@ Meteor.publish('singleProject', function(id){
 //  -------------------------------------------------------------------------
 //  SHOTS
 
-Meteor.publish('numberOfShots', function( number_of_shots ){
-  return ShotList.find({}, {limit:number_of_shots})  
+Meteor.publish('numberOfPublicShots', function( number_of_shots ){
+  return ShotList.find({}, {limit:number_of_shots, isPublic:true})  
 })
 
 Meteor.publish('shots', function(projectId){
