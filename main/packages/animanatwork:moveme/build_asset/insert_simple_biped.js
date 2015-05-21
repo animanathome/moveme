@@ -739,36 +739,59 @@ MM.bipedKeyAll = function( namespace, container, editor ){
 	var controls = [
 		 namespace+':cGlobalCtl'
 		
-		,namespace+':CcBodyCtl'
+		,namespace+':cBodyCtl'
+		,namespace+':cBodySubCtl'
+
 		,namespace+':cHipCtl'
 		,namespace+':cBChestCtl'
 		,namespace+':cTChestCtl'
 		,namespace+':cHeadCtl'
 		
+	// l arm
+		,namespace+':lShoulderCtl'
+
 		,namespace+':lShoulderFkCtl'
 		,namespace+':lElbowFkCtl'
     	,namespace+':lWristFkCtl'
-    	
+
+		,namespace+':lFingerCtl'
+		,namespace+':lThumbCtl'
+
+		,namespace+':lArmSwitch'
+    
+    //	r arm	
+		,namespace+':rShoulderCtl'
+
     	,namespace+':rShoulderFkCtl'
    	    ,namespace+':rElbowFkCtl'
    		,namespace+':rWristFkCtl'
 
+		,namespace+':rFingerCtl'
+		,namespace+':rThumbCtl'
+
+		,namespace+':rArmSwitch'
+
+	//	l leg
+		,namespace+':lHipFkCtl'
+   		,namespace+':lKneeFkCtl'
+   		,namespace+':lAnkleFkCtl'
+   		,namespace+':lBallFkCtl'
+
+		,namespace+':lKneeIkCtl'
+		,namespace+':lFootIkCtl'
+
+		,namespace+':lLegSwitch'
+
+	//	r leg
    		,namespace+':rHipFkCtl'
    		,namespace+':rKneeFkCtl'
    		,namespace+':rAnkleFkCtl'
    		,namespace+':rBallFkCtl'
 
-   		,namespace+':lKneeIkCtl'
-		,namespace+':lFootIkCtl'
-
 		,namespace+':rKneeIkCtl'
 		,namespace+':rFootIkCtl'
 
-		,namespace+':lFingerCtl'
-		,namespace+':lThumbCtl'
-
-		,namespace+':rFingerCtl'
-		,namespace+':rThumbCtl'
+		,namespace+':rLegSwitch'
 	]
 	var all = new MM.AssetKeySelectControls( editor )
 	all.setTitle('All').setControls(controls)
@@ -781,7 +804,8 @@ MM.bipedKeyAll = function( namespace, container, editor ){
 	container.add( global.panel )
 
 	var back = new MM.AssetKeySelectControls( editor )
-	back.setTitle('Back').setControls([ namespace+':CcBodyCtl',
+	back.setTitle('Back').setControls([ namespace+':cBodyCtl',
+										namespace+':cBodySubCtl',
     						  			namespace+':cHipCtl',
     						  			namespace+':cBChestCtl',
     						  			namespace+':cTChestCtl',
