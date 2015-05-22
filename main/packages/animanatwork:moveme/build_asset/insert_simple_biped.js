@@ -247,12 +247,10 @@ MM.insertBiped = function( editor, config ){
 	//	inter component connections by using spaceswitches
 	//	each control created through createControlGroup has a spaceswitch node
 		
-		// //	head to chest
+		// //	chest to head
 		u.getRigComponent('back').controls['cBChestCtl'].setParent( 
 			u.getRigComponent('head').controls['cTChestCtl'].parent)
-		// 	
-		// console.log('\thead chest control:', u.rigComponents[2].controls['cTChestCtl'])
-
+	
 		// //	head to cBodyCtl		
 		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpace(
 			u.getRigComponent('global').controls['GlobalCtl'])
@@ -260,6 +258,7 @@ MM.insertBiped = function( editor, config ){
 			u.getRigComponent('back').controls['cBodyCtl'])
 		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpace( 
 				u.getRigComponent('head').controls['cTChestCtl'])
+		
 		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpaceswitchChannel(
 				u.getRigComponent('head').controls['cHeadCtl'])
 

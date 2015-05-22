@@ -1,0 +1,186 @@
+MM.SpaceswitchSplit = function(){
+	MM.Control.call(this);
+
+	this.pOffsetMatrices = []
+	this.pSpaces = []
+	this.pSpaceNames = []
+	this.pChannelName = 'positionSpaceSwitch'
+	this.pChannelObject = undefined;
+
+	this.rOffsetMatrices = []
+	this.rSpaces = []
+	this.rSpaceNames = []
+	this.rChannelName = 'rotationSpaceSwitch'
+	this.rChannelObject = undefined;
+
+	this.objectType = 'SpaceswitchSplit'
+
+	this.addChannel('custom', this.pChannelName, [], 'enum')
+	this.addChannel('custom', this.rChannelName, [], 'enum')
+
+	this.custom = {'pSpaceSwitch':0, 'rSpaceSwitch':0}
+}
+
+MM.SpaceswitchSplit.prototype = Object.create( MM.Control.prototype );
+
+MM.SpaceswitchSplit.prototype.importData = function( data ){
+}
+
+MM.SpaceswitchSplit.prototype.exportData = function(){
+	var data = {}
+	return data;
+}
+
+MM.SpaceswitchSplit.prototype.importSetup = function( scene, data ){
+}
+
+MM.SpaceswitchSplit.prototype.exportSetup = function(){
+	var data = {}
+	return data;
+}
+
+MM.SpaceswitchSplit.prototype.addPositionSpace = function( object ){
+	// console.log('addSpace', object.name)
+ 	// console.log('\tchannelName', this.channelName)    
+	this.pSpaces.push( object )
+	this.pSpaceNames.push(object.name)
+    this.custom[this.pChannelName] = this.pSpaces.length - 1;
+    // console.log('\tthis', this)
+
+    this.addToChannelRange('custom' , this.pChannelName, object.name)
+
+	var parentInverse = new THREE.Matrix4().getInverse( object.matrixWorld );
+	// console.log('\tspace inverse', parentInverse.getPosition())
+
+	var offsetMatrix = new THREE.Matrix4().multiplyMatrices(parentInverse, this.matrixWorld);
+	// console.log('\tthis', this.matrixWorld.getPosition())
+	// console.log('\toffset', offsetMatrix.getPosition())
+	this.pOffsetMatrices.push( offsetMatrix );
+}
+
+MM.SpaceswitchSplit.prototype.hasPositionSpace = function( object ){
+	if( this.pSpaces.indexOf( object ) !== -1 ){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+MM.SpaceswitchSplit.prototype.addPositionSpaceswitchChannel = function( object ){
+    console.log('addPositionSpaceswitchChannel', object.name)
+
+	//	add the necessary properties to the object so we can have it pass 
+	//	through the value of the spaceSwitch as well as being properly 
+	//	displayed in the sidebar
+	//	this method is here because we don't allow the user to directly
+	//	interact with this driven object
+	
+	//	adds this ability to animate the channel
+	object.addChannel( 'custom', this.pChannelName, this.pSpaceNames, 'enum')
+    object.custom = this.custom;   
+    object.spaces = this.pSpaces;
+    object.spaceNames = this.pSpaceNames;
+    
+    this.pChannelObject = object;
+    // console.log('\tresult', this)
+}
+
+MM.SpaceswitchSplit.prototype.addRotationSpace = function( object ){
+	// console.log('addSpace', object.name)
+ 	// console.log('\tchannelName', this.channelName)    
+	this.rSpaces.push( object )
+	this.rSpaceNames.push(object.name)
+    this.custom[this.rChannelName] = this.rSpaces.length - 1;
+    // console.log('\tthis', this)
+
+    this.addToChannelRange('custom' , this.rChannelName, object.name)
+
+	var parentInverse = new THREE.Matrix4().getInverse( object.matrixWorld );
+	// console.log('\tspace inverse', parentInverse.getPosition())
+
+	var offsetMatrix = new THREE.Matrix4().multiplyMatrices(parentInverse, this.matrixWorld);
+	// console.log('\tthis', this.matrixWorld.getPosition())
+	// console.log('\toffset', offsetMatrix.getPosition())
+	this.rOffsetMatrices.push( offsetMatrix );
+}
+
+MM.SpaceswitchSplit.prototype.hasRotationSpace = function( object ){
+	if( this.rSpaces.indexOf( object ) !== -1 ){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+MM.SpaceswitchSplit.prototype.addRotationSpaceswitchChannel = function(object){
+    console.log('addRotationSpaceswitchChannel', object.name)
+
+	//	add the necessary properties to the object so we can have it pass 
+	//	through the value of the spaceSwitch as well as being properly 
+	//	displayed in the sidebar
+	//	this method is here because we don't allow the user to directly
+	//	interact with this driven object
+	
+	//	adds this ability to animate the channel
+	object.addChannel( 'custom', this.rChannelName, this.rSpaceNames, 'enum')
+    object.custom = this.custom;   
+    object.spaces = this.rSpaces;
+    object.spaceNames = this.rSpaceNames;
+    
+    this.rChannelObject = object;
+    // console.log('\tresult', this)
+}
+
+MM.SpaceswitchSplit.prototype.setChannelsTranslateAndRotate = function(){
+	this.animChannels = [
+                            this._getChannelsTranslate(), 
+                            this._getChannelsRotate(),
+							["custom", [this.pChannelName, this.rChannelName], [[],[]], ['enum', 'enum']]
+						]
+}
+
+MM.SpaceswitchSplit.prototype.updateMatrixWorld = function (){
+	// console.log('updateMatrixWorld')
+	MM.Control.prototype.updateMatrixWorld.call(this);
+
+	if( this.pSpaces.length === 0 ){
+		return
+	}
+
+	if( this.rSpaces.length === 0 ){
+		return 
+	}
+
+//	set position
+	var pIndex = this.custom[this.pChannelName];
+
+    var parentInverse = new THREE.Matrix4()
+    parentInverse.getInverse(this.parent.matrixWorld);
+
+    var pMatrix1 = new THREE.Matrix4();
+    pMatrix1.multiplyMatrices(parentInverse, this.pSpaces[pIndex].matrixWorld)
+
+    var pMatrix2 = new THREE.Matrix4();
+    pMatrix2.multiplyMatrices(pMatrix1, this.pOffsetMatrices[pIndex])
+    
+    this.position.getPositionFromMatrix( pMatrix2 );
+    
+//	set rotation
+	var rIndex = this.custom[this.rChannelName];
+
+    var parentInverse = new THREE.Matrix4()
+    parentInverse.getInverse(this.parent.matrixWorld);
+
+    var rMatrix1 = new THREE.Matrix4();
+    rMatrix1.multiplyMatrices(parentInverse, this.rSpaces[rIndex].matrixWorld);
+
+    var rMatrix2 = new THREE.Matrix4();
+    rMatrix2.multiplyMatrices(rMatrix1, this.rOffsetMatrices[rIndex])
+    
+    var m1 = new THREE.Matrix4();
+    m1.extractRotation( rMatrix2 );
+    this.quaternion.setFromRotationMatrix( m1 );
+
+//	update matrix
+    this.updateMatrix();
+}

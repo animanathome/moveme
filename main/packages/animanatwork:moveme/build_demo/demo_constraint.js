@@ -184,7 +184,7 @@ MM.SpaceswitchDemo2 = function( editor ){
     //  This needs to come before we add it to the scene!!! Otherwise we won't be
     //  able to register the offset.
     s.translateX(10)
-    editor.addObject( s )   
+    editor.addObject( s )
     s.addSpace( a ) 
     s.addSpace( b ) 
 
@@ -192,6 +192,55 @@ MM.SpaceswitchDemo2 = function( editor ){
     editor.addGroupContent( addedGroup, [a, b, s] ) 
 
     editor.controlsVisibility()     
+}
+
+MM.SpaceSwitchSplitDemo = function( editor ){
+    var a = new MM.Control();
+    a.name = 'a'
+    a.tag = 'control'   
+    a.controlSize = 10          
+    a.controlShape = 'plane'
+    a.setChannelsTranslateAndRotate()
+    a.translateY(10)
+    editor.addObject( a )
+
+    var b = new MM.Control();
+    b.name = 'b'
+    b.tag = 'control'   
+    b.controlSize = 10          
+    b.controlShape = 'plane'
+    b.setChannelsTranslateAndRotate()
+    b.translateY(-10)
+    editor.addObject( b )
+
+    var s = new MM.SpaceswitchSplit();
+    s.name = 'driven'
+    s.tag = 'control'
+    s.controlShape = ''
+    s.controlSize = 10      
+    s.displayRotationAxis = true    
+    s.setChannelsTranslateAndRotate()
+    editor.addObject( s )
+
+    s.addPositionSpace(a)
+    s.addPositionSpace(b)
+    s.addRotationSpace(a)
+    s.addRotationSpace(b)
+
+    var c = new MM.Control();
+    c.name = 'c'
+    c.tag = 'control'   
+    c.controlSize = 10          
+    c.controlShape = 'plane'
+    c.setChannelsTranslateAndRotate()
+    c.translateX(10)
+    editor.addObject( c )
+
+    s.addPositionSpaceswitchChannel( c )
+    s.addRotationSpaceswitchChannel( c )
+
+    var addedGroup = editor.addGroup( 'multiChannel' , 'asset')
+    editor.addGroupContent( addedGroup, [a, b, s, c] )
 }
 
 MM.ParentMasterDemo1 = function( editor ){

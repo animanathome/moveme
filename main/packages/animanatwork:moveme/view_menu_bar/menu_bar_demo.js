@@ -102,6 +102,11 @@ MM.Menubar.Demos = function( editor ){
 	})
 	constraintSubMenu.add( demo8bItem )
 
+	var demo8cItem = new MMUI.MenuItem('SpaceswitchSplit').onClick( function(){
+		MM.SpaceSwitchSplitDemo( editor );
+	})
+	constraintSubMenu.add( demo8cItem )
+
 	var demo9Item = new MMUI.MenuItem('ParentMaster 1').onClick( function() {
 		MM.ParentMasterDemo1( editor );
 	})

@@ -8,7 +8,7 @@ MM.Spaceswitch = function(){
     this.objectType = 'Spaceswitch'
     this.channelName = 'spaceSwitch'
 
-    this.addChannel( 'custom' , this.channelName, [], 'enum')
+    this.addChannel('custom' , this.channelName, [], 'enum')
     this.custom = {'spaceSwitch' : 0} 
 
     //  The object which actually controls the state of the channel

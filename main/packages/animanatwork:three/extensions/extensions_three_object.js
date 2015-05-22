@@ -1014,6 +1014,8 @@ THREE.Object3D.prototype.addInbetween = function( name , type){
 	var inbetween;
 	if( type === undefined || type === 'Spaceswitch'){
 		inbetween = new MM.Spaceswitch();
+	}else if( type === 'SpaceswitchSplit'){
+		inbetween = new MM.SpaceswitchSplit();
 	}else if( type === 'ParentMaster'){
 		inbetween = new MM.ParentMaster();
 	}else{

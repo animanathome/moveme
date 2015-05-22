@@ -69,6 +69,7 @@ Package.onUse(function(api) {
           ,"objects_rig/joint.js"
           ,"objects_rig/joint_display.js"
           ,"objects_rig/space_switch.js"
+          ,"objects_rig/space_switch_split.js"
           ,"objects_rig/parent_master.js"
           ,"objects_rig/multi_channel.js"
           // ,"objects_rig/cluster.js"

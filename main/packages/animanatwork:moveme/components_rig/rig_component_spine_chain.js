@@ -5,6 +5,9 @@ MM.SpineComponent = function( parameters ) {
     this.controlNames = ['C_body_0_ctrl', 'C_hip_0_ctrl', 'C_chest_0_ctrl']
     this.createGlobalControl = true
 
+    this.topInbetweenType = "Spaceswitch";
+    this.bottomInbetweenType = "Spaceswitch";
+
     this.setValues( parameters )
 
     return this
@@ -28,6 +31,12 @@ MM.SpineComponent.prototype.setValues = function( parameters ){
         if(parameters.hasOwnProperty('globalControl')){
             console.log('\tsetting create global control to', parameters['globalControl'])
             this.createGlobalControl = parameters['globalControl']
+        }
+        if(parameters.hasOwnProperty('topInbetweenType')){
+            this.topInbetweenType = parameters['topInbetweenType']
+        }
+        if(parameters.hasOwnProperty('bottomInbetweenType')){
+            this.topInbetweenType = parameters['bottomInbetweenType']
         }
     }
 }
@@ -71,10 +80,9 @@ MM.SpineComponent.prototype.build = function(){
     spineSetup.topControl.curve.name = this.namespace+this.controlNames[1]+'Curve'
     
     //  add zero groups
-    var bottomZero = spineSetup.bottomControl.addInbetween(
-        this.namespace+this.controlNames[1]+'zero')
-    var topZero = spineSetup.topControl.addInbetween(
-        this.namespace+this.controlNames[2]+'zero')
+    var bottomZero = spineSetup.bottomControl.addInbetween(this.namespace+this.controlNames[1]+'zero', this.bottomInbetweenType)
+    
+    var topZero = spineSetup.topControl.addInbetween(this.namespace+this.controlNames[2]+'zero', this.topInbetweenType)
 
     //  debugging
     // editor.addGroupContent( this.assetGroup, [ bottomZero, topZero ] ) 
