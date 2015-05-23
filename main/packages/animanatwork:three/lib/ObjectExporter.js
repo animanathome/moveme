@@ -351,6 +351,10 @@ THREE.ObjectExporter.prototype = {
 			} else if ( object instanceof MM.ParentMaster ){
 
 				data = object.exportData();
+
+			} else if ( object instanceof MM.SpaceswitchSplit ) {	
+
+				data = object.exportData();
 				
 			} else if ( object instanceof MM.Spaceswitch ) {
 

@@ -344,30 +344,17 @@ THREE.ObjectLoader.prototype = {
 				break;
 
 				case 'Joint':
-					// console.log('\tCreating joint')
-
 					object = new MM.Joint();
 					object.importData(data)
-
-					// object.radius = data.radius
-					// object.controlSize = data.controlSize
-					// object.showRotationAxis = data.showRotationAxis
-					// object.showHierarchy = data.showHierarchy
-					// object.showControl = data.showControl
-
-					// // console.log('\tskinData:', data.skinMatrix)
-
-					// object.skinMatrix.fromArray( data.skinMatrix )
-
-					// // console.log('\tskin obj:', object.skinMatrix)
-
-					// object.preferedAngle.set( data.preferedAngle.x, 
-					// 	data.preferedAngle.y, data.preferedAngle.z)
-
-					break;
+				break;
 
 				case 'ParentMaster':
 					object = new MM.ParentMaster();
+					object.importData( data );
+				break;
+
+				case 'SpaceswitchSplit':
+					object = new MM.SpaceswitchSplit();
 					object.importData( data );
 				break;
 

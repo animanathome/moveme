@@ -22,8 +22,6 @@ MM.Spaceswitch = function(){
 MM.Spaceswitch.prototype = Object.create( MM.Control.prototype );
 
 MM.Spaceswitch.prototype.importData = function( data ){
-    
-    // we should just be inheriting this from control!!!
     this.name = data.name
     this.uuid = data.uuid
 
@@ -48,6 +46,9 @@ MM.Spaceswitch.prototype.importData = function( data ){
     if( data.hasOwnProperty('custom')){
         this.custom = data.custom
     }
+
+    //  -----------------------------------------------------------------------
+    //  space switch specific
 
     //	custom to this object type
     this.spaceNames = data.spaceNames
@@ -139,7 +140,7 @@ MM.Spaceswitch.prototype.exportSetup = function(){
 
     //  this is only populated when we actually use this as a spaceswitch
     //  which might not always be the case since we use this by default
-    //  now when creating a controlGroup
+    //  when creating a controlGroup or when using the inbetween method
     // console.log('\tchannelObject', this.channelObject)
     if( this.channelObject !== undefined ){
         data.channelObject = this.channelObject.name    

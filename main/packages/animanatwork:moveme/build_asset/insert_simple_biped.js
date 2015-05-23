@@ -71,11 +71,12 @@ MM.insertBiped = function( editor, config ){
 	
 	//	Neck
 	u.addRigComponent( new MM.SpineComponent({
-		'controlSize' : config['control_scale']*1, 
-		'globalControl' : false,
-		'asset' : config['name'],
-		'names' : ['', 'cTChestCtl', 'cHeadCtl'],
-		'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
+		  'controlSize' : config['control_scale']*1
+		, 'globalControl' : false
+		, 'asset' : config['name']
+		, 'names' : ['', 'cTChestCtl', 'cHeadCtl']
+		, 'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
+		, 'topInbetweenType':'SpaceswitchSplit'
 		}
 	), 'head' )
 
@@ -247,20 +248,21 @@ MM.insertBiped = function( editor, config ){
 	//	inter component connections by using spaceswitches
 	//	each control created through createControlGroup has a spaceswitch node
 		
-		// //	chest to head
+		// parent chest control
 		u.getRigComponent('back').controls['cBChestCtl'].setParent( 
 			u.getRigComponent('head').controls['cTChestCtl'].parent)
 	
-		// //	head to cBodyCtl		
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpace(
-			u.getRigComponent('global').controls['GlobalCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpace(
-			u.getRigComponent('back').controls['cBodyCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpace( 
-				u.getRigComponent('head').controls['cTChestCtl'])
+		// define head control spaces
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('global').controls['GlobalCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('back').controls['cBodyCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('head').controls['cTChestCtl'])
 		
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addSpaceswitchChannel(
-				u.getRigComponent('head').controls['cHeadCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('back').controls['cBodyCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('head').controls['cTChestCtl'])
+
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent('head').controls['cHeadCtl'])
+		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent('head').controls['cHeadCtl'])
 
 		//	shoulder to chest
 		u.getRigComponent('head').controls['cTChestCtl'].setParent( 

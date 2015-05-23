@@ -24,18 +24,168 @@ MM.SpaceswitchSplit = function(){
 MM.SpaceswitchSplit.prototype = Object.create( MM.Control.prototype );
 
 MM.SpaceswitchSplit.prototype.importData = function( data ){
+	console.log('SpaceswitchSplit.importData', data)
+
+	this.name = data.name
+    this.uuid = data.uuid
+
+    this.controlColor.setRGB( data.controlColor.r, data.controlColor.g, 
+        data.controlColor.b )
+
+    this.controlSize = data.controlSize
+    
+    this.controlScale.set( data.controlScale.x, data.controlScale.y, 
+        data.controlScale.z )  
+
+    this.controlOffset.set( data.controlOffset.x, data.controlOffset.y, 
+        data.controlOffset.z ) 
+    
+    this.controlSide = data.controlSide
+    this.displayRotationAxis = data.displayRotationAxis
+
+    if( data.hasOwnProperty('controlShape')){
+        this.controlShape = data.controlShape
+    }
+
+    if( data.hasOwnProperty('custom')){
+        this.custom = data.custom
+    }
+
+    //	-----------------------------------------------------------------------
+    //	space switch split specific
+    var thisMatrix;
+
+    //	position
+    this.pSpaceNames = data.pSpaceNames;
+    this.pOffsetMatrices = []    
+    for(var i = 0; i < data.pOffsetMatrices.length; i++){
+    	thisMatrix = new THREE.Matrix4().fromArray(data.pOffsetMatrices[i])
+    	this.pOffsetMatrices.push(thisMatrix)
+    }
+    
+    //	rotation
+    this.rSpaceNames = data.rSpaceNames;
+    this.rOffsetMatrices = []    
+    for(var i = 0; i < data.rOffsetMatrices.length; i++){
+    	thisMatrix = new THREE.Matrix4().fromArray(data.rOffsetMatrices[i])
+    	this.rOffsetMatrices.push(thisMatrix)
+    }
 }
 
 MM.SpaceswitchSplit.prototype.exportData = function(){
+	console.log('SpaceswitchSplit.exportData')
+
 	var data = {}
+
+    data.name = this.name
+    data.uuid = this.uuid
+    data.type = this.objectType
+
+    data.controlColor = this.controlColor
+    data.controlSize = this.controlSize
+    data.controlScale = this.controlScale
+    data.controlOffset = this.controlOffset
+    data.controlSide = this.controlSide
+    data.displayRotationAxis = this.displayRotationAxis
+
+    if( this.controlShape !== undefined ) 
+        data.controlShape = this.controlShape 
+        
+    if( this.hasOwnProperty('custom')){
+        // console.log('\tExporting custom channels')
+        data.custom = this.custom
+    }   
+
+    //	-----------------------------------------------------------------------
+    //	space switch split specific
+	var theseElements;
+
+	//	position
+    data.pSpaceNames = this.pSpaceNames
+    data.pOffsetMatrices = []
+    for(var i = 0; i < this.pOffsetMatrices.length; i++){
+    	theseElements = this.pOffsetMatrices[i].toArray();
+    	data.pOffsetMatrices.push(theseElements)
+    }
+
+    //	rotation
+	data.rSpaceNames = this.rSpaceNames
+	data.rOffsetMatrices = []
+    for(var i = 0; i < this.rOffsetMatrices.length; i++){
+    	theseElements = this.rOffsetMatrices[i].toArray();
+    	data.rOffsetMatrices.push(theseElements)
+    }
+
 	return data;
 }
 
 MM.SpaceswitchSplit.prototype.importSetup = function( scene, data ){
+	console.log('SpaceswitchSplit.importSetup')
+
+	var foundObject;
+
+//	position
+	for( var i = 0; i < this.pSpaceNames.length; i++){
+		foundObject = scene.getObjectByName( this.pSpaceNames[i], true )
+		if( foundObject !== undefined ){
+			this.pSpaces.push( foundObject )
+		}else{
+			console.error('Unable to find', this.pSpaceNames[i])
+		}
+	}
+
+	// fill in the channel object ( when it has been defined before )
+    if( data.hasOwnProperty('pChannelObject')){
+        foundObject = scene.getObjectByName( data.pChannelObject, true )
+        if( foundObject !== undefined ){
+            this.addPositionSpaceswitchChannel( foundObject )
+        }else{
+            console.error('Unable to find channel object', data.foundObject)
+        }
+    }
+
+//	rotation
+	for( var i = 0; i < this.rSpaceNames.length; i++){
+		foundObject = scene.getObjectByName( this.rSpaceNames[i], true )
+		if( foundObject !== undefined ){
+			this.rSpaces.push( foundObject )
+		}else{
+			console.error('Unable to find', this.rSpaceNames[i])
+		}
+	}
+	
+	// fill in the channel object ( when it has been defined before )
+    if( data.hasOwnProperty('rChannelObject')){
+        foundObject = scene.getObjectByName( data.rChannelObject, true )
+        if( foundObject !== undefined ){
+            this.addRotationSpaceswitchChannel( foundObject )
+        }else{
+            console.error('Unable to find channel object', data.foundObject)
+        }
+    }
+
 }
 
 MM.SpaceswitchSplit.prototype.exportSetup = function(){
+	console.log('SpaceswitchSplit.exportSetup')
+
+	// console.log('Spaceswitch.exportSetup')
+	//	nothing to do 
 	var data = {}
+	data.type = this.objectType
+	data.name = this.name
+
+    //  this is only populated when we actually use this as a spaceswitch
+    //  which might not always be the case since we use this by default
+    //  when creating a controlGroup or when using the inbetween method
+    // console.log('\tchannelObject', this.channelObject)
+    if( this.pChannelObject !== undefined ){
+        data.pChannelObject = this.pChannelObject.name    
+    }
+    if( this.rChannelObject !== undefined ){
+        data.rChannelObject = this.rChannelObject.name    
+    }
+    // console.log('\tresult', data)
 	return data;
 }
 

@@ -376,6 +376,18 @@ MM.Editor.prototype.importSetups = function( data ){
                 parentMaster.importSetup( this.scene, thisData );
             break;
 
+            case "SpaceswitchSplit":
+                var spaceswitchSplit = this.scene.getObjectByUuid( uuid , true)
+                if( spaceswitchSplit === undefined ){
+                    // console.log('Unable to find spaceswitchSplit with uuid', uuid, ', looking by name', thisData.name)
+                    spaceswitchSplit = this.scene.getObjectByName( thisData.name , true)
+                    if( spaceswitchSplit === undefined ){
+                        break;
+                    }
+                }
+                spaceswitchSplit.importSetup( this.scene, thisData );
+            break;
+
             case "Spaceswitch":
                 var spaceswitch = this.scene.getObjectByUuid( uuid , true)
                 if( spaceswitch === undefined ){
@@ -541,6 +553,12 @@ MM.Editor.prototype.exportSetups = function( ){
     var parentMaster = this.scene.getObjectOfInstance(MM.ParentMaster)
     for( var i = 0, j = parentMaster.length; i < j; i++){
         data[ parentMaster[i].uuid ] = parentMaster[i].exportSetup();
+    }
+
+//  SPACESWITCHSPLITS
+    var spaceswitchSplits = this.scene.getObjectOfInstance(MM.SpaceswitchSplit)
+    for( var i = 0, j = spaceswitchSplits.length; i < j; i++){
+        data[ spaceswitchSplits[i].uuid ] = spaceswitchSplits[i].exportSetup();
     }
 
 //  SPACESWITCHES
