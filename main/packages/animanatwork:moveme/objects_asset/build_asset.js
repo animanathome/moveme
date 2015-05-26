@@ -57,6 +57,14 @@ MM.AssetBuild.prototype = {
 			}
 		}
 	},
+	getJoint : function( joint_name ){
+		var i, j;
+		for( i = 0, j = this.joints.length; i < j; i++){
+			if( this.joints[i].name === this.namespace+joint_name ){
+				return this.joints[i]
+			}
+		}
+	},
 	addModel : function( fileName ){
 		this.modelFiles.push( fileName )
 		this.nTasks += 1

@@ -279,10 +279,8 @@ MM.insertBiped = function( editor, config ){
 		
 		//	arms and legs
 		for( var i = 0; i < sides.length; i++){
-			//	arms
-			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('global').controls['GlobalCtl'])
-			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('back').controls['cBodyCtl'])
-			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('head').controls['cTChestCtl'])
+			//	arms			
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getJoint(sides[i]+'Shoulder'))
 
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('back').controls['cBodyCtl'])

@@ -24,8 +24,8 @@ MM.TwoBoneIkBlendSolver.prototype.exportData = function(){
 }
 
 MM.TwoBoneIkBlendSolver.prototype.importSetup = function(scene, data){
-    console.log('TwoBoneIkBlendSolver.importSetup', this.name)
-    console.log('\tdata', data)
+    // console.log('TwoBoneIkBlendSolver.importSetup', this.name)
+    // console.log('\tdata', data)
 
     MM.TwoBoneSoftIkSolver.prototype.importSetup.call(this, scene, data);
 
@@ -39,7 +39,7 @@ MM.TwoBoneIkBlendSolver.prototype.importSetup = function(scene, data){
 };
 
 MM.TwoBoneIkBlendSolver.prototype.exportSetup = function(){
-    console.log('TwoBoneIkBlendSolver.exportSetup', this.name)
+    // console.log('TwoBoneIkBlendSolver.exportSetup', this.name)
 
     var data = MM.TwoBoneSoftIkSolver.prototype.exportSetup.call(this);
 
@@ -98,7 +98,9 @@ MM.TwoBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ) {
         if( blendValue > 1.0 ) blendValue = 1;
 
         //  blend between ik and fk
-        this.startJoint.quaternion.slerp( this.startFkCtrl.quaternion, blendValue )
+        var comQuat = new THREE.Quaternion().multiplyQuaternions(this.startFkCtrl.parent.quaternion, this.startFkCtrl.quaternion)        
+        this.startJoint.quaternion.slerp( comQuat, blendValue )
+
         this.middleJoint.quaternion.slerp( this.middleFkCtrl.quaternion, blendValue )
         this.endJoint.quaternion.slerp( this.endFkCtrl.quaternion, blendValue )
 

@@ -160,13 +160,13 @@ MM.TwoBoneIkSolver.prototype.setEndJoint = function(endJoint){
 }
 
 MM.TwoBoneIkSolver.prototype.updateJoints = function(){
-	this.startJoint.updateMatrix();
+	// this.startJoint.updateMatrix();
 	this.startJoint.updateMatrixWorld(true);
 
-	this.middleJoint.updateMatrix();
+	// this.middleJoint.updateMatrix();
 	this.middleJoint.updateMatrixWorld(true);
 
-	this.endJoint.updateMatrix();
+	// this.endJoint.updateMatrix();
 	this.endJoint.updateMatrixWorld(true);
 }
 
