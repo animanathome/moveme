@@ -184,8 +184,9 @@ MM.Control.prototype.setControlShape = function( side, shape, controlSize ){
     this.controlSize = controlSize
 }
 
-MM.createControlGroup = function( side, name, shape, controlSize){
-    // console.log('createControlGroup', side, name, shape, controlSize)
+MM.createControlGroup = function( side, name, shape, controlSize, inbetweenType){
+    console.log('createControlGroup', side, name, shape, controlSize, inbetweenType)
+    
     if( shape === undefined){
         shape = 'plane'
     }
@@ -194,7 +195,19 @@ MM.createControlGroup = function( side, name, shape, controlSize){
         controlSize =  10;
     }
 
-    var zero = new MM.Spaceswitch();
+    var zero;
+    if( inbetweenType === undefined ){
+        inbetweenType = 'Spaceswitch';
+    }
+
+    if( inbetweenType === 'Spaceswitch'){
+        zero = new MM.Spaceswitch();
+    }else if(inbetweenType === 'SpaceswitchSplit'){
+        zero = new MM.SpaceswitchSplit();
+    }else{
+        console.log('Unsupported type.')
+    }
+
     zero.name = name+'Zero'
     
     var ctrl = new MM.Control();

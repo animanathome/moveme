@@ -8,7 +8,8 @@ MM.LimbComponent = function( parameters ){
     this.buildIkControlOnFloor = true 
     this.poleVectorOffset = 25
     this.stretchAxis = 'y'; // y for legs and x for arms
-    this.setValues( parameters )                             
+    this.setValues( parameters )
+    this.rootInbetweenType = 'SpaceswitchSplit'
     
     return this;
 }
@@ -16,7 +17,7 @@ MM.LimbComponent = function( parameters ){
 MM.LimbComponent.prototype = Object.create( MM.RigComponent.prototype );
 
 MM.LimbComponent.prototype.setValues = function( parameters ){
-    MM.RigComponent.prototype.setValues.call(this, parameters);
+    MM.RigComponent.prototype.setValues.call(this, parameters)
 
     //  custom parameters
     if( parameters !== undefined ){        
@@ -35,6 +36,10 @@ MM.LimbComponent.prototype.setValues = function( parameters ){
         if(parameters.hasOwnProperty('stretchAxis')){
             this.stretchAxis = parameters['stretchAxis']
         }
+        if(parameters.hasOwnProperty('rootInbetweenType')){            
+            this.rootInbetweenType = parameters['rootInbetweenType']
+            console.log('\tSetting rootInbetweenType to ', this.rootInbetweenType)
+        }
     }
 }
 
@@ -45,7 +50,7 @@ MM.LimbComponent.prototype.build = function(){
 
 //  create fk controls
     //  joint 0 fk control
-    var ctrl0 = MM.createControlGroup( this.side, this.getName(this.controlNames[0]), this.fkControlShape, this.controlSize )    
+    var ctrl0 = MM.createControlGroup( this.side, this.getName(this.controlNames[0]), this.fkControlShape, this.controlSize, this.rootInbetweenType )    
     ctrl0['control'].setChannelsRotate()
     if( joints[this.joints[0]].parent !== undefined ){
         joints[this.joints[0]].parent.add( ctrl0['zero'] )

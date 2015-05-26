@@ -109,22 +109,23 @@ MM.insertBiped = function( editor, config ){
 			side: sides[i], 
 			parentJoint: 'cSpine4', 
 			asset: config['name'], 
-			names: ['ShoulderCtl'], 
+			names: ['ShoulderCtl'],
 			joints: shoulderJoints
 		}), sides[i]+'Shoulder')
 		
 		//	Arm
 		u.addRigComponent( new MM.LimbComponent({
-			controlSize: config['control_scale']*2, 
-			asset:config['name'], 
-			side:sides[i], 
-			fkControlShape: 'circleX', 
-			ikControlShape: 'plane', 
-			stretchAxis: 'x', 
-			buildIkControlOnFloor:false, 
-			names:armNames, 
-			joints: armJoints, 
-			poleVectorOffset: config['control_distance']* -25
+			  controlSize: config['control_scale']*2
+			, asset:config['name']
+			, side:sides[i]
+			, fkControlShape: 'circleX'
+			, ikControlShape: 'plane'
+			, stretchAxis: 'x'
+			, buildIkControlOnFloor:false
+			// , rootInbetweenType: 'SpaceswitchSplit'
+			, names:armNames
+			, joints: armJoints
+			, poleVectorOffset: config['control_distance']* -25
 		}), sides[i]+'Arm')		
 	}
 
@@ -279,6 +280,17 @@ MM.insertBiped = function( editor, config ){
 		//	arms and legs
 		for( var i = 0; i < sides.length; i++){
 			//	arms
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('global').controls['GlobalCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('back').controls['cBodyCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getRigComponent('head').controls['cTChestCtl'])
+
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('back').controls['cBodyCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('head').controls['cTChestCtl'])
+
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
+
 			//	space switch to global, tchest and shoulder
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('global').controls['GlobalCtl'])
 			

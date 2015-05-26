@@ -100,7 +100,7 @@ MM.TwoBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ) {
         //  blend between ik and fk
         this.startJoint.quaternion.slerp( this.startFkCtrl.quaternion, blendValue )
         this.middleJoint.quaternion.slerp( this.middleFkCtrl.quaternion, blendValue )
-        this.endJoint.quaternion.slerp( this.endFkCtrl.quaternion, blendValue )    
+        this.endJoint.quaternion.slerp( this.endFkCtrl.quaternion, blendValue )
 
         this.updateJoints();
 

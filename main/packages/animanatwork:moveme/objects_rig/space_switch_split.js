@@ -4,13 +4,13 @@ MM.SpaceswitchSplit = function(){
 	this.pOffsetMatrices = []
 	this.pSpaces = []
 	this.pSpaceNames = []
-	this.pChannelName = 'positionSpaceSwitch'
+	this.pChannelName = 'positionSwitch'
 	this.pChannelObject = undefined;
 
 	this.rOffsetMatrices = []
 	this.rSpaces = []
 	this.rSpaceNames = []
-	this.rChannelName = 'rotationSpaceSwitch'
+	this.rChannelName = 'rotationSwitch'
 	this.rChannelObject = undefined;
 
 	this.objectType = 'SpaceswitchSplit'
