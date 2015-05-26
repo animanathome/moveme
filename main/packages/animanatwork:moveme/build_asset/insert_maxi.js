@@ -4,7 +4,7 @@ MM.insertMaxi = function( editor ){
 	var config = {
 		  namespace: 'maxi:'
 		, name : 'maxi'
-		, control_scale : 2.0
+		, control_scale : 3.0
         , control_distance : 1.0		
 		//	root data directory
 		,  root_path : '/data/maxi/'		
@@ -79,17 +79,28 @@ MM.insertMaxi = function( editor ){
 			shoulder.controlScale.x = 0.4
 			shoulder.controlScale.z = 0.8;
 
+			var knee = u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl']
+			knee.controlScale.x = 0.5;
+			knee.controlScale.z = 0.5;
+
 			var foot = u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl']
-			foot.controlScale.x = 1.4;
-			foot.controlScale.z = 2.6;
-			foot.controlOffset.z = 2.2;
+			foot.controlScale.x = 1.0;
+			foot.controlScale.z = 1.6;
+			foot.controlOffset.z = 3.2;
 
 			var hand = u.getRigComponent(sides[i]+'Arm').controls['HandCtl']
 			hand.controlShape = 'planeX'
-			hand.controlScale.x = 1.5;
-			hand.controlScale.z = 1.5;
+			
+			var elbow = u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl']
+			elbow.controlScale.x = 0.5;
+			elbow.controlScale.z = 0.5;
 
 			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -10;
+
+			// var finger = u.getControl(sides[i]+'FingerCtl')
+			// finger.controlScale.x = 4.0
+			// finger.controlScale.y = 4.0
+			// finger.controlScale.z = 4.0
 		}
 	})
 	u.build()

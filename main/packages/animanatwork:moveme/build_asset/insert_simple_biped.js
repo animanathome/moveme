@@ -192,7 +192,8 @@ MM.insertBiped = function( editor, config ){
 					new THREE.Color(0x660000))
 			}
 			// fingerControl['constraint'].setControlShape( sides[i], 'circleZ', 2.5)
-			fingerControl['constraint'].animChannels = [["rotation", ["z"]]]		
+			// fingerControl['constraint'].animChannels = [["rotation", ["z"]]]
+			fingerControl['constraint'].setChannelsRotate()	
 			fingerControl['constraint'].constraintMode = 1;
 			fingerControl['constraint'].setObjectToSolve(fingerJoint)
 			fingerControl['constraint'].asset = u.assetName
@@ -201,7 +202,7 @@ MM.insertBiped = function( editor, config ){
 			editor.addGroupContent( u.assetGroup, [fingerControl['constraint']])
 			editor.addSelectables([fingerControl['constraint']])
 
-			u.addControls([fingerControl])
+			u.addControls([fingerControl['constraint']])
 
 		//	Thumb
 			var thumbJoint = editor.scene.getObjectByName(
@@ -227,7 +228,7 @@ MM.insertBiped = function( editor, config ){
 			editor.addGroupContent( u.assetGroup, [thumbControl['constraint']])
 			editor.addSelectables([thumbControl['constraint']])
 
-			u.addControls([thumbControl])
+			u.addControls([thumbControl['constraint']])
 		}
 
 	//	add jaw control
