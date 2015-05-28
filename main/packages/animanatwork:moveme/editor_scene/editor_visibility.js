@@ -25,6 +25,7 @@ MM.Editor.prototype.controlsVisibility = function( value ){
             }
         }
     }
+    this.signals.showInfo.dispatch('Show controls '+value)
 }
 
 MM.Editor.prototype.gridVisibility = function( value ){
@@ -34,11 +35,13 @@ MM.Editor.prototype.gridVisibility = function( value ){
     var object = this.scene.getObjectByName('grid')  
     object.visible = value
 
-    this.signals.sceneGraphChanged.dispatch();
+    this.signals.showInfo.dispatch('Show grid '+value)
+
+    this.signals.sceneGraphChanged.dispatch();    
 }
 
 MM.Editor.prototype.geometryVisibility = function( value ){
-    console.log('geometryVisibility', value)
+    // console.log('geometryVisibility', value)
 
     var geometry = this.scene.getObjectOfInstance(THREE.Mesh)
     var ngeometry = geometry.length
@@ -54,9 +57,11 @@ MM.Editor.prototype.geometryVisibility = function( value ){
         if( skipList.indexOf( geometry[i].name) !== -1 ){
             continue;
         }
-        console.log('\t', geometry[i].name)
+        // console.log('\t', geometry[i].name)
         geometry[i].visible = value
     }
+    this.signals.showInfo.dispatch('Show geometry '+value)
+
     this.signals.sceneGraphChanged.dispatch();
 }
 
@@ -80,7 +85,7 @@ MM.Editor.prototype.rotationAxisVisibility=function(value){
             }
         }
     }
-
+    this.signals.showInfo.dispatch('Show rotation axis on selected joints '+value)
 }
 
 MM.Editor.prototype.jointsVisibility = function( value ){
@@ -108,4 +113,5 @@ MM.Editor.prototype.jointsVisibility = function( value ){
             }
         }
     }
+    this.signals.showInfo.dispatch('Show joints '+value)
 }

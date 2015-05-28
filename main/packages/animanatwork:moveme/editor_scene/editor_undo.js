@@ -52,13 +52,13 @@ MM.Editor.prototype.undo = function(){
     var nActions = this.undoStack.length;
     if( nActions > 0 ){
         var commandData = this.undoStack[nActions-1];            
-        console.log('\trunning undoData', commandData)
+        // console.log('\trunning undoData', commandData)
 
         //  commandData structure
         //  0 = action to perform
         //  1 = object to apply the action on
         //  2+ = more action related data
-        
+            
         switch(commandData[0]){
         //  OBJECTS
             case "selectObject":
@@ -204,6 +204,7 @@ MM.Editor.prototype.undo = function(){
     // }else{
     //     console.log('\tNo actions to undo.')
     }
+    this.signals.showInfo.dispatch('Undo')
 }
 MM.Editor.prototype.redo = function(){
     // console.log('---------------------------------------')
@@ -356,6 +357,7 @@ MM.Editor.prototype.redo = function(){
         this.redoStack.pop();
         // console.log('removing one from list, new length', editor.redoStack.length)
     }
+    this.signals.showInfo.dispatch('Redo')
 }
 
    //  OBJECT3D UNDO

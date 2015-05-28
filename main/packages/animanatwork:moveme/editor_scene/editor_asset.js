@@ -13,15 +13,15 @@ MM.Editor.prototype.addAssetObject = function( assetObject ){
 }
 
 MM.Editor.prototype.addAsset = function( asset ){
-    // console.log('Editor.addAsset', asset)
+    console.log('Editor.addAsset', asset)
 
     this.assets.push( asset )
-
-    this.signals.assetAdded.dispatch( asset )
+    this.signals.showInfo.dispatch('Added asset '+asset.name)
+    this.signals.assetAdded.dispatch( asset )    
 }
 
 MM.Editor.prototype.getAssetByName = function( assetName ){
-    console.log('Editor: getAssetByName', assetName)
+    // console.log('Editor: getAssetByName', assetName)
     var i,j;
     for( i = 0, j = this.assets.length; i < j; i++){
         if( this.assets[i].getAbsoluteName() === assetName ){
@@ -54,8 +54,9 @@ MM.Editor.prototype.getDescriptionFromAssetObjects = function(){
 }
 
 MM.Editor.prototype.removeAssetObject = function( assetObject ){
-    console.log('Removing assetObject', assetObject)
+    // console.log('Removing assetObject', assetObject)
     
+    this.signals.showInfo.dispatch('Removed asset '+asset.name)
     this.signals.assetRemoved.dispatch( assetObject )
 
     var i, j;

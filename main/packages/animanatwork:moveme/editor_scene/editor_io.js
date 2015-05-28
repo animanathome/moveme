@@ -24,14 +24,13 @@ MM.Editor.prototype.initDrivenChannels = function(){
     }
 */
 MM.Editor.prototype.importPTASettings = function(data){
-    console.log('importPTASettings', data)
-
+    // console.log('importPTASettings', data)
     this.projectObj = data;
 }
 
 MM.Editor.prototype.exportPTASettings = function(){
-    console.log('exportPTASettings')
-    console.log('\tresult', this.projectObj)
+    // console.log('exportPTASettings')
+    // console.log('\tresult', this.projectObj)
     return this.projectObj;
 }
 
@@ -137,8 +136,6 @@ MM.Editor.prototype.exportSceneSettings = function(){
     data.showGrid = this.showGrid;
     data.showJoints = this.showJoints;
     data.showControls = this.showControls;
-    // data.layoutMode = this.layout.layoutMode;
-    // data.sceneList = this.sceneList;
     data.sceneBackgroundColor = this.sceneBackgroundColor.toArray();
     data.keyBackgroundColor = this.keyBackgroundColor.toArray();
 
@@ -149,7 +146,7 @@ MM.Editor.prototype.exportSceneSettings = function(){
     data.startRange = this.startRange
     data.endRange = this.endRange
 
-    console.log('\tresult:', data)
+    // console.log('\tresult:', data)
     return data;
 }
 
@@ -587,60 +584,6 @@ MM.Editor.prototype.exportSetups = function( ){
 //  IK SOLVERS
     var fourBoneIkBlendSolver = this.scene.getObjectOfInstance(MM.FourBoneIkBlendSolver)
     for( var i = 0, j = fourBoneIkBlendSolver.length; i < j; i++){
-        // thisData = {}
-        // console.log('\texporting', fourBoneIkBlendSolver[i], 'as FourBoneIkBlendSolver')
-
-        // thisData.type = 'FourBoneIkBlendSolver';
-        // thisData.name = fourBoneIkBlendSolver[i].name;
-
-        // //  base 
-        // thisData.startMatrix = fourBoneIkBlendSolver[i].startMatrix.toArray() 
-        // thisData.aimAnkleOffset = fourBoneIkBlendSolver[i].aimAnkleOffset.toArray() 
-        // thisData.startJoint = fourBoneIkBlendSolver[i].startJoint.name
-        // thisData.middleJoint = fourBoneIkBlendSolver[i].middleJoint.name
-        // thisData.endJoint = fourBoneIkBlendSolver[i].endJoint.name
-        // thisData.handleControl = fourBoneIkBlendSolver[i].handleControl.name
-        // thisData.poleVector = fourBoneIkBlendSolver[i].poleVector.name
-
-        // //  extra
-        // thisData.startFkCtrl = fourBoneIkBlendSolver[i].startFkCtrl.name
-        // thisData.middleFkCtrl = fourBoneIkBlendSolver[i].middleFkCtrl.name
-        // thisData.endFkCtrl = fourBoneIkBlendSolver[i].endFkCtrl.name
-        
-        // thisData.customCtrl = fourBoneIkBlendSolver[i].customCtrl.name
-        // thisData.ikFkBlendGroup = fourBoneIkBlendSolver[i].ikFkBlendGroup
-        // thisData.ikFkBlendChannel = fourBoneIkBlendSolver[i].ikFkBlendChannel
-        // thisData.stretchGroup = fourBoneIkBlendSolver[i].stretchGroup
-        // thisData.stretchChannel = fourBoneIkBlendSolver[i].stretchChannel
-        // thisData.autoStretchGroup = fourBoneIkBlendSolver[i].autoStretchGroup;
-        // thisData.autoStretchChannel = fourBoneIkBlendSolver[i].autoStretchChannel;
-        // thisData.autoMinChannel = fourBoneIkBlendSolver[i].autoMinChannel;
-        // thisData.autoMaxChannel = fourBoneIkBlendSolver[i].autoMaxChannel;
-        // thisData.stretchAxis = fourBoneIkBlendSolver[i].stretchAxis;
-        // thisData.startLength = fourBoneIkBlendSolver[i].startLength;
-        // thisData.endLength = fourBoneIkBlendSolver[i].endLength;
-        // thisData.previousStretch = fourBoneIkBlendSolver[i].previousStretch;
-
-        // thisData.heelJoint = fourBoneIkBlendSolver[i].heelJoint.name;
-        // thisData.ballJoint = fourBoneIkBlendSolver[i].ballJoint.name;
-        // thisData.toeJoint = fourBoneIkBlendSolver[i].toeJoint.name;
-
-        // thisData.ballFkCtl = fourBoneIkBlendSolver[i].ballFkCtl.name;
-
-        // //  foot roll setup hierarchy
-        // thisData.toeObject = fourBoneIkBlendSolver[i].toeObject.name;
-        // thisData.ballObject = fourBoneIkBlendSolver[i].ballObject.name;
-        // thisData.heelObject = fourBoneIkBlendSolver[i].heelObject.name;
-        // thisData.ankleObject = fourBoneIkBlendSolver[i].ankleObject.name;
-
-        // //  control channel
-        // thisData.toeChannel = fourBoneIkBlendSolver[i].toeChannel;
-        // thisData.ballChannel = fourBoneIkBlendSolver[i].ballChannel;
-        // thisData.heelChannel = fourBoneIkBlendSolver[i].heelChannel;
-        // thisData.toeRotateChannel = fourBoneIkBlendSolver[i].toeRotateChannel;
-        
-        // // console.log('out', thisData)
-
         data[fourBoneIkBlendSolver[i].uuid ]=fourBoneIkBlendSolver[i].exportSetup();;
     }
  
@@ -653,41 +596,6 @@ MM.Editor.prototype.exportSetups = function( ){
             // console.log('\tskipping ', twoBoneIkBlendSolver[i].name)
             break;
         }
-
-        // thisData = {}
-        // // console.log('\texporting', twoBoneIkBlendSolver[i], 'as TwoBoneIkBlendSolver')
-
-        // thisData.type = 'TwoBoneIkBlendSolver';
-        // thisData.name = twoBoneIkBlendSolver[i].name;
-
-        //  base 
-        // thisData.startMatrix = twoBoneIkBlendSolver[i].startMatrix.toArray() 
-        // thisData.startJoint = twoBoneIkBlendSolver[i].startJoint.name
-        // thisData.middleJoint = twoBoneIkBlendSolver[i].middleJoint.name
-        // thisData.endJoint = twoBoneIkBlendSolver[i].endJoint.name
-        // thisData.handleControl = twoBoneIkBlendSolver[i].handleControl.name
-        // thisData.poleVector = twoBoneIkBlendSolver[i].poleVector.name
-
-        //  extra
-        // thisData.startFkCtrl = twoBoneIkBlendSolver[i].startFkCtrl.name
-        // thisData.middleFkCtrl = twoBoneIkBlendSolver[i].middleFkCtrl.name
-        // thisData.endFkCtrl = twoBoneIkBlendSolver[i].endFkCtrl.name
-        
-        // thisData.customCtrl = twoBoneIkBlendSolver[i].customCtrl.name
-        // thisData.ikFkBlendGroup = twoBoneIkBlendSolver[i].ikFkBlendGroup
-        // thisData.ikFkBlendChannel = twoBoneIkBlendSolver[i].ikFkBlendChannel
-        // thisData.stretchGroup = twoBoneIkBlendSolver[i].stretchGroup
-        // thisData.stretchChannel = twoBoneIkBlendSolver[i].stretchChannel
-        // thisData.autoStretchGroup = twoBoneIkBlendSolver[i].autoStretchGroup;
-        // thisData.autoStretchChannel = twoBoneIkBlendSolver[i].autoStretchChannel;
-        // thisData.autoMinChannel = twoBoneIkBlendSolver[i].autoMinChannel;
-        // thisData.autoMaxChannel = twoBoneIkBlendSolver[i].autoMaxChannel;
-        // thisData.stretchAxis = twoBoneIkBlendSolver[i].stretchAxis;
-        // thisData.startLength = twoBoneIkBlendSolver[i].startLength;
-        // thisData.endLength = twoBoneIkBlendSolver[i].endLength;
-        // thisData.previousStretch = twoBoneIkBlendSolver[i].previousStretch;
-
-        // console.log('out', thisData)
 
         data[twoBoneIkBlendSolver[i].uuid]=twoBoneIkBlendSolver[i].exportSetup();
     }        

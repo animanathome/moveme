@@ -20,8 +20,10 @@ MM.Editor.prototype.addGroup = function ( groupName , groupType, silent ){
     //  add the group    
     var addedGroup = this.groups[groupType].addGroup( groupName )
 
-    if( ! silent === true ) 
+    if( ! silent === true ){
         this.signals.groupAdded.dispatch( addedGroup )
+        this.signals.showInfo.dispatch('Added group '+groupName)
+    }
 
     return addedGroup
 }
@@ -40,7 +42,8 @@ MM.Editor.prototype.addGroupContent = function( groupName, content, groupType, s
     
     this.groups[groupType].addContent( groupName, content )
 
-    if( ! silent === true ) 
+    if( ! silent === true ){
         this.signals.groupContentAdded.dispatch( groupName )
+    }
 }
 

@@ -21,12 +21,12 @@ MM.Editor.prototype.play = function(){
         this.isPlaying = false;
         this.clock.stop();
         this.timeAsDouble = this.time;
-        this.signals.showInfo.dispatch('Stop playing')
+        this.signals.showInfo.dispatch('Stop animation')
     }else{
         this.isPlaying = true;
         this.clock.start();
         this.timeAsDouble = this.time;
-        this.signals.showInfo.dispatch('Start playing')
+        this.signals.showInfo.dispatch('Play animation')
     }
     this.signals.play.dispatch();
     return this;
@@ -35,28 +35,28 @@ MM.Editor.prototype.play = function(){
 MM.Editor.prototype.nextFrame = function(){
     this.setTime(this.time + 1);    
 
-    this.signals.showInfo.dispatch('Move to next frame')
+    this.signals.showInfo.dispatch('Move to next frame '+(this.time+1))
     return this;
 }
 
 MM.Editor.prototype.previousFrame = function(){
     this.setTime(this.time - 1);
     
-    this.signals.showInfo.dispatch('Move to previous frame')
+    this.signals.showInfo.dispatch('Move to previous frame '+(this.time-1))
     return this;    
 }
 
 MM.Editor.prototype.startFrame = function(){
     this.setTime(this.startRange);    
     
-    this.signals.showInfo.dispatch('Move to start frame')
+    this.signals.showInfo.dispatch('Move to start frame '+this.startRange)
     return this;
 }
 
 MM.Editor.prototype.endFrame = function(){
     this.setTime(this.endRange);
 
-    this.signals.showInfo.dispatch('Move to end frame')
+    this.signals.showInfo.dispatch('Move to end frame '+this.endRange)
     return this;
 }
 
@@ -233,6 +233,7 @@ MM.Editor.prototype.keyObjects = function( objectList ){
         }
     }
 
+    this.signals.showInfo.dispatch('Key controls')
     this.signals.objectSelected.dispatch()
 }
 
@@ -271,6 +272,7 @@ MM.Editor.prototype.keySelectedObjectsChannels = function(channels){
 
     this.displayAnimCurves()
     this.signals.objectSelected.dispatch()
+    this.signals.showInfo.dispatch('Key selected controls')
     //  object selected needs to trigger key view redraw
     //  
     return allAddedAnimCurves;
@@ -296,6 +298,7 @@ MM.Editor.prototype.clearSelectedObjectsChannels = function( channels){
         }
     }
     this.displayAnimCurves()
+    this.signals.showInfo.dispatch('Clear selected object channels')
     this.signals.objectSelected.dispatch()
 }
 
@@ -472,7 +475,7 @@ MM.Editor.prototype.displayAnimCurves = function( animCurves ){
             this.sceneAnimCurves.add(this.selectedAnimCurves[i].dp.dvrt)
             this.sceneAnimCurves.add(this.selectedAnimCurves[i].dp.svrt)
         }            
-    }
+    }    
 } 
 
 MM.Editor.prototype.updateDisplayAnimCurves = function(){
@@ -561,6 +564,8 @@ MM.Editor.prototype.addKey = function(){
     //  undo command
     this.getUndoDataFromAddKey( undoAnimCurves, undoKeyData , "undo")
 
+    this.signals.showInfo.dispatch('Add key to active animation curves')
+    
     this.signals.keyframeEditorChanged.dispatch()
 }
 
@@ -579,6 +584,8 @@ MM.Editor.prototype.moveKeys = function(start_time, end_time, value){
 
         }
     }
+
+    this.signals.showInfo.dispatch('Move keys between '+start_time+' and '+end_time+', '+value+' unit')
 
     this.signals.keyframeEditorChanged.dispatch()
 }
@@ -613,7 +620,7 @@ MM.Editor.prototype.removeKey = function(){
         }
     }  
 
-
+    this.signals.showInfo.dispatch('Remove selected keys')
     this.signals.keyframeEditorChanged.dispatch()      
 }
 
@@ -635,6 +642,7 @@ MM.Editor.prototype.copyKeys = function(){
         data[tc.name]=tv;
     }
     // console.log('\tresult', data)
+    this.signals.showInfo.dispatch('Copy selected keys')
     this.pastedKeyValues = data;
 }
 
@@ -692,6 +700,7 @@ MM.Editor.prototype.pasteKeys = function(){
 
     if(keysAdded){
         console.log('\tKeys were added, dispatch event.')
+        this.signals.showInfo.dispatch('Paste keys')
         this.signals.keyAdded.dispatch();
         this.signals.keyframeEditorChanged.dispatch();
     }    
@@ -724,6 +733,7 @@ MM.Editor.prototype.pasteKey = function(){
         this.selectedAnimCurves[i].add( this.time, this.pastedKeyValue )
     }
 
+    this.signals.showInfo.dispatch('Paste key')
     this.signals.keyAdded.dispatch();
     this.signals.keyframeEditorChanged.dispatch();
 }
@@ -822,7 +832,8 @@ MM.Editor.prototype.setTangentMode = function( mode ){
 */
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].setTangentType( mode );
-    }   
+    }
+    this.signals.showInfo.dispatch('Set tangent type to '+mode)
 }
 
 MM.Editor.prototype.resetTangent = function()
@@ -830,6 +841,7 @@ MM.Editor.prototype.resetTangent = function()
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].resetTangent();
     }
+    this.signals.showInfo.dispatch('Reset tangent type')
 }
 
 MM.Editor.prototype.breakTangent = function()
@@ -837,34 +849,39 @@ MM.Editor.prototype.breakTangent = function()
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].breakTangent();
     }   
+    this.signals.showInfo.dispatch('Break tangents')
 }
 
 MM.Editor.prototype.unifyTangent = function()
 {
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].unifyTangent();
-    }   
+    }
+    this.signals.showInfo.dispatch('Unify tangents')
 }
 
 MM.Editor.prototype.lockTangent = function()
 {
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].lockTangent();
-    }        
+    }
+    this.signals.showInfo.dispatch('Lock tangents')
 }
 
 MM.Editor.prototype.unlockTangent = function()
 {
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].unlockTangent();
-    }           
+    }
+    this.signals.showInfo.dispatch('Unlock tangents')
 }
 
 MM.Editor.prototype.flattenTangent = function()
 {
     for(var i = 0; i < this.selectedAnimCurves.length; i++){
         this.selectedAnimCurves[i].flattenTangent();
-    }           
+    }
+    this.signals.showInfo.dispatch('Flatten tangents')
 }
 
 //  TANGENT WRAPPERS
