@@ -175,7 +175,7 @@ MM.insertBiped = function( editor, config ){
 				u.namespace+sides[i]+'Finger', true)			
 			
 			var fingerControl = MM.createConstraintGroup( sides[i], 
-				u.namespace+sides[i]+'FingerCtl', 'circleZ', 1.25)
+				u.namespace+sides[i]+'FingerCtl', 'circleZ')
 
 			var wristJoint = editor.scene.getObjectByName(
 				u.namespace+sides[i]+'Wrist', true)
@@ -208,7 +208,7 @@ MM.insertBiped = function( editor, config ){
 			var thumbJoint = editor.scene.getObjectByName(
 				u.namespace+sides[i]+'Thumb', true)
 			var thumbControl = MM.createConstraintGroup( sides[i], 
-				u.namespace+sides[i]+'ThumbCtl', 'circle', 1.25)
+				u.namespace+sides[i]+'ThumbCtl', 'circle')
 
 			wristJoint.setParent(thumbControl['zero'])
 			if( i === 0 ){				

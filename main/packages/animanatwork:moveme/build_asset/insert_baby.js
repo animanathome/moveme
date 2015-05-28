@@ -84,6 +84,12 @@ MM.insertMini = function( editor ){
 
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].controlShape = 'planeX'
 			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -5;
+
+			var finger = u.getControl(sides[i]+'FingerCtl')
+			finger.controlSize = 1.0;
+
+			var thumb = u.getControl(sides[i]+'ThumbCtl')
+			thumb.controlSize = 1.0;
 		}
 	})
 	u.build()

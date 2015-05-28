@@ -97,10 +97,11 @@ MM.insertMaxi = function( editor ){
 
 			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -10;
 
-			// var finger = u.getControl(sides[i]+'FingerCtl')
-			// finger.controlScale.x = 4.0
-			// finger.controlScale.y = 4.0
-			// finger.controlScale.z = 4.0
+			var finger = u.getControl(sides[i]+'FingerCtl')
+			finger.controlSize = 3.0;
+
+			var thumb = u.getControl(sides[i]+'ThumbCtl')
+			thumb.controlSize = 3.0;
 		}
 	})
 	u.build()
