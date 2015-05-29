@@ -280,7 +280,9 @@ MM.insertBiped = function( editor, config ){
 		
 		//	arms and legs
 		for( var i = 0; i < sides.length; i++){
-			//	arms			
+		
+		//	arms
+			//	fk shoulder control
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getJoint(sides[i]+'Shoulder'))
 
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
@@ -290,7 +292,7 @@ MM.insertBiped = function( editor, config ){
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
 
-			//	space switch to global, tchest and shoulder
+			//	hand ik control
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('global').controls['GlobalCtl'])
 			
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('head').controls['cTChestCtl'])
@@ -299,6 +301,7 @@ MM.insertBiped = function( editor, config ){
 
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpaceswitchChannel( u.getRigComponent(sides[i]+'Arm').controls['HandCtl'])
 
+			//	elbow ik control
 			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent('global').controls['GlobalCtl'])
 			
 			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent('head').controls['cTChestCtl'])
@@ -307,14 +310,20 @@ MM.insertBiped = function( editor, config ){
 			
 			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'])
 		
-			//	legs
+		//	legs
+			//	foot control
 			u.getRigComponent('global').controls['GlobalCtl'].setParent(
-				u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl'].parent)		
+				u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl'].parent)
+
+			//	knee control
+			//	specify spaces
 			u.getRigComponent('global').controls['GlobalCtl'].setParent(
 				u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent)
-
 			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('global').controls['GlobalCtl'])
-			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('back').controls['cBodyCtl'])			
+			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('back').controls['cBodyCtl'])
+			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl'])
+			//	specify space control
+			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpaceswitchChannel(u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'])
 		}						
 		
 	//	visualize controls
