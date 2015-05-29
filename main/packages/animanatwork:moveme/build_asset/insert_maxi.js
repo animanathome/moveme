@@ -47,11 +47,11 @@ MM.insertMaxi = function( editor ){
 		u.getRigComponent('head').controls['cHeadCtl'].controlScale.z = 0.6
 		u.getRigComponent('head').controls['cHeadCtl'].controlOffset.y = 4.0
 
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.3
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.3
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 0.3
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.8
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.25
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 1.0
 		u.getRigComponent('head').controls['cTChestCtl'].controlOffset.y = 1.0
-		u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 9
+		// u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 9
 
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.x = 0.8
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.25

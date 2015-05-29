@@ -38,18 +38,21 @@ MM.insertMini = function( editor ){
 		jaw_ctl.controlOffset.y = -1.25
 		jaw_ctl.controlOffset.z = 1.5
 		jaw_ctl.controlScale.y = 0.15
+		jaw_ctl.controlScale.x = 0.75
+		jaw_ctl.controlScale.z = 0.75
 
+		u.getRigComponent('head').controls['cHeadCtl'].controlScale.x = 0.5
 		u.getRigComponent('head').controls['cHeadCtl'].controlScale.y = 0.5	
 		u.getRigComponent('head').controls['cHeadCtl'].controlScale.z = 0.6	
 		u.getRigComponent('head').controls['cHeadCtl'].controlOffset.y = 5.0
 
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.1
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.1
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 0.1
-		u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 1.5
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.2
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.075
+		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 0.25
+		// u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 1.5
 
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.x = 0.25
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.125
+		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.075
 		u.getRigComponent('back').controls['cBChestCtl'].controlScale.z = 0.25
 
 		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.25
@@ -74,8 +77,8 @@ MM.insertMini = function( editor ){
 		for( i = 0; i < 2; i++){
 			var shoulder = u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl']
 			shoulder.controlOffset.y = 1;
-			shoulder.controlScale.x = 0.2;
-			shoulder.controlScale.z = 0.1
+			shoulder.controlScale.x = 0.25;
+			shoulder.controlScale.z = 0.15;
 
 			var foot = u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl']
 			foot.controlScale.x = 2;
