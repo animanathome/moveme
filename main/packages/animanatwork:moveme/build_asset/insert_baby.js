@@ -86,7 +86,9 @@ MM.insertMini = function( editor ){
 			foot.controlOffset.z = 2.0;
 
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].controlShape = 'planeX'
-			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -5;
+			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].controlSize = 1.5;
+
+			u.getRigComponent(sides[i]+'Arm').controls['ArmSwitch'].controlOffset.z = -5;			
 
 			var finger = u.getControl(sides[i]+'FingerCtl')
 			finger.controlSize = 1.0;

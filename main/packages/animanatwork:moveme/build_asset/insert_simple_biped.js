@@ -191,9 +191,11 @@ MM.insertBiped = function( editor, config ){
 				fingerControl['constraint'].setDisplayColor(
 					new THREE.Color(0x660000))
 			}
-			// fingerControl['constraint'].setControlShape( sides[i], 'circleZ', 2.5)
-			// fingerControl['constraint'].animChannels = [["rotation", ["z"]]]
-			fingerControl['constraint'].setChannelsRotate()	
+			
+			fingerControl['constraint'].animChannels = [
+				["rotation", ["z"],[[-Infinity, Infinity]], ["number"]]
+			]
+
 			fingerControl['constraint'].constraintMode = 1;
 			fingerControl['constraint'].setObjectToSolve(fingerJoint)
 			fingerControl['constraint'].asset = u.assetName
