@@ -69,7 +69,7 @@ MM.Editor.prototype.removeAssetObject = function( assetObject ){
 }
 
 MM.Editor.prototype.removeAsset = function ( object , namespace , isUndo){
-    // console.log('editor.removeAsset', object, namespace)
+    console.log('editor.removeAsset', object, namespace)
 
     //  Delete all of the objects that have the same namespace
     //  This assumes that all objects with the same namespace
@@ -98,7 +98,7 @@ MM.Editor.prototype.removeAsset = function ( object , namespace , isUndo){
 
     //  get scene objects which match description
     var sceneObjects = this.scene.getObjectWithNamespace( namespace )
-    // console.log('scene objects', sceneObjects)
+    console.log('#\tfound the following objects with namespace', namespace, sceneObjects)
     this.removeObjects( sceneObjects );
 
     //  get asset group elements which match description

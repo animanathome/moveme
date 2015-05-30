@@ -13,7 +13,7 @@ MM.insertBall = function( editor ){
 	mesh.material.color.b = 68 / 255;
 	editor.addObject( mesh );
 
-	console.log('building')
+	// console.log('building')
 	var groundControl = new MM.createControlGroup('c', namespace+'ground', 'plane', 10);	
 	editor.addObject( groundControl.zero )
 	groundControl.control.setChannelsTranslateAndRotate()
@@ -22,8 +22,7 @@ MM.insertBall = function( editor ){
 	editor.addObject( groundControl.zero )	
 	groundControl.control.add( mainControl.zero )
 	mainControl.zero.position.set(0,5,0)
-
-	mainControl.control.add( mesh )	
+	mainControl.control.add( mesh )
 
 	editor.addSelectables([groundControl.control, mainControl.control])	
 
@@ -40,8 +39,7 @@ MM.insertBall = function( editor ){
 	assetObject.name = asset
 	assetObject.namespace = namespace;
 	assetObject.models.push( mesh )
-	assetObject.controls.push( groundControl.control )
-	assetObject.controls.push( mainControl.control )
+	assetObject.addControls([groundControl.control, mainControl.control])
 	assetObject.assetGroup = assetGroup;
 
 	editor.addAssetObject( assetObject )	
@@ -50,7 +48,8 @@ MM.insertBall = function( editor ){
 }	
 
 MM.ballSelect = function( namespace, container, editor ){
-	console.log('MM.ballSelect', namespace, container, editor)
+	// console.log('MM.ballSelect', namespace, container, editor)
+	
 	container.setHeight('180px')
 
     //  GLOBAL

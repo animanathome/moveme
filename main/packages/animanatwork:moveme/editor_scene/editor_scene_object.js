@@ -108,18 +108,18 @@ MM.Editor.prototype.deleteSelected = function ( ){
     //  NOTE: that in case of an asset this is not true. Here we actually
     //  want to make sure we remove everything associated to the selected
     //  asset
-    console.log('deleteSelected')
+    // console.log('deleteSelected')
 
     var i, j;
     if( this.selectedObjects.length === 0 )
     {
-        // console.log('\tNothing selected')
+        // console.log('\tNothing selected. ')
     }else{
-        // console.log('\t', this.selected.name, 'selected')
-
         //  might be better to ask the object if it has any animCurves selected?
         if( this.selectedAnimCurves.length === 0 ){
             for( i = 0, j = this.selectedObjects.length; i < j; i++){
+                // console.log('\tDeleting object with name ', this.selectedObjects[i].name)
+
                 //  check whether or not we're dealing with an asset
                 //   in case of a 'normal' object, we just have to delete the
                 //   object
@@ -136,11 +136,11 @@ MM.Editor.prototype.deleteSelected = function ( ){
         }else{
             for( i = 0, j = this.selectedObjects.length; i < j; i++){
                 if( this.selectedObjects[i].hasKeysSelected() === false ){
-                    console.log('\t', this.selected.name, 'has no keys selected')
-                    console.log('\tdeleting curve')                    
+                    // console.log('\t', this.selected.name, 'has no keys selected')
+                    // console.log('\tdeleting curve')                    
                     this.removeSelectedAnimCurves();
                 }else{
-                    console.log('\tdeleting keys')
+                    // console.log('\tdeleting keys')
                     this.removeKey();
                 }
             }
@@ -149,7 +149,7 @@ MM.Editor.prototype.deleteSelected = function ( ){
 }
 
 MM.Editor.prototype.initSimpleScene = function(){ 
-    console.log('initSimpleScene')
+    // console.log('initSimpleScene')
 
     var grid = new THREE.GridHelper( 250, 25 );
     grid.name = 'grid'
@@ -396,25 +396,16 @@ MM.Editor.prototype.addObject = function ( object ){
             newName = object.name + i; i += 1;
         }
 
-        if( object.name !== newName ){
-            console.warn('Object', object.name, 'already exists. Renaming to', 
-                newName);
-        }
+        // if( object.name !== newName ){
+        //     console.warn('Object', object.name, 'already exists. Renaming to', 
+        //         newName);
+        // }
 
         object.name = newName
     }   
 
 //  add object to render scene
-    this.scene.add(object);
-
-    // console.log('\tnumber of objects:', this.scene.children.length, 
-    //     this.scene.children)
-
-    //  Not sure what this does...
-    // this.object.traverse( function ( child ) {
-    //     this.objects.push( child );
-    // } );        
-    
+    this.scene.add(object);      
     this.signals.objectAdded.dispatch( object );
     this.signals.sceneGraphChanged.dispatch();    
 }
@@ -426,7 +417,7 @@ MM.Editor.prototype.removeObjects = function( objects ){
 }
 
 MM.Editor.prototype.removeObject = function ( object ){
-    // console.log('editor: removeObject', object)
+    // console.log('editor: removeObject', object.name, object)
 
     if ( object === undefined ) return; 
 
@@ -468,13 +459,13 @@ MM.Editor.prototype.removeObject = function ( object ){
 }
 
 MM.Editor.prototype.selectObjectByName = function( objectName ){
-    console.log('selectObjectByName', objectName)
+    // console.log('selectObjectByName', objectName)
 
     var found = this.scene.getObjectByName( objectName , true);
     if( found !== undefined ){
         this.select( found )
-    }else{
-        console.log('\tobject', objectName, 'does not exist.')
+    // }else{
+    //     console.log('\tobject', objectName, 'does not exist.')
     }
 }
 

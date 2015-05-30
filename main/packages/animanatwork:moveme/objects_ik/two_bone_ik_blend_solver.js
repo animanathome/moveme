@@ -78,6 +78,17 @@ MM.TwoBoneIkBlendSolver.prototype.solveSoftIk=function(){
     if(this.endFkCtrl === undefined ){
         return;
     }
+    if(this.middleFkCtrl.parent === undefined){
+        return;
+    }
+    if(this.endFkCtrl.parent === undefined ){
+        return;
+    }
+
+    // console.log('\tmiddleFkCtrl', this.middleFkCtrl)
+    // console.log('\tendFkCtrl', this.endFkCtrl)
+    // console.log('\tmiddleJoint', this.middleJoint)
+    // console.log('\tendJoint', this.endJoint)
 
     //  update the position of the fk controls in case we scale the joints
     this.middleFkCtrl.parent.position[this.stretchAxis]=this.middleJoint.position[this.stretchAxis]
@@ -91,7 +102,12 @@ MM.TwoBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ) {
     //  blend   
     if( this.customCtrl !== undefined && this.ikFkBlendGroup !== undefined
         && this.ikFkBlendChannel !== undefined && this.doBlend === true
-        && this.handleControl !== undefined ){
+        && this.handleControl !== undefined && this.startFkCtrl !== undefined){
+
+        if(this.startFkCtrl.parent === undefined ){
+            return;
+        }
+
         var blendObjectGroup = this.customCtrl[this.ikFkBlendGroup]
         var blendValue = blendObjectGroup[this.ikFkBlendChannel]
         if( blendValue < 0.0 ) blendValue = 0;

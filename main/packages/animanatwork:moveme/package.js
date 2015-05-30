@@ -27,6 +27,7 @@ Package.onUse(function(api) {
           ,"editor_scene/editor.js"
           ,"editor_scene/editor_scene_object.js"
           ,"editor_scene/editor_scene_key.js"
+          ,"editor_scene/editor_scene_setup.js"
           ,"editor_scene/editor_asset.js"
           ,"editor_scene/editor_anim.js"
           ,"editor_scene/editor_undo.js"

@@ -37,6 +37,13 @@ MM.Asset.prototype = {
 	},
 	addControls : function( controls ){
 		this.controls = MM.extendArrayWithArray( this.controls, controls );
+
+		//	associate the passed controls to this asset
+		var i = 0; var j = controls.length;
+		for( i = 0; i < j; i ++){
+			controls[i].asset = this.name
+		}
+
 		return this;
 	},
 	exportData: function(){
