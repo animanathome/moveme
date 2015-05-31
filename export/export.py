@@ -384,8 +384,8 @@ def exportBaby():
 def exportMaxi():	
 	e = Export();
 	e.doShapes = False
-	e.sourceFile = '/Users/manu/Dropbox/learning/js/three.js/mrdoob-three.js-8673cc8/manu/resources/biggy_004.ma'
-	e.destinationFolder = '/Users/manu/Dropbox/MoveMe/public/data/maxi/'
+	e.sourceFile = '/Users/manu/GitHub/moveme/export/resources/maxi_004.ma'
+	e.destinationFolder = '/Users/manu/GitHub/moveme/main/public/data/maxi/'
 	e();	
 
 def exportTunny():

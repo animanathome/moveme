@@ -1,22 +1,100 @@
 //Maya ASCII 2014 scene
-//Name: biggy_004.ma
-//Last modified: Sat, Apr 18, 2015 01:22:09 PM
+//Name: maxi_004.ma
+//Last modified: Sun, May 31, 2015 02:41:20 PM
 //Codeset: UTF-8
 requires maya "2014";
+requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOutputPass" -nodeType "mentalrayRenderPass"
+		 -nodeType "mentalrayUserBuffer" -nodeType "mentalraySubdivApprox" -nodeType "mentalrayCurveApprox"
+		 -nodeType "mentalraySurfaceApprox" -nodeType "mentalrayDisplaceApprox" -nodeType "mentalrayOptions"
+		 -nodeType "mentalrayGlobals" -nodeType "mentalrayItemsList" -nodeType "mentalrayShader"
+		 -nodeType "mentalrayUserData" -nodeType "mentalrayText" -nodeType "mentalrayTessellation"
+		 -nodeType "mentalrayPhenomenon" -nodeType "mentalrayLightProfile" -nodeType "mentalrayVertexColors"
+		 -nodeType "mentalrayIblShape" -nodeType "mapVizShape" -nodeType "mentalrayCCMeshProxy"
+		 -nodeType "cylindricalLightLocator" -nodeType "discLightLocator" -nodeType "rectangularLightLocator"
+		 -nodeType "sphericalLightLocator" -nodeType "abcimport" -nodeType "mia_physicalsun"
+		 -nodeType "mia_physicalsky" -nodeType "mia_material" -nodeType "mia_material_x" -nodeType "mia_roundcorners"
+		 -nodeType "mia_exposure_simple" -nodeType "mia_portal_light" -nodeType "mia_light_surface"
+		 -nodeType "mia_exposure_photographic" -nodeType "mia_exposure_photographic_rev" -nodeType "mia_lens_bokeh"
+		 -nodeType "mia_envblur" -nodeType "mia_ciesky" -nodeType "mia_photometric_light"
+		 -nodeType "mib_texture_vector" -nodeType "mib_texture_remap" -nodeType "mib_texture_rotate"
+		 -nodeType "mib_bump_basis" -nodeType "mib_bump_map" -nodeType "mib_passthrough_bump_map"
+		 -nodeType "mib_bump_map2" -nodeType "mib_lookup_spherical" -nodeType "mib_lookup_cube1"
+		 -nodeType "mib_lookup_cube6" -nodeType "mib_lookup_background" -nodeType "mib_lookup_cylindrical"
+		 -nodeType "mib_texture_lookup" -nodeType "mib_texture_lookup2" -nodeType "mib_texture_filter_lookup"
+		 -nodeType "mib_texture_checkerboard" -nodeType "mib_texture_polkadot" -nodeType "mib_texture_polkasphere"
+		 -nodeType "mib_texture_turbulence" -nodeType "mib_texture_wave" -nodeType "mib_reflect"
+		 -nodeType "mib_refract" -nodeType "mib_transparency" -nodeType "mib_continue" -nodeType "mib_opacity"
+		 -nodeType "mib_twosided" -nodeType "mib_refraction_index" -nodeType "mib_dielectric"
+		 -nodeType "mib_ray_marcher" -nodeType "mib_illum_lambert" -nodeType "mib_illum_phong"
+		 -nodeType "mib_illum_ward" -nodeType "mib_illum_ward_deriv" -nodeType "mib_illum_blinn"
+		 -nodeType "mib_illum_cooktorr" -nodeType "mib_illum_hair" -nodeType "mib_volume"
+		 -nodeType "mib_color_alpha" -nodeType "mib_color_average" -nodeType "mib_color_intensity"
+		 -nodeType "mib_color_interpolate" -nodeType "mib_color_mix" -nodeType "mib_color_spread"
+		 -nodeType "mib_geo_cube" -nodeType "mib_geo_torus" -nodeType "mib_geo_sphere" -nodeType "mib_geo_cone"
+		 -nodeType "mib_geo_cylinder" -nodeType "mib_geo_square" -nodeType "mib_geo_instance"
+		 -nodeType "mib_geo_instance_mlist" -nodeType "mib_geo_add_uv_texsurf" -nodeType "mib_photon_basic"
+		 -nodeType "mib_light_infinite" -nodeType "mib_light_point" -nodeType "mib_light_spot"
+		 -nodeType "mib_light_photometric" -nodeType "mib_cie_d" -nodeType "mib_blackbody"
+		 -nodeType "mib_shadow_transparency" -nodeType "mib_lens_stencil" -nodeType "mib_lens_clamp"
+		 -nodeType "mib_lightmap_write" -nodeType "mib_lightmap_sample" -nodeType "mib_amb_occlusion"
+		 -nodeType "mib_fast_occlusion" -nodeType "mib_map_get_scalar" -nodeType "mib_map_get_integer"
+		 -nodeType "mib_map_get_vector" -nodeType "mib_map_get_color" -nodeType "mib_map_get_transform"
+		 -nodeType "mib_map_get_scalar_array" -nodeType "mib_map_get_integer_array" -nodeType "mib_fg_occlusion"
+		 -nodeType "mib_bent_normal_env" -nodeType "mib_glossy_reflection" -nodeType "mib_glossy_refraction"
+		 -nodeType "builtin_bsdf_architectural" -nodeType "builtin_bsdf_architectural_comp"
+		 -nodeType "builtin_bsdf_carpaint" -nodeType "builtin_bsdf_ashikhmin" -nodeType "builtin_bsdf_lambert"
+		 -nodeType "builtin_bsdf_mirror" -nodeType "builtin_bsdf_phong" -nodeType "contour_store_function"
+		 -nodeType "contour_store_function_simple" -nodeType "contour_contrast_function_levels"
+		 -nodeType "contour_contrast_function_simple" -nodeType "contour_shader_simple" -nodeType "contour_shader_silhouette"
+		 -nodeType "contour_shader_maxcolor" -nodeType "contour_shader_curvature" -nodeType "contour_shader_factorcolor"
+		 -nodeType "contour_shader_depthfade" -nodeType "contour_shader_framefade" -nodeType "contour_shader_layerthinner"
+		 -nodeType "contour_shader_widthfromcolor" -nodeType "contour_shader_widthfromlightdir"
+		 -nodeType "contour_shader_widthfromlight" -nodeType "contour_shader_combi" -nodeType "contour_only"
+		 -nodeType "contour_composite" -nodeType "contour_ps" -nodeType "mi_metallic_paint"
+		 -nodeType "mi_metallic_paint_x" -nodeType "mi_bump_flakes" -nodeType "mi_car_paint_phen"
+		 -nodeType "mi_metallic_paint_output_mixer" -nodeType "mi_car_paint_phen_x" -nodeType "physical_lens_dof"
+		 -nodeType "physical_light" -nodeType "dgs_material" -nodeType "dgs_material_photon"
+		 -nodeType "dielectric_material" -nodeType "dielectric_material_photon" -nodeType "oversampling_lens"
+		 -nodeType "path_material" -nodeType "parti_volume" -nodeType "parti_volume_photon"
+		 -nodeType "transmat" -nodeType "transmat_photon" -nodeType "mip_rayswitch" -nodeType "mip_rayswitch_advanced"
+		 -nodeType "mip_rayswitch_environment" -nodeType "mip_card_opacity" -nodeType "mip_motionblur"
+		 -nodeType "mip_motion_vector" -nodeType "mip_matteshadow" -nodeType "mip_cameramap"
+		 -nodeType "mip_mirrorball" -nodeType "mip_grayball" -nodeType "mip_gamma_gain" -nodeType "mip_render_subset"
+		 -nodeType "mip_matteshadow_mtl" -nodeType "mip_binaryproxy" -nodeType "mip_rayswitch_stage"
+		 -nodeType "mip_fgshooter" -nodeType "mib_ptex_lookup" -nodeType "misss_physical"
+		 -nodeType "misss_physical_phen" -nodeType "misss_fast_shader" -nodeType "misss_fast_shader_x"
+		 -nodeType "misss_fast_shader2" -nodeType "misss_fast_shader2_x" -nodeType "misss_skin_specular"
+		 -nodeType "misss_lightmap_write" -nodeType "misss_lambert_gamma" -nodeType "misss_call_shader"
+		 -nodeType "misss_set_normal" -nodeType "misss_fast_lmap_maya" -nodeType "misss_fast_simple_maya"
+		 -nodeType "misss_fast_skin_maya" -nodeType "misss_fast_skin_phen" -nodeType "misss_fast_skin_phen_d"
+		 -nodeType "misss_mia_skin2_phen" -nodeType "misss_mia_skin2_phen_d" -nodeType "misss_lightmap_phen"
+		 -nodeType "misss_mia_skin2_surface_phen" -nodeType "surfaceSampler" -nodeType "mib_data_bool"
+		 -nodeType "mib_data_int" -nodeType "mib_data_scalar" -nodeType "mib_data_vector"
+		 -nodeType "mib_data_color" -nodeType "mib_data_string" -nodeType "mib_data_texture"
+		 -nodeType "mib_data_shader" -nodeType "mib_data_bool_array" -nodeType "mib_data_int_array"
+		 -nodeType "mib_data_scalar_array" -nodeType "mib_data_vector_array" -nodeType "mib_data_color_array"
+		 -nodeType "mib_data_string_array" -nodeType "mib_data_texture_array" -nodeType "mib_data_shader_array"
+		 -nodeType "mib_data_get_bool" -nodeType "mib_data_get_int" -nodeType "mib_data_get_scalar"
+		 -nodeType "mib_data_get_vector" -nodeType "mib_data_get_color" -nodeType "mib_data_get_string"
+		 -nodeType "mib_data_get_texture" -nodeType "mib_data_get_shader" -nodeType "mib_data_get_shader_bool"
+		 -nodeType "mib_data_get_shader_int" -nodeType "mib_data_get_shader_scalar" -nodeType "mib_data_get_shader_vector"
+		 -nodeType "mib_data_get_shader_color" -nodeType "user_ibl_env" -nodeType "user_ibl_rect"
+		 -nodeType "mia_material_x_passes" -nodeType "mi_metallic_paint_x_passes" -nodeType "mi_car_paint_phen_x_passes"
+		 -nodeType "misss_fast_shader_x_passes" -dataType "byteArray" "Mayatomr" "2014.0 - 3.11.1.4 ";
 requires "fkSolver" "3.0";
 currentUnit -l centimeter -a degree -t film;
 fileInfo "application" "maya";
 fileInfo "product" "Maya 2014";
 fileInfo "version" "2014 x64";
 fileInfo "cutIdentifier" "201303010035-864206";
-fileInfo "osv" "Mac OS X 10.9.2";
+fileInfo "osv" "Mac OS X 10.9.3";
 createNode transform -s -n "persp";
-	setAttr ".t" -type "double3" 3.7094827513210813 7.7406081121239323 7.4872544180872183 ;
-	setAttr ".r" -type "double3" -20.138352729917774 388.59999999958205 9.0564246986124036e-16 ;
+	setAttr ".t" -type "double3" 9.5438894656638649 10.716603403687664 10.17941993349085 ;
+	setAttr ".r" -type "double3" -26.138352729917791 36.199999999575454 1.9707008099299721e-15 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v";
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 9.760037740562149;
+	setAttr ".coi" 14.852322299652158;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -248,17 +326,16 @@ createNode joint -n "lFingerEnd" -p "lFinger";
 		 2.52842987715439 3.0294272065987928 -0.093642370867875427 1;
 createNode joint -n "lWristStretch" -p "lElbow";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
-	setAttr ".t" -type "double3" 1.1192420405986305 1.7763568394002505e-15 0.055802821881460518 ;
+	setAttr ".t" -type "double3" 1.1192420405986303 1.7763568394002505e-15 0.055802821881460518 ;
 	setAttr ".jo" -type "double3" 0 0 -2.9113023828648599e-34 ;
-	setAttr ".bps" -type "matrix" 1 -7.90093372758991e-19 -2.7755575615628914e-17 0 5.5511151231256447e-17 1.0000000000000002 4.8636442095961741e-14 0
-		 2.7755575615634343e-17 -4.8853465599305293e-14 1.0000000000000002 0 4.0131887595309852 4.9125923348177079 -0.20959685272838549 1;
+	setAttr ".bps" -type "matrix" 1 -7.90093372758991e-19 -2.7755575615628914e-17 0 5.5511151231256453e-17 1.0000000000000002 4.8636442095961741e-14 0
+		 2.7755575615634343e-17 -4.88534655993053e-14 1.0000000000000002 0 4.0131887595309852 4.9125923348177079 -0.20959685272838549 1;
 createNode joint -n "lElbowStretch" -p "lShoulder";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".t" -type "double3" 1.3368173540977828 -3.5527136788005009e-15 -0.055802821881460518 ;
 	setAttr ".jo" -type "double3" 0 0 -2.9113023828648599e-34 ;
-	setAttr ".bps" -type "matrix" 1 -7.9009337275899109e-19 -2.7755575615628914e-17 0
-		 5.5511151231256465e-17 1.0000000000000002 4.865725877767345e-14 0 2.7755575615631625e-17 -4.8853465599305281e-14 1 0
-		 2.8939467189323551 4.912592334817707 -0.32120249649130639 1;
+	setAttr ".bps" -type "matrix" 1 -7.90093372758991e-19 -2.7755575615628914e-17 0 5.5511151231256471e-17 1.0000000000000002 4.8657258777673456e-14 0
+		 2.7755575615631625e-17 -4.8853465599305281e-14 1 0 2.8939467189323551 4.912592334817707 -0.32120249649130639 1;
 createNode joint -n "rCollar" -p "cSpine4";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".uoc" yes;
@@ -280,13 +357,13 @@ createNode joint -n "rElbow" -p "rShoulder";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".uoc" yes;
 	setAttr ".oc" 7;
-	setAttr ".t" -type "double3" -1.33682 2.7981063793149306e-15 0.055802821881460296 ;
+	setAttr ".t" -type "double3" -1.33682 2.7981063793149302e-15 0.055802821881460296 ;
 	setAttr ".bps" -type "matrix" 1 1.0623645541547468e-16 1.3877787807814457e-16 0 1.1102230246251563e-16 -1.0000000000000002 -4.9948760405538195e-14 0
 		 1.9428902930940239e-16 5.0143607190537899e-14 -1 0 -2.9187099999999999 4.9125899999999998 -0.26540000000000002 1;
 createNode joint -n "rWrist" -p "rElbow";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".uoc" yes;
-	setAttr ".t" -type "double3" -1.11924 -2.7981063793149306e-15 -0.055802821881460518 ;
+	setAttr ".t" -type "double3" -1.11924 -2.7981063793149302e-15 -0.055802821881460518 ;
 	setAttr ".bps" -type "matrix" 1 1.0623645541547468e-16 1.3877787807814457e-16 0 1.1102230246251563e-16 -1.0000000000000002 -4.9948760405538195e-14 0
 		 1.9428902930940239e-16 5.0143607190537899e-14 -1 0 -4.0379500000000004 4.9125899999999998 -0.26540000000000002 1;
 createNode joint -n "rThumb" -p "rWrist";
@@ -325,15 +402,15 @@ createNode joint -n "rWristStretch" -p "rElbow";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".t" -type "double3" -1.11924 -2.6645352591003757e-15 -0.055802821881460518 ;
 	setAttr ".jo" -type "double3" 0 0 2.5025166719419889e-31 ;
-	setAttr ".bps" -type "matrix" 1 1.0623645541546929e-16 1.3877787807814457e-16 0 1.1102230246250731e-16 -1.0000000000000002 -4.9941821511634275e-14 0
+	setAttr ".bps" -type "matrix" 1 1.0623645541546929e-16 1.3877787807814457e-16 0 1.1102230246250732e-16 -1.0000000000000002 -4.9941821511634269e-14 0
 		 1.9428902930940797e-16 5.0143607190537874e-14 -1 0 -4.0379499999999995 4.9125899999999998 -0.20959717811853967 1;
 createNode joint -n "rElbowStretch" -p "rShoulder";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
-	setAttr ".t" -type "double3" -1.3368200000000001 2.6645352591003757e-15 0.055802821881460296 ;
+	setAttr ".t" -type "double3" -1.33682 2.6645352591003757e-15 0.055802821881460296 ;
 	setAttr ".jo" -type "double3" 0 0 2.5025166719419889e-31 ;
-	setAttr ".bps" -type "matrix" 0.99999999999999978 6.51643508269799e-16 1.0931255900459293e-16 2.9486539714206408e-33
-		 1.5492856997311451e-16 -1.0000000000000002 -4.9941394075769801e-14 -2.775557561562892e-17
-		 1.9428902930940163e-16 5.0143607190537887e-14 -1.0000000000000002 -1.8598120354896025e-31
+	setAttr ".bps" -type "matrix" 0.99999999999999989 6.51643508269799e-16 1.0931255900459292e-16 2.9486539714206408e-33
+		 1.5492856997311453e-16 -1.0000000000000002 -4.9941394075769801e-14 -2.775557561562892e-17
+		 1.9428902930940163e-16 5.0143607190537887e-14 -1.0000000000000002 -1.8598120354896028e-31
 		 -2.9187099999999999 4.9125899999999989 -0.32120282188146049 1;
 createNode joint -n "lHip" -p "cSpine0";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
@@ -387,17 +464,17 @@ createNode joint -n "lToe" -p "lBall";
 		 0.30421113587877707 0.0021028530987221346 0.76735763294064419 1;
 createNode joint -n "lAnkleStretch" -p "lKnee";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
-	setAttr ".t" -type "double3" -1.3062240994327188 -0.031354773677064518 -1.1102230246251565e-16 ;
-	setAttr ".jo" -type "double3" 1.3075830917025694e-19 -1.7624961747698514e-18 4.9696166897867449e-17 ;
+	setAttr ".t" -type "double3" -1.3062240994327188 -0.031354773677064518 -1.1102230246251563e-16 ;
+	setAttr ".jo" -type "double3" 1.3075830917025694e-19 -1.7624961747698514e-18 4.9696166897867443e-17 ;
 	setAttr ".bps" -type "matrix" -0.0072510207702834867 0.99996079702054064 -0.0050820389445783102 0
-		 -3.6850445815862533e-05 0.0050819053394226535 0.99998708635670175 0 0.99997371032434357 0.0072511144085883892 -2.2205661671586765e-16 0
-		 0.65843725143841858 0.38199429615083025 -0.18431660933213162 1;
+		 -3.685044581586254e-05 0.0050819053394226535 0.99998708635670175 0 0.99997371032434357 0.0072511144085883892 -2.2205661671586765e-16 0
+		 0.65843725143841858 0.38199429615083025 -0.18431660933213159 1;
 createNode joint -n "lKneeStretch" -p "lHip";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".t" -type "double3" -1.309529747215906 0.031354773677064518 -4.4408920985006262e-16 ;
-	setAttr ".jo" -type "double3" 1.3075830917025694e-19 -1.7624961747698514e-18 4.9696166897867449e-17 ;
+	setAttr ".jo" -type "double3" 1.3075830917025694e-19 -1.7624961747698514e-18 4.9696166897867443e-17 ;
 	setAttr ".bps" -type "matrix" -0.0072510207702833748 0.99996079702054053 -0.0050820389445783033 0
-		 -3.6850445815861307e-05 0.0050819053394226526 0.99998708635670175 0 0.99997371032434323 0.0072511144085883866 -2.2206543194808058e-16 0
+		 -3.6850445815861307e-05 0.0050819053394226526 0.99998708635670175 0 0.99997371032434323 0.0072511144085883866 -2.2206543194808053e-16 0
 		 0.64896463792539816 1.6883265296987753 -0.12824534371643753 1;
 createNode joint -n "rHip" -p "cSpine0";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
@@ -456,18 +533,18 @@ createNode joint -n "rToe" -p "rBall";
 createNode joint -n "rAnkleStretch" -p "rKnee";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".t" -type "double3" 1.3062278731562822 0.031353884401414706 -3.5869862646809025e-07 ;
-	setAttr ".jo" -type "double3" 4.4512405348279113e-19 -1.6214774142114948e-17 -4.9696166897867449e-17 ;
-	setAttr ".bps" -type "matrix" -0.0072510207702899242 -0.99996079702054053 0.0050820389445782417 1.1102230246251565e-16
-		 -3.6865346585328979e-05 -0.0050819052313725551 -0.99998708635670164 4.3368086899420177e-19
-		 0.99997371032379434 -0.0072511144843212822 -1.4900968619819992e-08 8.6736173798840345e-19
+	setAttr ".jo" -type "double3" 4.4512405348279113e-19 -1.6214774142114948e-17 -4.9696166897867443e-17 ;
+	setAttr ".bps" -type "matrix" -0.0072510207702899242 -0.99996079702054053 0.0050820389445782417 1.1102230246251563e-16
+		 -3.6865346585328972e-05 -0.0050819052313725551 -0.99998708635670164 4.3368086899420177e-19
+		 0.99997371032379445 -0.0072511144843212822 -1.4900968619819992e-08 8.6736173798840355e-19
 		 -0.68218899999999938 0.38199400000000039 -0.1843161785866563 1;
 createNode joint -n "rKneeStretch" -p "rHip";
 	addAttr -ci true -sn "liw" -ln "lockInfluenceWeights" -min 0 -max 1 -at "bool";
 	setAttr ".t" -type "double3" 1.3095306760719541 -0.031354497592540623 2.7824442394575044e-07 ;
-	setAttr ".jo" -type "double3" 4.4512405348279113e-19 -1.6214774142114948e-17 -4.9696166897867449e-17 ;
+	setAttr ".jo" -type "double3" 4.4512405348279113e-19 -1.6214774142114948e-17 -4.9696166897867443e-17 ;
 	setAttr ".bps" -type "matrix" -0.0072510207702900084 -0.99996079702054053 0.0050820389445782347 0
 		 -3.6865346585328986e-05 -0.0050819052313725559 -0.99998708635670164 0 0.99997371032379456 -0.0072511144843212839 -1.4900968619975848e-08 0
-		 -0.67271600000000031 1.6883300000000019 -0.12824582141334365 1;
+		 -0.67271600000000031 1.6883300000000021 -0.12824582141334365 1;
 createNode transform -n "model";
 createNode transform -n "cEyes" -p "model";
 	setAttr -l on ".tx";
@@ -6261,21 +6338,21 @@ createNode dagPose -n "bindPose1";
 	setAttr ".xm[30]" -type "matrix" "xform" 1 1 1.0000000000000002 -1.1275702593861868e-17
 		 1.4732659536784139e-17 1.6646707101169486e-16 0 -1.1192399999999991 -2.6645352591003757e-15
 		 -0.055802821881460435 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
-	setAttr ".xm[31]" -type "matrix" "xform" 1 0.99999999999999978 1.0000000000000002 2.6020852139530946e-18
-		 -1.7097434579552404e-18 -6.5164350826979881e-16 0 -1.3368200000000001 3.5527136788005009e-15
+	setAttr ".xm[31]" -type "matrix" "xform" 1 0.99999999999999989 1.0000000000000002 2.6020852139530946e-18
+		 -1.7097434579552404e-18 -6.5164350826979881e-16 0 -1.3368199999999999 3.5527136788005009e-15
 		 0.055802821881460352 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
-	setAttr ".xm[32]" -type "matrix" "xform" 1 1 1 -1.2143064331862893e-17 -3.6977854932234928e-32
+	setAttr ".xm[32]" -type "matrix" "xform" 1 1 1 -1.2143064331862892e-17 -3.6977854932234928e-32
 		 -7.90093372758991e-19 0 1.3368173540977828 -4.4408920985006262e-15 -0.055802821881460629 0
 		 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
 	setAttr ".xm[33]" -type "matrix" "xform" 0.99999999999999989 1 1 -5.2041704279556648e-18
-		 -1.3877787807814491e-17 -7.9009337275831297e-19 0 1.1192420405986288 8.8817841970012523e-16
+		 -1.3877787807814494e-17 -7.9009337275831297e-19 0 1.1192420405986288 8.8817841970012523e-16
 		 0.055802821881460518 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
 	setAttr ".xm[34]" -type "matrix" "xform" 1 0.99999999999999989 0.99999999999999989 -2.9586783401411483e-19
 		 -2.7788540959998197e-17 -4.3368086899420177e-18 0 -1.3095297472159066 0.03135477367706449
 		 -5.5511151231257827e-16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
 	setAttr ".xm[35]" -type "matrix" "xform" 1 0.99999999999999989 1 -2.8909997103614864e-19
 		 -2.865259672338798e-17 -3.4694469519536142e-18 0 -1.3062240994327188 -0.031354773677064518
-		 1.1102230246251565e-16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
+		 1.1102230246251563e-16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
 	setAttr ".xm[36]" -type "matrix" "xform" 1.0000000000000002 0.99999999999999989 1 1.2297032422335822e-19
 		 2.7472367675927413e-17 1.4745149545802857e-17 0 1.3095306760719538 -0.031354497592540567
 		 2.7824442383472814e-07 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 yes;
@@ -6596,8 +6673,8 @@ createNode skinCluster -n "skinCluster4";
 		0.32186246746055913;
 	setAttr -s 5 ".wl[258].w[4:8]"  4.6579463478490127e-05 0.0020816347540594041 
 		0.076299969693725045 0.049546391287829838 0.87202542480090717;
-	setAttr -s 4 ".wl[259].w[5:8]"  0.29949730392722512 0.42369209391260809 
-		0.27681061205947094 -9.8993041913189157e-09;
+	setAttr -s 3 ".wl[259].w[5:7]"  0.29949730096241028 0.42369208971835104 
+		0.27681060931923857;
 	setAttr -s 3 ".wl[260].w[5:7]"  0.33295895030710221 0.3906725211200599 
 		0.27636852857283795;
 	setAttr -s 4 ".wl[261].w[5:8]"  0.30214965548247391 0.42534707203632416 
@@ -6668,7 +6745,7 @@ createNode skinCluster -n "skinCluster4";
 	setAttr ".wl[317].w[8]"  1;
 	setAttr ".wl[318].w[8]"  1;
 	setAttr ".wl[319].w[8]"  1;
-	setAttr ".wl[320].w[7]"  1;
+	setAttr ".wl[320].w[8]"  1;
 	setAttr ".wl[321].w[8]"  1;
 	setAttr ".wl[322].w[7]"  1;
 	setAttr ".wl[323].w[7]"  1;
@@ -6720,7 +6797,7 @@ createNode skinCluster -n "skinCluster4";
 	setAttr ".wl[369].w[7]"  1;
 	setAttr ".wl[370].w[7]"  1;
 	setAttr ".wl[371].w[7]"  1;
-	setAttr ".wl[372].w[8]"  1;
+	setAttr ".wl[372].w[7]"  1;
 	setAttr ".wl[373].w[7]"  1;
 	setAttr ".wl[374].w[7]"  1;
 	setAttr ".wl[375].w[7]"  1;
@@ -6739,8 +6816,7 @@ createNode skinCluster -n "skinCluster4";
 	setAttr ".wl[388].w[7]"  1;
 	setAttr ".wl[389].w[7]"  1;
 	setAttr ".wl[390].w[7]"  1;
-	setAttr -s 4 ".wl[391].w[5:8]"  0.044785007812494289 0.30676665369683498 
-		0.3432717386663135 0.3051765998243573;
+	setAttr ".wl[391].w[7]"  1;
 	setAttr ".wl[392].w[7]"  1;
 	setAttr -s 37 ".pm";
 	setAttr ".pm[0]" -type "matrix" -0.0072510207702834008 -3.6850445815817105e-05 0.99997371032434301 0
@@ -6830,27 +6906,27 @@ createNode skinCluster -n "skinCluster4";
 	setAttr ".pm[28]" -type "matrix" 2.180562708671201e-05 -0.015639840254768122 -0.99987768998078896 0
 		 0.0014009236593199282 -0.99987670856672706 0.015639855455487069 0 -0.99999901846822559 -0.0014010933491764154 1.0728360115245048e-07 0
 		 0.28689542224806119 0.18184776922980761 -0.68648777846022035 1;
-	setAttr ".pm[29]" -type "matrix" 1.0000000000000002 1.3635176321358941e-16 1.3989928165595344e-16 0
-		 2.2204460492503131e-16 -0.99999999999999978 4.9939219426420323e-14 0 1.9428902930942133e-16 -5.0143607190537862e-14 -1 0
+	setAttr ".pm[29]" -type "matrix" 1.0000000000000002 1.3635176321358939e-16 1.3989928165595344e-16 0
+		 2.2204460492503131e-16 -0.99999999999999989 4.9939219426420323e-14 0 1.942890293094213e-16 -5.0143607190537862e-14 -1 0
 		 4.0379499999999986 4.9125899999999882 -0.20959717811878445 1;
-	setAttr ".pm[30]" -type "matrix" 1.0000000000000002 8.1811057928150045e-16 1.1304243842962708e-16 4.9303806576313238e-32
-		 0 -0.99999999999999989 4.994615832032423e-14 -5.5511151231257827e-17 1.9428902930940239e-16 -5.0143607190537881e-14 -0.99999999999999978 -1.5777218104420236e-30
+	setAttr ".pm[30]" -type "matrix" 1.0000000000000002 8.1811057928150055e-16 1.1304243842962708e-16 4.9303806576313238e-32
+		 0 -0.99999999999999989 4.994615832032423e-14 -5.5511151231257827e-17 1.9428902930940239e-16 -5.0143607190537881e-14 -0.99999999999999989 -1.577721810442024e-30
 		 2.9187100000000008 4.9125899999999847 -0.32120282188170551 1.0000000000000002;
-	setAttr ".pm[31]" -type "matrix" 1 6.7797802926352181e-31 1.387778780781446e-17 0
-		 0 0.99999999999999978 -4.86694018420053e-14 0 -2.7755575615635224e-17 4.8853465599305281e-14 1.0000000000000002 0
+	setAttr ".pm[31]" -type "matrix" 1 6.779780292635219e-31 1.387778780781446e-17 0
+		 0 0.99999999999999989 -4.86694018420053e-14 0 -2.7755575615635224e-17 4.8853465599305281e-14 1.0000000000000002 0
 		 -2.8939467189323551 -4.9125923348176901 0.32120249649154547 1;
-	setAttr ".pm[32]" -type "matrix" 1 1.3559560585270436e-30 2.775557561562891e-17 0
+	setAttr ".pm[32]" -type "matrix" 1 1.3559560585270438e-30 2.775557561562891e-17 0
 		 0 0.99999999999999967 -4.8634707372485764e-14 0 -2.7755575615635224e-17 4.8853465599305281e-14 0.99999999999999989 0
 		 -4.0131887595309852 -4.9125923348176963 0.2095968527286243 1;
-	setAttr ".pm[33]" -type "matrix" -0.0072510207702834008 -3.6850445815817044e-05 0.99997371032434346 0
-		 0.99996079702054042 0.0050819053394227792 0.0072511144085883328 0 -0.0050820389445781792 0.99998708635670197 -1.7650811368064012e-16 0
+	setAttr ".pm[33]" -type "matrix" -0.0072510207702834008 -3.6850445815817044e-05 0.99997371032434357 0
+		 0.99996079702054053 0.0050819053394227792 0.0072511144085883328 0 -0.0050820389445781792 0.99998708635670197 -1.7650811368064012e-16 0
 		 -1.6842064340309619 0.11968768663207506 -0.66118982568145523 1;
-	setAttr ".pm[34]" -type "matrix" -0.0072510207702833999 -3.6850445815817051e-05 0.9999737103243429 0
+	setAttr ".pm[34]" -type "matrix" -0.0072510207702833999 -3.6850445815817051e-05 0.99997371032434279 0
 		 0.99996079702054053 0.0050819053394227844 0.0072511144085884698 0 -0.005082038944578181 0.99998708635670197 -1.7607215904922668e-16 0
-		 -0.37814168283693483 0.18239723398620411 -0.66118982568145557 1;
-	setAttr ".pm[35]" -type "matrix" -0.007251020770290004 -3.6865346585373648e-05 0.99997371032379334 0
+		 -0.37814168283693478 0.18239723398620411 -0.66118982568145557 1;
+	setAttr ".pm[35]" -type "matrix" -0.007251020770290004 -3.6865346585373648e-05 0.99997371032379323 0
 		 -0.99996079702054075 -0.0050819052313726826 -0.0072511144843214193 0 0.005082038944578109 -0.99998708635670175 -1.4900968576224416e-08 0
-		 1.6840376850040872 -0.11968903214176151 0.68494058672050862 1;
+		 1.6840376850040872 -0.11968903214176152 0.68494058672050862 1;
 	setAttr ".pm[36]" -type "matrix" -0.007251020770290004 -3.6865346585373574e-05 0.99997371032379356 -6.2297926412494766e-20
 		 -0.99996079702054064 -0.0050819052313727103 -0.0072511144843211217 1.1102644332181106e-16
 		 0.0050820389445781081 -0.99998708635670175 -1.4900968576696238e-08 -1.3054438331255024e-19
@@ -7523,7 +7599,7 @@ connectAttr "lAnkleStretch.obcc" "skinCluster4.ifcl[34]";
 connectAttr "rKneeStretch.obcc" "skinCluster4.ifcl[35]";
 connectAttr "rAnkleStretch.obcc" "skinCluster4.ifcl[36]";
 connectAttr "bindPose1.msg" "skinCluster4.bp";
-connectAttr "rWristStretch.msg" "skinCluster4.ptt";
+connectAttr "cJaw.msg" "skinCluster4.ptt";
 connectAttr "cBodyShapeOrig.w" "groupParts11.ig";
 connectAttr "groupId495.id" "groupParts11.gi";
 connectAttr "groupParts11.og" "groupParts12.ig";
@@ -7551,4 +7627,4 @@ connectAttr "groupId496.msg" ":initialShadingGroup.gn" -na;
 connectAttr "lambert2.msg" ":defaultShaderList1.s" -na;
 connectAttr "lambert3.msg" ":defaultShaderList1.s" -na;
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
-// End of biggy_004.ma
+// End of maxi_004.ma
