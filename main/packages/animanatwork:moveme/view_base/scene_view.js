@@ -317,8 +317,14 @@ MM.SceneView.prototype.focus = function(){
     var min = new THREE.Vector3(1000, 1000, 1000);
     var max = new THREE.Vector3(-1000, -1000, -1000);
     for( i = 0, j = no; i<j; i++){
-        min.min(this.editor.selectedObjects[i].boundingBox.min)
-        max.max(this.editor.selectedObjects[i].boundingBox.max)
+        if(this.editor.selectedObjects[i].hasOwnProperty('boundingBox')){
+            min.min(this.editor.selectedObjects[i].boundingBox.min)
+            max.max(this.editor.selectedObjects[i].boundingBox.max)
+        }else{
+            console.warn('Unable to find boundingBox on ', this.editor.selectedObjects[i]);
+            //  NOTE: Currently we only support object which have a bounding box like controls.
+            return;
+        }
     }
     var bb = new THREE.Box3(min,max);
     var size = bb.size();
