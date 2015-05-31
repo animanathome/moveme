@@ -13,6 +13,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     this.left = 0;
     this.prefix = prefix;
     this.isActive = true;
+    this.scene = new THREE.Scene();
 
     //	both objects get managed on the PanelViewLayout level
     // this.canvas = canvas;
@@ -23,7 +24,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 
     var signals = this.editor.signals
 	var ray = new THREE.Raycaster();
-    var projector = new THREE.Projector();
+    var projector = new THREE.Projector();    
 
     //  only allow objects with the given tag to be selected
     //  if no tag is specified, then all objects can be selected
@@ -39,7 +40,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     manipulator.gizmo.name='manipulator'+this.prefix;
     manipulator.hide();
     
-    this.editor.addHelper( manipulator.gizmo ); 
+    // this.editor.addHelper( manipulator.gizmo ); 
+    this.scene.add( manipulator.gizmo )
     this.manipulator = manipulator
 
     manipulator.addEventListener( 'start', function(){
@@ -83,13 +85,12 @@ MM.SceneView = function( editor, prefix, parentPanel ){
         if(event.altKey === true){
             viewportCameraControl.enabled = true;
         }else{
-            if(manipulator.hovered === true){
-                manipulator.enabled = true;                
-            }            
-            viewportCameraControl.enabled = false; 
-
+            // if(manipulator.hovered === true){
+            //     // manipulator.enabled = true;
+            // }            
+            viewportCameraControl.enabled = false;
         }
-        manipulator.enabled = false; 
+        // manipulator.enabled = false;
 
         scope.parentPanel.dom.addEventListener( 'mouseup', onMouseUp, false );
     }
@@ -153,8 +154,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
                     );
             projector.unprojectVector( vector, scope.camera );
             ray.set( scope.camera.position, vector.sub( scope.camera.position ).normalize() );
-        }else{
-            console.log('Unsupported camera type')
+        // }else{
+        //     console.log('Unsupported camera type')
         }
        
 
@@ -169,20 +170,25 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     signals.manipSpaceChange.add( function ( space )
     {
         // console.log('Viewport: manipSpaceChange', space)
+        // console.log('\tprefix', scope.prefix)
 
-        manipulator.space = space
+        manipulator.setSpace(space);
+
         signals.objectChanged.dispatch();
     });
 
     signals.manipModeChange.add( function ( mode ){
-        // console.log('Viewport: manipModeChange', mode)                
-        manipulator.setMode( mode )
+        // console.log('Viewport: manipModeChange', mode)
+        // console.log('\tprefix', scope.prefix)
+
+        manipulator.setMode(mode);
                 
         signals.objectChanged.dispatch();
     });    
 
     signals.manipScaleChange.add( function( value ){
-        console.log('SceneView.manipScaleChange', value)
+        // console.log('SceneView.manipScaleChange', value)
+
         manipulator.scale += value;
         manipulator.scale = Math.max( manipulator.scale, 0.1 );
 
@@ -360,7 +366,7 @@ MM.SceneView.prototype.focus = function(){
 MM.SceneView.prototype.render = function(){
     // console.log('MM.SceneView.render')	
 	// NOTE: the actuall renderer get defined in the panelViewLayout ( 2 levels up) as it there where the canvas gets created. Here we just specify which area within the canvas we want to render.
-	
+
     this.renderer.setViewport( this.left, this.top, this.width, this.height);
     this.renderer.setScissor( this.left, this.top, this.width, this.height);
     this.renderer.enableScissorTest( true )
@@ -371,19 +377,21 @@ MM.SceneView.prototype.render = function(){
     this.camera.updateProjectionMatrix();
 
 	this.renderer.render( this.editor.scene, this.camera );
+    this.renderer.render( this.scene, this.camera );
 }
 
 MM.SceneView.prototype.clear = function(){
     // console.log('MM.SceneView.clear')
     
     //  remove manipulator from scene 
-    this.editor.removeHelper(this.manipulator.gizmo);
+    // this.editor.removeHelper(this.manipulator.gizmo);
     
     //  remove any lingering events
     this.viewportCameraControl.clear();
     this.parentPanel.dom.removeEventListener( 'mousemove', this.onMouseDown );
 
     delete this.viewportCameraControl;
+    delete this.scene;
 
     //  reset objects
     this.viewportCameraControl = {};    

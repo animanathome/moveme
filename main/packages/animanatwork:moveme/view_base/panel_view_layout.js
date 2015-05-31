@@ -320,28 +320,6 @@ MM.PanelViewLayout.prototype.render = function(){
 	// console.log('MM.PanelViewLayout.render')	
 	var space;
 	for( space in this.layoutElements['view'] ){
-		console.log('rendering space ', space)
-
-		// //	hide any scene manipulators of all but the current panel
-		// for( sspace in this.layoutElements['view'] ){
-
-		// 	if(space === sspace ){
-		// 		break;
-		// 	}
-
-		// 	if(this.layoutElements['view'][sspace].childPanel.hasOwnProperty('manipulator')){
-		// 		// this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.visible = false;
-		// 		this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.visible = 0;
-		// 		// console.log('\thiding ', this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.name)
-		// 	}
-		// }
-
-		// //	make sure we show our the scene manipulator to the current panel
-		// if(this.layoutElements['view'][space].childPanel.hasOwnProperty('manipulator')){
-		// 	// this.layoutElements['view'][space].childPanel.manipulator.gizmo.visible = true;
-		// 	this.layoutElements['view'][space].childPanel.manipulator.gizmo.visible = 1;
-		// }
-
 		// console.log('\trendering', space)
 		this.layoutElements['view'][space].render();
 	}

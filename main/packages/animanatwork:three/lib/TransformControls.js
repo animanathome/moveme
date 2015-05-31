@@ -17,6 +17,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	this.object = undefined;
 	this.objects = undefined; 
 
+
 	this.active = false;
 	this.hovered = false;
 
@@ -616,19 +617,25 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 	}
 
+	this.setSpace = function( value ){
+		// console.log('TransformControls: setSpace', value)
+		scope.space = value
+		scope.setMode( scope.mode)
+	}
+
 	this.setMode = function ( value ) {
 		// console.log('TransformControls: setMode', value)
 		// console.log('\tobject', this.object)
 		// console.log('\tobjects', this.objects)
 		
 		//	Toggle space
-		if(scope.mode === value){
-			if(scope.space === 'local'){
-				scope.space = 'world'
-			}else{
-				scope.space = 'local'
-			}
-		}
+		// if(scope.mode === value){
+		// 	if(scope.space === 'local'){
+		// 		scope.space = 'world'
+		// 	}else{
+		// 		scope.space = 'local'
+		// 	}
+		// }
 
 		scope.mode = value;
 

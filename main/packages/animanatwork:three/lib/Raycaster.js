@@ -421,6 +421,7 @@
 
 	//
 
+	// THREE.Raycaster.prototype.precision = 0.0001;
 	THREE.Raycaster.prototype.precision = 0.0001;
 	THREE.Raycaster.prototype.linePrecision = 1;
 
