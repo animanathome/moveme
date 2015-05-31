@@ -162,7 +162,7 @@ MM.PanelViewLayout.prototype.setActivePanel = function( panelId ){
 }
 
 MM.PanelViewLayout.prototype.init = function(){
-	console.log('MM.PanelViewLayout.init')	
+	// console.log('MM.PanelViewLayout.init')	
 
 //	CANVAS
 	if( this.canvas === undefined ){
@@ -186,34 +186,36 @@ MM.PanelViewLayout.prototype.init = function(){
 	}
 
 //	build containers
-	console.log('\tCreating layout elements')
+	// console.log('\tCreating layout elements')
 
 	this.buildContainers();
 	this.buildHSliders();
 	this.buildVSliders();
 
-	console.log('\tNumber of panels', this.panelCount());
+	// console.log('\tNumber of panels', this.panelCount());
 
 //	PANEL VIEWS
 	//	now for each container, add a viewpanel
 	var viewportPanel, container, space;
 	this.layoutElements['view'] = {}
 	for( space in this.layoutObject['panels'] ){
-		console.log('\tcreating panel view for', space)
+		// console.log('\tcreating panel view for', space)
 
 		container = this.layoutElements['container'][space]
 
-	//	panel view
+	//	create panel view
 		viewportPanel = new MM.PanelView( this.editor, space);
 		viewportPanel.setParentPanel( container )	
 		viewportPanel.setParentLayout( this )		
 		container.add( viewportPanel )				
 
 	//	scene view
+	//	HARDCODED default panel setup
 		if( space === 'view0'){
 			var sceneView = new MM.SceneView( this.editor, space, viewportPanel, this.canvas, this.renderer)			
 			viewportPanel.setChildPanel( sceneView )
 			viewportPanel.contentType = 'SceneView'
+			
 			//	default to persp view
 			viewportPanel.setCamera( this.editor.cameras[0])()
 		}
@@ -318,6 +320,28 @@ MM.PanelViewLayout.prototype.render = function(){
 	// console.log('MM.PanelViewLayout.render')	
 	var space;
 	for( space in this.layoutElements['view'] ){
+		console.log('rendering space ', space)
+
+		// //	hide any scene manipulators of all but the current panel
+		// for( sspace in this.layoutElements['view'] ){
+
+		// 	if(space === sspace ){
+		// 		break;
+		// 	}
+
+		// 	if(this.layoutElements['view'][sspace].childPanel.hasOwnProperty('manipulator')){
+		// 		// this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.visible = false;
+		// 		this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.visible = 0;
+		// 		// console.log('\thiding ', this.layoutElements['view'][sspace].childPanel.manipulator.gizmo.name)
+		// 	}
+		// }
+
+		// //	make sure we show our the scene manipulator to the current panel
+		// if(this.layoutElements['view'][space].childPanel.hasOwnProperty('manipulator')){
+		// 	// this.layoutElements['view'][space].childPanel.manipulator.gizmo.visible = true;
+		// 	this.layoutElements['view'][space].childPanel.manipulator.gizmo.visible = 1;
+		// }
+
 		// console.log('\trendering', space)
 		this.layoutElements['view'][space].render();
 	}

@@ -451,7 +451,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	}
 
 	this.update = function () {
-		console.log('TransformControls: update')
+		// console.log('TransformControls: update')
 		// console.log('\tcamera', this.camera)
 
 	//	SINGLE SELECTION
@@ -565,6 +565,32 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		}
 
 	}
+
+
+	this.show = function () {
+
+		for ( var i in displayAxes ) {
+
+			for ( var j in displayAxes[i].children ) {
+
+				displayAxes[i].children[j].visible = true;
+
+			}
+
+		}
+
+		for ( var i in pickerAxes ) {
+
+			for ( var j in pickerAxes[i].children ) {
+
+				pickerAxes[i].children[j].visible = true;
+
+			}
+
+		}
+
+	}
+
 
 	this.hide = function () {
 

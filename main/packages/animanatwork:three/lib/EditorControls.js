@@ -6,7 +6,7 @@
  */
 
 THREE.EditorControls = function ( object, domElement, prefix) {
-	console.log('THREE.EditorControls', object, domElement, prefix)
+	// console.log('THREE.EditorControls', object, domElement, prefix)
 
 	domElement = ( domElement !== undefined ) ? domElement : document;
 
@@ -32,7 +32,7 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 	var changeEvent = { type: 'change' };
 
 	this.setObject = function(object){
-		console.log('setObject', object)
+		// console.log('setObject', object)
 
 		this.object = object;
 
@@ -43,7 +43,7 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 	}
 
 	this.focusOnPoint = function( point ){
-		console.log('EditorControls.focusOnPoint', point)
+		// console.log('EditorControls.focusOnPoint', point)
 
 		center = point;
 		this.object.lookAt( center );

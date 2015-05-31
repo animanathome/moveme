@@ -1162,7 +1162,7 @@ MMUI.PanelLayout.prototype.setPrefix = function( prefix ){
 }
 
 MMUI.PanelLayout.prototype.setLayout = function( layoutObject ){
-	console.log('PanelLayout.setLayout', layoutObject)
+	// console.log('PanelLayout.setLayout', layoutObject)
 
 	this.layoutObject = layoutObject
 	return this
@@ -1431,7 +1431,7 @@ MMUI.PanelLayout.prototype.updateContainers = function(){
 }
 
 MMUI.PanelLayout.prototype.buildHSlider = function( space ){
-	console.log('buildHSlider', space)
+	// console.log('buildHSlider', space)
 
 	var sep = new MMUI.Panel()
 	sep.dom.id = this.prefix+_.str.classify(space)+'HSlider'
@@ -1519,7 +1519,7 @@ MMUI.PanelLayout.prototype.init = function(){
 	//	build layout elements from the layout object
 	//	NOTE: the layout is a simple structure which represent the panel hierarchy
 
-	console.log('MMUI PanelLayout: init')
+	// console.log('MMUI PanelLayout: init')
 	// console.log('\th before:', this.dom.clientHeight);
 
 	this.buildContainers();

@@ -153,7 +153,7 @@ MMUI.Timeline = function(){
 MMUI.Timeline.prototype = Object.create( MMUI.Element.prototype );
 
 MMUI.Timeline.prototype.setActiveKeys = function( activeKeys ){
-	console.log('Timeline.setActiveKeys', activeKeys)
+	// console.log('Timeline.setActiveKeys', activeKeys)
 	
 	if(this._drag_selection_mode === true){
 		console.log('\tdrag selection mode')
@@ -428,7 +428,7 @@ MMUI.Timeline.prototype._getKeysWithinSelection = function(){
 			this._key_indices.push(i)
 		}
 	}
-	console.log('\tkey indices:', this._key_indices)
+	// console.log('\tkey indices:', this._key_indices)
 }
 
 MMUI.Timeline.prototype._moveKeys = function( value ){
@@ -466,7 +466,7 @@ MMUI.Timeline.prototype._buildKeys = function(){
 		}
 		position = parseInt(this.uiElements['bar'][this.keyframes[i]].style.left)
 
-		console.log('\tadding keyframe', this.keyframes[i])
+		// console.log('\tadding keyframe', this.keyframes[i])
 		var key = document.createElement('span');		
 		key.className = 'timeline-key'
 		key.style.cssText = 'left:'+(position+2)+'px;'
@@ -501,7 +501,7 @@ MMUI.Timeline.prototype.rebuild = function(){
 	// console.log('\ttotal', (offset + 1) * numberOfLines )
 	this._frame_width = offset;
 
-	console.log('start', this.startTime)
+	// console.log('start', this.startTime)
 	var number = this.startTime
 	var increment = 0;
 	var position = 0;

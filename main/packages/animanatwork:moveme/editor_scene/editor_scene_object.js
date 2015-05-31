@@ -39,18 +39,18 @@ MM.Editor.prototype.setScene = function ( scene ){
 }
 
 MM.Editor.prototype.saveScene = function(message){
-    console.log('Editor.saveScene', message)
+    // console.log('Editor.saveScene', message)
     var savedData = this.loader.saveLocalStorage()
     this.signals.sceneSave.dispatch( message );
 }
 
 MM.Editor.prototype.saveSceneLocal = function(){
-    console.log('Editor.saveSceneLocal')
+    // console.log('Editor.saveSceneLocal')
     this.loader.saveLocalStorage();    
 }
 
 MM.Editor.prototype.loadSceneLocal = function(){
-    console.log('Editor.loadLocalStorage')
+    // console.log('Editor.loadLocalStorage')
     this.loader.loadLocalStorage()
 }
 

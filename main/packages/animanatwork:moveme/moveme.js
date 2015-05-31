@@ -4,7 +4,7 @@ MM = {};
 	Meteor Animation Application
 */
 MM.App = function( container, options){
-	console.log('MM.App', container, options)
+	// console.log('MM.App', container, options)
 
 	if( container === undefined ){
 		console.log('No parent dom element defined. Unable to continue.')

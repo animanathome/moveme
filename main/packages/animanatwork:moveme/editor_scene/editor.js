@@ -133,12 +133,12 @@ MM.Editor = function(){
 
 //  HELPERS    
     this.helpers = [];   
-    this.tooltip = undefined;
+    this.tooltip = undefined;    
     this.showGrid = true;
     this.showJoints = true;
     this.showControls = true;
 
-//  MANIPULATOR    
+//  MANIPULATOR
     this.activeTool = 'select';
     this.activeSpace = 'local';      
 

@@ -2,8 +2,8 @@ MM.NoLayout = function( dom, editor, options){
 	/*
 	Basic or no layout for rendering purpose. In this instance we only have a renderview. No other controls are present.
 	*/
-	console.log('NoLayout')
-	console.log('\tdom', dom)
+	// console.log('NoLayout')
+	// console.log('\tdom', dom)
 
 	var scope = this;
 	this.editor = editor;
@@ -59,15 +59,15 @@ MM.NoLayout = function( dom, editor, options){
 }
 
 MM.Layout = function( dom, editor, options){	
-	console.log('MM.Layout init', dom, editor, options);
+	// console.log('MM.Layout init', dom, editor, options);
 
 	if(dom === undefined){
-		console.log('A parent dom element is required.');
+		// console.log('A parent dom element is required.');
 		return;
 	}
 
 	if(editor === undefined){
-		console.log('A parent editor is required.');
+		// console.log('A parent editor is required.');
 		return;
 	}
 
@@ -87,7 +87,7 @@ MM.Layout = function( dom, editor, options){
 	if(!options.hasOwnProperty('hasToolBar')){
 		options['hasToolBar']=true;
 	}
-	console.log('\toptions', options)
+	// console.log('\toptions', options)
 	
 	var scope = this;
 	this.editor = editor;	
@@ -135,8 +135,8 @@ MM.Layout = function( dom, editor, options){
 			menuOptions = options['menu']
 		}
 
-		console.log('\tmenu bar options:', menuOptions)
-		this.menubar = new MM.Menubar(this, this.editor, this.dom, menuOptions);
+		// console.log('\tmenu bar options:', menuOptions)
+		this.menubar = new MM.Menubar(this, this.editor, this.dom, menuOptions)
 	}
 
 //	SETTINGS BUTTON
@@ -533,7 +533,7 @@ MM.Layout = function( dom, editor, options){
 	//	NOTE: try to the different types of signals contained
 	//	In this case the is a keyframe editor related signal which shouldn't have any influence outside of it's scope. Something to look into as it will make debugging and updating the different modules easier.
 	this.editor.signals.keyframeEditorKeysUpdated.add( function(){
-		console.log('Layout.keyframeEditorKeysUpdated')
+		// console.log('Layout.keyframeEditorKeysUpdated')
 		if(scope.timeline){
 			// console.log('\tactive time value:', scope.editor.activeTimeValue )
 			scope.timeline.setActiveKeys( scope.editor.activeTimeValue )
@@ -543,7 +543,7 @@ MM.Layout = function( dom, editor, options){
 	});
 
 	this.editor.signals.keyframeEditorChanged.add( function(){
-		console.log('MM.Layout.onKeyframeEditorChanged')
+		// console.log('MM.Layout.onKeyframeEditorChanged')
 		/*
 		Every time the key view changes we want to make sure we show the active keyframes to the user.
 		*/
@@ -563,7 +563,7 @@ MM.Layout = function( dom, editor, options){
 	});
 
 	this.editor.signals.layoutResized.add( function( item ){
-		console.log('layoutResized', item)
+		// console.log('layoutResized', item)
 		if( item === 'main') scope.viewportLayout.resize();		
 
 		if(scope.timeline) scope.timeline.rebuild();
@@ -586,8 +586,7 @@ MM.Layout = function( dom, editor, options){
 	})
 
 	this.update = function(){
-		console.log('Layout.update')
-
+		// console.log('Layout.update')
 		onTimeRangeChanged();
 	}
 

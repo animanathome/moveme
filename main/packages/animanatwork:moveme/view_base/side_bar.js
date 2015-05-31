@@ -13,7 +13,7 @@ MM.Sidebar = function ( editor, mdom){
     //  this avoids from the other ui element from jumping
     //  up and down 
     channelBox.onCollapsedChange( function( boolean ){
-        console.log('collapsed', boolean)
+        // console.log('collapsed', boolean)
         if( boolean === false ){
             channelBox.setHeight('350px');
         }else{

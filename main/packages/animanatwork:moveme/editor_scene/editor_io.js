@@ -210,7 +210,7 @@ MM.Editor.prototype.loadSceneSettings = function(){
         // console.log('data', JSON.parse(localStorage.moveMeSceneSettings))
         this.importSceneSettings(JSON.parse(localStorage.moveMeSceneSettings))
     }
-    console.log('after load scene settings', this.time)
+    // console.log('after load scene settings', this.time)
 }
 
 MM.Editor.prototype.loadResetSceneSettings = function(){

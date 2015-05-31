@@ -19,7 +19,7 @@ MM.Toolbar = function( editor, parent, options){
 }
 
 MM.FileToolBar = function( editor, parent, options){
-	console.log('FileToolBar', editor, parent, options)
+	// console.log('FileToolBar', editor, parent, options)
 
 	var showFile = true
 	if( options.hasOwnProperty('server_actions')){

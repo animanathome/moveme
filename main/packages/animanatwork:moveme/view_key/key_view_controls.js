@@ -1,8 +1,8 @@
 
 MM.KeyframeEditorControls = function ( object, domElement ) {
 
-	console.log('KeyframeEditorControls', object.name)
-	console.log('\tdom', domElement)
+	// console.log('KeyframeEditorControls', object.name)
+	// console.log('\tdom', domElement)
 
 	domElement = ( domElement !== undefined ) ? domElement : document;
 

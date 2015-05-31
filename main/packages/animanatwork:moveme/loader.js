@@ -51,7 +51,7 @@ MM.Loader = function ( editor ) {
 			editor.initDrivenChannels();
 
 		}else{
-			console.log('\tNo local storage defined.')
+			// console.log('\tNo local storage defined.')
 		}
 
 	};
