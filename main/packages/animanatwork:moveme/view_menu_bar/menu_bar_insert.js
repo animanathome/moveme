@@ -17,57 +17,40 @@ MM.Menubar.Inserts = function( editor ){
 	var sepItem1 = new MMUI.MenuDivider();
 	menuGrp.add( sepItem1 )	
 
-//	primitive
-	var primitiveSubMenu = new MMUI.SubMenuGrp('Primitive')
-	menuGrp.add( primitiveSubMenu )
+//	prop
+	var propSubMenu = new MMUI.SubMenuGrp('Prop')
+	menuGrp.add( propSubMenu )
 
 	// var primitiveGround = new MMUI.MenuItem('Ground').onClick( function(){
 	// 	MM.insertGround( editor );
 	// })
-	// primitiveSubMenu.add( primitiveGround )	
+	// propSubMenu.add( primitiveGround )	
 
 	var primitivePlane = new MMUI.MenuItem('Plane').onClick( function(){
 		MM.insertPlane( editor);
 	})
-	primitiveSubMenu.add( primitivePlane )	
+	propSubMenu.add( primitivePlane )	
 
 	var primitiveRamp = new MMUI.MenuItem('Ramp').onClick( function(){
 		MM.insertRamp( editor );
 	});
-	primitiveSubMenu.add( primitiveRamp )
+	propSubMenu.add( primitiveRamp )
 
 	var primitiveCube = new MMUI.MenuItem('Cube').onClick( function(){
 		MM.insertCube( editor );
 	});
-	primitiveSubMenu.add( primitiveCube )
-
-	var primitiveSphere = new MMUI.MenuItem('Sphere').onClick( function(){
-		MM.insertSphere(editor)
-	});
-	primitiveSubMenu.add( primitiveSphere );
+	propSubMenu.add( primitiveCube )
 	
-//	prop
-	// var propSubMenu = new MMUI.SubMenuGrp('Prop')
-	// menuGrp.add( propSubMenu )
+	var propBall = new MMUI.MenuItem('Ball');
+	propBall.onClick( function(){
+		MM.insertBall( editor )
+	})
+	propSubMenu.add( propBall )
 
-	// var propChair = new MMUI.MenuItem('Chair');
-	// // propChair.onClick( insertChair )
-	// propSubMenu.add( propChair )
 
 //	character
 	var characterSubMenu = new MMUI.SubMenuGrp('Character')
 	menuGrp.add( characterSubMenu )
-
-	var characterTail = new MMUI.MenuItem('Ball');
-	characterTail.onClick( function(){
-		console.log('Insert Ball')
-		MM.insertBall( editor )
-	})
-	characterSubMenu.add( characterTail )	
-
-	//	Separator
-	sepItem1 = new MMUI.MenuDivider();
-	characterSubMenu.add( sepItem1 )
 
 	characterTail = new MMUI.MenuItem('Tail');
 	characterTail.onClick( function(){
