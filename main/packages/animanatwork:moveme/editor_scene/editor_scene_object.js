@@ -1,7 +1,7 @@
 MM.Editor.prototype.newScene = function ( ){
     //http://stackoverflow.com/questions/10823408/performance-drops-when-trying-to-reset-whole-scene-with-three-js
     //https://github.com/mrdoob/three.js/issues/2760
-    console.log('Editor: sceneNew')
+    // console.log('Editor: sceneNew')
     this.loader.saveLayout();
 
     //  NOTE: might be better to store the scene settings
@@ -12,7 +12,8 @@ MM.Editor.prototype.newScene = function ( ){
     }
 
     location.href = location.pathname;
-
+    
+    this.signals.showInfo.dispatch('New scene')
     this.signals.sceneNew.dispatch()
 }
 
@@ -596,6 +597,7 @@ MM.Editor.prototype.selectObjectsByName = function( objectNames ){
     this.displayAnimCurves( animCurves )        
 
     //  make sure we set all the new data before launching any signals
+    this.signals.showInfo.dispatch('Select object(s)')
     this.signals.objectSelected.dispatch( object );                
 }
 
@@ -633,6 +635,7 @@ MM.Editor.prototype.deselect = function ( isUndo ) {
     // console.log('\tselected', this.selected)
     // console.log('\tprevSelected', this.prevSelected)
 
+    this.signals.showInfo.dispatch('Deselect object(s)')
     this.signals.objectSelected.dispatch( null );
 }
 

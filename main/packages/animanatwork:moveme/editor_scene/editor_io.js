@@ -52,7 +52,7 @@ MM.Editor.prototype.currentPTASettingsMatches = function(projectId, shotId, vers
 }
 
 MM.Editor.prototype.localPTASettingsMatches = function(projectId, shotId, versionId){
-    console.log('Editor.localPTASettings')
+    // console.log('Editor.localPTASettings')
     if ( localStorage.threejsEditor !== undefined ) {    
     //  make sure we have the necessary data
         var loader = new THREE.ObjectLoader();          
@@ -115,7 +115,7 @@ MM.Editor.prototype.exportSelectables = function(){
 }
 
 MM.Editor.prototype.importSelectables = function( data ){
-    console.log('importSelectables', data)
+    // console.log('importSelectables', data)
 
     var i, j;
     for( i=0, j=data.length; i < j; i++){
@@ -128,7 +128,7 @@ MM.Editor.prototype.importSelectables = function( data ){
 }
 
 MM.Editor.prototype.exportSceneSettings = function(){
-    console.log('editor.exportSceneSettings')
+    // console.log('editor.exportSceneSettings')
 
     var data = {}
 
@@ -707,13 +707,13 @@ MM.Editor.prototype.importAnimationData = function( data ){
 
     // console.log('data type:', data.metadata.type)
     if( data.metadata.type !== 'animation'){
-        console.log('\twrong data type, looking for animation.')
+        console.warn('\twrong data type, looking for animation.')
         return
     }
     
     // console.log(data.animCurves.length)
     if(!data.hasOwnProperty('animCurves')){
-        console.log('# No animation data found')
+        console.warn('# No animation data found')
         return
     }
 
@@ -724,7 +724,7 @@ MM.Editor.prototype.importAnimationData = function( data ){
         object = this.scene.getObjectByName(data.animCurves[i].driven, true)
         // console.log(object)
         if( object === undefined){
-            console.log('Unable to find', data.animCurves[i].driven)
+            console.warn('Unable to find', data.animCurves[i].driven)
             continue;
         }
         console.log('\t', i, data.animCurves[i].driven)
@@ -760,6 +760,7 @@ MM.Editor.prototype.importAnimationData = function( data ){
     this.endTime = maxTime;   
     this.endRange = maxTime; 
 
+    this.signals.showInfo.dispatch('Import all animation')
     this.signals.timeRangeChanged.dispatch();    
 }
 
@@ -767,7 +768,7 @@ MM.Editor.prototype.exportAnimationData = function(){
     /*
     Moved from menu_bar_file
     */
-    console.log('this.exportAnimationData')
+    // console.log('this.exportAnimationData')
 
     var output = {
         metadata:{
@@ -784,6 +785,7 @@ MM.Editor.prototype.exportAnimationData = function(){
         output.animCurves.push( data );
     }
     
+    this.signals.showInfo.dispatch('Export all animation')
     return output;
 }
 
@@ -800,6 +802,7 @@ MM.Editor.prototype.exportPoseData = function(){
             // controls[i].setChannelValues( channelData );
         }
     }
+    this.signals.showInfo.dispatch('Export all poses')
     return data;
 }
 
@@ -814,14 +817,15 @@ MM.Editor.prototype.importPoseData = function(data){
             control.setChannelValues( data[object] );
         }
     }
+    this.signals.showInfo.dispatch('Import all poses')
 }
 
 MM.Editor.prototype.exportPose = function(){
-    console.log('exportPose is depricated. Use exportPoseData instead.')
+    console.warn('exportPose is depricated. Use exportPoseData instead.')
     return this.exportPoseData();
 }
 
 MM.Editor.prototype.importPose = function( data ){
-    console.log('importPose is depricated. Use importPoseData instead.')
+    console.warn('importPose is depricated. Use importPoseData instead.')
     this.importPoseData(data);
 }
