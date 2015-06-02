@@ -2,17 +2,38 @@
 	{{> header}} 
 	{{> errors}}
 
+	<div class="intro-header">
+		<div class="intro-header-content">
+			<h1>Gallery</h1>
+			<p>Any time, any where on any device. Learn, review, collaborate and share your work with the world.</p>		
+		</div>
+	</div>
+
 	<div class="gallery-container">
-        <div class="gallery-container-content">
+        <div class="gallery-container-content">        	
         	<ul class="gallery-item-list">
-			{{#each shots}}
-				{{> galleryItem}}
-			{{/each}}
+
+        		{{#if currentUser}}
+					<li class="gallery-item-container">
+						<img class="new" src="ui/addEntry_small.png">
+						<div>
+							<span>
+								Add entry
+							</span>
+						</div>
+					</li>
+				{{/if}}
+
+				{{#each shots}}
+					{{> galleryItem}}
+				{{/each}}
+
 			</ul>
+
        	</div>
     </div>
 
-	<!-- {{>footer}} -->
+	{{>footer}}
 </template>
 
 <template name="galleryItem">

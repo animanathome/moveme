@@ -6,12 +6,20 @@ Template.gallery.helpers({
 
 Template.gallery.events({
 	'click .anim' : function(e){
-		// console.log('Clicking on anim')
-		// console.log('\tthis', this)		
 		Router.go('anim', {
 			projectId: this.projectId
 			, shotId: this._id
 			, _id: this.latestVersionId
 		})
+	},
+
+	'click .new' : function(e){
+		Meteor.call('shotInsertEmpty', function(error, result) {
+		  	Router.go('anim', {
+				  projectId: result.projectId
+				, shotId: result.shotId
+				, _id: -1
+			});
+    	});
 	}
 });

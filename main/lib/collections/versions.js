@@ -131,8 +131,14 @@ Meteor.methods({
     //  update shot version count
     ShotList.update({
       _id: versionAttributes.shotId   
-    }, { 
-      $inc: {versionCount:1}
+    }, {
+        $set: {
+            latestVersionId:versionId
+          , latestVersionThumbnail:'/ui/imagePlaceHolder.png'
+        }
+      , $inc: {
+        versionCount:1
+      }
     })
     
     return {

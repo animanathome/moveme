@@ -20,12 +20,34 @@ Meteor.publish('singleProject', function(id){
   return ProjectList.find(id);
 });
 
+Meteor.publish('activeProject', function(){
+  console.log('activeProject')
+  console.log('\tuser', this.userId)
+  return ProjectList.find({
+      userId: this.userId
+    , isActive: true
+  });
+})
+
 
 //  -------------------------------------------------------------------------
 //  SHOTS
 
 Meteor.publish('numberOfPublicShots', function( number_of_shots ){
-  return ShotList.find({}, {limit:number_of_shots, isPublic:true})  
+  return ShotList.find({isPublic:true}, {limit:number_of_shots})  
+})
+
+Meteor.publish('numberOfMyShots', function( number_of_shots){
+  return ShotList.find({userId:this.userId}, {limit:number_of_shots})  
+})
+
+Meteor.publish('numberOfMyPublicShots', function( number_of_shots){
+  return ShotList.find({
+      userId:this.userId
+    , isPublic:true
+  }, {
+    limit:number_of_shots
+  })  
 })
 
 Meteor.publish('shots', function(projectId){

@@ -21,6 +21,19 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="nav navbar-nav">
 
+          <li class="{{activeRouteClass 'gallery'}}">
+            {{#if currentUser}}
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gallery<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{pathFor 'publicGallery'}}" >Public Gallery</a></li>
+                <li><a href="{{pathFor 'myGallery'}}" >My Gallery</a></li>
+                <li><a href="{{pathFor 'myPublicGallery'}}" >My Public Gallery</a></li>
+              </ul>
+            {{else}}
+              <a href="{{pathFor 'publicGallery'}}">Gallery</a>
+            {{/if}}
+          </li>
+
           {{#if currentUser}}
             <li class="{{activeRouteClass 'prod'}}">
               <a href="{{pathFor 'prod'}}">Projects</a>
@@ -30,10 +43,6 @@
           <li class="{{activeRouteClass 'assets'}}">
               <a href="{{pathFor 'assets'}}">Assets</a>
           </li>
-
-          <!-- <li class="{{activeRouteClass 'gallery'}}">
-              <a href="{{pathFor 'gallery'}}">Gallery</a>
-          </li> -->
 
           <li class="{{activeRouteClass 'learn'}}">              
                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Learn<span class="caret"></span></a>

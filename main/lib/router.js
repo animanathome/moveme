@@ -52,19 +52,60 @@ Router.route('/', {
     }    
 });
 
+//  -------------------------------------------------------------------------
 //  gallery
-Router.route('/gallery',{
-    name: 'gallery',
+Router.route('/publicGallery',{
+    name: 'publicGallery',
+    template: 'gallery',    
     waitOn: function(){
         return [
-            Meteor.subscribe('numberOfPublicShots', 20)
+              Meteor.subscribe('numberOfPublicShots', 20)
+            , Meteor.subscribe('activeProject')
             ];
     },
     data: function(){
-        return ShotList.find({})
+        return [
+                  ShotList.find({})
+                , ProjectList.find({})
+                ]
     }
-})    
+})
 
+Router.route('/myGallery',{
+    name: 'myGallery',
+    template: 'gallery',    
+    waitOn: function(){
+        return [
+              Meteor.subscribe('numberOfMyShots', 20)
+            , Meteor.subscribe('activeProject')
+            ];
+    },
+    data: function(){
+        return [
+                  ShotList.find({})
+                , ProjectList.find({})
+                ]
+    }
+})
+
+Router.route('/myPublicGallery',{
+    name: 'myPublicGallery',
+    template: 'gallery',    
+    waitOn: function(){
+        return [
+              Meteor.subscribe('numberOfMyPublicShots', 20)
+            , Meteor.subscribe('activeProject')
+            ];
+    },
+    data: function(){
+        return [
+                  ShotList.find({})
+                , ProjectList.find({})
+                ]
+    }
+})
+
+//  -------------------------------------------------------------------------
 //  assets
 Router.route('/assets',{
     name: 'assets',

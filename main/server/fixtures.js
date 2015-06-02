@@ -17,6 +17,11 @@ if ( Meteor.users.find().count() === 0 ) {
     });
     console.log('Admin', adminId)
 
+    admin = Meteor.users.findOne(adminId);
+    // console.log('\tuser:', admin)
+    console.log('\tname:', admin.username)
+    console.log('\t-------------')
+
     // create personal logins
     // manu
     manuId = Accounts.createUser({
@@ -30,6 +35,9 @@ if ( Meteor.users.find().count() === 0 ) {
         }
     });
     console.log('manu', manuId)
+    manu = Meteor.users.findOne(manuId)
+    console.log('\tname:', manu.username)
+    console.log('\t-------------')
 
     //  ambre
     ambreId = Accounts.createUser({
@@ -43,14 +51,17 @@ if ( Meteor.users.find().count() === 0 ) {
         }
     });
     console.log('Ambre', ambreId)
+    ambre = Meteor.users.findOne(ambreId)
+    console.log('\tname:', ambre.username)
+    console.log('\t-------------')
 
 //  ---------------------------------------------------------------------------
 //  create asset entries
 //  
 
   var bounceId = AssetList.insert({    
-    author: 'manu',
-    userId: manuId,
+    author: manu.username,
+    userId: manu._id,
     title: 'Ball', // rename to bounce
     description: 'A simple asset, a real base for starting animation. Try our bouncing ball tutorial with this asset to learn more about timing and spacing.',
     submitted: new Date(now - 1 * 3600 * 1000),
@@ -64,15 +75,15 @@ if ( Meteor.users.find().count() === 0 ) {
   Comments.insert({
     postId: bounceId, // maybe we need to generalize the name postId?
     postType: 'asset',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     submitted: new Date(now - 5 * 3600 * 1000),
     body: 'Love this bounce asset. It is a great way to get started!'
   });
 
 	AssetList.insert({
-		author: 'manu',
-    userId: manuId,
+		author: manu.username,
+    userId: manu._id,
 		title: 'Tail',
 		description: 'This asset is a little more challenging with the addition of the tail. use it for overlapping action as well as squash and stretch.',
 		submitted: new Date(now - 2 * 3600 * 1000),
@@ -84,8 +95,8 @@ if ( Meteor.users.find().count() === 0 ) {
 	});
 
 	AssetList.insert({
-		author: 'manu',
-    userId: manuId,
+		author: manu.username,
+    userId: manu._id,
 		title: 'Legs',
 		description: 'A simple ball with legs for you to have fun with. Make hip moves and walk cycles for instance. Find out how in the tutorial.',
 		submitted: new Date(now - 3 * 3600 * 1000),
@@ -96,8 +107,8 @@ if ( Meteor.users.find().count() === 0 ) {
 	});
 
 	AssetList.insert({
-		author: 'manu',
-    userId: manuId,
+		author: manu.username,
+    userId: manu._id,
 		title: 'Mini',
 		description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
 		submitted: new Date(now - 4 * 3600 * 1000),
@@ -108,8 +119,8 @@ if ( Meteor.users.find().count() === 0 ) {
 	});
 
   AssetList.insert({
-    author: 'manu',
-    userId: manuId,
+    author: manu.username,
+    userId: manu._id,
     title: 'Midi',
     description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
     submitted: new Date(now - 4 * 3600 * 1000),
@@ -120,8 +131,8 @@ if ( Meteor.users.find().count() === 0 ) {
   }); 
 
   AssetList.insert({
-    author: 'manu',
-    userId: manuId,
+    author: manu.username,
+    userId: manu._id,
     title: 'Maxi',
     description: 'A classic body mechanics rig, a simple evolution from Legs! Animate hips, torso, arms, head and see the little tiny in your brain coming to life! Choose from Ik to Fk in few clics.',
     submitted: new Date(now - 4 * 3600 * 1000),
@@ -150,22 +161,23 @@ if ( Meteor.users.find().count() === 0 ) {
   //  -------------------------------------------------------------------------
   //  Front page demo project
   var front_page_project_id = ProjectList.insert({
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     title: 'Homepage examples',
     description: 'This project contains all of the animation examples we see  on the front page.',
     submitted: new Date(now - 3 * 3600 * 1000),
     shotCount: 0,
     fps: 24,
-    duration: 0
+    duration: 0,
+    isActive: true
   })
 
   //  -----------------------------------------
   //  Jumping ball shot
   var jumping_ball_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     title: 'Jumping ball',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -173,6 +185,7 @@ if ( Meteor.users.find().count() === 0 ) {
     versionCount: 0,
     fps: 24,
     duration: 48,
+
     latestVersionId: 0,
     latestVersionVideoId: '',
     latestVersionThumbnail: ''
@@ -192,8 +205,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var jumping_ball_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: jumping_ball_shot_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     description: 'What is up there?',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -229,8 +242,8 @@ if ( Meteor.users.find().count() === 0 ) {
   //  Jumping tail shot
   var jumping_tail_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     title: 'Jumping tail',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -258,8 +271,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var jumping_tail_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: jumping_tail_shot_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     description: 'I can go higher',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -292,8 +305,8 @@ if ( Meteor.users.find().count() === 0 ) {
   //  Running legs shot
   var running_legs_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     title: 'Running legs',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -313,8 +326,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var running_legs_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: running_legs_shot_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     description: 'Faster! Faster!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -341,8 +354,8 @@ if ( Meteor.users.find().count() === 0 ) {
   //  Midi reflection shot
   var midi_reflection_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     title: 'Midi reflection shot',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -362,8 +375,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var midi_reflection_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: midi_reflection_shot_id,
-    author: adminId.username,
-    userId: adminId._id,
+    author: admin.username,
+    userId: admin._id,
     description: 'But why?',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -391,22 +404,23 @@ if ( Meteor.users.find().count() === 0 ) {
   //  -------------------------------------------------------------------------
   //  Front page demo project
   var front_page_project_id = ProjectList.insert({
-    author: manuId.username,
-    userId: manuId._id,
-    title: 'Homepage examples',
-    description: 'This project contains all of the animation examples we see  on the front page.',
+    author: manu.username,
+    userId: manu._id,
+    title: 'The beginning',
+    description: 'My first steps using moveme.',
     submitted: new Date(now - 3 * 3600 * 1000),
-    shotCount: 0,
+    shotCount: 2,
     fps: 24,
-    duration: 0
+    duration: 96,
+    isActive: true
   })
 
   //  -----------------------------------------
   //  Mini jumping kick shot
   var jumping_kick_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: manuId.username,
-    userId: manuId._id,    
+    author: manu.username,
+    userId: manu._id,    
     title: 'Jumping kick',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -426,8 +440,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var jumping_kick_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: jumping_kick_shot_id,
-    author: manuId.username,
-    userId: manuId._id,
+    author: manu.username,
+    userId: manu._id,
     description: 'Aaaaaaahhhh!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -454,8 +468,8 @@ if ( Meteor.users.find().count() === 0 ) {
   //  Maxi jump run shot
   var maxi_jump_run_shot_id = ShotList.insert({
     projectId: front_page_project_id,
-    author: manuId.username,
-    userId: manuId._id,
+    author: manu.username,
+    userId: manu._id,
     title: 'Midi reflection shot',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
@@ -468,15 +482,15 @@ if ( Meteor.users.find().count() === 0 ) {
     latestVersionVideoId: '',
     latestVersionThumbnail: ''
 
-    , isPublic: true
+    , isPublic: false
   })
 
   //  Maxi jump run version 1
   var maxi_jump_run_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: maxi_jump_run_shot_id,
-    author: manuId.username,
-    userId: manuId._id,
+    author: manu.username,
+    userId: manu._id,
     description: 'I can make it?!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
@@ -509,8 +523,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var addAudioId = Posts.insert({
     title: 'Add audio support',
     body: 'Would be nice to have support for audio',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 7 * 3600 * 1000),
     commentsCount: 2,
@@ -521,8 +535,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var addQuadrupedId = Posts.insert({
     title: 'Add quadruped asset',
     body: 'Can we have a quadruped please? Pretty please?',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 7 * 3600 * 1000),
     commentsCount: 0,
@@ -533,8 +547,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var addDrawId = Posts.insert({
     title: 'Add the ability to draw',
     body: 'Would be nice if we could draw on top of the viewport. We could use it better communicate corrections or to even animate particle effects.',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 6 * 3600 * 1000),
     commentsCount: 0,
@@ -545,8 +559,8 @@ if ( Meteor.users.find().count() === 0 ) {
   var addRigId = Posts.insert({
     title: 'Create custom rigs',
     body: 'It would be nice if we could rig custom models. Right now we can only use pre-build rigs.',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     // url: 'http://sachagreif.com/introducing-telescope/',    
     submitted: new Date(now - 4 * 3600 * 1000),
     commentsCount: 0,
@@ -557,8 +571,8 @@ if ( Meteor.users.find().count() === 0 ) {
   Comments.insert({
     postId: addAudioId,
     postType: 'suggest',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     submitted: new Date(now - 5 * 3600 * 1000),
     body: 'Interesting project, can I get involved?'
     // ,type: 'suggest'
@@ -567,8 +581,8 @@ if ( Meteor.users.find().count() === 0 ) {
   Comments.insert({
     postId: addAudioId,
     postType: 'suggest',
-    userId: ambreId._id,
-    author: ambreId.username,
+    userId: ambre._id,
+    author: ambre.username,
     submitted: new Date(now - 3 * 3600 * 1000),
     body: 'You sure can Tom!'
     // ,type: 'suggest'
@@ -579,8 +593,8 @@ if ( Meteor.users.find().count() === 0 ) {
 //  
 
   TutorialList.insert({
-    author: 'manu',
-    userId: manuId,
+    author: manu.username,
+    userId: manu._id,
     title: 'Using Sphere',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
@@ -590,8 +604,8 @@ if ( Meteor.users.find().count() === 0 ) {
   })
 
   TutorialList.insert({
-    author: 'manu',
-    userId: manuId,
+    author: manu.username,
+    userId: manu._id,
     title: 'Using Tail',
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),

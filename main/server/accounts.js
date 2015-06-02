@@ -35,7 +35,8 @@ Accounts.onLogin(function( loginData ){
             author: user.username, 
             submitted: new Date(),
             shotCount: 1,
-            duration: 24
+            duration: 24,
+            isActive: true
   		});
 
   		var shotId = ShotList.insert({

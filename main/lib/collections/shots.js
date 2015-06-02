@@ -13,6 +13,64 @@ ShotList.allow({
 
 
 Meteor.methods({
+  //  add an empty short, this one gets selected through the gallery option.
+  shotInsertEmpty: function(){
+    // console.log('shotInsertEmpty')
+
+    //  get the users active project
+    var user = Meteor.user();
+    var project = ProjectList.find({userId:user._id}, {fields: {_id: 1, shotCount: 1}}).fetch();
+    // console.log('\tproject', project)
+
+    if(project.length === 0 ){
+      // console.log('\tNo active project was found.');
+      return;
+    }
+
+    // console.log('\tproject id', project[0]._id)
+
+    //  create default shot attributes    
+    shotAttributes = {
+        title: 'Untitled'
+      , description: 'No description'
+      , duration: -1
+      , fps: 24
+    }
+    var shot = _.extend(shotAttributes, {
+        projectId: project[0]._id
+      , userId: user._id
+      , author: user.username
+      , submitted: new Date()
+      , fps: 24
+      , versionCount: 0
+      , shotNumber: (project[0].shotCount + 1)
+      , latestVersionId: 0
+      , latestVersionVideoId: ''
+      , latestVersionThumbnail: ''
+      , isPublic: true
+    });
+    // console.log('\tadd shot', shot)
+
+    //  update the shotcount for the active project
+    ProjectList.update({
+      _id: project[0]._id
+    },{
+      $inc: {
+        shotCount: 1
+      }
+    })
+
+    //  create shot
+    var shotId = ShotList.insert(shot);
+    // console.log('\tadded shot', shotId);
+    
+    return {
+        projectId: project[0]._id
+      , shotId: shotId
+    }
+  },
+
+  //  add a shot to the given project
   shotInsert: function(shotAttributes) {
   	console.log('insert short')
     /*
@@ -55,26 +113,4 @@ Meteor.methods({
       _id: shotId
     };
   }
-  // launchShot: function( shotId){
-  //   /*
-  //   shot entry has the following data:
-  //   - range
-  //   - assets
-  //   - scene file link
-  //   */
-  // 	console.log('launching shot', shotId)
-
-  // 	versionInfo = Meteor.call("hasVersionForShot", shotId )
-  // 	if( versionInfo.result ){
-  // 		console.log('\tloading version', versionInfo.version)
-
-  //     //  files is stored as /shotId/versionId.json
-
-  //     Meteor.call("getVersionSceneFile")
-
-
-  // 	}else{
-  // 		console.log('\tFirst version')
-  // 	}
-  // }
 });
