@@ -17,22 +17,33 @@
 	<h2>Shot: {{title}}</h2>
 	<p>{{description}}</p>
 
-    <a class="info">
-        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>        
+    <a class="info" data-toggle="tooltip" data-delay="400" data-placement="bottom" title="Number of shot versions">
+        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
         <span class="badge">{{versionCount}} versions</span>
     </a>
     
-    <a class="info">
-        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>        
+    <a class="info" data-toggle="tooltip" data-delay="400" data-placement="bottom" title="Shot length in frames">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
         <span class="badge">{{duration}} frames</span>
     </a>
 
-    <a class="info">
-        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>        
+    <a class="info" data-toggle="tooltip" data-delay="400" data-placement="bottom" title="Frame rate">
+        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
         <span class="badge">{{fps}} fps</span>
     </a>
-    
-    <a href="{{pathFor 'shotEdit'}}" class="edit btn" role="button">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>        
+
+    <a class="info" data-toggle="tooltip" data-delay="400" data-placement="bottom" title="Is public or shared">
+        <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+        <span class="badge">
+            {{#if isPublic}}
+                public
+            {{else}}
+                private
+            {{/if}}
+        </span>
     </a>
+    
+    <a href="{{pathFor 'shotEdit'}}" class="edit btn" role="button" data-toggle="tooltip" data-delay="400" data-placement="bottom" title="Edit Shot Info">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    </a>    
 </template>

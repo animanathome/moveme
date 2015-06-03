@@ -16,6 +16,17 @@ Template.shotEdit.rendered = function(){
  	var fps = this.find('#fps')
  	fps.setAttribute('value', this.data.shots[0].fps)
 
+ 	var shared = this.find('#shared')
+ 	console.log('shared', this.data.shots[0].isPublic)
+ 	console.log('shared element', shared)
+ 	console.log('shared options', shared.options)
+
+ 	if(this.data.shots[0].isPublic === true){
+ 		shared.options.selectedIndex = 1;
+ 	}else{
+ 		shared.options.selectedIndex = 0;
+ 	}
+
 //	BREADCRUMB
 	var breadcrumb = this.find("#breadcrumb")
 	console.log('\tbreadcrumb', breadcrumb)
@@ -67,11 +78,18 @@ Template.shotEdit.events({
     var currentShotId = this.shots[0]._id;
     var currentProjectId = this.projects[0]._id;
 
+    var is_shared = true;
+    var shared = $(e.target).find('[name=shared]').find(":selected").text();
+    if(shared === 'Private'){
+    	is_shared = false;
+    }
+
     var shotProperties = {
         title: $(e.target).find('[name=title]').val()
       , description: $(e.target).find('[name=description]').val()
       , duration: $(e.target).find('[name=duration]').val()
       , fps: $(e.target).find('[name=fps]').find(":selected").text()
+      , isPublic: is_shared
     }
 
     console.log(shotProperties)

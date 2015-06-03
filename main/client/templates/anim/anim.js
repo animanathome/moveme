@@ -31,8 +31,8 @@ Template.anim.rendered = function(){
 //	animation to projects signals
 	//  stubs to allow communication from moveme to meteor
 	moveme.onSaveScene = function(message){
-		console.log('Meteor: anim save scene:', message)
-		console.log('\tdata', localStorage.threejsEditor)
+		// console.log('Meteor: anim save scene:', message)
+		// console.log('\tdata', localStorage.threejsEditor)
 
 		//	get the animation scene data
 		//	NOTE: we don't really have to go through the local storage here

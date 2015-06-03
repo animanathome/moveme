@@ -29,8 +29,9 @@ MM.Editor.prototype.importPTASettings = function(data){
 }
 
 MM.Editor.prototype.exportPTASettings = function(){
-    // console.log('exportPTASettings')
-    // console.log('\tresult', this.projectObj)
+    console.log('exportPTASettings')
+    this.projectObj['duration'] = this.endTime - this.startTime;
+    console.log('\tresult', this.projectObj)
     return this.projectObj;
 }
 
