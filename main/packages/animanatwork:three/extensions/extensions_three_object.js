@@ -1,3 +1,77 @@
+THREE.Object3D.prototype.importData = function(data){
+	this.uuid = data.uuid;
+
+	if(data.name !== undefined){
+		this.name = data.name;
+	}
+	
+	if(data.type !== undefined){
+		this.type = data.type;
+	}
+
+	if(data.asset !== undefined){
+		this.asset = data.asset;
+	}
+	
+	if(data.animChannels !== undefined){
+		// console.log(this.name, ' -> ', data.animChannels)
+		this.animChannels = data.animChannels;
+	}
+
+	if(data.hasOwnProperty('driveChannel')){
+		this.driveChannel = data.driveChannel;		
+	}
+
+	if(data.custom !== undefined){
+		this.custom = data.custom
+
+		if( data.custom.hasOwnProperty('color') === true ){
+			data.custom['color'] = this.material.color
+		}
+	}
+	if(data.tag !== undefined){
+		this.tag = data.tag;
+	}
+}
+
+THREE.Object3D.prototype.exportData = function(){
+	var data = {};
+    
+    data.name = this.name
+    data.uuid = this.uuid
+    data.type = 'Object3D'
+
+	if ( this.asset !== undefined ){
+		data.asset = this.asset;
+	}
+
+	if ( this.animChannels !== undefined ){	
+		data.animChannels = this.animChannels;
+	}
+
+	if( this.hasOwnProperty('driveChannel')){
+		data.driveChannel = this.driveChannel;
+	}
+
+	if ( this.tag !== undefined ){
+		data.tag = this.tag;
+	}
+
+	if ( JSON.stringify( this.userData ) !== '{}' ){
+		data.userData = this.userData;
+	}
+
+	if (this.visible !== true ){
+		data.visible = this.visible;
+	}
+	
+	if( this.custom !== undefined ){
+		data.custom = this.custom;
+	}
+
+    return data;
+}
+
 THREE.Object3D.prototype.setVisibility = function( value ){
 	/*
 	The visiblity methods deal with the visibility of the 

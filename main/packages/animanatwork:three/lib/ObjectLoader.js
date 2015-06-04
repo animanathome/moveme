@@ -365,58 +365,15 @@ THREE.ObjectLoader.prototype = {
 
 				case 'Constraint':
 					// console.log('\tCreating constraint')
-					// console.log('\tdata', data)
-
 					object = new MM.Constraint();
-
-					object.constraintMode = data.constraintMode 
-					
-					object.controlColor.setRGB( data.controlColor.r, 
-						data.controlColor.g, data.controlColor.b )
-					object.controlSize = data.controlSize
-					
-					object.controlScale.set( data.controlScale.x, 
-						data.controlScale.y, data.controlScale.z ) 	
-
-					object.controlOffset.set( data.controlOffset.x, 
-						data.controlOffset.y, data.controlOffset.z ) 
-					
-					object.controlSide = data.controlSide
-					object.offsetMatrix.fromArray( data.offsetMatrix)
-
-					if( data.hasOwnProperty('controlShape')){
-						object.controlShape = data.controlShape
-					}
-
-					if( data.hasOwnProperty('custom')){
-						object.custom = data.custom
-					}
+					object.importData(data);
 				break;	
 
 				case 'Control':
 					// console.log('\tCreating Control')
-
 					object = new MM.Control();
-
-					object.controlColor.setRGB( data.controlColor.r, 
-						data.controlColor.g, data.controlColor.b )
-
-					object.controlSize = data.controlSize
-					
-					object.controlScale.set( data.controlScale.x, 
-						data.controlScale.y, data.controlScale.z ) 	
-
-					object.controlOffset.set( data.controlOffset.x, 
-						data.controlOffset.y, data.controlOffset.z ) 
-					
-					object.controlSide = data.controlSide
-
-					// object.offsetMatrix.fromArray( data.offsetMatrix)
-
-					if( data.hasOwnProperty('controlShape')){
-						object.controlShape = data.controlShape
-					}
-					break;			
+					object.importData(data);
+				break;
 
 				default:
 

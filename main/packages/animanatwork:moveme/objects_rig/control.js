@@ -1,6 +1,5 @@
 MM.Control = function(){
     THREE.Object3D.call(this);
-    this.type = 'control'
 
     //  shape control properties 
     this.controlColor = new THREE.Color( 0xffff00);
@@ -36,6 +35,54 @@ MM.Control = function(){
 };
 
 MM.Control.prototype = Object.create( THREE.Object3D.prototype );
+
+MM.Control.prototype.importData = function(data){
+    console.log('Control.importData', data)
+
+    THREE.Object3D.prototype.importData.call(this, data);
+    
+    this.controlColor.setRGB(data.controlColor.r, data.controlColor.g, data.controlColor.b);
+    this.controlSize = data.controlSize;
+    this.controlScale.set(data.controlScale.x, data.controlScale.y, data.controlScale.z);
+    this.controlOffset.set(data.controlOffset.x, data.controlOffset.y, data.controlOffset.z);    
+    this.controlSide = data.controlSide;
+    
+    console.log('#\t', data.controlShape)
+    if(data.hasOwnProperty('controlShape')){
+        this.controlShape = data.controlShape
+    }
+
+    if(data.hasOwnProperty('displayRotationAxis')){
+        this.displayRotationAxis = data.displayRotationAxis
+    }
+}
+
+MM.Control.prototype.exportData = function(){
+    console.log('Control.exportData', this.name)
+
+    var data = THREE.Object3D.prototype.exportData.call(this);
+    data.type = 'Control'
+
+    data.controlColor = this.controlColor
+    data.controlSize = this.controlSize
+    data.controlScale = this.controlScale
+    data.controlOffset = this.controlOffset
+    data.controlSide = this.controlSide
+
+    console.log('#\t', this.controlShape)
+    if(this.controlShape !== undefined ){
+        console.log('#\texporting controlShape')
+        data.controlShape = this.controlShape;
+    }
+
+    if(this.displayRotationAxis === true){
+        data.displayRotationAxis = true;
+    }
+
+    console.log('#\tdata', data)
+    return data;
+}
+
 
 MM.Control.prototype.setFacingCamera = function( camera ){
     console.log('MM.Control.setFacingCamera', camera)

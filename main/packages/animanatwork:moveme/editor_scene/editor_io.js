@@ -408,19 +408,21 @@ MM.Editor.prototype.importSetups = function( data ){
                     }
                 }
 
-                var objectToSolve = this.scene.getObjectByName( 
-                    thisData.objectToSolve , true);
+                // var objectToSolve = this.scene.getObjectByName( 
+                //     thisData.objectToSolve , true);
 
-                if( objectToSolve === undefined ){
-                    // console.log('Unable to find object to solve', thisData.objectToSolve)
-                    break;
-                }
+                // if( objectToSolve === undefined ){
+                //     // console.log('Unable to find object to solve', thisData.objectToSolve)
+                //     break;
+                // }
 
-                // console.log('constraint', constraint)
-                // console.log('objectToSolve', objectToSolve)
+                // // console.log('constraint', constraint)
+                // // console.log('objectToSolve', objectToSolve)
 
-                // constraint.objectToSolve = objectToSolve; 
-                constraint.setObjectToSolve( objectToSolve ); 
+                // // constraint.objectToSolve = objectToSolve; 
+                // constraint.setObjectToSolve( objectToSolve ); 
+
+                constraint.importSetup(this.scene, thisData);
             break;
 
             case "FourBoneIkBlendSolver":
@@ -568,24 +570,13 @@ MM.Editor.prototype.exportSetups = function( ){
 //  CONSTRAINTS
     var constraint = this.scene.getObjectOfInstance(MM.Constraint)
     for( var i = 0, j = constraint.length; i < j; i++){
-        thisData = {}
-        // console.log('\texporting', constraint[i])
-
-        thisData.type = 'Constraint';
-        thisData.name = constraint[i].name;
-        if( constraint[i].objectToSolve !== undefined ){                
-            thisData.objectToSolve = constraint[i].objectToSolve.name
-        // }else{
-        //     console.log('\tNo object to solve defined')
-        }            
-        data[ constraint[i].uuid ] = thisData;
-
+        data[constraint[i].uuid] = constraint[i].exportSetup();
     }
 
 //  IK SOLVERS
     var fourBoneIkBlendSolver = this.scene.getObjectOfInstance(MM.FourBoneIkBlendSolver)
     for( var i = 0, j = fourBoneIkBlendSolver.length; i < j; i++){
-        data[fourBoneIkBlendSolver[i].uuid ]=fourBoneIkBlendSolver[i].exportSetup();;
+        data[fourBoneIkBlendSolver[i].uuid ]=fourBoneIkBlendSolver[i].exportSetup();
     }
  
     var twoBoneIkBlendSolver = this.scene.getObjectOfInstance(MM.TwoBoneIkBlendSolver)

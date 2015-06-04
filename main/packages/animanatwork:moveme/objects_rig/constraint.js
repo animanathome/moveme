@@ -12,13 +12,71 @@ MM.Constraint = function(){
     
     this.constraintMode = 0
     this.objectToSolve = undefined 
-    this.offsetMatrix = new THREE.Matrix4();
+    this.offsetMatrix = new THREE.Matrix4();    
 
-    this.useOffset = false
-    this.order = 'XYZ'
+    this.useOffset = false;
+    this.aimOffset = undefined;
+    this.order = 'XYZ';
 };
 
 MM.Constraint.prototype = Object.create( MM.Control.prototype );
+
+MM.Constraint.prototype.importData = function(data){
+
+    MM.Control.prototype.importData.call(this, data);
+
+    this.constraintMode = data.constraintMode;
+    this.offsetMatrix.fromArray(data.offsetMatrix);
+    
+    this.useOffset = data.useOffset;
+    if( data.hasOwnProperty('aimOffset')){
+        this.aimOffset.fromArray(data.aimOffset);
+    }
+
+    this.order = data.order    
+}
+
+MM.Constraint.prototype.exportData = function(){
+
+    var data = MM.Control.prototype.exportData.call(this);
+    
+    data.type = 'Constraint'
+    data.constraintMode = this.constraintMode;
+    data.offsetMatrix = this.offsetMatrix.elements;
+    
+    data.useOffset = this.useOffset;
+    if( this.aimOffset !== undefined ){
+        data.aimOffset = this.aimOffset.elements;
+    }
+
+    data.order = this.order;
+
+    return data
+}
+
+MM.Constraint.prototype.exportSetup = function(){
+    data = {}
+    // console.log('\texporting', constraint[i])
+
+    data.type = 'Constraint';
+    data.name = this.name;
+    if( this.objectToSolve !== undefined ){                
+        data.objectToSolve = this.objectToSolve.name
+    }
+    
+    return data;
+}
+
+MM.Constraint.prototype.importSetup = function(scene, data){
+    var objectToSolve = scene.getObjectByName(data.objectToSolve, true);
+
+    if( objectToSolve !== undefined ){
+        // this.setObjectToSolve(objectToSolve);
+        this.objectToSolve = objectToSolve
+    }else{
+        console.warn('Unable to find '+data.objectToSolve)
+    }
+}
 
 MM.Constraint.prototype.setObjectToSolve = function( transform ){
     // console.log('setObjectToSolve', transform.name)
@@ -203,7 +261,7 @@ MM.Constraint.prototype.doSolve = function() {
         //  we can use it as an offset
         if( this.aimOffset === undefined ){
             this.objectToSolve.updateMatrix();
-            // console.warn('\tundefined aim offset')
+            console.warn('Undefined aim offset. Calculating aim offset.')
             this.aimOffset = new THREE.Matrix4().getInverse(this.objectToSolve.matrix)            
             // console.log('\taim offset:', this.aimOffs    et.elements)
         }

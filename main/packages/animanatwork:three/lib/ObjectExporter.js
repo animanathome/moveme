@@ -362,39 +362,15 @@ THREE.ObjectExporter.prototype = {
 
 			} else if ( object instanceof MM.Constraint ) {
 
-				data.type = 'Constraint'
-
-				data.constraintMode = object.constraintMode
-				//data.objectToSolve = object.objectToSolve.name // can use uuid
-				
-				data.controlColor = object.controlColor
-				data.controlSize = object.controlSize
-				data.controlScale = object.controlScale
-				data.controlOffset = object.controlOffset
-				data.controlSide = object.controlSide
-				if( object.controlShape !== undefined ) 
-					data.controlShape = object.controlShape
-
-				data.offsetMatrix = object.offsetMatrix.elements
+				data = object.exportData()
 
 			} else if ( object instanceof MM.Control ) {				
 
-				data.type = 'Control'
-
-				data.controlColor = object.controlColor
-				data.controlSize = object.controlSize
-				data.controlScale = object.controlScale
-				data.controlOffset = object.controlOffset
-				data.controlSide = object.controlSide
-				if( object.controlShape !== undefined ) 
-					data.controlShape = object.controlShape
-
-				// data.offsetMatrix = object.offsetMatrix.elements
+				data = object.exportData()
 				
 			} else {
 				// console.log('\tExporting Object3D', object)
 				data.type = 'Object3D';
-
 			}
 
 			data.matrix = object.matrix.toArray();

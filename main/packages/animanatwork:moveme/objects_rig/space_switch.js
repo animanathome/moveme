@@ -22,33 +22,8 @@ MM.Spaceswitch = function(){
 MM.Spaceswitch.prototype = Object.create( MM.Control.prototype );
 
 MM.Spaceswitch.prototype.importData = function( data ){
-    this.name = data.name
-    this.uuid = data.uuid
 
-    this.controlColor.setRGB( data.controlColor.r, data.controlColor.g, 
-        data.controlColor.b )
-
-    this.controlSize = data.controlSize
-    
-    this.controlScale.set( data.controlScale.x, data.controlScale.y, 
-        data.controlScale.z )  
-
-    this.controlOffset.set( data.controlOffset.x, data.controlOffset.y, 
-        data.controlOffset.z ) 
-    
-    this.controlSide = data.controlSide
-    this.displayRotationAxis = data.displayRotationAxis
-
-    if( data.hasOwnProperty('controlShape')){
-        this.controlShape = data.controlShape
-    }
-
-    if( data.hasOwnProperty('custom')){
-        this.custom = data.custom
-    }
-
-    //  -----------------------------------------------------------------------
-    //  space switch specific
+    MM.Control.prototype.importData.call(this, data);
 
     //	custom to this object type
     this.spaceNames = data.spaceNames
@@ -66,32 +41,14 @@ MM.Spaceswitch.prototype.importData = function( data ){
 }
 
 MM.Spaceswitch.prototype.exportData = function(){
-	var data = {}
+    console.log('Spaceswitch.exportData', this.name)
 
-	// we should just be inheriting this from control!!!
-    data.name = this.name
-    data.uuid = this.uuid
-    data.type = this.objectType
+    var data = MM.Control.prototype.exportData.call(this);
+    
+    data.type = 'Spaceswitch';
+    data.spaceNames = this.spaceNames;
 
-    data.controlColor = this.controlColor
-    data.controlSize = this.controlSize
-    data.controlScale = this.controlScale
-    data.controlOffset = this.controlOffset
-    data.controlSide = this.controlSide
-    data.displayRotationAxis = this.displayRotationAxis
-
-    if( this.controlShape !== undefined ) 
-        data.controlShape = this.controlShape 
-        
-    if( this.hasOwnProperty('custom')){
-        // console.log('\tExporting custom channels')
-        data.custom = this.custom
-    }   
-
-    //	custom to this object
-    data.spaceNames = this.spaceNames
-
-    data.offsetMatrices = []
+    data.offsetMatrices = [];
     var theseElements;
     for( var i = 0; i < this.offsetMatrices.length; i++){
     	theseElements = this.offsetMatrices[i].toArray();
@@ -100,7 +57,7 @@ MM.Spaceswitch.prototype.exportData = function(){
 
     	data.offsetMatrices.push( theseElements );
     }
-    return data
+    return data;
 }
 
 MM.Spaceswitch.prototype.importSetup = function( scene , data ){
