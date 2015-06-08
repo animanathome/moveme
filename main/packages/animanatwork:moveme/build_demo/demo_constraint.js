@@ -127,12 +127,14 @@ MM.AimAndOffsetConstraint = function( editor ){
 }
 
 MM.SpaceswitchDemo1 = function( editor ){
+    console.log('SpaceswitchDemo1')
+
     var c = new MM.Control();
     c.name = 'driver'
     c.tag = 'control'   
     c.controlSize = 10          
     c.controlShape = 'plane'
-    c.setChannelsTranslateAndRotate()
+    // c.setChannelsTranslateAndRotate()
     editor.addObject( c )
 
     var s = new MM.Spaceswitch();
@@ -141,12 +143,13 @@ MM.SpaceswitchDemo1 = function( editor ){
     s.controlShape = ''
     s.controlSize = 10      
     s.displayRotationAxis = true    
-    s.setChannelsTranslateAndRotate()
+    // s.setChannelsTranslateAndRotate()
     //  This needs to come before we add it to the scene!!! Otherwise we won't be
     //  able to register the offset.
     s.translateY(10)
     editor.addObject( s )   
     s.addSpace( c )
+    s.addSpaceswitchChannel(s)
 
 
     var addedGroup = editor.addGroup( 'multiChannel' , 'asset')

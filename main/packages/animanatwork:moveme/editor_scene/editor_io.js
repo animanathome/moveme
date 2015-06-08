@@ -29,9 +29,13 @@ MM.Editor.prototype.importPTASettings = function(data){
 }
 
 MM.Editor.prototype.exportPTASettings = function(){
-    console.log('exportPTASettings')
+    // console.log('exportPTASettings')
+    if(this.projectObj === undefined){
+        // console.log('\tNo projectObj has been defined.', this)
+        return 
+    }
     this.projectObj['duration'] = this.endTime - this.startTime;
-    console.log('\tresult', this.projectObj)
+    // console.log('\tresult', this.projectObj)
     return this.projectObj;
 }
 

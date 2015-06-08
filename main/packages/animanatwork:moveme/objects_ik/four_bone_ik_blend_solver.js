@@ -21,6 +21,7 @@ MM.FourBoneIkBlendSolver = function(){
 
     //  joint offset
     this.ballJointRotationOffset = undefined;
+    this.aimAnkleOffset = undefined;
 }
 
 MM.FourBoneIkBlendSolver.prototype = Object.create(MM.TwoBoneIkBlendSolver.prototype);
@@ -53,7 +54,8 @@ MM.FourBoneIkBlendSolver.prototype.importSetup = function(scene, data){
     this.toeRotateChannel=data.toeRotateChannel;  
 
     //  joint offset
-    this.ballJointRotationOffset = new THREE.Matrix4().fromArray(data.ballJointRotationOffset)  
+    this.ballJointRotationOffset = new THREE.Matrix4().fromArray(data.ballJointRotationOffset)
+    this.aimAnkleOffset = new THREE.Matrix4().fromArray(data.aimAnkleOffset)
 };
 
 MM.FourBoneIkBlendSolver.prototype.exportSetup = function(){
@@ -82,7 +84,7 @@ MM.FourBoneIkBlendSolver.prototype.exportSetup = function(){
 
     //  joint offset
     data.ballJointRotationOffset = this.ballJointRotationOffset.toArray()
-
+    data.aimAnkleOffset = this.aimAnkleOffset.toArray()
     return data;
 }
 
@@ -90,7 +92,7 @@ MM.FourBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ){
 //  IK
     //  use our custom channels to drive hidden object channels
     //  is this case it is to generate the foot roll behavior
-    if( this.handleControl !== undefined ){
+    if(this.handleControl !== undefined){
         this.toeObject.rotation.x = this.handleControl.custom[this.toeChannel];
         this.ballObject.rotation.x = this.handleControl.custom[this.ballChannel];
         this.heelObject.rotation.x = this.handleControl.custom[this.heelChannel];
@@ -107,7 +109,7 @@ MM.FourBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ){
     //  We could this push this further by chosing a different up when the dot 
     //  product is to close to parallel.    
     var thisUp, thisSide;
-    if( this.ballObject !== undefined){
+    if(this.ballObject !== undefined){
         // thisUp = new THREE.Vector3().subVectors(this.startJoint.getWorldPosition(),
                 // this.endJoint.getWorldPosition()).normalize();
         // thisUp.add( this.ballObject.getWorldUp() ).multiplyScalar( 0.5 )
@@ -118,7 +120,7 @@ MM.FourBoneIkBlendSolver.prototype.updateMatrixWorld = function ( force ){
     }
 
     //  aim ankle to ball
-    if( this.ballObject !== undefined && this.endJoint.parent !== undefined ){
+    if(this.ballObject !== undefined && this.endJoint.parent !== undefined){
         // this.endJoint.matrix = new THREE.Matrix4();
         // this.updateJoints();
         this.endJoint.matrix = new THREE.Matrix4();

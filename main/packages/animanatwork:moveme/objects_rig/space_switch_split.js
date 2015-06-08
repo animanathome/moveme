@@ -13,7 +13,7 @@ MM.SpaceswitchSplit = function(){
 	this.rChannelName = 'rotationSwitch'
 	this.rChannelObject = undefined;
 
-	this.objectType = 'SpaceswitchSplit'
+	// this.objectType = 'SpaceswitchSplit'
 
 	this.addChannel('custom', this.pChannelName, [], 'enum')
 	this.addChannel('custom', this.rChannelName, [], 'enum')
@@ -25,33 +25,9 @@ MM.SpaceswitchSplit.prototype = Object.create( MM.Control.prototype );
 
 MM.SpaceswitchSplit.prototype.importData = function( data ){
 	console.log('SpaceswitchSplit.importData', data)
-
-	this.name = data.name
-    this.uuid = data.uuid
-
-    this.controlColor.setRGB( data.controlColor.r, data.controlColor.g, 
-        data.controlColor.b )
-
-    this.controlSize = data.controlSize
     
-    this.controlScale.set( data.controlScale.x, data.controlScale.y, 
-        data.controlScale.z )  
-
-    this.controlOffset.set( data.controlOffset.x, data.controlOffset.y, 
-        data.controlOffset.z ) 
+    MM.Control.prototype.importData.call(this, data);
     
-    this.controlSide = data.controlSide
-    this.displayRotationAxis = data.displayRotationAxis
-
-    if( data.hasOwnProperty('controlShape')){
-        this.controlShape = data.controlShape
-    }
-
-    if( data.hasOwnProperty('custom')){
-        this.custom = data.custom
-    }
-
-    //	-----------------------------------------------------------------------
     //	space switch split specific
     var thisMatrix;
 
@@ -75,28 +51,9 @@ MM.SpaceswitchSplit.prototype.importData = function( data ){
 MM.SpaceswitchSplit.prototype.exportData = function(){
 	console.log('SpaceswitchSplit.exportData')
 
-	var data = {}
+    var data = MM.Control.prototype.exportData.call(this);
+    data.type = 'SpaceswitchSplit'
 
-    data.name = this.name
-    data.uuid = this.uuid
-    data.type = this.objectType
-
-    data.controlColor = this.controlColor
-    data.controlSize = this.controlSize
-    data.controlScale = this.controlScale
-    data.controlOffset = this.controlOffset
-    data.controlSide = this.controlSide
-    data.displayRotationAxis = this.displayRotationAxis
-
-    if( this.controlShape !== undefined ) 
-        data.controlShape = this.controlShape 
-        
-    if( this.hasOwnProperty('custom')){
-        // console.log('\tExporting custom channels')
-        data.custom = this.custom
-    }   
-
-    //	-----------------------------------------------------------------------
     //	space switch split specific
 	var theseElements;
 
@@ -172,7 +129,7 @@ MM.SpaceswitchSplit.prototype.exportSetup = function(){
 	// console.log('Spaceswitch.exportSetup')
 	//	nothing to do 
 	var data = {}
-	data.type = this.objectType
+	data.type = 'SpaceswitchSplit'
 	data.name = this.name
 
     //  this is only populated when we actually use this as a spaceswitch

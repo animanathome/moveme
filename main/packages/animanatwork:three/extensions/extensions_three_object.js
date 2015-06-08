@@ -366,7 +366,8 @@ THREE.Object3D.prototype.getChannelGroupIndex = function( channelGroup ){
 }
 
 THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelName){
-	// console.log('getChannelNameIndex', channelGroup, channelName)
+	console.log('getChannelNameIndex', channelGroup, channelName)
+	console.log('this', this.animChannels)
 
 	var gi = this.getChannelGroupIndex(channelGroup);
 	var nc = this.animChannels[gi][1].length;
@@ -402,9 +403,10 @@ THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, 
 }
 
 THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName, channelRange ){
+	console.log('addToChannelRange', channelGroup, channelName, channelRange)
 
 	var gi = this.getChannelGroupIndex(channelGroup)
-	var index = this.getChannelNameIndex( channelGroup, channelName )
+	var index = this.getChannelNameIndex(channelGroup, channelName)
 	if( index == -1 ){
 		console.log('Unable to find channel name')
 		return;

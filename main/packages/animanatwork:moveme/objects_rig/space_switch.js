@@ -9,7 +9,7 @@ MM.Spaceswitch = function(){
     this.channelName = 'spaceSwitch'
 
     this.addChannel('custom' , this.channelName, [], 'enum')
-    this.custom = {'spaceSwitch' : 0} 
+    this.custom = {'spaceSwitch' : 0}
 
     //  The object which actually controls the state of the channel
     //  we need this since we can't use this to change/animate/pose
@@ -143,9 +143,14 @@ MM.Spaceswitch.prototype.updateSpace = function( object ){
 
 MM.Spaceswitch.prototype.setChannelsTranslateAndRotate = function(){
 	this.animChannels = [
-                            this._getChannelsTranslate(), 
+                            this._getChannelsTranslate(),
                             this._getChannelsRotate(),
-							["custom", [this.channelName], [], 'enum']
+							[
+                                "custom", 
+                                [this.channelName], 
+                                [], 
+                                ['enum']
+                            ]
 						]
 }
 
