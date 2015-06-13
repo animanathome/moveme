@@ -55,6 +55,7 @@ MM.TentacleComponent.prototype.build = function(){
 	solver.setJoints(this.getJointsAsArray())
 	solver.setTipControl(tip.control)
 	solver.setRootControl(root.control)
+	solver.followBottomControl = true
 	this.editor.addObject(solver)	
 
 	return this

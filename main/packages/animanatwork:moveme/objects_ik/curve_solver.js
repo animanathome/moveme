@@ -13,7 +13,6 @@ MM.CurveSolver = function(){
 	this.tipIndices = [2,3]
 	this.tipBindMatrix = undefined
 
-	this.linearCurve = undefined    
     this.followBottomControl = false
     this.skipFirstJoint = false
 }
@@ -35,7 +34,7 @@ MM.CurveSolver.prototype.updateTipControl = function(){
 		var thisIndex = this.tipIndices[i]
         var thisVertex = this.baseControlPoints[thisIndex].clone();
         
-		// console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+		console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 
         var inverseMatrix = new THREE.Matrix4();
         inverseMatrix.getInverse(this.tipBindMatrix)
@@ -44,9 +43,9 @@ MM.CurveSolver.prototype.updateTipControl = function(){
         localMatrix.multiplyMatrices(this.tipCtl.matrixWorld, inverseMatrix)
 
         thisVertex.applyMatrix4(localMatrix);
-        this.deformedControlPoints[thisIndex].copy(thisVertex)
+        this.deformedControlPoints[thisIndex].set(thisVertex.x, thisVertex.y, thisVertex.z, 1.0)
 
-        // console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+        console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 	}
 }
 
@@ -73,7 +72,7 @@ MM.CurveSolver.prototype.updateRootControl = function(){
         localMatrix.multiplyMatrices(this.rootCtl.matrixWorld, inverseMatrix)
 
         thisVertex.applyMatrix4(localMatrix);
-        this.deformedControlPoints[thisIndex].copy(thisVertex)
+        this.deformedControlPoints[thisIndex].set(thisVertex.x, thisVertex.y, thisVertex.z, 1.0)
 
         console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 	}
@@ -122,10 +121,11 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
     for(i = 0; i < nJoints; i++){
         var wpos = THREE.NURBSUtils.calcBSplinePoint(nurbsDegree, nurbsKnots, this.deformedControlPoints, blendValues[i]);
 
-        // console.log('\t\t', i, 'position', wpos.x, wpos.y, wpos.z)
+        console.log('\t\t', i, 'position', wpos.x, wpos.y, wpos.z)
         spinePositions.push(wpos);
     }
 
+    var startIndex = 0
     if(this.followBottomControl === true 
     	&& this.skipFirstJoint === false
         && this.joints[0].parent !== undefined ){
@@ -136,7 +136,7 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
         parentInverse.getInverse(this.joints[0].parent.matrixWorld)
 
         var localMatrix = new THREE.Matrix4()
-        localMatrix.multiplyMatrices(parentInverse, this.bottomControl.matrixWorld)    
+        localMatrix.multiplyMatrices(parentInverse, this.rootCtl.matrixWorld)
 
         var m1 = new THREE.Matrix4();
         this.joints[0].position.getPositionFromMatrix(localMatrix)
@@ -147,18 +147,20 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
         this.joints[0].updateMatrix()
         this.joints[0].updateMatrixWorld(true)   
 
-        startIndex = 1;
+        startIndex = 1
     }else{
-        console.log('following curve')
+        console.log('\tfollowing curve')
     }
 
 	var m1 = new THREE.Matrix4();
     for(i = startIndex; i < (nJoints-1); i++){
+        console.log('\tupdating joint position ', i)
+
         var botQuat = new THREE.Quaternion();
-        botQuat.setFromRotationMatrix(this.bottomControl.matrixWorld);
+        botQuat.setFromRotationMatrix(this.rootCtl.matrixWorld);
     
         var topQuat = new THREE.Quaternion();
-        topQuat.setFromRotationMatrix(this.topControl.matrixWorld);
+        topQuat.setFromRotationMatrix(this.tipCtl.matrixWorld);
         
         botQuat.slerp(topQuat, blendValues[i]);  
         
