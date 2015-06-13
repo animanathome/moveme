@@ -69,9 +69,9 @@ MM.Control.prototype.exportData = function(){
     data.controlOffset = this.controlOffset
     data.controlSide = this.controlSide
 
-    console.log('#\t', this.controlShape)
+    // console.log('#\t', this.controlShape)
     if(this.controlShape !== undefined ){
-        console.log('#\texporting controlShape')
+        // console.log('#\texporting controlShape')
         data.controlShape = this.controlShape;
     }
 

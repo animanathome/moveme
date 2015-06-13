@@ -303,7 +303,7 @@ THREE.ObjectLoader.prototype = {
 				case 'SplineCluster':
 					//	here we need to make a temp object so we can create
 					//	any objects that might be parented under the object
-					object = new THREE.Object3D();
+					object = new MM.Control();
 				break;
 
 				case 'FourBoneIkBlendSolver':

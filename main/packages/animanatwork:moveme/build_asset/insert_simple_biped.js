@@ -62,17 +62,20 @@ MM.insertBiped = function( editor, config ){
 	
 	//	Back
 	u.addRigComponent( new MM.SpineComponent({
-		controlSize: config['control_scale']*1, 
-		'globalControl' : true,
-		asset: config['name'], 
-		names: ['cBodyCtl', 'cHipCtl', 'cBChestCtl'], 
-		joints: ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']}
+		  controlSize: config['control_scale']*1
+		, 'name':'back'
+		, 'globalControl':true
+		, asset:config['name']
+		, names:['cBodyCtl', 'cHipCtl', 'cBChestCtl']
+		, joints:['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+		}
 	), 'back' )
 	
 	//	Neck
 	u.addRigComponent( new MM.SpineComponent({
-		  'controlSize' : config['control_scale']*1
-		, 'globalControl' : false
+		  'controlSize':config['control_scale']*1
+		, 'name':'neck'
+		, 'globalControl':false
 		, 'asset' : config['name']
 		, 'names' : ['', 'cTChestCtl', 'cHeadCtl']
 		, 'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
@@ -168,7 +171,7 @@ MM.insertBiped = function( editor, config ){
 			editor.addGroupContent( u.assetGroup, [eyeControl['constraint']]) 
 			editor.addSelectables([eyeControl['constraint']])
 
-			u.addControls([eyeControl])
+			u.addControls([eyeControl['constraint']])
 
 		//	Finger
 			var fingerJoint = editor.scene.getObjectByName(
@@ -247,7 +250,7 @@ MM.insertBiped = function( editor, config ){
 		jawControl.setChannelsRotate()
 		editor.addSelectables([jawControl])
 
-		u.addControls([jawControl])
+		u.addControls([jawControl])	
 	
 	//	inter component connections by using spaceswitches
 	//	each control created through createControlGroup has a spaceswitch node

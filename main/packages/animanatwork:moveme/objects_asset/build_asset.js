@@ -47,9 +47,11 @@ MM.AssetBuild.prototype = {
 		this.materialGroup = this._editor.addGroup( this.namespace , 'material')  
 	},
 	addControls : function( controls ){
+		console.log('addControls', controls)
 		this.controls = MM.extendArrayWithArray(this.controls, controls)
 	},
 	getControl : function( control_name ){
+		console.log('getControl', control_name)
 		var i, j;
 		for( i = 0, j = this.controls.length; i < j; i++){
 			if( this.controls[i].name === this.namespace+control_name ){
@@ -238,8 +240,12 @@ MM.AssetBuild.prototype = {
 
 			var thisComponent = component.build()
 
-			// console.log('--------------------')
-			// console.log(thisComponent.controls)
+			if(thisComponent === undefined){
+				console.error('No rigComponent was returned from the build method.')
+			}
+
+			console.log('--------------------')
+			console.log(thisComponent.controls)
 			scope.addControls( MM.getDictionaryAsArray( thisComponent.controls ))
 
 			scope.updateProgress()

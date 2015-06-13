@@ -55,6 +55,9 @@ MM.toScreenXY = function( position, camera, jqdiv ) {
 MM.extendArrayWithArray = function( arrayToExtend, array ){
 	var i, j;
 	for( i = 0, j = array.length; i < j; i++){
+		if(array[i] === undefined){
+			console.error('Element is undefined.')
+		}
 		arrayToExtend.push( array[i] )
 	}
 	return arrayToExtend;

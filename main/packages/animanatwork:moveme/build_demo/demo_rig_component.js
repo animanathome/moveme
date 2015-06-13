@@ -217,12 +217,47 @@ MM.legIkPlus = function( editor ){
 	u.build()		
 }
 
+MM.newSplineIk = function(editor){
+	console.log('newSplineIk')
+
+	var assetName = 'spline'
+	var namespace = 'spline:'
+	var u = new MM.AssetBuild( editor );
+	u.setNamespace( namespace )
+	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
+
+	u.addRigComponent( new MM.TentacleComponent( 
+	{'controlSize':0.5, 'asset':assetName, 'side':'c',
+	'names' : ['root', 'tip'],
+	'joints' : ['Spine0', 'Spine1', 'Spine2', 'Spine3']}))
+
+	var cleanup = function(){
+		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+		for( var i = 0; i < joints.length; i++){
+			var thisJoint = editor.scene.getObjectByName( namespace+joints[i], true )
+			if( thisJoint !== undefined ){
+				thisJoint.showHierarchy = false
+				thisJoint.showRotationAxis = true
+				thisJoint.radius = 5
+				editor.addGroupContent( u.assetGroup, [thisJoint] )
+			// }else{
+			// 	console.log('Unable to find', namespace+joints[i])
+			}
+		}
+		editor.jointsVisibility()
+		editor.controlsVisibility()		
+	}
+	u.addLast(cleanup)
+	u.build()	
+
+}
+
 MM.splineIk = function( editor ){
 	console.log('Building spline IK')
 
 	var assetName = 'spline'
 	var namespace = 'spline:'
-	var u = new MM.Asset( editor );
+	var u = new MM.AssetBuild( editor );
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
 
@@ -251,7 +286,7 @@ MM.splineIk = function( editor ){
 	}
 
 	u.addLast( cleanup )
-	u.build()		
+	u.build()
 }
 
 MM.splineIkPlus = function( editor ){

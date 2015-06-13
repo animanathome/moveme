@@ -41,6 +41,11 @@ MM.Asset.prototype = {
 		//	associate the passed controls to this asset
 		var i = 0; var j = controls.length;
 		for( i = 0; i < j; i ++){
+			if(controls[i].name === undefined 
+			|| controls[i].name === null){
+				console.warn(controls[i], 'has no name defined.')
+			}
+
 			controls[i].asset = this.name
 		}
 
@@ -76,7 +81,7 @@ MM.Asset.prototype = {
 		return data;
 	},
 	importData: function( data, scene ){
-		// console.log('assetObject: importData', data, scene)
+		console.log('assetObject: importData', data, scene)
 		/*
 		This will take a while to construct a we'll have to 
 		go through the entire scene and collect all of the 

@@ -18,6 +18,7 @@ MM.SplineCluster.prototype.exportData = function(){
     data.name = this.name
     data.uuid = this.uuid
     data.parent = this.parent.name
+    data.custom = this.custom
     data.matrix = this.matrix.toArray();
     data.bindMatrix = this.bindMatrix.toArray();
 
@@ -68,13 +69,16 @@ MM.SplineCluster.prototype.importData = function( data, editor ){
         for( var i = 0; i < existingObject.animCurves.length; i++){
             this.addAnimCurve( existingObject.animCurves[i])
         }
-    }
-
-    //  delete the old object
-    editor.removeObject( existingObject )
+    }    
 
     this.name = data.name
     this.uuid = data.uuid
+    // this.type = existingObject.type
+    this.asset = existingObject.asset
+    this.custom = data.custom
+
+    //  delete the old object
+    editor.removeObject( existingObject )
 
     var thisParent    
     if( data.parent === 'objectScene'){
@@ -362,7 +366,8 @@ MM.SplineSolver.prototype.update = function(){
                                                      nurbsKnots, 
                                                      this.linearCurve.geometry.vertices, 
                                                      thisBlendValue);
-        spinePositions.push(wpos);                        
+        spinePositions.push(wpos);
+        console.log('\t\t', i, 'position', wpos.x, wpos.y, wpos.z)
     }
 
     var startIndex = 0;

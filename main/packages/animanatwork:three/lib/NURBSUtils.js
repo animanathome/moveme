@@ -102,6 +102,8 @@ THREE.NURBSUtils = {
 	returns point for given u
 	*/
 	calcBSplinePoint: function( p, U, P, u ) {
+		// console.log('calcBSplinePoint', p, U, P, u)
+
 		var span = this.findSpan(p, u, U);
 		var N = this.calcBasisFunctions(span, u, p, U);
 		var C = new THREE.Vector4(0, 0, 0, 0);

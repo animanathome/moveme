@@ -46,7 +46,8 @@ MM.SpineComponent.prototype.build = function(){
     // console.log('\tspineJoint', spineJoint)    
 
     //  spine control
-    var spineSetup = new MM.SplineSolver( this.editor )    
+    var spineSetup = new MM.SplineSolver(this.editor)
+    spineSetup.name = this.getName(this.name+'_SS')
     spineSetup.topControlScale.set(1.25 * this.controlSize,0.4 * this.controlSize, 1.25 * this.controlSize)
     spineSetup.bottomControlScale.set(1.25 * this.controlSize,0.4 * this.controlSize,1.25 * this.controlSize)
     spineSetup.followBottomControl = true;

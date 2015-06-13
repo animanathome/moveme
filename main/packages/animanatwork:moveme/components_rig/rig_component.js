@@ -3,6 +3,10 @@ MM.RigComponent = function(){
     // used to be able to associate controls (objects) with a given
     // asset. This allows us to for instance show a different picture
     // within the asset select widget. 
+    
+    //  component name
+    this.name = 'base'
+    
     this.asset  = undefined 
     this.namespace = undefined
     this.assetGroup = undefined
@@ -44,6 +48,8 @@ MM.RigComponent.prototype = {
     constructor: MM.RigComponent,
     
     addControl: function( control, controlKey ){
+        console.log('RigComponent.addControl', control, controlKey)
+
         if( controlKey === undefined ){
             console.error('No key was defined')
             return
@@ -99,6 +105,10 @@ MM.RigComponent.prototype = {
                 // console.log('\tsetting side to', parameters['side'])
                 this.side = parameters['side']
             }
+            if( parameters.hasOwnProperty('name')){
+                console.log('\tsetting component name to ', parameters['name'])
+                this.name = parameters['name']
+            }
             if( parameters.hasOwnProperty('names')){
                 // console.log('\tsetting control names to', parameters['names'])
                 this.controlNames = parameters['names']
@@ -123,6 +133,19 @@ MM.RigComponent.prototype = {
                 console.warn('Unable to find ', thisJointName)
             }
             foundJoints[this.joints[i]] = thisJoint;
+        }
+        return foundJoints;
+    },
+    getJointsAsArray: function(){
+        var foundJoints = [];
+        var thisJoint, thisJointName;
+        for( var i = 0, j = this.joints.length; i < j ; i++){
+            thisJointName = this.namespace+this.side+this.joints[i];
+            thisJoint = this.editor.scene.getObjectByName(thisJointName, true)
+            if( thisJoint === undefined ){
+                console.warn('Unable to find ', thisJointName)
+            }
+            foundJoints.push(thisJoint);
         }
         return foundJoints;
     },
