@@ -12,7 +12,7 @@ MM.Constraint = function(){
     
     this.constraintMode = 0
     this.objectToSolve = undefined 
-    this.offsetMatrix = new THREE.Matrix4();    
+    this.offsetMatrix = new THREE.Matrix4()
 
     this.useOffset = false;
     this.aimOffset = undefined;

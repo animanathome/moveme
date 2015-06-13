@@ -303,24 +303,7 @@ THREE.ObjectExporter.prototype = {
 				// console.log('\t', object.name, 'is joint')
 				// console.log('\t', object)
 				data.type = 'Joint'
-
 				_.extend(data, object.exportData())
-
-				// //	display options
-				// data.radius = object.radius
-				// data.controlSize = object.controlSize
-				// data.showRotationAxis = object.showRotationAxis
-				// data.showHierarchy = object.showHierarchy
-				// data.showControl = object.showControl
-			
-				// //	skinning related variables
-				// // console.log('\tobject:', object.skinMatrix)
-				// // data.skinMatrix = object.skinMatrix.elements
-
-				// data.skinMatrix = object.skinMatrix.toArray();
-
-				// // console.log('\tdata:', data.skinMatrix)
-				// data.preferedAngle = object.preferedAngle
 
 			} else if ( object instanceof MM.FourBoneIkBlendSolver ){				
 				// console.log('\t', object.name, 'is FourBoneIkBlendSolver')
@@ -343,6 +326,10 @@ THREE.ObjectExporter.prototype = {
 			} else if ( object instanceof MM.OneSimpleBoneIkSolver ){
 
 				data = object.exportData();				
+
+			} else if ( object instanceof MM.CurveSolver ){
+				
+				data = object.exportData();
 
 			} else if ( object instanceof MM.SplineCluster ){
 

@@ -91,14 +91,17 @@ MM.RigComponent.prototype = {
         // console.log('RigComponent: setValues')
         if( parameters !== undefined ){
             if( parameters.hasOwnProperty('controlScale')){
+                console.warn('Use controlScales instead')
                 // console.log('\tsetting controlScale to', parameters['controlScale'])
                 this.controlScale = parameters['controlScale']
             }
             if( parameters.hasOwnProperty('controlSize')){
+                console.warn('Use controlSizes instead')
                 // console.log('\tsetting controlSize to', parameters['controlSize'])
                 this.controlSize = parameters['controlSize']
             }
             if(parameters.hasOwnProperty('controlShape')){
+                console.warn('Use controlShapes instead')
                 this.controlShape = parameters['controlShape']
             }
             if( parameters.hasOwnProperty('side')){
@@ -112,6 +115,9 @@ MM.RigComponent.prototype = {
             if( parameters.hasOwnProperty('names')){
                 // console.log('\tsetting control names to', parameters['names'])
                 this.controlNames = parameters['names']
+            }
+            if( parameters.hasOwnProperty('sizes')){
+                this.controlSizes = parameters['sizes']   
             }
             if( parameters.hasOwnProperty('asset')){
                 // console.log('\tsetting asset name to ', parameters['asset'])

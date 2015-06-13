@@ -168,10 +168,16 @@ MM.Menubar.Demos = function( editor ){
 	var sepItem2 = new MMUI.MenuDivider();
 	ikSubMenu.add(sepItem2);
 
-	var demo11Item = new MMUI.MenuItem('New Spline Ik').onClick(function(){
-		MM.newSplineIk(editor);
+	var demo11Item = new MMUI.MenuItem('Tentacle Ik').onClick(function(){
+		MM.tentacleIk(editor);
 	})
 	ikSubMenu.add( demo11Item )
+
+	var demo11Item = new MMUI.MenuItem('Back Ik').onClick(function(){
+		MM.backIk(editor);
+	})
+	ikSubMenu.add( demo11Item )
+
 
 	var demo11Item = new MMUI.MenuItem('Spline Ik').onClick( function(){
 		MM.splineIk( editor );

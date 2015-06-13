@@ -7,11 +7,11 @@ MM.CurveSolver = function(){
 	
 	this.rootCtl = undefined
 	this.rootIndices = [0,1]
-	this.rootBindMatrix = undefined
+	this.rootBindMatrix = new THREE.Matrix4()
 	
 	this.tipCtl = undefined
 	this.tipIndices = [2,3]
-	this.tipBindMatrix = undefined
+	this.tipBindMatrix = new THREE.Matrix4()
 
     this.followBottomControl = false
     this.skipFirstJoint = false
@@ -19,22 +19,129 @@ MM.CurveSolver = function(){
 
 MM.CurveSolver.prototype = Object.create(MM.Control.prototype);
 
+MM.CurveSolver.prototype.importData = function(data){
+    console.log('CurveSolver.importData', data)
+
+    MM.Control.prototype.importData.call(this, data);
+
+    console.log('\tdata rootBindMatrix', data.rootBindMatrix)
+    this.rootBindMatrix.fromArray(data.rootBindMatrix)
+    console.log('\tthis rootBindMatrix', this.rootBindMatrix.elements)
+    this.rootIndices = data.rootIndices
+
+    console.log('\tdata tipBindMatrix', data.tipBindMatrix)    
+    this.tipBindMatrix.fromArray(data.tipBindMatrix)
+    console.log('\tthis tipBindMatrix', this.tipBindMatrix.elements)
+    this.tipIndices = data.tipIndices
+    
+    this.followBottomControl = data.followBottomControl
+    this.skipFirstJoint = data.skipFirstJoint
+
+    console.log('\tfinished importing data', this)
+}
+
+MM.CurveSolver.prototype.exportData = function(){
+    // console.log('CurveSolver.exportData')
+
+    var data = MM.Control.prototype.exportData.call(this)
+    data.type = 'CurveSolver'
+    
+    data.rootBindMatrix = []
+    this.rootBindMatrix.flattenToArray(data.rootBindMatrix)
+    // console.log('\trootBindMatrix', data.rootBindMatrix)    
+    data.rootIndices = this.rootIndices
+    
+    data.tipBindMatrix = []
+    this.tipBindMatrix.flattenToArray(data.tipBindMatrix)
+    // console.log('\ttipBindMatrix', data.tipBindMatrix)
+    data.tipIndices = this.tipIndices
+    
+    data.followBottomControl = this.followBottomControl
+    data.skipFirstJoint = this.skipFirstJoint
+
+    return data
+}
+
+MM.CurveSolver.prototype.exportSetup = function(){
+    // console.log('CurveSolver.exportSetup')
+
+    data = {}
+    data.type = 'CurveSolver'
+
+    data.joints = []
+    for( var i = 0; i < this.joints.length; i++){
+        data.joints.push( this.joints[i].name )
+    }
+
+    data.baseControlPoints = []
+    for( var i = 0; i < this.baseControlPoints.length; i++){
+        data.baseControlPoints.push( this.baseControlPoints[i].x)
+        data.baseControlPoints.push( this.baseControlPoints[i].y)
+        data.baseControlPoints.push( this.baseControlPoints[i].z)
+    }
+
+    data.rootCtl = this.rootCtl.name
+    data.tipCtl = this.tipCtl.name
+
+    return data;
+}
+
+MM.CurveSolver.prototype.importSetup = function(scene, data){
+    // console.log('CurveSolver.importSetup', data)
+    
+    var thisJoint;
+    for( var i = 0; i < data.joints.length; i++){
+        thisJoint = scene.getObjectByName(data.joints[i], true);
+        if( thisJoint === undefined ){
+            console.error('Unable to find', data.joints[i])
+        }
+        this.joints.push(thisJoint)
+    }
+
+    for( var i = 0; i < data.baseControlPoints.length; i++){
+        this.baseControlPoints.push( new THREE.Vector3( 
+            data.baseControlPoints[i],
+            data.baseControlPoints[i+1],
+            data.baseControlPoints[i+2])
+        )
+        i += 2
+
+        this.deformedControlPoints.push(new THREE.Vector4());
+    }
+
+    var rootCtl = scene.getObjectByName(data.rootCtl, true)
+    if( rootCtl !== undefined ){
+        this.rootCtl = rootCtl
+    }else{
+        console.error('Unable to find '+data.rootCtl)
+    }
+
+    var tipCtl = scene.getObjectByName(data.tipCtl, true)
+    if( tipCtl !== undefined ){
+        this.tipCtl = tipCtl
+    }else{
+        console.error('Unable to find '+data.tipCtl)
+    }
+
+    // console.log('\tfinished importSetup', this)
+}
+
 MM.CurveSolver.prototype.setTipControl = function(control){
-	console.log('CurveSolver.setTipControl', control)
+	// console.log('CurveSolver.setTipControl', control)
 
 	this.tipCtl = control
 	this.tipBindMatrix = control.matrixWorld.clone()
 }
 
 MM.CurveSolver.prototype.updateTipControl = function(){
-	console.log('CurveSolver.updateTipControl')
+	// console.log('CurveSolver.updateTipControl')
 
 	var nv = this.tipIndices.length
 	for(var i = 0; i < nv; i++){
 		var thisIndex = this.tipIndices[i]
         var thisVertex = this.baseControlPoints[thisIndex].clone();
         
-		console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+		// console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 
         var inverseMatrix = new THREE.Matrix4();
         inverseMatrix.getInverse(this.tipBindMatrix)
@@ -45,25 +152,25 @@ MM.CurveSolver.prototype.updateTipControl = function(){
         thisVertex.applyMatrix4(localMatrix);
         this.deformedControlPoints[thisIndex].set(thisVertex.x, thisVertex.y, thisVertex.z, 1.0)
 
-        console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+        // console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 	}
 }
 
 MM.CurveSolver.prototype.setRootControl = function(control){
-	console.log('CurveSolver.setRootControl', control)
+	// console.log('CurveSolver.setRootControl', control)
 	this.rootCtl = control
 	this.rootBindMatrix = control.matrixWorld.clone()
 }
 
 MM.CurveSolver.prototype.updateRootControl = function(){
-	console.log('CurveSolver.updateRootControl')
+	// console.log('CurveSolver.updateRootControl')
 
 	var nv = this.rootIndices.length
 	for(var i = 0; i < nv; i++){
 		var thisIndex = this.rootIndices[i]
         var thisVertex = this.baseControlPoints[thisIndex].clone();
 
-        console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+        // console.log('\tb', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
         
         var inverseMatrix = new THREE.Matrix4();
         inverseMatrix.getInverse(this.rootBindMatrix)
@@ -74,12 +181,12 @@ MM.CurveSolver.prototype.updateRootControl = function(){
         thisVertex.applyMatrix4(localMatrix);
         this.deformedControlPoints[thisIndex].set(thisVertex.x, thisVertex.y, thisVertex.z, 1.0)
 
-        console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
+        // console.log('\td', thisIndex, thisVertex.x, thisVertex.y, thisVertex.z)
 	}
 }
 
 MM.CurveSolver.prototype.setJoints = function(joints){
-	console.log('CurveSolver.setJoints', joints)
+	// console.log('CurveSolver.setJoints', joints)
 
 	this.joints = joints
 	var nJoints = this.joints.length
@@ -121,7 +228,7 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
     for(i = 0; i < nJoints; i++){
         var wpos = THREE.NURBSUtils.calcBSplinePoint(nurbsDegree, nurbsKnots, this.deformedControlPoints, blendValues[i]);
 
-        console.log('\t\t', i, 'position', wpos.x, wpos.y, wpos.z)
+        // console.log('\t\t', i, 'position', wpos.x, wpos.y, wpos.z)
         spinePositions.push(wpos);
     }
 
@@ -148,13 +255,13 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
         this.joints[0].updateMatrixWorld(true)   
 
         startIndex = 1
-    }else{
-        console.log('\tfollowing curve')
+    // }else{
+    //     console.log('\tfollowing curve')
     }
 
 	var m1 = new THREE.Matrix4();
     for(i = startIndex; i < (nJoints-1); i++){
-        console.log('\tupdating joint position ', i)
+        // console.log('\tupdating joint position ', i)
 
         var botQuat = new THREE.Quaternion();
         botQuat.setFromRotationMatrix(this.rootCtl.matrixWorld);
@@ -220,7 +327,7 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
 
     //  local matrix
     var thisIndex = (nJoints-1)
-    console.log('\tlast joint', thisIndex, this.joints[thisIndex])
+    // console.log('\tlast joint', thisIndex, this.joints[thisIndex])
     if( this.joints[thisIndex].parent === undefined ){
         return
     }

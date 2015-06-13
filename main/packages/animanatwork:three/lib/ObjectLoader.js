@@ -300,6 +300,13 @@ THREE.ObjectLoader.prototype = {
 
 					break;
 
+				case 'CurveSolver':
+					//	here we need to make a temp object so we can create
+					//	any objects that might be parented under the object
+					object = new MM.CurveSolver();
+					object.importData(data)
+				break;
+
 				case 'SplineCluster':
 					//	here we need to make a temp object so we can create
 					//	any objects that might be parented under the object

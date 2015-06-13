@@ -217,8 +217,8 @@ MM.legIkPlus = function( editor ){
 	u.build()		
 }
 
-MM.newSplineIk = function(editor){
-	console.log('newSplineIk')
+MM.tentacleIk = function(editor){
+	console.log('tentacleIk')
 
 	var assetName = 'spline'
 	var namespace = 'spline:'
@@ -248,23 +248,23 @@ MM.newSplineIk = function(editor){
 		editor.controlsVisibility()		
 	}
 	u.addLast(cleanup)
-	u.build()	
-
+	u.build()
 }
 
-MM.splineIk = function( editor ){
-	console.log('Building spline IK')
+MM.backIk = function(editor){
+	console.log('backIk')
 
-	var assetName = 'spline'
-	var namespace = 'spline:'
+	var assetName = 'back'
+	var namespace = 'back:'
 	var u = new MM.AssetBuild( editor );
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
 
-	u.addRigComponent( new MM.SpineComponent( 
-	{'controlSize' : 0.5, 'asset' : assetName, 
-	'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
-	'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
+	u.addRigComponent( new MM.BackComponent( 
+	{'controlSize':0.5, 'asset':assetName, 'side':'c',
+	'names' : ['global', 'globalSub', 'root', 'tip'],
+	'sizes': [5.0, 4.0, 3.0, 3.0],
+	'joints' : ['Spine0', 'Spine1', 'Spine2', 'Spine3']}))
 
 	var cleanup = function(){
 		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
@@ -279,12 +279,42 @@ MM.splineIk = function( editor ){
 			// 	console.log('Unable to find', namespace+joints[i])
 			}
 		}
-
-
 		editor.jointsVisibility()
 		editor.controlsVisibility()		
 	}
+	u.addLast(cleanup)
+	u.build()
+}
 
+MM.splineIk = function( editor ){
+	console.log('Building spline IK')
+
+	var assetName = 'spline'
+	var namespace = 'spline:'
+	var u = new MM.AssetBuild( editor );
+	u.setNamespace( namespace )
+	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
+
+	u.addRigComponent( new MM.SpineComponent({
+		'controlSize' : 0.5, 'asset' : assetName, 
+		'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
+		'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+	}))
+
+	var cleanup = function(){
+		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+		for( var i = 0; i < joints.length; i++){
+			var thisJoint = editor.scene.getObjectByName( namespace+joints[i], true )
+			if( thisJoint !== undefined ){
+				thisJoint.showHierarchy = false
+				thisJoint.showRotationAxis = true
+				thisJoint.radius = 5
+				editor.addGroupContent( u.assetGroup, [thisJoint] )
+			}
+		}
+		editor.jointsVisibility()
+		editor.controlsVisibility()		
+	}
 	u.addLast( cleanup )
 	u.build()
 }

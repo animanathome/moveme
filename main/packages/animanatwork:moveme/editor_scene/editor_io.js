@@ -498,6 +498,17 @@ MM.Editor.prototype.importSetups = function( data ){
                 // console.log('\tSolver', solver)
             break;
 
+            case "CurveSolver":
+                console.log('\tSetting up', thisData.name)
+
+                var solver = this.scene.getObjectByUuid( uuid , true)
+                if( solver === undefined ){
+                    console.error('Unable to find solver with uuid', uuid)
+                    break;
+                }
+                solver.importSetup(this.scene, thisData)
+            break;
+
             case "SplineSolver":
                 // console.log('\tSetting up SplineSolver')
                 // console.log('\tData:', thisData)
@@ -643,6 +654,12 @@ MM.Editor.prototype.exportSetups = function( ){
         thisData.startPreferedAngle = oneSimpleBoneIkSolver[i].startPreferedAngle.toArray()
 
         data[ oneSimpleBoneIkSolver[i].uuid ] = thisData;
+    }
+
+    //  CurveSolver
+    var curveSolver = this.scene.getObjectOfInstance(MM.CurveSolver)
+    for( var i = 0, j = curveSolver.length; i < j; i++){
+        data[curveSolver[i].uuid]=curveSolver[i].exportSetup();
     }
 
     //  solver does not get evaluated by itself but through its child 
