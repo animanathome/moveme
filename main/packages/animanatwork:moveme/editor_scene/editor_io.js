@@ -509,15 +509,6 @@ MM.Editor.prototype.importSetups = function( data ){
                 solver.importSetup(this.scene, thisData)
             break;
 
-            case "SplineSolver":
-                // console.log('\tSetting up SplineSolver')
-                // console.log('\tData:', thisData)
-
-                var solver = new MM.SplineSolver( this )
-                solver.importData( thisData )
-
-            break;
-
             case "MultiChannel":
                 var multi = new MM.MultiChannel();
                 multi.importData( thisData , this.scene)
@@ -660,24 +651,6 @@ MM.Editor.prototype.exportSetups = function( ){
     var curveSolver = this.scene.getObjectOfInstance(MM.CurveSolver)
     for( var i = 0, j = curveSolver.length; i < j; i++){
         data[curveSolver[i].uuid]=curveSolver[i].exportSetup();
-    }
-
-    //  solver does not get evaluated by itself but through its child 
-    //  SplineClusters
-    var splineIkSolver = this.scene.getObjectOfInstance(MM.SplineCluster, 'as SplineCluster')        
-    for( var i = 0, j = splineIkSolver.length; i < j; i++){
-        //  Since we have 2 controls per spline solver we need to make sure 
-        //  we only export it once. That's why we only continue exporting 
-        //  when we're dealing with the top control
-        var thisSolver;
-        if( splineIkSolver[i].mode === 'T'){
-            thisData = {}
-            thisSolver = splineIkSolver[i].splineSolver
-
-            // console.log('\texporting', thisSolver)
-            data[ thisSolver.uuid ] = thisSolver.exportData()
-            console.log( data[ thisSolver.uuid ] )
-        }
     }
 
 //  STEP NODES

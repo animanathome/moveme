@@ -178,26 +178,16 @@ MM.Menubar.Demos = function( editor ){
 	})
 	ikSubMenu.add( demo11Item )
 
-
-	var demo11Item = new MMUI.MenuItem('Spline Ik').onClick( function(){
-		MM.splineIk( editor );
+	var demo11Item = new MMUI.MenuItem('Spine Ik').onClick(function(){
+		MM.spineIk(editor);
 	})
 	ikSubMenu.add( demo11Item )
 
-	var demo12Item = new MMUI.MenuItem('Spline Ik plus').onClick( function(){
-		MM.splineIkPlus( editor );
-	})
-	ikSubMenu.add( demo12Item )
 
 	var demo13Item = new MMUI.MenuItem('Arm Ik').onClick( function(){
 		MM.armIk( editor );
 	})
 	ikSubMenu.add( demo13Item )	
-
-	var demo14Item = new MMUI.MenuItem('Stacked IK Splines').onClick( function(){
-		MM.stackedSplines( editor );
-	})
-	ikSubMenu.add( demo14Item )		
 
 	return menuGrp;
 }

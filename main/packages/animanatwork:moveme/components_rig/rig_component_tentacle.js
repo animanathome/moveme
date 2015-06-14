@@ -123,7 +123,7 @@ MM.BackComponent.prototype.build = function(){
 	console.log('\ttip position', tipPos)
 
 	var tip = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[1])	
+		+this.controlNames[3])
 	tip.zero.position.set(tipPos.x, tipPos.y, tipPos.z)
 	tip.control.setChannelsTranslateAndRotate()
 	tip.control.controlSize = this.controlSizes[3]
@@ -136,7 +136,7 @@ MM.BackComponent.prototype.build = function(){
 	this.editor.addGroupContent(this.assetGroup, [global.control, globalSub.control, tip.control, root.control])
 
 //	curve solver
-	var solver = new MM.CurveSolver()
+	var solver = new MM.CurveSolver();
 	solver.name=this.getName('solver')
 	console.log('\tsolver name', solver.name)
 	solver.setJoints(this.getJointsAsArray())

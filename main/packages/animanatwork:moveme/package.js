@@ -79,7 +79,7 @@ Package.onUse(function(api) {
           ,"objects_rig/lip_zip.js"
           ,"objects_rig/deform.js"
 
-          ,"objects_ik/spline_solver.js"
+          // ,"objects_ik/spline_solver.js"
           ,"objects_ik/curve_solver.js"
           ,"objects_ik/one_simple_bone_ik_solver.js"
           ,"objects_ik/two_bone_ik_solver.js"
@@ -108,7 +108,7 @@ Package.onUse(function(api) {
           ,"components_rig/rig_component_fk_chain.js"
           ,"components_rig/rig_component_shoulder.js"
           ,"components_rig/rig_component_tentacle.js"
-          ,"components_rig/rig_component_spine_chain.js"
+          ,"components_rig/rig_component_spine.js"
           ,"components_rig/rig_component_limb.js"
           ,"components_rig/rig_component_arm.js"
           ,"components_rig/rig_component_leg.js"

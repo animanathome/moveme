@@ -119,6 +119,9 @@ MM.RigComponent.prototype = {
             if( parameters.hasOwnProperty('sizes')){
                 this.controlSizes = parameters['sizes']   
             }
+            if( parameters.hasOwnProperty('shapes')){
+                this.controlShapes = parameters['shapes']   
+            }
             if( parameters.hasOwnProperty('asset')){
                 // console.log('\tsetting asset name to ', parameters['asset'])
                 this.asset = parameters['asset']

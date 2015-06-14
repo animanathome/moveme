@@ -328,12 +328,8 @@ THREE.ObjectExporter.prototype = {
 				data = object.exportData();				
 
 			} else if ( object instanceof MM.CurveSolver ){
-				
+
 				data = object.exportData();
-
-			} else if ( object instanceof MM.SplineCluster ){
-
-				data.type = 'SplineCluster'
 
 			} else if ( object instanceof MM.ParentMaster ){
 

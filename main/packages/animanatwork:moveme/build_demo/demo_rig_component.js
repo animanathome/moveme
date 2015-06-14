@@ -260,11 +260,9 @@ MM.backIk = function(editor){
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
 
-	u.addRigComponent( new MM.BackComponent( 
-	{'controlSize':0.5, 'asset':assetName, 'side':'c',
-	'names' : ['global', 'globalSub', 'root', 'tip'],
-	'sizes': [5.0, 4.0, 3.0, 3.0],
-	'joints' : ['Spine0', 'Spine1', 'Spine2', 'Spine3']}))
+	u.addRigComponent( new MM.BackComponent({
+		'controlSize':0.5, 'asset':assetName, 'side':'c', 'names' : ['global', 'globalSub', 'root', 'tip'], 'sizes': [5.0, 4.0, 3.0, 3.0], 'joints' : ['Spine0', 'Spine1', 'Spine2', 'Spine3']
+	}))
 
 	var cleanup = function(){
 		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
@@ -286,23 +284,21 @@ MM.backIk = function(editor){
 	u.build()
 }
 
-MM.splineIk = function( editor ){
-	console.log('Building spline IK')
+MM.spineIk = function(editor){
+	console.log('spineIk')
 
-	var assetName = 'spline'
-	var namespace = 'spline:'
+	var assetName = 'spine'
+	var namespace = 'spine:'
 	var u = new MM.AssetBuild( editor );
 	u.setNamespace( namespace )
 	u.addSkeleton('/data/manWithFace/skeleton/cRoot_skeleton.json')
 
 	u.addRigComponent( new MM.SpineComponent({
-		'controlSize' : 0.5, 'asset' : assetName, 
-		'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
-		'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+		'asset':assetName, 'side':'c', 'names':['body', 'bodySub', 'hip', 'chest', 'chestSub', 'head'], 'sizes':[5.0, 4.0, 3.0, 3.0, 3.0, 3.0, 5.0], 'joints' : ['Spine0', 'Spine1', 'Spine2', 'Spine3', 'Spine4', 'Neck0', 'Neck1', 'Neck2'], 'shapes':['plane', 'plane', 'cube', 'cube', 'cube', 'cube']
 	}))
 
 	var cleanup = function(){
-		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
+		var joints = ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3', 'cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
 		for( var i = 0; i < joints.length; i++){
 			var thisJoint = editor.scene.getObjectByName( namespace+joints[i], true )
 			if( thisJoint !== undefined ){
@@ -310,67 +306,14 @@ MM.splineIk = function( editor ){
 				thisJoint.showRotationAxis = true
 				thisJoint.radius = 5
 				editor.addGroupContent( u.assetGroup, [thisJoint] )
+			}else{
+				console.log('Unable to find', namespace+joints[i])
 			}
 		}
 		editor.jointsVisibility()
 		editor.controlsVisibility()		
 	}
-	u.addLast( cleanup )
-	u.build()
-}
-
-MM.splineIkPlus = function( editor ){
-	// console.log('Building spline IK plus')
-	var assetName = 'spline'
-	var namespace = 'spline:'
-	var u = new MM.Asset( editor );
-	u.setNamespace( namespace )
-	u.addSkeleton('/data/tiny/skeleton/cRoot_skeleton.json')
-
-	u.addRigComponent( new MM.SpineComponent( 
-	{'controlSize' : 0.5, 'asset' : assetName, 
-	'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
-	'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
-
-	var sides = ['l']//, 'r']
-	var shoulderJoints = ['Collar', 'Shoulder']
-	var armNames = ['ElbowCtl', 'HandCtl']
-	var armJoints = ['Shoulder', 'Elbow', 'Wrist']		
-	for( var i = 0; i < sides.length; i++){
-	//	Shoulder
-		u.addRigComponent( new MM.ShoulderComponent( 
-			{'controlSize' : 0.5, 'side' : sides[i], 'parentJoint' : 'cSpine4', 
-			'asset' : assetName, 'names' : ['ShoulderCtl'], 
-			'joints' : shoulderJoints}))
-	//	Arm
-		u.addRigComponent( new MM.ArmComponent( {'controlSize' : 0.5, 
-			'asset' : assetName, 'side' : sides[i],
-			'names' : armNames, 'joints' : armJoints }))			
-	}				
-
-	var cleanup = function(){
-		var addedGroup = editor.addGroup( 'spline' , 'asset')
-		var objectsToSelect=['cBodyCtl', 'cHipCtl', 'cBChestCtl', 'lShoulderCtl',
-		'rShoulderCtl', 'lElbowCtl', 'lHandCtl', 'rElbowCtl', 'rHandCtl']
-		var thisJoint;
-		for( var i = 0, l = objectsToSelect.length; i < l; i++){
-			thisJoint = editor.scene.getObjectByName( u.namespace+objectsToSelect[i], true )
-			if(thisJoint !== undefined ){
-				editor.addGroupContent( addedGroup, [thisJoint] )
-			// }else{
-			// 	console.log('Unable to find', objectsToSelect[i])
-			}
-		}			
-
-		var lShoulder = editor.scene.getObjectByName(u.namespace+'lShoulderCtl', true);			
-		var cBotChest = editor.scene.getObjectByName(u.namespace+'cBChestCtl', true);
-		cBotChest.setParent( lShoulder )
-
-		editor.jointsVisibility()
-		editor.controlsVisibility()
-	}
-
-	u.addLast( cleanup )
+	u.addLast(cleanup)
 	u.build()
 }
 
@@ -418,62 +361,4 @@ MM.armIk = function( editor ){
 
 	u.addLast( cleanup )
 	u.build()		
-}
-
-MM.stackedSplines = function( editor ){
-	// console.log('Building stacked splines')
-	var assetName = 'sSpline'
-	var namespace = 'sSpline'
-
-	var u = new MM.Asset( editor );
-	u.setNamespace( namespace );		
-	u.addSkeleton('/data/tiny/skeleton/cRoot_skeleton.json')
-
-	//	Back
-	u.addRigComponent( new MM.SpineComponent( 
-		{'controlSize' : 0.5, 'asset' : assetName, 
-		'names' : ['cBodyCtl', 'cHipCtl', 'cBChestCtl'],
-		'joints' : ['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']} ) )
-	
-	//	Neck
-	u.addRigComponent( new MM.SpineComponent( 
-		{'controlSize' : 0.5, 'globalControl' : false, 'asset' : assetName,
-		'names' : ['', 'cTChestCtl', 'cHeadCtl'],
-		'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']} ) )
-
-	var lastFunction = function(){	
-		var controlsToLookFor = [ 'cTChestCtl', 'cBChestCtl', 'cHeadCtl']
-		var controls = {}
-		//	create asset group
-		var assetGroup = editor.addGroup( u.namespace , 'asset')
-		for( var i = 0; i < controlsToLookFor.length; i++){
-			var foundControl = editor.scene.getObjectByName(u.namespace+
-				controlsToLookFor[i], true);		
-			if( foundControl === undefined ){
-				console.error('Unable to find', u.namespace+controlsToLookFor[i])
-			}
-			controls[controlsToLookFor[i]] = foundControl
-
-		//	add control to selection group			
-			editor.addGroupContent( assetGroup, [foundControl])
-		}
-		// console.log('result', controls)
-
-	//	inter component connections
-		controls['cBChestCtl'].setParent( controls['cTChestCtl'] )
-		controls['cTChestCtl'].setParent( controls['cHeadCtl'] )
-
-		var test = new THREE.Object3D()
-		test.name = 'test'
-		test.tag = 'control'
-		editor.addObject( test )
-		editor.addGroupContent( assetGroup, [test])
-		controls['cBChestCtl'].setParent( test )
-
-		editor.jointsVisibility()
-		editor.controlsVisibility()
-	}
-
-	u.addLast(lastFunction)
-	u.build();
 }
