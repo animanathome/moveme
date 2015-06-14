@@ -33,6 +33,12 @@ Template.prodShotVersionItem.events({
         , shotId:this.shotId
         , _id:this._id})
   },
+  'click .movie' : function(e){
+    console.log('View movie', this.youTubeVideoId)
+
+    event.preventDefault();
+    window.open("https://www.youtube.com/v/"+this.youTubeVideoId, '_blank');
+  },
   'click .delete': function(e) {
     e.preventDefault();
 

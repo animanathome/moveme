@@ -32,7 +32,7 @@ casper.then(function() {
     //  wait for the page to load
     this.wait(1000);
     for(var i = sargs['startFrame']; i < sargs['endFrame']; i++){
-        var tFrame = 'rendering frame '+i
+        var tFrame = '\trendering frame '+i
         utils.dump(tFrame);
         
         // this.wait(500);
@@ -40,10 +40,10 @@ casper.then(function() {
             moveme.editor.setTime(value);
             return moveme.editor.time
         }, i)
-        utils.dump(value);
+        // utils.dump(value);
 
-        this.capture('/Users/manu/Dropbox/MoveMeRender/frames/'+sargs['versionId']+i+'.png'
-            , { 
+        this.capture(sargs['framesPath']+'/'+sargs['versionId']+i+'.png', 
+            { 
                   top:0, left:0
                 , width:sargs['screenResolutionX']
                 , height:sargs['screenResolutionY']

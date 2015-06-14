@@ -1,7 +1,8 @@
 Meteor.methods({
 	hardwareRenderScene: function( versionAttributes ){
 		console.log('hardwareRenderScene')
-		console.log('\tmodule', MMHWR)			
+		console.log('\t!-> module', MMHWR)
+		console.log('\t!-> version', versionAttributes)
 
 		var user = Meteor.user();
 		var googleErrorMessage = "Only google accounts can publish on youtube. Please login using your google account."
@@ -12,6 +13,7 @@ Meteor.methods({
 		if(! user.services.hasOwnProperty('google')){
 			throw new Meteor.Error('Wrong account', googleErrorMessage)	
 		}
+		console.log('\t!-> received google account')
 		
 		var version = VersionList.findOne(versionAttributes.versionId)
 		var renderJob = _.extend(versionAttributes, {
@@ -23,11 +25,14 @@ Meteor.methods({
 			, screenResolutionY: 900
 		});
 
+		console.log('\t!-> render job:', renderJob)
+
 		if(!BatchServer){
 			throw new Meteor.Error('Empty', "No renderfarm has been defined.");
 		}
 
 		var status = BatchServer.status();
+		console.log('\t!-> batch server status:', status)
 		if( status.connected === true){
 			BatchServer.call('hardwareRenderScene', renderJob, function(error, data){
 				console.log('result', error, data)

@@ -35,8 +35,7 @@ MMHWR.renderScene = function(options){
 	*/
 
 	//	depending on the environment this will change
-	var posPath = [	'/Users/manu/Dropbox/MoveMeRender'
-				  , '/Users/animanatwork/Dropbox/MoveMeRender']
+	var posPath = ['/Users/manu/GitHub/moveme/render']
 	var rootPath;
 	for( var i = 0; i < posPath.length; i++){
 		if(fs.existsSync(posPath[i])){
@@ -45,8 +44,7 @@ MMHWR.renderScene = function(options){
 	}
 	// console.log('\trootPath:', rootPath)
 	options['rootPath']=rootPath;
-
-	console.log('\toptions', options)
+	console.log('\t!->options', options)
 	
 	MMHWR.renderSequence( options, Meteor.bindEnvironment(function(){		
 		MMHWR.createMovie( options, Meteor.bindEnvironment(function(data){			
@@ -68,15 +66,26 @@ MMHWR.renderSequence = function( options, callback ){
 
 	//	https://gist.github.com/rdpanek/867fc40e68c3160739e1
 	//	sudo npm install -g slimerjs
-
 	var rootPath = options['rootPath']
 	var binPath = 'casperjs'//'/usr/local/lib/node_modules/casperjs'
     var scriptPath = path.join(rootPath, 'createMovie.js');
-    var command = binPath;
 
+//	create frames directory
+    var framePath = path.join(rootPath, 'frames');
+    if(fs.existsSync(framePath)){
+    	console.log('\t', framePath, 'already exists')
+    }else{
+    	console.log('\tcreating folder', framePath)
+    	fs.mkdirSync(framePath)
+    }
+
+//	create render command
+    var command = binPath;
     command += ' --engine=slimerjs';
     command += ' --startFrame='+options.startFrame;
     command += ' --endFrame='+options.endFrame;
+
+    command += ' --framesPath='+framePath
 
     command += ' --projectId='+options.projectId;
     command += ' --shotId='+options.shotId;
@@ -87,15 +96,6 @@ MMHWR.renderSequence = function( options, callback ){
     command += ' '+scriptPath
 
     console.log('\trender command', command)
-
-//	create frames directory
-    var framePath = path.join(rootPath, 'frames');
-    if(fs.existsSync(framePath)){
-    	console.log('\t', framePath, 'already exists')
-    }else{
-    	console.log('\tcreating folder', framePath)
-    	fs.mkdirSync(framePath)
-    }
 
     childProcess.exec(command, function (error, stdout, stderr) {
 		console.log('stdout: ' + stdout);
