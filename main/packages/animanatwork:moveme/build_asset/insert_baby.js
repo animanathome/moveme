@@ -40,34 +40,14 @@ MM.insertMini = function( editor ){
 		jaw_ctl.controlScale.y = 0.15
 		jaw_ctl.controlScale.x = 0.75
 		jaw_ctl.controlScale.z = 0.75
-
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.x = 0.5
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.y = 0.5	
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.z = 0.6	
-		u.getRigComponent('head').controls['cHeadCtl'].controlOffset.y = 5.0
-
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.2
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.075
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 0.25
-		// u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 1.5
-
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.x = 0.25
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.075
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.z = 0.25
-
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.25
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.125
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.25
-
-		// u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.x = 0.65
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.y = 0.65
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.z = 0.65
-
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.x = 0.45
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.y = 0.45
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.z = 0.45
-
+		
+		u.getRigComponent('spine').controls['HeadCtl'].controlScale.set( 1.5, 1.5, 1.8)
+		u.getRigComponent('spine').controls['HeadCtl'].controlOffset.y = 5.0
+		u.getRigComponent('spine').controls['TChestCtl'].controlScale.set(0.6, 0.225, 0.75)
+		u.getRigComponent('spine').controls['BChestCtl'].controlScale.set(0.75,0.225,0.75)
+		u.getRigComponent('spine').controls['HipCtl'].controlScale.set(0.75, 0.375, 0.75)
+		u.getRigComponent('spine').controls['BodyCtl'].controlScale.set(1.5, 1.5, 1.5)
+		u.getRigComponent('spine').controls['BodySubCtl'].controlScale.set( 1.25, 1.25, 1.25)		
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.x = 1.5
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.5
 		u.getRigComponent('global').controls['GlobalCtl'].controlOffset.z = 0.75

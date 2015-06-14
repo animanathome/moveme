@@ -5,6 +5,7 @@ MM.SpineComponent = function(parameters){
     this.controlNames = ['body', 'bodySub', 'hip', 'chest', 'chestSub', 'head']
     this.controlSizes = [5.0, 4.0, 3.0, 3.0, 3.0, 3.0, 5.0]
     this.controlShapes = ['plane', 'plane', 'cube', 'cube', 'cube', 'cube']
+    this.inbetweenTypes = ['Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'SpaceswitchSplit']
     this.setValues(parameters)
     return this;
 }
@@ -12,7 +13,7 @@ MM.SpineComponent = function(parameters){
 MM.SpineComponent.prototype = Object.create(MM.RigComponent.prototype)
 
 MM.SpineComponent.prototype.build = function(){
-	console.log('SpineComponent', this)
+	// console.log('SpineComponent', this)
 
 	var nJ = this.joints.length 
 	var joints = this.getJoints()
@@ -20,24 +21,20 @@ MM.SpineComponent.prototype.build = function(){
 
 	//	global control
 	var globalPos = jointPositions[this.joints[0]]
-	console.log('\tglobal position', globalPos)
+	// console.log('\tglobal position', globalPos)
 
-	var global = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[0], this.controlShapes[0])	
+	var global = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[0], this.controlShapes[0], this.controlSizes[0], this.inbetweenTypes[0])
 	global.zero.position.set(globalPos.x, globalPos.y, globalPos.z)
 	global.control.setChannelsTranslateAndRotate()
-	global.control.controlSize = this.controlSizes[0]
 	
 	this.editor.addObject(global.zero)
 	this.editor.addSelectables([global.control])
 	this.addControl( global.control, this.controlNames[0])
 
 	//	global sub control
-	var globalSub = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[1], this.controlShapes[1])	
+	var globalSub = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[1], this.controlShapes[1], this.controlSizes[1], this.inbetweenTypes[1])
 	globalSub.zero.position.set(globalPos.x, globalPos.y, globalPos.z)
 	globalSub.control.setChannelsTranslateAndRotate()
-	globalSub.control.controlSize = this.controlSizes[1]
 	
 	this.editor.addObject(globalSub.zero)
 	global.control.setChild( globalSub.zero)
@@ -46,13 +43,11 @@ MM.SpineComponent.prototype.build = function(){
 
 	//	hip control
 	var hipPos = jointPositions[this.joints[0]]
-	console.log('\thip position', hipPos)
+	// console.log('\thip position', hipPos)
 
-	var hip = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[2], this.controlShapes[2])
+	var hip = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[2], this.controlShapes[2], this.controlSizes[2], this.inbetweenTypes[2])
 	hip.zero.position.set(hipPos.x, hipPos.y, hipPos.z)
 	hip.control.setChannelsTranslateAndRotate()
-	hip.control.controlSize = this.controlSizes[2]
 	
 	this.editor.addObject(hip.zero)
 	globalSub.control.setChild(hip.zero)
@@ -61,13 +56,11 @@ MM.SpineComponent.prototype.build = function(){
 
 	//	chest control
 	var chestPos = jointPositions[this.joints[3]]
-	console.log('\tchest position', chestPos)
+	// console.log('\tchest position', chestPos)
 
-	var chest = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[3], this.controlShapes[3])	
+	var chest = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[3], this.controlShapes[3], this.controlSizes[3], this.inbetweenTypes[3])
 	chest.zero.position.set(chestPos.x, chestPos.y, chestPos.z)
 	chest.control.setChannelsTranslateAndRotate()
-	chest.control.controlSize = this.controlSizes[3]
 	
 	this.editor.addObject(chest.zero)
 	globalSub.control.setChild(chest.zero)
@@ -76,13 +69,11 @@ MM.SpineComponent.prototype.build = function(){
 
 	//	chest sub control
 	var chestSubPos = jointPositions[this.joints[4]]
-	console.log('\tchest sub position', chestSubPos)
+	// console.log('\tchest sub position', chestSubPos)
 
-	var chestSub = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[4], this.controlShapes[4])
+	var chestSub = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[4], this.controlShapes[4], this.controlSizes[4], this.inbetweenTypes[4])
 	chestSub.zero.position.set(chestSubPos.x, chestSubPos.y, chestSubPos.z)
-	chestSub.control.setChannelsTranslateAndRotate()
-	chestSub.control.controlSize = this.controlSizes[4]
+	chestSub.control.setChannelsTranslateAndRotate()	
 	
 	this.editor.addObject(chestSub.zero)
 	chest.control.setChild(chestSub.zero)
@@ -91,19 +82,15 @@ MM.SpineComponent.prototype.build = function(){
 
 	//	head control
 	var headPos = jointPositions[this.joints[7]]
-	console.log('\thead sub position', headPos)
+	// console.log('\thead sub position', headPos)
 
-	var head = MM.createControlGroup(this.side, this.namespace
-		+this.controlNames[5], this.controlShapes[5])
+	var head = MM.createControlGroup(this.side, this.namespace+this.side+this.controlNames[5], this.controlShapes[5], this.controlSizes[5], this.inbetweenTypes[5])
 	head.zero.position.set(headPos.x, headPos.y, headPos.z)
 	head.control.setChannelsTranslateAndRotate()
-	head.control.controlSize = this.controlSizes[5]
 	
 	this.editor.addObject(head.zero)
-	// globalSub.control.setChild(head.zero)
 	this.editor.addSelectables([head.control])
 	this.addControl(head.control, this.controlNames[5])
-
 
 //	back solver
 	allJoints = this.getJointsAsArray()
@@ -112,8 +99,8 @@ MM.SpineComponent.prototype.build = function(){
 
 	var backSolver = new MM.CurveSolver();
 	backSolver.name=this.getName('backSolver')
-	console.log('\tback solver name', backSolver.name)
-	console.log('\tback joints', backJoints)
+	// console.log('\tback solver name', backSolver.name)
+	// console.log('\tback joints', backJoints)
 	backSolver.setJoints(backJoints)
 	backSolver.setRootControl(hip.control)
 	backSolver.setTipControl(chest.control)	
@@ -122,8 +109,8 @@ MM.SpineComponent.prototype.build = function(){
 
 	var neckSolver = new MM.CurveSolver();
 	neckSolver.name=this.getName('neckSolver')
-	console.log('\tneck solver name', neckSolver.name)
-	console.log('\tneck joints', neckJoints)
+	// console.log('\tneck solver name', neckSolver.name)
+	// console.log('\tneck joints', neckJoints)
 	neckSolver.setJoints(neckJoints)
 	neckSolver.setRootControl(chestSub.control)
 	neckSolver.setTipControl(head.control)	

@@ -41,27 +41,26 @@ MM.insertMidi = function( editor ){
 		jaw_ctl.controlOffset.z = 1.5
 		jaw_ctl.controlScale.y = 0.2
 
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.y = 0.5
-        u.getRigComponent('head').controls['cHeadCtl'].controlScale.x = 0.6
-        u.getRigComponent('head').controls['cHeadCtl'].controlScale.z = 0.6	
-		u.getRigComponent('head').controls['cHeadCtl'].controlOffset.y = 4.0
+		u.getRigComponent('spine').controls['HeadCtl'].controlScale.y = 1.5
+        u.getRigComponent('spine').controls['HeadCtl'].controlScale.x = 1.8
+        u.getRigComponent('spine').controls['HeadCtl'].controlScale.z = 1.8	
+		u.getRigComponent('spine').controls['HeadCtl'].controlOffset.y = 4.0
 
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.35
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.1
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 0.4
-		// u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 2.5
+		u.getRigComponent('spine').controls['TChestCtl'].controlScale.x = 1.15
+		u.getRigComponent('spine').controls['TChestCtl'].controlScale.y = 0.3
+		u.getRigComponent('spine').controls['TChestCtl'].controlScale.z = 1.2
 
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.x = 0.4
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.125
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.z = 0.4
+		u.getRigComponent('spine').controls['BChestCtl'].controlScale.x = 1.25
+		u.getRigComponent('spine').controls['BChestCtl'].controlScale.y = 0.375
+		u.getRigComponent('spine').controls['BChestCtl'].controlScale.z = 1.2
 
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.4
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.125
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.4
+		u.getRigComponent('spine').controls['HipCtl'].controlScale.x = 1.2
+		u.getRigComponent('spine').controls['HipCtl'].controlScale.y = 0.375
+		u.getRigComponent('spine').controls['HipCtl'].controlScale.z = 1.2
 
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.x = 0.7
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.y = 0.7
-		u.getRigComponent('back').controls['cBodySubCtl'].controlScale.z = 0.7
+		u.getRigComponent('spine').controls['BodySubCtl'].controlScale.x = 2.1
+		u.getRigComponent('spine').controls['BodySubCtl'].controlScale.y = 2.1
+		u.getRigComponent('spine').controls['BodySubCtl'].controlScale.z = 2.1
 
 		var sides = ['l', 'r']
 		var i;

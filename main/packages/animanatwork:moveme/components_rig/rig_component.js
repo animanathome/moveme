@@ -113,7 +113,6 @@ MM.RigComponent.prototype = {
                 this.name = parameters['name']
             }
             if( parameters.hasOwnProperty('names')){
-                // console.log('\tsetting control names to', parameters['names'])
                 this.controlNames = parameters['names']
             }
             if( parameters.hasOwnProperty('sizes')){
@@ -122,12 +121,13 @@ MM.RigComponent.prototype = {
             if( parameters.hasOwnProperty('shapes')){
                 this.controlShapes = parameters['shapes']   
             }
-            if( parameters.hasOwnProperty('asset')){
-                // console.log('\tsetting asset name to ', parameters['asset'])
+            if( parameters.hasOwnProperty('types')){
+                this.transformTypes = parameters['types']
+            }
+            if( parameters.hasOwnProperty('asset')){                
                 this.asset = parameters['asset']
             }
             if( parameters.hasOwnProperty('joints')){
-                // console.log('\tsetting asset name to ', parameters['joints'])
                 this.joints = parameters['joints']
             }
         }

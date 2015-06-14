@@ -51,7 +51,7 @@ MM.insertBiped = function( editor, config ){
 
 // COMPONENTS
 	//	Rigging components
-	u.addRigComponent( new MM.GlobalComponent({
+	u.addRigComponent(new MM.GlobalComponent({
 		controlSize: config['control_scale']*10, 
 		controlShape: 'plane', 
 		asset: config['name'], 
@@ -60,28 +60,15 @@ MM.insertBiped = function( editor, config ){
 		joints: ['Root']
 	} ), 'global' )
 	
-	//	Back
-	u.addRigComponent( new MM.SpineComponent({
-		  controlSize: config['control_scale']*1
-		, 'name':'back'
-		, 'globalControl':true
-		, asset:config['name']
-		, names:['cBodyCtl', 'cHipCtl', 'cBChestCtl']
-		, joints:['cSpine0', 'cSpine1', 'cSpine2', 'cSpine3']
-		}
-	), 'back' )
-	
-	//	Neck
-	u.addRigComponent( new MM.SpineComponent({
-		  'controlSize':config['control_scale']*1
-		, 'name':'neck'
-		, 'globalControl':false
-		, 'asset' : config['name']
-		, 'names' : ['', 'cTChestCtl', 'cHeadCtl']
-		, 'joints' : ['cSpine4', 'cNeck0', 'cNeck1', 'cNeck2']
-		, 'topInbetweenType':'SpaceswitchSplit'
-		}
-	), 'head' )
+	//	Spine
+	u.addRigComponent(new MM.SpineComponent({
+		  'asset':config['name']
+		, 'side':'c'
+		, 'names':['BodyCtl', 'BodySubCtl', 'HipCtl', 'BChestCtl', 'TChestCtl', 'HeadCtl']
+		, 'joints':['Spine0', 'Spine1', 'Spine2', 'Spine3', 'Spine4', 'Neck0', 'Neck1', 'Neck2']
+		, 'shapes':['plane', 'plane', 'cube', 'cube', 'cube', 'cube']
+		, 'types': ['Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'Spaceswitch', 'SpaceswitchSplit']
+	}),'spine')
 
 	//	Limbs
 	var legNames = ['HipFkCtl', 'KneeFkCtl', 'AnkleFkCtl', 'BallFkCtl', 'LegSwitch', 'KneeIkCtl', 'FootIkCtl']
@@ -157,7 +144,10 @@ MM.insertBiped = function( editor, config ){
 			var eyeControl = MM.createConstraintGroup( sides[i], 
 				u.namespace+sides[i]+'EyeCtl', 'planeZ', 1)
 			eyeControl['constraint'].controlOffset.z = 1			
-			u.rigComponents[2].controls['cHeadCtl'].setParent(
+			
+			console.log('\trig component', u.rigComponents[1])
+
+			u.rigComponents[1].controls['HeadCtl'].setParent(
 					eyeControl['zero'])
 
 			//	NOTE: here we need to run updateMatrixWorld since we need
@@ -243,10 +233,10 @@ MM.insertBiped = function( editor, config ){
 		jawControl.name = u.namespace+'cJawCtl'
 		jawControl.asset = u.assetName
 		jawControl.setControlShape('c', 'cube', 5)		
-		u.rigComponents[2].controls['cHeadCtl'].add( jawControl )
+		u.rigComponents[1].controls['HeadCtl'].add(jawControl)
 		jawControl.constraintMode = 1
-		jawControl.setObjectToSolve( jawJoint )
-		editor.addGroupContent( u.assetGroup, [ jawControl ] ) 
+		jawControl.setObjectToSolve(jawJoint)
+		editor.addGroupContent( u.assetGroup, [jawControl])
 		jawControl.setChannelsRotate()
 		editor.addSelectables([jawControl])
 
@@ -254,34 +244,30 @@ MM.insertBiped = function( editor, config ){
 	
 	//	inter component connections by using spaceswitches
 	//	each control created through createControlGroup has a spaceswitch node
-		
-		// parent chest control
-		u.getRigComponent('back').controls['cBChestCtl'].setParent( 
-			u.getRigComponent('head').controls['cTChestCtl'].parent)
 	
 		// define head control spaces
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('global').controls['GlobalCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('back').controls['cBodyCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpace(u.getRigComponent('head').controls['cTChestCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addPositionSpace(u.getRigComponent('global').controls['GlobalCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addPositionSpace(u.getRigComponent('spine').controls['BodyCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addPositionSpace(u.getRigComponent('spine').controls['TChestCtl'])
 		
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('back').controls['cBodyCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpace(u.getRigComponent('head').controls['cTChestCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addRotationSpace(u.getRigComponent('spine').controls['BodyCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addRotationSpace(u.getRigComponent('spine').controls['TChestCtl'])
 
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent('head').controls['cHeadCtl'])
-		u.getRigComponent('head').controls['cHeadCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent('head').controls['cHeadCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent('spine').controls['HeadCtl'])
+		u.getRigComponent('spine').controls['HeadCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent('spine').controls['HeadCtl'])
 
 		//	shoulder to chest
-		u.getRigComponent('head').controls['cTChestCtl'].setParent( 
+		u.getRigComponent('spine').controls['TChestCtl'].setParent( 
 			u.getRigComponent('lShoulder').controls['ShoulderCtl'].parent)
 
-		u.getRigComponent('head').controls['cTChestCtl'].setParent( 
+		u.getRigComponent('spine').controls['TChestCtl'].setParent( 
 			u.getRigComponent('rShoulder').controls['ShoulderCtl'].parent)
 
 		//	rest to global
 		//	spine		
 		u.getRigComponent('global').controls['GlobalCtl'].setParent(
-			u.getRigComponent('back').controls['cBodyCtl'].getParent())
+			u.getRigComponent('spine').controls['BodyCtl'].getParent())
 		
 		//	arms and legs
 		for( var i = 0; i < sides.length; i++){
@@ -291,8 +277,8 @@ MM.insertBiped = function( editor, config ){
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpace(u.getJoint(sides[i]+'Shoulder'))
 
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('global').controls['GlobalCtl'])
-			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('back').controls['cBodyCtl'])
-			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('head').controls['cTChestCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('spine').controls['BodyCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpace(u.getRigComponent('spine').controls['TChestCtl'])
 
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addPositionSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
 			u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'].parent.addRotationSpaceswitchChannel(u.getRigComponent(sides[i]+'Arm').controls['ShoulderFkCtl'])
@@ -300,7 +286,7 @@ MM.insertBiped = function( editor, config ){
 			//	hand ik control
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('global').controls['GlobalCtl'])
 			
-			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('head').controls['cTChestCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent('spine').controls['TChestCtl'])
 			
 			u.getRigComponent(sides[i]+'Arm').controls['HandCtl'].parent.addSpace( u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl'])
 
@@ -309,7 +295,7 @@ MM.insertBiped = function( editor, config ){
 			//	elbow ik control
 			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent('global').controls['GlobalCtl'])
 			
-			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent('head').controls['cTChestCtl'])
+			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent('spine').controls['TChestCtl'])
 			
 			u.getRigComponent(sides[i]+'Arm').controls['ElbowCtl'].parent.addSpace(u.getRigComponent(sides[i]+'Shoulder').controls['ShoulderCtl'])
 			
@@ -325,7 +311,7 @@ MM.insertBiped = function( editor, config ){
 			u.getRigComponent('global').controls['GlobalCtl'].setParent(
 				u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent)
 			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('global').controls['GlobalCtl'])
-			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('back').controls['cBodyCtl'])
+			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent('spine').controls['BodyCtl'])
 			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpace(u.getRigComponent(sides[i]+'Leg').controls['FootIkCtl'])
 			//	specify space control
 			u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'].parent.addSpaceswitchChannel(u.getRigComponent(sides[i]+'Leg').controls['KneeIkCtl'])

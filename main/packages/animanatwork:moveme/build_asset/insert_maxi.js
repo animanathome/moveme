@@ -42,31 +42,20 @@ MM.insertMaxi = function( editor ){
 		jaw_ctl.controlOffset.z = 5.0
 		jaw_ctl.controlScale.y = 0.25
 
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.y = 0.6
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.x = 0.6
-		u.getRigComponent('head').controls['cHeadCtl'].controlScale.z = 0.6
-		u.getRigComponent('head').controls['cHeadCtl'].controlOffset.y = 4.0
+		u.getRigComponent('spine').controls['HeadCtl'].controlScale.set( 1.8, 1.8, 1.8)		
+		u.getRigComponent('spine').controls['HeadCtl'].controlOffset.y = 4.0
 
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.x = 0.8
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.y = 0.25
-		u.getRigComponent('head').controls['cTChestCtl'].controlScale.z = 1.0
-		u.getRigComponent('head').controls['cTChestCtl'].controlOffset.y = 1.0
-		// u.getRigComponent('head').controls['cTChestCtl'].controlOffset.z = 9
+		u.getRigComponent('spine').controls['TChestCtl'].controlScale.set( 2.7, 0.75, 3.3)
+		u.getRigComponent('spine').controls['TChestCtl'].controlOffset.y = 1.0
 
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.x = 0.8
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.y = 0.25
-		u.getRigComponent('back').controls['cBChestCtl'].controlScale.z = 0.8
-		u.getRigComponent('back').controls['cBChestCtl'].controlOffset.z = 1.6
+		u.getRigComponent('spine').controls['BChestCtl'].controlScale.set( 2.4, 0.75, 2.4)				
+		u.getRigComponent('spine').controls['BChestCtl'].controlOffset.z = 1.6
 
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.x = 0.8
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.y = 0.25
-		u.getRigComponent('back').controls['cHipCtl'].controlScale.z = 0.8
-		u.getRigComponent('back').controls['cHipCtl'].controlOffset.z = 1.6
+		u.getRigComponent('spine').controls['HipCtl'].controlScale.set(2.4, 0.75, 2.4)		
+		u.getRigComponent('spine').controls['HipCtl'].controlOffset.z = 1.6
 
-		// u.getRigComponent('back').controls['cBodyCtl'].controlOffset.y = -2.5
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.x = 1.25
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.y = 1.25
-		u.getRigComponent('back').controls['cBodyCtl'].controlScale.z = 1.25
+		u.getRigComponent('spine').controls['BodySubCtl'].controlScale.set(2.5, 2.5, 2.5)
+		u.getRigComponent('spine').controls['BodyCtl'].controlScale.set(3.0, 3.0, 3.0)
 		
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.x = 1.0;
 		u.getRigComponent('global').controls['GlobalCtl'].controlScale.z = 1.0;
