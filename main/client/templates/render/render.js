@@ -1,6 +1,8 @@
 moveme = {};
 
 Template.render.rendered = function(){ 
+	console.log('render.rendered')
+
 	var mmElement = this.find("#movemerender")
 
 	moveme = new MM.App(mmElement, {
@@ -13,8 +15,12 @@ Template.render.rendered = function(){
       console.log('No file found. Nothing to load...')
       return;
     }
-    // console.log('\tfile url', file.url())
+    console.log('\tfile url', file.url())
     var absUrl = Meteor.absoluteUrl(file.url());
+    console.log('\tabs url', absUrl)
+
+    var newUrl = 'http://192.168.1.69:3000'+file.url()
+    console.log('\tnew url', newUrl)
 
 //	load the data once loaded
 	var xhr;
@@ -28,7 +34,8 @@ Template.render.rendered = function(){
 		var data = JSON.parse(xhr.responseText)
 		moveme.editor.loader.loadAsJSON(data)		
 	}
-	xhr.open("GET", absUrl);
+	// xhr.open("GET", absUrl);
+	xhr.open("GET", newUrl);
 	xhr.send();		
 }
 

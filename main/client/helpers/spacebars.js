@@ -9,7 +9,7 @@ UI.registerHelper('imageSize', function(n, thing) {
   var result = filename+thing+'.'+extension
 
   // console.log('\tresult:', result)
-
+ 
   return result;
 });
 
