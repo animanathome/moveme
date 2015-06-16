@@ -15,7 +15,8 @@ utils.dump(casper.cli.options);
 var sargs = casper.cli.options
 
 // var page = 'file:///Users/manu/GitHub/MoveMe/test/casperTest/simpleThreeScene.html'
-var page = 'http://localhost:3000/render'
+// var page = 'http://localhost:3000/render'
+var page = 'http://192.168.1.69:3000/render'
 page += '/project/'+sargs['projectId'] 
 page += '/shot/'+sargs['shotId']
 page += '/version/'+sargs['versionId']
@@ -30,7 +31,7 @@ casper.viewport(sargs['screenResolutionX'], sargs['screenResolutionY']);
 casper.then(function() {
     var scope = this;
     //  wait for the page to load
-    this.wait(1000);
+    this.wait(10000);
     for(var i = sargs['startFrame']; i < sargs['endFrame']; i++){
         var tFrame = '\trendering frame '+i
         utils.dump(tFrame);

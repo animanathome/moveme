@@ -35,7 +35,8 @@ MMHWR.renderScene = function(options){
 	*/
 
 	//	depending on the environment this will change
-	var posPath = ['/Users/manu/GitHub/moveme/render']
+	var posPath = [  '/Users/manu/GitHub/moveme/render'
+					,'/Users/animanatwork/GitHub/moveme/render']
 	var rootPath;
 	for( var i = 0; i < posPath.length; i++){
 		if(fs.existsSync(posPath[i])){
@@ -121,7 +122,7 @@ MMHWR.createMovie = function( options, callback ){
 	mcommand += " -i "+imagePath
 	mcommand += " -s "+options.screenResolutionX+"x"+options.screenResolutionY
 	mcommand += " -b 1280k -vcodec libx264 "
-	mcommand += movieFile    
+	mcommand += movieFile
 	
 	console.log('\tmovie command:', mcommand)
 

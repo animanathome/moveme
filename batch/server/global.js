@@ -1,4 +1,5 @@
-var remote = DDP.connect('http://localhost:3000/');
+// var remote = DDP.connect('http://localhost:3000/');
+var remote = DDP.connect('http://192.168.1.69:3000/');
 VersionList = new Mongo.Collection('versions', remote);
 
 VersionList.allow({
