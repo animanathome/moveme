@@ -15,5 +15,5 @@ Template.intro.rendered = function(){
 	//  activate all tooltips for this page
   	$(function (){
     	$('[data-toggle="tooltip"]').tooltip()
-  	})	
+  	})
 }

@@ -1,6 +1,6 @@
 Template.gallery.helpers({
 	shots: function(){
-		return ShotList.find({})
+		return ShotList.find({versionCount:{$gte: 1}})
 	}
 });
 

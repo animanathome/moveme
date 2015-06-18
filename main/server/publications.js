@@ -1,3 +1,23 @@
+Meteor.publish("userData", function (){
+  // console.log('userData', this.userId)
+  // console.log('data', Meteor.users.findOne({_id:this.userId}))
+  if (this.userId) {
+    // currentUser = Meteor.users.findOne({_id:this.userId})    
+    // if(currentUser.hasOwnProperty('services')){
+    //   if(currentUser.services.hasOwnProperty('google')){
+    //     user_name = currentUser.services.google.given_name
+    //     console.log('google account', user_name)
+    //     return Meteor.users.find({_id: this.userId}, {fields:{'services':1}});
+    //   }
+    // }else{
+      
+    // } 
+    return Meteor.users.find({_id: this.userId});   
+  } else {
+    this.ready();
+  }
+});
+
 Meteor.publish('assets', function() {
   return AssetList.find();
 });
@@ -46,7 +66,7 @@ Meteor.publish('numberOfMyPublicShots', function( number_of_shots){
       userId:this.userId
     , isPublic:true
   }, {
-    limit:number_of_shots
+      limit:number_of_shots    
   })  
 })
 

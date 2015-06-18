@@ -111,7 +111,7 @@ Template.animWall.rendered = function(){
 		panelName = 'view'+counter;
 		panelItem = wallPanel.getPanel(panelName)	
 
-		console.log('width:', panelItem.dom.offsetWidth)
+		// console.log('width:', panelItem.dom.offsetWidth)
 	
 	//	image
 		width = panelItem.dom.offsetWidth;
@@ -130,6 +130,7 @@ Template.animWall.rendered = function(){
 			image_extension = 'jpg'
 		}
 	
+		// console.log('#\titem', item.thumbnail)
 		var split = item.thumbnail.split('.')
 		var srci = split[0]+image_size+'.'+image_extension
 

@@ -182,7 +182,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 
@@ -248,7 +248,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 
@@ -311,7 +311,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 
@@ -360,7 +360,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 
@@ -425,7 +425,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 
@@ -474,7 +474,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
-    versionCount: 0,
+    versionCount: 1,
     fps: 24,
     duration: 48,
 

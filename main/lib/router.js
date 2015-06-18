@@ -35,9 +35,10 @@ Router.route('/', {
     name: 'intro',
     waitOn: function(){
         return [
-            Meteor.subscribe('numberOfVersions', 6),
-            Meteor.subscribe('tutorials'),
-            Meteor.subscribe('numberOfAssets', 6)
+              Meteor.subscribe('numberOfVersions', 6)
+            , Meteor.subscribe('tutorials')
+            , Meteor.subscribe('numberOfAssets', 6)
+            , Meteor.subscribe('userData')
         ];
     },
     onBeforeAction: function(){
@@ -48,6 +49,7 @@ Router.route('/', {
               versions: VersionList.find({})
             , tutorials: TutorialList.find({})
             , assets: AssetList.find({})
+            , user: Meteor.users.find({})
         }
     }    
 });
