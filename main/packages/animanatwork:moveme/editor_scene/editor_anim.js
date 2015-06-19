@@ -108,7 +108,7 @@ MM.Editor.prototype.evaluateScene = function( evalAnim ){
 
     //  evaluate all animation curves
     if( evalAnim ){
-        this.scene.updateAnimation( this.time )
+        this.scene.updateAnimation(this.time)
     }
     
     // console.log('MM.Editor.animate')

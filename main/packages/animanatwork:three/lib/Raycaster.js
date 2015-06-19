@@ -35,7 +35,7 @@
 	var vC = new THREE.Vector3();
 
 	var intersectObject = function ( object, raycaster, intersects ) {
-		console.log('Raycaster: intersectObject', object.name, object)
+		// console.log('Raycaster: intersectObject', object.name, object)
 
 		if ( object instanceof THREE.Particle ) {
 
@@ -58,11 +58,11 @@
 			} );
 
 		}else if(object instanceof MM.Control){
-			console.log('\t', object.name, 'boundingbox ', object.boundingBox)
+			// console.log('\t', object.name, 'boundingbox ', object.boundingBox)
 			
 			if(object.boundingBox !== null && object.visible === true)
 			{
-				console.log('\t\thas bounding box')
+				// console.log('\t\thas bounding box')
 				//inverseMatrix.getInverse( object.matrixWorld );  
 				localRay.copy( raycaster.ray )//.applyMatrix4( inverseMatrix );
 
@@ -74,12 +74,12 @@
 
 				// new
 				if(localRay.isIntersectionBox(object.boundingBox) === false){
-					console.log('\t\tray not intersecting bounding box',object.boundingBox)
+					// console.log('\t\tray not intersecting bounding box',object.boundingBox)
 					return intersects;
 				}  
 
 				if( object.hasDisplay() === true ){
-					console.log('\tcontrol display')
+					// console.log('\tcontrol display')
 
 					var precision = raycaster.linePrecision;
 					var precisionSq = precision * precision;

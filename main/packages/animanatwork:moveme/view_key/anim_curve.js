@@ -1,4 +1,5 @@
 MM.AnimCurve = function ( object, channel ){
+    console.log('AnimCurve', object, channel)
     // object is the object that we are going to drive
     // channel is the name of the attribute it's driving
     // - [channelGroup, channel]    
@@ -14,7 +15,10 @@ MM.AnimCurve = function ( object, channel ){
     //  is set on creation time in editor
     this.id = 0;        
     this.attr = channel;     
-    this.driven = object; 
+    this.driven = object;
+
+    this.attrType = typeof(this.driven[channel[0]][channel[1]])
+    console.log('#\tattribute type', this.attrType)    
 
     this.nattr = object.getNiceName( channel[0], channel[1])
 
@@ -433,8 +437,12 @@ MM.AnimCurve.prototype = {
             vv = vv.value;            
         }
         
-        tv = parseFloat( tv )
-        vv = parseFloat( vv )
+        tv = parseFloat(tv)
+        if(this.attrType === "number"){
+            vv = parseFloat(vv)
+        }else{
+            vv = vv;
+        }
 
         //  Make sure we don't have a key already with exactly the same time value. If we do, override it with the new value
         for( var i = 0; i < this.t.length; i++ ){
@@ -727,6 +735,8 @@ MM.AnimCurve.prototype = {
         this.v[ firstSelected ] = value; 
     },
     set: function (selected, ntv, nvv ){
+        console.log('animCurve.set', selected, ntv, nvv)
+
         this.t[selected]=ntv;
         this.v[selected]=nvv;
         
@@ -812,11 +822,17 @@ MM.AnimCurve.prototype = {
     },
     getValue: function( currentTime ){
         // console.log('AnimCurve: getValue', currentTime)
-        // console.log('\t', this.name)
+        console.log('\t', this.name)
 
         var nKeys = this.getNumberOfKeys()
-        if(currentTime <= this.t[0]) return this.v[0]
-        if(currentTime >= this.t[nKeys - 1]) return this.v[nKeys - 1]
+        if(currentTime <= this.t[0]){
+            // console.log('\treturning first value', this.v[0])
+            return this.v[0]
+        }
+        if(currentTime >= this.t[nKeys - 1]){
+            // console.log('\treturning last value', this.v[nKeys-1])
+            return this.v[nKeys - 1]
+        }
 
         //  get the AnimCurve range
         var nextIndex = 0;
@@ -868,7 +884,7 @@ MM.AnimCurve.prototype = {
         }
 
         // console.log('time', currentTime, 'range', this.t[nextIndex], this.t[nextIndex+1], 'value', outputValue)
-        // console.log('\t', outputValue)
+        console.log('\treturn value', outputValue)
         return outputValue
     }
 }

@@ -122,6 +122,9 @@ MM.TwoBoneSoftIkSolver.prototype.solveSoftIk=function(){
 	this.scaleJnt1=this.softControl.custom['scaleBone1']
 	this.scaleJnt2=this.softControl.custom['scaleBone2']
 
+
+	// console.log('#\tsolver', this)
+
 	// console.log('\tcustom', this.custom)
 
 	var inputROOTV = new THREE.Vector3().getPositionFromMatrix(this.inputMatrix_ROOT);
@@ -229,7 +232,11 @@ MM.TwoBoneSoftIkSolver.prototype.updateMatrixWorld=function(force){
 	    if(this.softControl.custom['useSoft']){
 	    	this.customHandlePos=true;
 			this.solveSoftIk();
-	    }        
+	    // }else{
+	    // 	console.log('No soft to calculate', this.softControl.custom['useSoft'])
+	    }
+	}else{
+		console.log('No soft ik control is defined. Nothing to calculate.')
 	}
 
 	MM.TwoBoneIkSolver.prototype.updateMatrixWorld.call(this, force);
