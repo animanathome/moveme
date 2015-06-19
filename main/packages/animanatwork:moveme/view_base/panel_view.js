@@ -30,16 +30,18 @@ MM.PanelView = function( editor , prefix){
 
 //	SETTINGS
     //  hide our panel HUD options by default
-	this.show_frame = false;
-    this.show_fps = false;
-    this.show_camera = false;
+	this.show_frame = false
+    this.show_fps = false
+    this.show_camera = false
+    this.show_aspect = false
 
-    this.menuCamera = undefined;
-    this.textCamera = undefined;
-    this.usedCamera = undefined;
-    this.showSettingsMenu = true;
-    this.showRatio = false;
-    this.aspectRatio = [16,10]
+    this.menuCamera = undefined
+    this.textCamera = undefined
+    this.usedCamera = undefined
+    this.showSettingsMenu = true
+    this.aspectRatio = [1.6, 1]
+    //  UNKNOWN: not sure how we are going to deal with this offset value as it means the final render will be actually smaller. 
+    this.aspectBorder = 20
     this.lockCamera = false;
 
 //  SETTINGS LAYOUT
@@ -91,13 +93,14 @@ MM.PanelView = function( editor , prefix){
     this.children.push( this.frameText.dom )
 
 //  aspect ratio gate (16:10 - 4:3)
-    var aspectFrame = new MMUI.Panel().setPosition('absolute');    
+    var aspectFrame = new MMUI.Panel().setPosition('absolute')
+    aspectFrame.addClass('aspectview')
     aspectFrame.setWidth('120px')
-    aspectFrame.setHeight('200px')   
+    aspectFrame.setHeight('200px')
     aspectFrame.dom.id = 'panelview-'+this.prefix
     aspectFrame.setDisplay('none')
     this.aspectFrame = aspectFrame;
-    dom.appendChild( aspectFrame.dom )   
+    dom.appendChild( aspectFrame.dom ) 
 
     this.children.push( this.aspectFrame.dom )
 
@@ -252,6 +255,27 @@ MM.PanelView.prototype.setFPS = function( fps ){
     this.fpsText.setValue(fps+' fps');
 }
 
+MM.PanelView.prototype.toggleAspect = function(){
+    if(this.show_aspect){
+        this.hideAspect()
+    }else{
+        this.showAspect()
+    }
+}
+
+MM.PanelView.prototype.hideAspect = function(){
+    this.aspectFrame.setDisplay('none')
+    this.show_aspect = false
+}
+
+MM.PanelView.prototype.showAspect = function(){
+    this.aspectFrame.setDisplay('block')
+    this.show_aspect = true
+
+    //  redraw panel to properly scale the frame
+    this.resize()
+}
+
 //  FRAME
 MM.PanelView.prototype.toggleTime = function(){
     if( this.show_frame ){
@@ -380,6 +404,13 @@ MM.PanelView.prototype.buildPanelDD = function(){
         scope.toggleFPS();
     })
     this.panelDD.add( fpsDDI )
+
+    // aspect ratio
+    var aspectText = ((this.show_aspect)?'Hide Aspect Ratio':'Show Aspect Ratio')
+    var aspectDDI = new MMUI.DropdownItem(aspectText).onClick( function(){
+        scope.toggleAspect();
+    })
+    this.panelDD.add( aspectDDI )
 }
 
 MM.PanelView.prototype.deletePanel = function( panel, direction ){
@@ -636,5 +667,28 @@ MM.PanelView.prototype.render = function(){
 MM.PanelView.prototype.resize = function(){
     if( this.childPanel ){
         this.childPanel.resize();
+
+        if(this.contentType === 'SceneView' && this.show_aspect === true){
+            // console.log('resize', this.dom)
+            // console.log('\tdimension', this.dom.offsetWidth, this.dom.offsetHeight)
+            
+            var widthRatio = (this.dom.offsetWidth - this.aspectBorder) / 1.6
+            var heightRatio = (this.dom.offsetHeight - this.aspectBorder) / 1
+
+            // console.log('\tratio', widthRatio, heightRatio)
+
+            var smallest = widthRatio
+            if(heightRatio < smallest){
+                smallest = heightRatio
+            }
+
+            var widthOffset = this.dom.offsetWidth - (smallest * 1.6)
+            this.aspectFrame.dom.style.left = widthOffset/2+'px'
+            this.aspectFrame.dom.style.width = (smallest*1.6)+'px'
+
+            var heightOffset = this.dom.offsetHeight - smallest
+            this.aspectFrame.dom.style.top = heightOffset/2+'px'
+            this.aspectFrame.dom.style.height = smallest+'px'
+        }
     }    
 }

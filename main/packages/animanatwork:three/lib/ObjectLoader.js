@@ -403,7 +403,7 @@ THREE.ObjectLoader.prototype = {
 			}
 
 			if( data.custom !== undefined ){
-				console.log('\treading in custom data object', data.custom)
+				// console.log('\treading in custom data object', data.custom)
 				object.custom = data.custom
 
 				if( data.custom.hasOwnProperty('color') === true ){

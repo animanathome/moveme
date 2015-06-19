@@ -109,7 +109,7 @@ Template.anim.rendered = function(){
 					    xhr = new ActiveXObject("Microsoft.XMLHTTP");
 					}
 					xhr.onload = function(){
-						console.log('\tcontent',xhr.responseText)
+						// console.log('\tcontent',xhr.responseText)
 
 						//	load scene file
 						var data = JSON.parse(xhr.responseText)

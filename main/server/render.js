@@ -5,6 +5,11 @@ Meteor.methods({
 		console.log('\t!-> version', versionAttributes)
 
 		var user = Meteor.user();
+		if( user === undefined ){
+			console.log('No user logged in.')
+			return
+		}
+
 		var googleErrorMessage = "Only google accounts can publish on youtube. Please login using your google account."
 		if(! user.hasOwnProperty('services')){
 			throw new Meteor.Error('Wrong account', googleErrorMessage);

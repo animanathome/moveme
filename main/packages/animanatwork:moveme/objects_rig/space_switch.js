@@ -41,7 +41,7 @@ MM.Spaceswitch.prototype.importData = function( data ){
 }
 
 MM.Spaceswitch.prototype.exportData = function(){
-    console.log('Spaceswitch.exportData', this.name)
+    // console.log('Spaceswitch.exportData', this.name)
 
     var data = MM.Control.prototype.exportData.call(this);
     
@@ -61,7 +61,7 @@ MM.Spaceswitch.prototype.exportData = function(){
 }
 
 MM.Spaceswitch.prototype.importSetup = function( scene , data ){
-	console.log('Spaceswitch.importSetup', data)
+	// console.log('Spaceswitch.importSetup', data)
 
 	var foundObject;
 

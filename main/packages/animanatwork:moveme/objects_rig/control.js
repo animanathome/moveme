@@ -37,7 +37,7 @@ MM.Control = function(){
 MM.Control.prototype = Object.create( THREE.Object3D.prototype );
 
 MM.Control.prototype.importData = function(data){
-    console.log('Control.importData', data)
+    // console.log('Control.importData', data)
 
     THREE.Object3D.prototype.importData.call(this, data);
     
@@ -47,7 +47,7 @@ MM.Control.prototype.importData = function(data){
     this.controlOffset.set(data.controlOffset.x, data.controlOffset.y, data.controlOffset.z);    
     this.controlSide = data.controlSide;
     
-    console.log('#\t', data.controlShape)
+    // console.log('#\t', data.controlShape)
     if(data.hasOwnProperty('controlShape')){
         this.controlShape = data.controlShape
     }
@@ -58,7 +58,7 @@ MM.Control.prototype.importData = function(data){
 }
 
 MM.Control.prototype.exportData = function(){
-    console.log('Control.exportData', this.name)
+    // console.log('Control.exportData', this.name)
 
     var data = THREE.Object3D.prototype.exportData.call(this);
     data.type = 'Control'
