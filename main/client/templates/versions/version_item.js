@@ -12,6 +12,19 @@ Template.prodShotVersionItem.helpers({
     time += "/"
     time += this.submitted.getFullYear();
     return time;
+  },
+  hasRender: function(){
+    console.log('hadRender')
+    console.log('this', this)
+
+    if(this.youTubeVideoId === -1){
+      return false
+    }else{
+      return true
+    }
+  },
+  getId: function(){
+    return this._id
   }
 });
 
@@ -34,10 +47,13 @@ Template.prodShotVersionItem.events({
         , _id:this._id})
   },
   'click .movie' : function(e){
-    console.log('View movie', this.youTubeVideoId)
+    console.log('View movie', this, this.youTubeVideoId)
 
-    event.preventDefault();
-    window.open("https://www.youtube.com/v/"+this.youTubeVideoId, '_blank');
+    var player = new MMUI.VideoDialog('', this.youTubeVideoId, 'view');
+    $('#'+this._id)[0].appendChild( player.dom )
+
+    // event.preventDefault();
+    // window.open("https://www.youtube.com/v/"+this.youTubeVideoId, '_blank');
   },
   'click .delete': function(e) {
     e.preventDefault();

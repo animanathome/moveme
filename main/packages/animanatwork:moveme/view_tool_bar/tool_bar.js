@@ -63,7 +63,7 @@ MM.FileToolBar = function( editor, parent, options){
 	} );	
 	snapGroup.add(undoUI)
 
-	var redoUI = new MMUI.Button().setImage('/ui/redo.gif').addToolTip('Undo Action').onClick( function(){
+	var redoUI = new MMUI.Button().setImage('/ui/redo.gif').addToolTip('Redo Action').onClick( function(){
 			editor.redo();
 	} );	
 	snapGroup.add(redoUI)

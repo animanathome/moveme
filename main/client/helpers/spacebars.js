@@ -44,13 +44,27 @@ UI.registerHelper('youtubeVideo', function(videoId){
   return "https://www.youtube.com/v/"+videoId;
 })
 
-UI.registerHelper('youtubeImage', function(imageUrl){
-  // console.log('youtubeImage', imageUrl)
-  if( imageUrl === undefined ){
+UI.registerHelper('youtubeImage', function(youtubeId, resolution){
+  console.log('youtubeImage', youtubeId, resolution)
+
+  //  youtubeId: unique youtube id
+  //  resolution: s, m or h  
+
+  if( youtubeId === undefined ){
     return '/ui/imagePlaceHolder.png';
-  }else{
-    return imageUrl;
   }
+  
+  if(resolution === undefined ){
+    resolution = 'm'
+  }
+
+  //  define image name
+  imagesName = 'mqdefault.jpg'
+  if(resolution === 'h'){
+    imagesName = 'maxresdefault.jpg'
+  }
+
+  return 'https://img.youtube.com/vi/'+youtubeId+'/'+imagesName
 })
 
 UI.registerHelper('tutorialImage', function(id){

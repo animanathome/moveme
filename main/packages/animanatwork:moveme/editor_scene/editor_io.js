@@ -133,7 +133,7 @@ MM.Editor.prototype.importSelectables = function( data ){
 }
 
 MM.Editor.prototype.exportSceneSettings = function(){
-    // console.log('editor.exportSceneSettings')
+    console.log('editor.exportSceneSettings')
 
     var data = {}
 
@@ -151,7 +151,21 @@ MM.Editor.prototype.exportSceneSettings = function(){
     data.startRange = this.startRange
     data.endRange = this.endRange
 
-    // console.log('\tresult:', data)
+//  camera settings
+    data.cameraSettings = {}
+    var cameras = ['persp', 'front', 'side', 'top']
+    var i, j;
+    for( i = 0, j = cameras.length; i < j; i++ ){
+        console.log('\texporting data for', camera)
+        camera = this.scene.getObjectByName(cameras[i], true)
+        if(camera == undefined ){
+            console.log('\tskipping ', cameras[i], 'since it can not be found.')
+            continue
+        }
+        data.cameraSettings[cameras[i]] = camera.exportTransformation()
+    }
+
+    console.log('\tresult:', data)
     return data;
 }
 
@@ -167,6 +181,32 @@ MM.Editor.prototype.resetSceneSettings = function(){
     data.sceneBackgroundColor = new THREE.Color().setRGB( 0.75, 0.75, 0.75 ).toArray();
     data.keyBackgroundColor = new THREE.Color().setRGB( 0.75, 0.75, 0.75 ).toArray();
 
+//  camera settings
+    frontCamera = this.scene.getObjectByName('front', true)
+    if(frontCamera !== undefined){
+        frontCamera.custom = {'near':0.1, 'far':2000}
+        frontCamera.position.set( 0.0, 0.0, 100.0)
+    }
+
+    sideCamera = this.scene.getObjectByName('side', true)
+    if(sideCamera !== undefined){
+        sideCamera.custom = {'near':0.1, 'far':2000}
+        sideCamera.position.set( 100.0, 0.0, 0.0)
+    }
+
+    topCamera = this.scene.getObjectByName('top', true)
+    if(topCamera !== undefined){
+        topCamera.custom = {'near':0.1, 'far':2000}
+        topCamera.position.set( 0.0, 100.0, 0.0)
+    }
+
+    perspCamera = this.scene.getObjectByName('persp', true)
+    if(perspCamera !== undefined){
+        perspCamera.custom = {'focusLength': 35, 'frameHeight':24, 'aspect':1, 'near':0.1, 'far':2000}
+        perspCamera.position.set( 0.0, 100.0, 0.0)
+        perspCamera.lookAt( new THREE.Vector3(0,0,0) );   
+    }
+
 //  animation    
     data.time = 0;
     data.startTime = 0;
@@ -177,8 +217,8 @@ MM.Editor.prototype.resetSceneSettings = function(){
     return data;
 }
 
-MM.Editor.prototype.importSceneSettings = function( data ){
-    // console.log('editor.importSceneSettings', data)    
+MM.Editor.prototype.importSceneSettings = function(data){
+    console.log('editor.importSceneSettings', data)    
 
 //  show
     this.gridVisibility( data.showGrid )
@@ -190,6 +230,19 @@ MM.Editor.prototype.importSceneSettings = function( data ){
     this.sceneBackgroundColor.fromArray(data.sceneBackgroundColor)
     this.keyBackgroundColor.fromArray(data.keyBackgroundColor)
 
+//  camera settings
+    for( var camera in data.cameraSettings ){
+        console.log('\timporting data for', camera)
+        console.log('\tdata', data.cameraSettings[camera])
+
+        scene_camera = this.scene.getObjectByName(camera, true)
+        if(camera == undefined ){
+            console.log('\tskipping ', cameras[i], 'since it can not be found.')
+            continue
+        }
+        scene_camera.importTransformation(data.cameraSettings[camera])
+    }
+
 //  time
     this.time = data.time;
     this.startTime = data.startTime
@@ -198,7 +251,7 @@ MM.Editor.prototype.importSceneSettings = function( data ){
     this.endRange = data.endRange
 
     //  dispatch an event which will update the time line and range slide
-    this.signals.timeChanged.dispatch( data.time )
+    this.signals.timeRangeChanged.dispatch()
 }
 
 MM.Editor.prototype.saveSceneSettings = function(){
@@ -208,7 +261,7 @@ MM.Editor.prototype.saveSceneSettings = function(){
 }
 
 MM.Editor.prototype.loadSceneSettings = function(){
-    // console.log('editor.Load scene settings from localStorage')
+    console.log('editor.Load scene settings from localStorage')
     if(localStorage.moveMeSceneSettings !== undefined ){
         // console.log('\tloading...')
         // console.log('raw data', localStorage.moveMeSceneSettings)
@@ -690,16 +743,19 @@ MM.Editor.prototype.importAnimationData = function( data ){
     */
     // console.log('editor.importAnimationData')
     // console.log('\tdata', data)
+    this.signals.showInfo.dispatch('Import all animation')
 
     // console.log('data type:', data.metadata.type)
     if( data.metadata.type !== 'animation'){
         console.warn('\twrong data type, looking for animation.')
+        this.signals.showInfo.dispatch('Imported file does not contain any animation data.')
         return
     }
     
     // console.log(data.animCurves.length)
     if(!data.hasOwnProperty('animCurves')){
         console.warn('# No animation data found')
+        this.signals.showInfo.dispatch('Imported file does not contain any animation data.')
         return
     }
 
@@ -745,8 +801,9 @@ MM.Editor.prototype.importAnimationData = function( data ){
     this.startRange = minTime;
     this.endTime = maxTime;   
     this.endRange = maxTime; 
+    this.signals.showInfo.dispatch('Updating range from '+minTime+' to '+maxTime)
 
-    this.signals.showInfo.dispatch('Import all animation')
+    
     this.signals.timeRangeChanged.dispatch();    
 }
 
@@ -755,7 +812,8 @@ MM.Editor.prototype.exportAnimationData = function(){
     Moved from menu_bar_file
     */
     // console.log('this.exportAnimationData')
-
+    this.signals.showInfo.dispatch('Export all animation')
+    
     var output = {
         metadata:{
             version: 0.1,
@@ -770,8 +828,8 @@ MM.Editor.prototype.exportAnimationData = function(){
         var data = this.animCurves[i].exportData()
         output.animCurves.push( data );
     }
+    this.signals.showInfo.dispatch('Exported '+this.animCurves.length+' animation curves')
     
-    this.signals.showInfo.dispatch('Export all animation')
     return output;
 }
 

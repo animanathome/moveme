@@ -293,7 +293,7 @@ Template.tutorialWall.rendered = function(){
 
 	var showMovie = function(parent, youtubeTitle, youtubeId){
 		return function(){
-			// console.log('showMovie', parent, youtubeId)
+			console.log('showMovie', parent, youtubeId)
 			var player = new MMUI.VideoDialog(youtubeTitle, youtubeId, 'view');
 			parent.appendChild( player.dom )			
 		}

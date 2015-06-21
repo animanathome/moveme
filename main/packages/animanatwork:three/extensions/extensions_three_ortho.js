@@ -40,5 +40,4 @@ THREE.PerspectiveCamera.prototype.updateProjectionMatrix = function () {
 		this.projectionMatrix.makePerspective( fov, this.aspect, this.near, this.far );
 
 	}
-
 };

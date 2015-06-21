@@ -22,7 +22,7 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	}).addShortcut('Ctrl+n')
 	menuGrp.add( newItem )
 
-	var openItem = new MMUI.MenuItem('Import File').onClick(
+	var openItem = new MMUI.MenuItem('Open File').onClick(
 		function () {
 			input.click();
 		})//.addShortcut('Ctrl+o')
@@ -38,7 +38,7 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	menuGrp.add( divider )	
 
 //	SAVE - AS
-	var saveLocalItem = new MMUI.MenuItem('Save Local').onClick(function(){
+	var saveLocalItem = new MMUI.MenuItem('Cache File').onClick(function(){
 		editor.saveSceneLocal();
 	}).addShortcut('Ctrl+s');
 	menuGrp.add(saveLocalItem)
@@ -64,7 +64,7 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 		menuGrp.add( saveItem )
 	}
 
-	var saveAsItem = new MMUI.MenuItem('Export File').onClick( function(){
+	var saveAsItem = new MMUI.MenuItem('Save File').onClick( function(){
 		console.log('MM.Menubar.saveFile')
 		var output = editor.saveSceneAs();
 		var blob = new Blob( [ output ], { type: 'text/plain' } );

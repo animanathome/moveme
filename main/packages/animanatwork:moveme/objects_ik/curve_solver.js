@@ -20,24 +20,24 @@ MM.CurveSolver = function(){
 MM.CurveSolver.prototype = Object.create(MM.Control.prototype);
 
 MM.CurveSolver.prototype.importData = function(data){
-    console.log('CurveSolver.importData', data)
+    // console.log('CurveSolver.importData', data)
 
     MM.Control.prototype.importData.call(this, data);
 
-    console.log('\tdata rootBindMatrix', data.rootBindMatrix)
+    // console.log('\tdata rootBindMatrix', data.rootBindMatrix)
     this.rootBindMatrix.fromArray(data.rootBindMatrix)
-    console.log('\tthis rootBindMatrix', this.rootBindMatrix.elements)
+    // console.log('\tthis rootBindMatrix', this.rootBindMatrix.elements)
     this.rootIndices = data.rootIndices
 
-    console.log('\tdata tipBindMatrix', data.tipBindMatrix)    
+    // console.log('\tdata tipBindMatrix', data.tipBindMatrix)    
     this.tipBindMatrix.fromArray(data.tipBindMatrix)
-    console.log('\tthis tipBindMatrix', this.tipBindMatrix.elements)
+    // console.log('\tthis tipBindMatrix', this.tipBindMatrix.elements)
     this.tipIndices = data.tipIndices
     
     this.followBottomControl = data.followBottomControl
     this.skipFirstJoint = data.skipFirstJoint
 
-    console.log('\tfinished importing data', this)
+    // console.log('\tfinished importing data', this)
 }
 
 MM.CurveSolver.prototype.exportData = function(){

@@ -108,12 +108,13 @@ MMUI.Dialog.prototype.deleteUI = function(){
 	this.dom.parentNode.removeChild( this.dom )
 }
 
-MMUI.VideoDialog = function( videoTitle, videoId, buttonLabel){
+MMUI.VideoDialog = function( videoTitle, videoId, buttonLabel, options){
 	MMUI.Element.call( this )
 
 	var scope = this;
 
 	var dom = document.createElement('div')
+	dom.className = "video"
 	// dom.className = 'modal'
 	this.dom = dom;
 

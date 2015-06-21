@@ -1,3 +1,35 @@
+THREE.Object3D.prototype.exportTransformation = function(){
+	console.log('exportTransformation')
+	var data = {}
+
+	data.position = this.position.toArray()
+	data.rotation = this.rotation.toArray()
+	data.scale = this.scale.toArray()
+
+	console.log('\tscale', this.scale)
+
+	if( this.custom !== undefined ){
+		data.custom = this.custom
+	}
+
+	return data
+}
+
+THREE.Object3D.prototype.importTransformation = function(data){
+	console.log('importTransformation', data)
+	console.log('\tscale', data.scale)
+
+	this.position.fromArray(data.position)
+	this.rotation.fromArray(data.rotation)
+	this.scale.fromArray(data.scale)
+
+	if(data.custom !== undefined){
+		this.custom = data.custom
+	}
+
+	this.updateMatrixWorld(true)
+}
+
 THREE.Object3D.prototype.importData = function(data){
 	this.uuid = data.uuid;
 

@@ -58,8 +58,11 @@ Template.anim.rendered = function(){
 		);
 	}	
 
-//	OPEN VERSION
+//	LOAD SCENE	
+	//	OPEN VERSION
 	if( this.data.hasOwnProperty('versions')){
+		loadedScene = true
+
 		console.log('versions', this.data)
 
 		var versionId;
@@ -143,8 +146,10 @@ Template.anim.rendered = function(){
 		moveme.layout.projectbar.setSceneData(sceneTitleData);
 	}
 
-//	OPEN ASSET
-	if( this.data.hasOwnProperty('asset')){
+	//	OPEN ASSET
+	else if( this.data.hasOwnProperty('asset')){
+
+
 		console.log('Loading asset', this.data.asset.title)
 		moveme.importAsset(this.data.asset.title)
 
@@ -161,16 +166,19 @@ Template.anim.rendered = function(){
 		moveme.layout.projectbar.setAssetData(assetTitleData)
 	}
 
-//	TRY
-	if( this.data.hasOwnProperty('try') ){
+	//	TRY
+	else if( this.data.hasOwnProperty('try') ){
 		moveme.layout.projectbar.setTryData()
 
 		console.log('Loading local cache.')
 		moveme.editor.loadSceneLocal();
 	}
 
-//	LOAD SAVED SCENE SETTINGS
-	moveme.editor.loadSceneSettings();
+	//	LOAD SAVED SCENE SETTINGS
+	else{
+		console.log('Nothing loaded.')
+		moveme.editor.loadSceneSettings();
+	}
 
 //	UPDATE LAYOUT
 //	this needs to be done since our scene settings are changed. For example start and end range. This means that the layout is not yet showing the proper range.	

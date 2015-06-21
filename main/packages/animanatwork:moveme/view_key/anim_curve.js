@@ -822,7 +822,7 @@ MM.AnimCurve.prototype = {
     },
     getValue: function( currentTime ){
         // console.log('AnimCurve: getValue', currentTime)
-        console.log('\t', this.name)
+        // console.log('\t', this.name)
 
         var nKeys = this.getNumberOfKeys()
         if(currentTime <= this.t[0]){
@@ -884,7 +884,7 @@ MM.AnimCurve.prototype = {
         }
 
         // console.log('time', currentTime, 'range', this.t[nextIndex], this.t[nextIndex+1], 'value', outputValue)
-        console.log('\treturn value', outputValue)
+        // console.log('\treturn value', outputValue)
         return outputValue
     }
 }

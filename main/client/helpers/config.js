@@ -33,3 +33,7 @@ Meteor.loginWithGoogle({
   if (err)
     Session.set('errorMessage', err.reason || 'Unknown error');    
 });
+
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
+});

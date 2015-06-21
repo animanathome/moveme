@@ -113,10 +113,7 @@ Meteor.methods({
       upvoters: [],
       votes: 0,
 
-      youTubeVideoId: -1,
-      youTubeImageUrlDef: '',
-      youTubeImageUrlMed: '',
-      youTubeImageUrlHigh: ''
+      youTubeId: -1,
     }
 
     var versionId = VersionList.insert(version);
@@ -136,7 +133,7 @@ Meteor.methods({
         $set: {
             duration: versionAttributes.duration
           , latestVersionId:versionId
-          , latestVersionThumbnail:'/ui/imagePlaceHolderInv.png'
+          , latestVersionYoutubeId: -1
         }
       , $inc: {
         versionCount:1
@@ -152,10 +149,9 @@ Meteor.methods({
   	console.log('launching version', versionId)
   },
   hasVersionForShot: function( shotId ){  
-  	console.log('hasVersionForShot', shotId)
+  	// console.log('hasVersionForShot', shotId)
   	var currentShotVersions = VersionList.find({ shotId: shotId }, {sort: {submitted: -1}}, {reactive: false}).fetch()
-  	console.log('\tshot versions', currentShotVersions)  	
-
+  	// console.log('\tshot versions', currentShotVersions)
   	if( currentShotVersions.length > 0){
   		return { result: true, version: currentShotVersions[0] }
   	}else{

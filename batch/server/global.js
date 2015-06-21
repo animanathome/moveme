@@ -5,16 +5,29 @@ VersionList = new Mongo.Collection('versions', remote);
 VersionList.allow({
   update: function(){ 
     return true; 
-  },
-  remove: function(){ 
-    return true; 
-  },
-  insert: function(){
-    return true;
   }
+  // remove: function(){ 
+  //   return true; 
+  // },
+  // insert: function(){
+  //   return true;
+  // }
 });
-
 remote.subscribe('versions');
+
+ShotList = new Mongo.Collection('shots', remote);
+VersionList.allow({
+  update: function(){ 
+    return true; 
+  }
+  // remove: function(){ 
+  //   return true; 
+  // },
+  // insert: function(){
+  //   return true;
+  // }
+});
+remote.subscribe('shots');
 
 Meteor.methods({
 	hardwareRenderScene: function( renderJob){

@@ -5,7 +5,7 @@ Meteor.methods({
 		console.log('\t!-> version', versionAttributes)
 
 		var user = Meteor.user();
-		if( user === undefined ){
+		if( user === undefined || user === null){
 			console.log('No user logged in.')
 			return
 		}
@@ -25,7 +25,7 @@ Meteor.methods({
 			  versionDescription:version.description
 			, accessToken: Meteor.user().services.google.accessToken
 			, startFrame: 0
-			, endFrame: 24
+			, endFrame: version.duration
 			, screenResolutionX: 1600
 			, screenResolutionY: 900
 		});

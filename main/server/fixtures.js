@@ -175,21 +175,18 @@ if ( Meteor.users.find().count() === 0 ) {
   //  -----------------------------------------
   //  Jumping ball shot
   var jumping_ball_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: admin.username,
-    userId: admin._id,
-    title: 'Jumping ball',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-
-    latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: ''
-
+      projectId: front_page_project_id
+    , author: admin.username
+    , userId: admin._id
+    , title: 'Jumping ball'
+    , description: 'No description yet.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 80
+    , latestVersionId: -1
+    , latestVersionYoutubeId: -1
     , isPublic: true
   })
 
@@ -211,13 +208,12 @@ if ( Meteor.users.find().count() === 0 ) {
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
     fps: 24,
-    duration: 48,
+    duration: 80,
     commentsCount: 0,
     upvoters: [],
     votes: 0,
     fileId: fileId._id,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetBall_000.jpg'
+    youTubeId: 'CJRDYr7TJYo'
   })
 
   //  Update file to link to shot version
@@ -232,8 +228,7 @@ if ( Meteor.users.find().count() === 0 ) {
     { $set:
       {
         latestVersionId: jumping_ball_shot_version_id,
-        latestVersionVideoId: 'CJRDYr7TJYo',
-        latestVersionThumbnail: '/assets/assetBall_000.jpg'
+        latestVersionYoutubeId: 'CJRDYr7TJYo',
       }
     }
   ) 
@@ -241,21 +236,18 @@ if ( Meteor.users.find().count() === 0 ) {
   //  -----------------------------------------
   //  Jumping tail shot
   var jumping_tail_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: admin.username,
-    userId: admin._id,
-    title: 'Jumping tail',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-
-    latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: ''
-
+      projectId: front_page_project_id
+    , author: admin.username
+    , userId: admin._id
+    , title: 'Jumping tail'
+    , description: 'No description yet.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 48
+    , latestVersionId: 0
+    , latestVersionYoutubeId: -1
     , isPublic: true
   })
 
@@ -282,8 +274,7 @@ if ( Meteor.users.find().count() === 0 ) {
     upvoters: [],
     votes: 0,
     fileId: fileId._id,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetTail_000.jpg'
+    youTubeId: 'SaMGRFxLtdU'
   })
 
   //  Link scene file to version
@@ -296,29 +287,25 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: jumping_tail_shot_id
   }, { $set:{
       latestVersionId: jumping_tail_shot_version_id,
-      latestVersionVideoId: 'CJRDYr7TJYo',
-      latestVersionThumbnail: '/assets/assetTail_000.jpg'
+      latestVersionYoutubeId: 'SaMGRFxLtdU'
     }
   }) 
 
   //  -----------------------------------------
   //  Running legs shot
   var running_legs_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: admin.username,
-    userId: admin._id,
-    title: 'Running legs',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-
-    latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: ''
-
+      projectId: front_page_project_id
+    , author: admin.username
+    , userId: admin._id
+    , title: 'Running legs'
+    , description: 'No description yet.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 48
+    , latestVersionId: -1
+    , latestVersionYoutubeId: -1
     , isPublic: true
   })
 
@@ -336,8 +323,7 @@ if ( Meteor.users.find().count() === 0 ) {
     commentsCount: 0,
     upvoters: [],
     votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetLegs_000.jpg'
+    youTubeId: 'CJRDYr7TJYo'
   }) 
 
   //  Update the shot to link to the latest version
@@ -345,57 +331,65 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: running_legs_shot_id
   }, {$set:{
       latestVersionId: running_legs_shot_version_id,
-      latestVersionVideoId: 'CJRDYr7TJYo',
-      latestVersionThumbnail: '/assets/assetLegs_000.jpg'
+      latestVersionYoutubeId: 'CJRDYr7TJYo'
     }
   })
 
   //  -----------------------------------------
-  //  Midi reflection shot
+  //  Midi kicking shot
   var midi_reflection_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: admin.username,
-    userId: admin._id,
-    title: 'Midi reflection shot',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-
-    latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: '' 
-
+      projectId: front_page_project_id
+    , author: admin.username
+    , userId: admin._id
+    , title: 'Midi kicking shot'
+    , description: 'No description yet.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 48
+    , latestVersionId: -1
+    , latestVersionYoutubeId: -1
     , isPublic: true   
   })
 
-  //  Mini reflection shot version 1
+  //  Create a shot version scene file
+  var sceneData = Assets.getText('demo/midi_kicking.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
+
+  //  Midi kicking shot version 1
   var midi_reflection_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: midi_reflection_shot_id,
     author: admin.username,
     userId: admin._id,
-    description: 'But why?',
+    description: 'Yeah, that is it!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
     fps: 24,
-    duration: 48,
+    duration: 29,
     commentsCount: 0,
     upvoters: [],
     votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetMidi_000.jpg'
+    fileId: fileId._id,
+    youTubeId: 'E0p1OaE41pA'
   })  
+
+  //  Link scene file to version
+  FileList.update({
+    _id: fileId._id
+  }, { versionId:midi_reflection_shot_version_id})
 
   //  Update the shot to link to the latest version
   ShotList.update({
     _id: midi_reflection_shot_id
   }, {$set:{
       latestVersionId: midi_reflection_shot_version_id,
-      latestVersionVideoId: 'CJRDYr7TJYo',
-      latestVersionThumbnail: '/assets/assetMidi_000.jpg'
+      latestVersionYoutubeId: 'E0p1OaE41pA'
     }
   })
 
@@ -430,8 +424,7 @@ if ( Meteor.users.find().count() === 0 ) {
     duration: 48,
 
     latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: ''
+    latestVersionYoutubeId: ''
 
     , isPublic: true
   })
@@ -450,8 +443,7 @@ if ( Meteor.users.find().count() === 0 ) {
     commentsCount: 0,
     upvoters: [],
     votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetMini_000.jpg'
+    youTubeId: 'CJRDYr7TJYo'
   })  
 
   //  Update the shot to link to the latest version
@@ -459,8 +451,7 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: jumping_kick_shot_id
   }, { $set:{
       latestVersionId: jumping_kick_shot_version_id,
-      latestVersionVideoId: 'CJRDYr7TJYo',
-      latestVersionThumbnail: '/assets/assetMini_000.jpg'
+      latestVersionYoutubeId: 'CJRDYr7TJYo'
     }
   })
 
@@ -479,8 +470,7 @@ if ( Meteor.users.find().count() === 0 ) {
     duration: 48,
 
     latestVersionId: 0,
-    latestVersionVideoId: '',
-    latestVersionThumbnail: ''
+    latestVersionYoutubeId: ''
 
     , isPublic: false
   })
@@ -499,8 +489,7 @@ if ( Meteor.users.find().count() === 0 ) {
     commentsCount: 0,
     upvoters: [],
     votes: 0,
-    youTubeVideoId: 'CJRDYr7TJYo',
-    thumbnail: '/assets/assetMaxi_000.jpg',
+    youTubeId: 'CJRDYr7TJYo'
   })  
 
 //  Update the shot to link to the latest version
@@ -508,8 +497,7 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: maxi_jump_run_shot_id
   }, {$set:{
       latestVersionId: maxi_jump_run_shot_version_id,
-      latestVersionVideoId: 'CJRDYr7TJYo',
-      latestVersionThumbnail: '/assets/assetMaxi_000.jpg'
+      latestVersionYoutubeId: 'CJRDYr7TJYo'
     }
   })  
 
@@ -599,7 +587,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "mWvYSjkYqpE",
+    youTubeId: "mWvYSjkYqpE",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -610,7 +598,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "Zl3sSOL0LtE",
+    youTubeId: "Zl3sSOL0LtE",
     thumbnail: '/tutorials/asset_tail_screen.png'
   })
 
@@ -621,7 +609,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "ll_lStU7Dxg",
+    youTubeId: "ll_lStU7Dxg",
     thumbnail: '/tutorials/asset_legs_screen.png'
   })
 
@@ -632,7 +620,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Lorem ipsum dolor sit amet, fierent scripserit nec id, eam libris adipisci eu. Ex quis eruditi maiorum vim. Falli altera putant ad quo. Vim amet idque aliquid no.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'asset',
-    youTubeVideoId: "4utrccoVISU",
+    youTubeId: "4utrccoVISU",
     thumbnail: '/tutorials/asset_midi_screen.png'
   })
 
@@ -643,7 +631,7 @@ if ( Meteor.users.find().count() === 0 ) {
   //   description: 'Here we are going to go over how we can create and edit projects.',
   //   submitted: new Date(now - 1 * 3600 * 1000),
   //   category: 'project',
-  //   youTubeVideoId: "FZ7U7THxe_w"
+  //   youTubeId: "FZ7U7THxe_w"
   // })
 
   // TutorialList.insert({
@@ -653,7 +641,7 @@ if ( Meteor.users.find().count() === 0 ) {
   //   description: 'What are shots and how do they relate to our projects?',
   //   submitted: new Date(now - 1 * 3600 * 1000),
   //   category: 'project',
-  //   youTubeVideoId: "FZ7U7THxe_w"
+  //   youTubeId: "FZ7U7THxe_w"
   // })
 
   // TutorialList.insert({
@@ -663,7 +651,7 @@ if ( Meteor.users.find().count() === 0 ) {
   //   description: 'What are versions and how do they related our shots?',
   //   submitted: new Date(now - 1 * 3600 * 1000),
   //   category: 'project',
-  //   youTubeVideoId: "FZ7U7THxe_w"
+  //   youTubeId: "FZ7U7THxe_w"
   // })
 
   //  done
@@ -674,7 +662,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'What am I looking at? An introduction talking about the different panels that make up the interface. What are all those panels and why are they there?',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "djuOTkqIJ88",
+    youTubeId: "djuOTkqIJ88",
     thumbnail: '/tutorials/interface_screen.png'
   })
 
@@ -686,7 +674,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Workspace and panels. How can I add one more panel? We always seem to run out of space. There is always that one additional panel we would like to add. Learn how we can get the most out of our layout in this tutorial.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "azGY9b87DHE",
+    youTubeId: "azGY9b87DHE",
     thumbnail: '/tutorials/workspace_screen.png'
   })
 
@@ -698,7 +686,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Learn how to use the viewport tools to move around in our scene; rotate, pan and dolly.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "PWOSvVW83mo",
+    youTubeId: "PWOSvVW83mo",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -710,7 +698,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Here we go over the select, move, rotate and scale tools. Different ways to use and activate them.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "TqXQ7TIIAFY",
+    youTubeId: "TqXQ7TIIAFY",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -722,7 +710,7 @@ if ( Meteor.users.find().count() === 0 ) {
     description: 'Where can we find all of the different options or channels for the selected object(s)? That would be the channel box. During this tutorial we are going to see the ',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "076dheRD2nk",
+    youTubeId: "076dheRD2nk",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -733,7 +721,7 @@ TutorialList.insert({
     description: 'When we have a lot of assets into our scene it is sometimes hard to select the right object. This is where the Asset Outliner comes in. It presents us the different objects in a clear and easy to select way.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "FZ7U7THxe_w",
+    youTubeId: "FZ7U7THxe_w",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -744,7 +732,7 @@ TutorialList.insert({
     description: 'Certain Assets are more complex then others. Some have numereous of controls which can be hard to select in the viewport. The Asset Select gives you a different way to select them.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "LQz7akFxrQc",
+    youTubeId: "LQz7akFxrQc",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -755,7 +743,7 @@ TutorialList.insert({
     description: 'This is an introduction on how to create, edit and delete keys.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "aO1Arpzmi7k",
+    youTubeId: "aO1Arpzmi7k",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -766,7 +754,7 @@ TutorialList.insert({
     description: 'During this tutorial we are going to talk about animation curves and interpolation.',
     submitted: new Date(now - 1 * 3600 * 1000),
     category: 'tools',
-    youTubeVideoId: "H40hL7xUKJc",
+    youTubeId: "H40hL7xUKJc",
     thumbnail: '/tutorials/asset_ball_screen.png'
   })
 
@@ -777,6 +765,6 @@ TutorialList.insert({
 //     description: 'Here we are going to look a bit further on what tangents are and how we can edit them.',
 //     submitted: new Date(now - 1 * 3600 * 1000),
 //     category: 'tools',
-//     youTubeVideoId: "FZ7U7THxe_w"
+//     youTubeId: "FZ7U7THxe_w"
 //   })  
 }
