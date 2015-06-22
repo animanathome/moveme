@@ -459,7 +459,7 @@ if ( Meteor.users.find().count() === 0 ) {
     projectId: front_page_project_id,
     author: manu.username,
     userId: manu._id,
-    title: 'Midi reflection shot',
+    title: 'Maxi catching a ball',
     description: 'No description yet.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
@@ -468,8 +468,16 @@ if ( Meteor.users.find().count() === 0 ) {
     duration: 48,
     latestVersionId: '',
     latestVersionYoutubeId: ''
-    , isPublic: false
+    , isPublic: true
   })
+
+  //  Create a shot version scene file
+  var sceneData = Assets.getText('demo/maxi_catching_ball.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
 
   //  Maxi jump run version 1
   var maxi_jump_run_shot_version_id = VersionList.insert({
@@ -477,7 +485,7 @@ if ( Meteor.users.find().count() === 0 ) {
     shotId: maxi_jump_run_shot_id,
     author: manu.username,
     userId: manu._id,
-    description: 'I can make it?!',
+    description: 'I am going to catch it!',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
     fps: 24,
@@ -485,8 +493,14 @@ if ( Meteor.users.find().count() === 0 ) {
     commentsCount: 0,
     upvoters: [],
     votes: 0,
+    fileId: fileId._id,
     youTubeId: ''
   })  
+
+//  Update file to link to shot version
+  FileList.update({
+    _id: fileId._id
+  }, { versionId: maxi_jump_run_shot_version_id})
 
 //  Update the shot to link to the latest version
   ShotList.update({

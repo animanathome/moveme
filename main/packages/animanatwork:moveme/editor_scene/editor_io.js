@@ -109,27 +109,34 @@ MM.Editor.prototype.matchesPTASettings = function(data){
 }
 
 MM.Editor.prototype.exportSelectables = function(){
+    // console.log('exportSelectables')
     var data = []
 
     var i, j;
     for( i = 0, j = this.selectableObjects.length; i < j; i++){
+        // console.log('\texporting ', this.selectableObjects[i].name)
         data.push(this.selectableObjects[i].name);
     }
-
+    // console.log('\tresult', data)
     return data;
 }
 
 MM.Editor.prototype.importSelectables = function( data ){
     // console.log('importSelectables', data)
+    // console.log('number of objects', data.length)
 
+    this.selectableObjects = []
     var i, j;
-    for( i=0, j=data.length; i < j; i++){
+    for( i=0, j=data.length; i < j; i++){        
         var objectByName = this.scene.getObjectByName(data[i], true)
-        
+        // console.log('\timporting ', data[i], objectByName)
         if(objectByName){
+            // console.log('\tadding to',objectByName,'list')
             this.selectableObjects.push(objectByName)
         }
     }
+    console.log('\tfound objects ', this.selectableObjects.length)
+    console.log('\tresult', this.selectableObjects)
 }
 
 MM.Editor.prototype.exportSceneSettings = function(){

@@ -348,6 +348,8 @@ MM.Editor.prototype.insertObjectInbetween = function( object ){
 }
 
 MM.Editor.prototype.addSelectables = function( objects ){
+    console.log('addSelectables', objects)
+
     Array.prototype.push.apply(this.selectableObjects, objects);
 }
 

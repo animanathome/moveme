@@ -22,11 +22,7 @@ MM.Loader = function ( editor ) {
 				// console.log('\t', allData['scene'])
 				var scene = loader.parse(allData['scene']);
 				editor.setScene(scene);
-			}
-			
-			if( allData.hasOwnProperty('selectable') === true){
-				editor.importSelectables(allData['selectable'])	
-			}
+			}			
 
 			// console.log('------------------ start setups')
 			if( allData.hasOwnProperty('setups') === true ){
@@ -46,6 +42,13 @@ MM.Loader = function ( editor ) {
 			// console.log('------------------ start assets')
 			if( allData.hasOwnProperty('assets') === true ){
 				editor.importAssetObjects(allData['assets'])
+			}
+
+			// WARNING: moved this to the end of the loading process
+			// since another process was overwriting the selectable 
+			// list. 			
+			if( allData.hasOwnProperty('selectable') === true){
+				editor.importSelectables(allData['selectable'])	
 			}
 
 			editor.initDrivenChannels();
