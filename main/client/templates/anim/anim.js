@@ -49,9 +49,22 @@ Template.anim.rendered = function(){
 					throw new Meteor.Error('Unknown', "Unknown error duing new version.");
 				}
 
+				//	data returns version id as _id and file id as _fileId
+				console.log('\tcreateSceneVersion result data:', data)
+
+				console.log('\tpreparing to run hardwareRenderScene with projectId', projectData.projectId, 'shotId', projectData.shotId, 'versionId', data._id)
+
+			    Meteor.call('hardwareRenderScene', {
+			        projectId: projectData.projectId
+			      , shotId: projectData.shotId
+			      , versionId: data._id
+			    }, function(error, data){
+			        throwError(error)
+			    }) 
+
 				//	go the shot once we've published a new version
 				Router.go('shotPage', {
-					  projectId:projectData.projectId
+					  projectId: projectData.projectId
 					, _id: projectData.shotId
 				})			
 			}
@@ -68,15 +81,14 @@ Template.anim.rendered = function(){
 		var versionId;
 		//	no version has been saved for the shot
 		if( this.data.versions[0] === undefined ){
-			versionId = '-1';			
-			
+			versionId = '-1'
 			if( moveme.editor.localPTASettingsMatches(
 					this.data.projects[0]._id, 
 					this.data.shots[0]._id, 
 					versionId))
 			{
 				console.log('Loading local cache.')
-				moveme.editor.loadSceneLocal();
+				moveme.editor.loadSceneLocal()
 			}
 		}else{
 			//	see if we have the scene already in our local cache
@@ -86,7 +98,7 @@ Template.anim.rendered = function(){
 					this.data.versions[0]._id))
 			{
 				console.log('Loading local cache.')
-				moveme.editor.loadSceneLocal();
+				moveme.editor.loadSceneLocal()
 			}else{
 				console.log('Loading file from server.')
 
@@ -101,19 +113,17 @@ Template.anim.rendered = function(){
 				    //	local url however does
 				    //var absUrl = Meteor.absoluteUrl(file.url());
 				    //console.log('\tabsolute file url', file.url())
-
 				    var absUrl = file.url();
 
 				//	load the data once loaded
 					var xhr;
-					if(window.XMLHttpRequest) {
-					    xhr = new XMLHttpRequest();
-					}else if(window.ActiveXObject) {
-					    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+					if(window.XMLHttpRequest){
+					    xhr = new XMLHttpRequest()
+					}else if(window.ActiveXObject){
+					    xhr = new ActiveXObject("Microsoft.XMLHTTP")
 					}
 					xhr.onload = function(){
 						// console.log('\tcontent',xhr.responseText)
-
 						//	load scene file
 						var data = JSON.parse(xhr.responseText)
 						moveme.editor.loader.loadAsJSON(data)			
@@ -148,8 +158,6 @@ Template.anim.rendered = function(){
 
 	//	OPEN ASSET
 	else if( this.data.hasOwnProperty('asset')){
-
-
 		console.log('Loading asset', this.data.asset.title)
 		moveme.importAsset(this.data.asset.title)
 

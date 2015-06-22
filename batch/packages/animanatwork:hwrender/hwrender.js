@@ -18,7 +18,7 @@ MMHWR = {};
 // 	http://stackoverflow.com/questions/28105957/meteor-and-the-private-directory
 // 	http://stackoverflow.com/questions/17740790/dynamically-insert-files-into-meteor-public-folder-without-hiding-it
 MMHWR.renderScene = function(options){
-	console.log('MMHWR.renderScene')
+	console.log('MMHWR.renderScene', options)
 	/*
 	{
 		projectId:this.projectId
@@ -266,28 +266,24 @@ MMHWR.uploadToYouTube = function( options, data, callback){
 }
 
 MMHWR.updateVersion = function( error, options, data ){
-	console.log('updateVersion', error, options, data)
+    console.log('updateVersion', error, options, data)
+    console.log('youtube video id:', data.id)
 
-	console.log('youtube video id:', data.id)
-	console.log('\tthumbnails default:', data.snippet.thumbnails.default.url)
-	console.log('\tthumbnails medium:', data.snippet.thumbnails.medium.url)
-	console.log('\tthumbnails high:', data.snippet.thumbnails.high.url)
+    console.log('updating version', options.versionId)
+    VersionList.update(
+        {_id: options.versionId },
+        { $set: {
+            youTubeId: data.id 
+        }}        
+    )
+    console.log('done updating version')
 
-	console.log('updating version', options.versionId)
-	VersionList.update(
-		{_id: options.versionId },
-		{ $set: {
-			  youTubeVideoId: data.id 
-			, youTubeImageDUrl: data.snippet.thumbnails.default.url
-			, youTubeImageMUrl: data.snippet.thumbnails.medium.url
-			, youTubeImageHUrl: data.snippet.thumbnails.high.url
-		}}		
-	)
-
-	console.log('done updating version')
-	return {test: data.id}
-}
-
-MMHWR.onDone = function( error, data ){
-	console.log('MMHWR.onDone', error, data)
+    console.log('updating shot', options.shotId)
+    ShotList.update(
+        {_id: options.shotId },
+        { $set: {
+            latestVersionYoutubeId: data.id 
+        }}        
+    )
+    console.log('done updating shot')
 }

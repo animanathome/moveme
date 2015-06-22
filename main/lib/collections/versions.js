@@ -113,7 +113,7 @@ Meteor.methods({
       upvoters: [],
       votes: 0,
 
-      youTubeId: -1,
+      youTubeId: '',
     }
 
     var versionId = VersionList.insert(version);

@@ -5,7 +5,7 @@ setWallHeight = function(dom){
 }
 
 buildWall = function(dom){
-	console.log('buildWall', dom)
+	// console.log('buildWall', dom)
 	var wallLayout = {
 		panels : {
 			view0: {
@@ -111,28 +111,15 @@ Template.animWall.rendered = function(){
 		panelName = 'view'+counter;
 		panelItem = wallPanel.getPanel(panelName)	
 
-		// console.log('width:', panelItem.dom.offsetWidth)
+		var res = 'mq'
+		if(counter === 3){
+			res = 'maxres'
+		}		
 	
-	//	image
-		width = panelItem.dom.offsetWidth;
-		
-		image_size = ''
-		image_extension = 'png'
-		if(width < 80){
-			image_size = '_r125'
-		}else if(width < 160){
-			image_size = '_r25'
-		}else if(width < 320){
-			image_size = '_r50'
-		}else if(width < 640){
-			image_size = '_r75'
-		}else{
-			image_extension = 'jpg'
+		var srci = '/ui/imagePlaceHolder.png'
+		if(item.youTubeId.length != 0){
+			srci = 'https://img.youtube.com/vi/'+item.youTubeId+'/'+res+'default.jpg'	
 		}
-	
-		// console.log('#\titem', item.thumbnail)
-		var split = item.thumbnail.split('.')
-		var srci = split[0]+image_size+'.'+image_extension
 
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
 		image.setWidth('100%')

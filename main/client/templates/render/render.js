@@ -34,9 +34,23 @@ Template.render.rendered = function(){
 		var data = JSON.parse(xhr.responseText)
 		moveme.editor.loader.loadAsJSON(data)		
 	}
-	// xhr.open("GET", absUrl);
-	xhr.open("GET", newUrl);
-	xhr.send();		
+	xhr.open("GET", absUrl);
+	// xhr.open("GET", newUrl);
+	xhr.send();
+
+	var overlay = document.createElement('div')
+	overlay.className = 'render-banner-overlay'
+	overlay.style.position = 'absolute'
+	overlay.style.right = '5px'
+	overlay.style.bottom = '5px'
+	overlay.style.width = '300px'
+	overlay.style.height = '50px'
+
+	var logo = document.createElement('img')
+	logo.src = '/ui/brand_small_io.png'
+	overlay.appendChild(logo)
+
+	mmElement.appendChild(overlay)
 }
 
 // Template.render.rendered = function(){ 

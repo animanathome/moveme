@@ -40,7 +40,10 @@ Meteor.methods({
 		console.log('\t!-> batch server status:', status)
 		if( status.connected === true){
 			BatchServer.call('hardwareRenderScene', renderJob, function(error, data){
-				console.log('result', error, data)
+				if(error){
+					throw new Meteor.Error(error)
+				}
+				console.log('result', data)
 			})
 		}else{		
 			throw new Meteor.Error('Offline', "Unable to render version since the renderfarm is down. Please try again later.");

@@ -12,7 +12,6 @@
 	<div class="gallery-container">
         <div class="gallery-container-content">        	
         	<ul class="gallery-item-list">
-
         		{{#if currentUser}}
 					<li class="gallery-item-container">
 						<img class="new" src="ui/addEntry_small.png">
@@ -23,13 +22,10 @@
 						</div>
 					</li>
 				{{/if}}
-
 				{{#each shots}}
 					{{> galleryItem}}
 				{{/each}}
-
 			</ul>
-
        	</div>
     </div>
 
@@ -38,7 +34,7 @@
 
 <template name="galleryItem">
 	<li class="gallery-item-container">		
-		<img class="anim" src={{latestVersionThumbnail}}>
+		<img class="anim" src={{youtubeImage latestVersionYoutubeId 'm'}}>
 		<div>
 			<span>
 				{{title}} by {{author}}

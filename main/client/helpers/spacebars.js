@@ -49,8 +49,10 @@ UI.registerHelper('youtubeImage', function(youtubeId, resolution){
 
   //  youtubeId: unique youtube id
   //  resolution: s, m or h  
+  console.log('length', youtubeId.length)
 
-  if( youtubeId === undefined ){
+  if(youtubeId.length == 0){
+    console.log('\tno id specified. Returning placeholder')
     return '/ui/imagePlaceHolder.png';
   }
   
