@@ -213,7 +213,7 @@ if ( Meteor.users.find().count() === 0 ) {
     upvoters: [],
     votes: 0,
     fileId: fileId._id,
-    youTubeId: 'CJRDYr7TJYo'
+    youTubeId: 'BvbaSNCJ-N0'
   })
 
   //  Update file to link to shot version
@@ -228,7 +228,7 @@ if ( Meteor.users.find().count() === 0 ) {
     { $set:
       {
         latestVersionId: jumping_ball_shot_version_id,
-        latestVersionYoutubeId: 'CJRDYr7TJYo',
+        latestVersionYoutubeId: 'BvbaSNCJ-N0',
       }
     }
   ) 
@@ -451,7 +451,7 @@ if ( Meteor.users.find().count() === 0 ) {
     upvoters: [],
     fileId: fileId._id,
     votes: 0,
-    youTubeId: ''
+    youTubeId: 'YRt4cTTnvYw'
   })  
 
   //  Update file to link to shot version
@@ -464,7 +464,7 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: unsure_shot_id
   }, { $set:{
       latestVersionId: unsure_shot_version_id,
-      latestVersionYoutubeId: ''
+      latestVersionYoutubeId: 'YRt4cTTnvYw'
     }
   })
 
@@ -509,7 +509,7 @@ if ( Meteor.users.find().count() === 0 ) {
     upvoters: [],
     votes: 0,
     fileId: fileId._id,
-    youTubeId: ''
+    youTubeId: 'NFzz50o2bHY'
   })  
 
 //  Update file to link to shot version
@@ -522,7 +522,7 @@ if ( Meteor.users.find().count() === 0 ) {
     _id: maxi_jump_run_shot_id
   }, {$set:{
       latestVersionId: maxi_jump_run_shot_version_id,
-      latestVersionYoutubeId: ''
+      latestVersionYoutubeId: 'NFzz50o2bHY'
     }
   })  
 

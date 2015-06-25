@@ -1,5 +1,5 @@
 Template.header.helpers({
-  activeRouteClass: function(/* route names */) {
+    activeRouteClass: function(){
     var args = Array.prototype.slice.call(arguments, 0);
     args.pop();
 
@@ -15,7 +15,7 @@ Template.header.helpers({
     return active && 'active';
   }
 });
-
+    
 Template.header.rendered = function(){
     //  reset to default body
     $('body').attr('class', null);

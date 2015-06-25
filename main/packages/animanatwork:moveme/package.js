@@ -7,11 +7,12 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0.2.1');
   api.use([
-           "animanatwork:three", 
-           "animanatwork:ui", 
+          "globals",
+           "animanatwork:three",
+           "animanatwork:ui",
            "codeadventure:js-signals"
            ], "client");
-  api.addFiles([      
+  api.addFiles([
            "moveme.js"
           ,"extensions.js"
           ,"loader.js"

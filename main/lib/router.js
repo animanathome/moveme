@@ -340,7 +340,9 @@ Router.route('/submit', {name: 'postSubmit'});
 Router.onBeforeAction('dataNotFound', {only: 'postPage'});
 Router.onBeforeAction(requireLogin, {only: 'postSubmit'});
 Router.onBeforeAction(requireLogin, {only: 'projectSubmit'});
-Router.onBeforeAction(requireLogin, {only: ['prod','projectEdit']});
+Router.onBeforeAction(requireLogin, {
+    only: ['prod','projectEdit','projectPage', 'projectEdit', 'shotPage', 'shotEdit']
+});
 
 //  ----------------------------------------------------------------------------
 //  PROJECTS

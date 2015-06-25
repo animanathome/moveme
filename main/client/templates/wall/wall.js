@@ -321,7 +321,7 @@ Template.tutorialWall.rendered = function(){
 		image.setHeight('100%')
 		image.dom.style.backgroundSize='cover';
 		panelItem.dom.appendChild( image.dom )
-		image.onClick(showMovie(wallBase, item.title, item.youTubeVideoId))
+		image.onClick(showMovie(wallBase, item.title, item.youTubeId))
 		// image.dom.style.outline='1px solid #e1e1e1'
 
 	//	Add banner

@@ -1,4 +1,4 @@
-moveme = {};
+// moveme = {};
 
 Template.render.rendered = function(){ 
 	console.log('render.rendered')

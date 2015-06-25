@@ -49,7 +49,7 @@ Template.prodShotVersionItem.events({
   'click .movie' : function(e){
     console.log('View movie', this, this.youTubeVideoId)
 
-    var player = new MMUI.VideoDialog('', this.youTubeVideoId, 'view');
+    var player = new MMUI.VideoDialog('', this.youTubeId, 'view');
     $('#'+this._id)[0].appendChild( player.dom )
 
     // event.preventDefault();
