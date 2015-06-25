@@ -1,5 +1,5 @@
 MM.AnimCurve = function ( object, channel ){
-    console.log('AnimCurve', object, channel)
+    // console.log('AnimCurve', object, channel)
     // object is the object that we are going to drive
     // channel is the name of the attribute it's driving
     // - [channelGroup, channel]    
@@ -18,7 +18,7 @@ MM.AnimCurve = function ( object, channel ){
     this.driven = object;
 
     this.attrType = typeof(this.driven[channel[0]][channel[1]])
-    console.log('#\tattribute type', this.attrType)    
+    // console.log('#\tattribute type', this.attrType)    
 
     this.nattr = object.getNiceName( channel[0], channel[1])
 

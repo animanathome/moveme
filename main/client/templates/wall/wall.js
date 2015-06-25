@@ -108,6 +108,8 @@ Template.animWall.rendered = function(){
 	var cursor = this.data.versions;
 	var panelItem, panelItem, image_size, image_extension, width;
 	cursor.forEach(function(item){
+		console.log('version', item)
+
 		panelName = 'view'+counter;
 		panelItem = wallPanel.getPanel(panelName)	
 

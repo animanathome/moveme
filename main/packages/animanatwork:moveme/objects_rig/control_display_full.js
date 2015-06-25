@@ -2,7 +2,7 @@ MM.ControlDisplayFull = function ( control ){
 	console.log('MM.ControlDisplayFull init')
 
 	this.control = control
-	
+	this.type = 'ControlDisplayFull'
 	this.name = control.name+'Display'
 	this.geometry = new THREE.Geometry()
 	

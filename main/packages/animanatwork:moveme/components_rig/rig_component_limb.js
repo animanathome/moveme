@@ -110,10 +110,13 @@ MM.LimbComponent.prototype.build = function(){
     this.addControl( poleControl['control'], this.controlNames[4] )
 
 //  ik creation and setup
-    var legIk = new MM.TwoBoneIkBlendSolver(); 
-    legIk.stretchAxis = this.stretchAxis;
-    legIk.endJointEqualsHandleOrientation = true;
-    legIk.name = this.getName('IkSolver')
+    var legIk = new MM.TwoBoneIkBlendSolver();
+    legIk.stretchAxis = this.stretchAxis
+    legIk.endJointEqualsHandleOrientation = true
+
+    shortName = this.name.slice(1, this.name.length)
+    legIk.name = this.getName(shortName+'IkSolver')
+
     legIk.position.set(jointPositions[this.joints[2]].x, 
         jointPositions[this.joints[2]].y, jointPositions[this.joints[2]].z);
 
@@ -133,7 +136,7 @@ MM.LimbComponent.prototype.build = function(){
 
     // legIk.customCtrl = blndCtrl
     legIk.setSoftControl(blndCtrl)
-    legIk.setSoftIk();
+    legIk.setSoftIk()
     legIk.setBlendControl(blndCtrl)
 
     //  not sure if we really need to expose the following
@@ -148,7 +151,7 @@ MM.LimbComponent.prototype.build = function(){
     this.editor.addGroupContent( this.assetGroup, controls)
     this.editor.addSelectables(controls)
     this.editor.addGroupContent( this.assetGroup, [ poleControl['control'], 
-        footControl['control'] ] )    
+        footControl['control'] ] )
 
     return this;
 }

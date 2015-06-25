@@ -136,12 +136,13 @@ MM.Loader = function ( editor ) {
 
 	this.loadAsJSON = function( data ){
 		var loader = new THREE.ObjectLoader();			
-		var scene = loader.parse(data['scene'] ); editor.setScene(scene);
-		editor.importSelectables(data['selectable'])
+		var scene = loader.parse(data['scene'])
+		editor.setScene(scene)
 		editor.importSetups(data['setups'])
 		editor.importGroups(data['groups'])
 		editor.importSceneSettings(data['settings'])
 		editor.importAssetObjects(data['assets'])
+		editor.importSelectables(data['selectable'])
 	};
 
 	this.loadJSONFile = function ( file ){

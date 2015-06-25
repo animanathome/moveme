@@ -1,5 +1,6 @@
 MM.SpaceswitchSplit = function(){
 	MM.Control.call(this);
+    this.type = 'SpaceswitchSplit'
 
 	this.pOffsetMatrices = []
 	this.pSpaces = []
@@ -52,6 +53,10 @@ MM.SpaceswitchSplit.prototype.exportData = function(){
 	console.log('SpaceswitchSplit.exportData')
 
     var data = MM.Control.prototype.exportData.call(this);
+
+    // If we don't hard code it here this property gets exported
+    // as undefined when using this.type. It must be overwritten 
+    // somewhere.
     data.type = 'SpaceswitchSplit'
 
     //	space switch split specific
@@ -129,7 +134,7 @@ MM.SpaceswitchSplit.prototype.exportSetup = function(){
 	// console.log('Spaceswitch.exportSetup')
 	//	nothing to do 
 	var data = {}
-	data.type = 'SpaceswitchSplit'
+	data.type = this.type
 	data.name = this.name
 
     //  this is only populated when we actually use this as a spaceswitch

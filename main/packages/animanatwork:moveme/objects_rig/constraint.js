@@ -1,6 +1,6 @@
 MM.Constraint = function(){
     MM.Control.call(this);
-
+    this.type = 'Constraint'
     //  solver variables
     //  constraint modes
     //  0 = point
@@ -40,7 +40,7 @@ MM.Constraint.prototype.exportData = function(){
 
     var data = MM.Control.prototype.exportData.call(this);
     
-    data.type = 'Constraint'
+    data.type = this.type
     data.constraintMode = this.constraintMode;
     data.offsetMatrix = this.offsetMatrix.elements;
     
@@ -58,7 +58,7 @@ MM.Constraint.prototype.exportSetup = function(){
     data = {}
     // console.log('\texporting', constraint[i])
 
-    data.type = 'Constraint';
+    data.type = this.type
     data.name = this.name;
     if( this.objectToSolve !== undefined ){                
         data.objectToSolve = this.objectToSolve.name

@@ -1,5 +1,6 @@
 MM.ParentMaster = function(){
-	MM.Spaceswitch.call( this );
+	MM.Spaceswitch.call(this);
+	this.type='ParentMaster'
 
 	this.objectType = 'ParentMaster'
     this.channelName = 'parentMaster'

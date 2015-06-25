@@ -1,5 +1,6 @@
 MM.TwoStepFourBoneIkBlendSolver = function(){
     MM.TwoBoneIkBlendSolver.call(this);
+    this.type = 'TwoStepFourBoneIkBlendSolver'
 
     this.heelJoint = undefined;
     this.ball0Joint = undefined;
@@ -31,7 +32,7 @@ MM.TwoStepFourBoneIkBlendSolver.prototype = Object.create(MM.TwoBoneIkBlendSolve
 
 MM.TwoStepFourBoneIkBlendSolver.prototype.exportData = function(){
     var data = MM.TwoBoneIkBlendSolver.prototype.exportData.call(this);
-    data.type = 'TwoStepFourBoneIkBlendSolver'
+    data.type = this.type
     return data
 }
 

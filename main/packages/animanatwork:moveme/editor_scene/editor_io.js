@@ -239,12 +239,12 @@ MM.Editor.prototype.importSceneSettings = function(data){
 
 //  camera settings
     for( var camera in data.cameraSettings ){
-        console.log('\timporting data for', camera)
-        console.log('\tdata', data.cameraSettings[camera])
+        // console.log('\timporting data for', camera)
+        // console.log('\tdata', data.cameraSettings[camera])
 
         scene_camera = this.scene.getObjectByName(camera, true)
         if(camera == undefined ){
-            console.log('\tskipping ', cameras[i], 'since it can not be found.')
+            // console.log('\tskipping ', cameras[i], 'since it can not be found.')
             continue
         }
         scene_camera.importTransformation(data.cameraSettings[camera])
@@ -348,11 +348,11 @@ MM.Editor.prototype.exportGroups = function(){
 MM.Editor.prototype.importSetups = function( data ){
     //  here we restore connections between objects
     //  which can only happen when all objects have been created!
-    // console.log('editor.importSetups', data)      
+    console.log('!!! --> editor.importSetups', data)
 
     for( var uuid in data ){
         var thisData = data[uuid]
-
+        console.log('#\tloading in',thisData.type,'setup for',thisData.name)
         switch( thisData.type ){
             case "SkinnedMesh":
                 /*
@@ -427,147 +427,174 @@ MM.Editor.prototype.importSetups = function( data ){
                 // console.log('SkinnedMesh', skinnedMesh)
             break;
 
-            case "ParentMaster":
-                var parentMaster = this.scene.getObjectByUuid( uuid, true )
-                if( parentMaster === undefined ){
-                    parentMaster = this.scene.getObjectByName( thisData.name , true)
-                    if( parentMaster === undefined ){
+            case 'Constraint':
+            case 'Spaceswitch':
+            case 'SpaceswitchSplit':
+            case 'ParentMaster' :
+            case 'CurveSolver':
+            case 'OneSimpleBoneIkSolver':
+            case 'TwoBoneSoftIkSolver':
+            case 'TwoBoneIkSolver':
+            case 'TwoBoneIkBlendSolver':
+            case 'FourBoneIkBlendSolver':
+            case 'TwoStepFourBoneIkBlendSolver':
+                var transformNode = this.scene.getObjectByUuid(uuid, true)
+                if(transformNode === undefined){
+                    console.log('#\tUnable to find node with uuid', uuid)
+                    transformNode = this.scene.getObjectByName(thisData.name , true)
+                    if(transformNode === undefined){
+                        console.log('#\tUnable to find node with name', thisData.name)
                         break;
                     }
                 }
-                parentMaster.importSetup( this.scene, thisData );
-            break;
-
-            case "SpaceswitchSplit":
-                var spaceswitchSplit = this.scene.getObjectByUuid( uuid , true)
-                if( spaceswitchSplit === undefined ){
-                    // console.log('Unable to find spaceswitchSplit with uuid', uuid, ', looking by name', thisData.name)
-                    spaceswitchSplit = this.scene.getObjectByName( thisData.name , true)
-                    if( spaceswitchSplit === undefined ){
-                        break;
-                    }
+                if(typeof(transformNode.importSetup) === 'function'){
+                    transformNode.importSetup(this.scene, thisData);
+                }else{
+                    console.log('#\t!!! WARNING: unable to load setup data on', transformNode)                    
                 }
-                spaceswitchSplit.importSetup( this.scene, thisData );
             break;
 
-            case "Spaceswitch":
-                var spaceswitch = this.scene.getObjectByUuid( uuid , true)
-                if( spaceswitch === undefined ){
-                    // console.log('Unable to find spaceswitch with uuid', uuid, ', looking by name', thisData.name)
-                    spaceswitch = this.scene.getObjectByName( thisData.name , true)
-                    if( spaceswitch === undefined ){
-                        break;
-                    }
-                }
-                spaceswitch.importSetup( this.scene, thisData );
-            break;
+            // case "ParentMaster":
+            //     var parentMaster = this.scene.getObjectByUuid( uuid, true )
+            //     if( parentMaster === undefined ){
+            //         parentMaster = this.scene.getObjectByName( thisData.name , true)
+            //         if( parentMaster === undefined ){
+            //             break;
+            //         }
+            //     }
+            //     parentMaster.importSetup( this.scene, thisData );
+            // break;
 
-            case "Constraint":
-                var constraint = this.scene.getObjectByUuid( uuid , true)
-                if( constraint === undefined ){
-                    // console.log('Unable to find constraint with uuid', uuid, ', looking by name', thisData.name)                        
-                    constraint = this.scene.getObjectByName( thisData.name , true)
-                    if( constraint === undefined ){
-                        break;
-                    }
-                }
+            // case "SpaceswitchSplit":
+            //     var spaceswitchSplit = this.scene.getObjectByUuid( uuid , true)
+            //     if( spaceswitchSplit === undefined ){
+            //         // console.log('Unable to find spaceswitchSplit with uuid', uuid, ', looking by name', thisData.name)
+            //         spaceswitchSplit = this.scene.getObjectByName( thisData.name , true)
+            //         if( spaceswitchSplit === undefined ){
+            //             break;
+            //         }
+            //     }
+            //     spaceswitchSplit.importSetup( this.scene, thisData );
+            // break;
 
-                // var objectToSolve = this.scene.getObjectByName( 
-                //     thisData.objectToSolve , true);
+            // case "Spaceswitch":
+            //     var spaceswitch = this.scene.getObjectByUuid( uuid , true)
+            //     if( spaceswitch === undefined ){
+            //         // console.log('Unable to find spaceswitch with uuid', uuid, ', looking by name', thisData.name)
+            //         spaceswitch = this.scene.getObjectByName( thisData.name , true)
+            //         if( spaceswitch === undefined ){
+            //             break;
+            //         }
+            //     }
+            //     spaceswitch.importSetup( this.scene, thisData );
+            // break;
 
-                // if( objectToSolve === undefined ){
-                //     // console.log('Unable to find object to solve', thisData.objectToSolve)
-                //     break;
-                // }
+            // case "Constraint":
+            //     var constraint = this.scene.getObjectByUuid( uuid , true)
+            //     if( constraint === undefined ){
+            //         // console.log('Unable to find constraint with uuid', uuid, ', looking by name', thisData.name)                        
+            //         constraint = this.scene.getObjectByName( thisData.name , true)
+            //         if( constraint === undefined ){
+            //             break;
+            //         }
+            //     }
 
-                // // console.log('constraint', constraint)
-                // // console.log('objectToSolve', objectToSolve)
+            //     // var objectToSolve = this.scene.getObjectByName( 
+            //     //     thisData.objectToSolve , true);
 
-                // // constraint.objectToSolve = objectToSolve; 
-                // constraint.setObjectToSolve( objectToSolve ); 
+            //     // if( objectToSolve === undefined ){
+            //     //     // console.log('Unable to find object to solve', thisData.objectToSolve)
+            //     //     break;
+            //     // }
 
-                constraint.importSetup(this.scene, thisData);
-            break;
+            //     // // console.log('constraint', constraint)
+            //     // // console.log('objectToSolve', objectToSolve)
 
-            case "FourBoneIkBlendSolver":
-                // console.log('\tSetting up', thisData.name)
+            //     // // constraint.objectToSolve = objectToSolve; 
+            //     // constraint.setObjectToSolve( objectToSolve ); 
 
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    // console.log('Unable to find solver with uuid', uuid)
-                    break;
-                }
+            //     constraint.importSetup(this.scene, thisData);
+            // break;
 
-                solver.importSetup(this.scene, thisData)
-                // console.log('SOLVER:', solver )                      
-            break;
+            // case "FourBoneIkBlendSolver":
+            //     // console.log('\tSetting up', thisData.name)
 
-            case "TwoBoneIkBlendSolver":
-                // console.log('\tSetting up', thisData.name)
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         // console.log('Unable to find solver with uuid', uuid)
+            //         break;
+            //     }
 
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    // console.log('Unable to find solver with uuid', uuid)
-                    break;
-                }
-                solver.importSetup(this.scene, thisData)                  
-            break;
+            //     solver.importSetup(this.scene, thisData)
+            //     // console.log('SOLVER:', solver )                      
+            // break;
 
-            case "TwoBoneSoftIkSolver":
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    // console.log('Unable to find solver with uuid', uuid)
-                    break;
-                }
-                solver.importSetup(this.scene, thisData)
-            break;
+            // case "TwoBoneIkBlendSolver":
+            //     // console.log('\tSetting up', thisData.name)
 
-            case "TwoBoneIkSolver":
-                // console.log('\tSetting up', thisData.name)
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         // console.log('Unable to find solver with uuid', uuid)
+            //         break;
+            //     }
+            //     solver.importSetup(this.scene, thisData)                  
+            // break;
 
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    // console.log('Unable to find solver with uuid', uuid)
-                    break;
-                }
-                solver.importSetup(this.scene, thisData);
-            break;
+            // case "TwoBoneSoftIkSolver":
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         // console.log('Unable to find solver with uuid', uuid)
+            //         break;
+            //     }
+            //     solver.importSetup(this.scene, thisData)
+            // break;
 
-            case "OneSimpleBoneIkSolver":
-                // console.log('\tSetting up', thisData.name)
-                // console.log('\tData', thisData)
+            // case "TwoBoneIkSolver":
+            //     // console.log('\tSetting up', thisData.name)
 
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    // console.log('Unable to find OneSimpleBoneIkSolver with uuid', uuid)
-                    break;
-                }
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         // console.log('Unable to find solver with uuid', uuid)
+            //         break;
+            //     }
+            //     solver.importSetup(this.scene, thisData);
+            // break;
 
-                var startJoint = this.scene.getObjectByName( thisData.startJoint , true);
-                // if( startJoint === undefined ){
-                //     console.log('Unable to find', thisData.startJoint)
-                // }
-                var endJoint = this.scene.getObjectByName( thisData.endJoint , true);
-                // if( endJoint === undefined ){
-                //     console.log('Unable to find', thisData.endJoint)
-                // }
-                solver.setStartJoint( startJoint )                    
-                solver.endJoint = endJoint    
-                solver.startPreferedAngle.fromArray( thisData.startPreferedAngle )
+            // case "OneSimpleBoneIkSolver":
+            //     // console.log('\tSetting up', thisData.name)
+            //     // console.log('\tData', thisData)
 
-                // console.log('\tSolver', solver)
-            break;
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         // console.log('Unable to find OneSimpleBoneIkSolver with uuid', uuid)
+            //         break;
+            //     }
 
-            case "CurveSolver":
-                console.log('\tSetting up', thisData.name)
+            //     var startJoint = this.scene.getObjectByName( thisData.startJoint , true);
+            //     // if( startJoint === undefined ){
+            //     //     console.log('Unable to find', thisData.startJoint)
+            //     // }
+            //     var endJoint = this.scene.getObjectByName( thisData.endJoint , true);
+            //     // if( endJoint === undefined ){
+            //     //     console.log('Unable to find', thisData.endJoint)
+            //     // }
+            //     solver.setStartJoint( startJoint )                    
+            //     solver.endJoint = endJoint    
+            //     solver.startPreferedAngle.fromArray( thisData.startPreferedAngle )
 
-                var solver = this.scene.getObjectByUuid( uuid , true)
-                if( solver === undefined ){
-                    console.error('Unable to find solver with uuid', uuid)
-                    break;
-                }
-                solver.importSetup(this.scene, thisData)
-            break;
+            //     // console.log('\tSolver', solver)
+            // break;
+
+            // case "CurveSolver":
+            //     console.log('\tSetting up', thisData.name)
+
+            //     var solver = this.scene.getObjectByUuid( uuid , true)
+            //     if( solver === undefined ){
+            //         console.error('Unable to find solver with uuid', uuid)
+            //         break;
+            //     }
+            //     solver.importSetup(this.scene, thisData)
+            // break;
 
             case "MultiChannel":
                 var multi = new MM.MultiChannel();
@@ -586,131 +613,26 @@ MM.Editor.prototype.exportSetups = function( ){
 
 //  WEIGHTS
     var skin = this.scene.getObjectOfInstance(THREE.SkinnedMesh)
-    // console.log('skin', skin)
+    // console.log('#\tfound', skin.length, 'of type skin')
     for(var i = 0, j = skin.length; i < j; i++){
-        thisData = {}
-        // console.log('\texporting', skin[i])
+        // console.log('#\t\texporting skin for', skin[i])
+        data[skin[i].uuid] = skin[i].exportSetup();
+    }
 
-
-        thisData.type = 'SkinnedMesh';
-        thisData.name = skin[i].name;
-        thisData.identityMatrix = skin[i].identityMatrix.elements;
-        thisData.bones = [];
-
-        for( var k = 0, l = skin[i].bones.length; k < l; k++){
-            thisData.bones.push( skin[i].bones[k].name )
+//  TRANSFORM NODE TYPES (TNT)
+    var nn = this.transformNodeTypes.length;
+    var i, j, not, nodes;
+    for( i = 0; i < nn; i++){
+        nodes = this.scene.getObjectOfType(this.transformNodeTypes[i])
+        // console.log('#\tfound', nodes.length, 'of type', this.transformNodeTypes[i])
+        for( j = 0, not = nodes.length; j < not; j++){            
+            if(typeof(nodes[j].exportSetup) === 'function'){
+                // console.log('#\t\texporting setup for', nodes[j])
+                data[nodes[j].uuid] = nodes[j].exportSetup()
+            }else{
+                console.log('#\t\tunable to export setup for', nodes[j])
+            }
         }
-
-        // console.log('boneMatrices:', skin[i].boneMatrices.length)
-        thisData.boneMatrices = []
-        for( var k = 0, l = skin[i].boneMatrices.length; k < l; k++){
-            thisData.boneMatrices.push( skin[i].boneMatrices[k] )
-        }   
-        // console.log( 'data:', thisData.boneMatrices )
-        thisData.skinWeights = skin[i].geometry.skinWeights;
-        thisData.skinIndices = skin[i].geometry.skinIndices;
-
-        //  this unique id should help us when we need to convert the
-        //  existing Mesh into a SkinnedMesh
-        data[ skin[i].uuid ] = thisData;
-    }
-
-//  PARENTMASTER
-    var parentMaster = this.scene.getObjectOfInstance(MM.ParentMaster)
-    for( var i = 0, j = parentMaster.length; i < j; i++){
-        data[ parentMaster[i].uuid ] = parentMaster[i].exportSetup();
-    }
-
-//  SPACESWITCHSPLITS
-    var spaceswitchSplits = this.scene.getObjectOfInstance(MM.SpaceswitchSplit)
-    for( var i = 0, j = spaceswitchSplits.length; i < j; i++){
-        data[ spaceswitchSplits[i].uuid ] = spaceswitchSplits[i].exportSetup();
-    }
-
-//  SPACESWITCHES
-    var spaceswitch = this.scene.getObjectOfInstance(MM.Spaceswitch)
-    for( var i = 0, j = spaceswitch.length; i < j; i++){
-        data[ spaceswitch[i].uuid ] = spaceswitch[i].exportSetup();
-    }
-
-//  CONSTRAINTS
-    var constraint = this.scene.getObjectOfInstance(MM.Constraint)
-    for( var i = 0, j = constraint.length; i < j; i++){
-        data[constraint[i].uuid] = constraint[i].exportSetup();
-    }
-
-//  IK SOLVERS
-    var fourBoneIkBlendSolver = this.scene.getObjectOfInstance(MM.FourBoneIkBlendSolver)
-    for( var i = 0, j = fourBoneIkBlendSolver.length; i < j; i++){
-        data[fourBoneIkBlendSolver[i].uuid ]=fourBoneIkBlendSolver[i].exportSetup();
-    }
- 
-    var twoBoneIkBlendSolver = this.scene.getObjectOfInstance(MM.TwoBoneIkBlendSolver)
-    for( var i = 0, j = twoBoneIkBlendSolver.length; i < j; i++){
-        //  make sure we do not export the same object twice
-        //  this is currently the only way I know how do deal with 
-        //  objects which inherit from the same prototype
-        if( fourBoneIkBlendSolver.indexOf( twoBoneIkBlendSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneIkBlendSolver[i].name)
-            break;
-        }
-
-        data[twoBoneIkBlendSolver[i].uuid]=twoBoneIkBlendSolver[i].exportSetup();
-    }        
-
-    var twoBoneSoftIkSolver=this.scene.getObjectOfInstance(MM.TwoBoneSoftIkSolver);
-    for( var i = 0, j = twoBoneSoftIkSolver.length; i < j; i++){
-        if( fourBoneIkBlendSolver.indexOf( twoBoneSoftIkSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneSoftIkSolver[i].name)
-            break;
-        }
-        if( twoBoneIkBlendSolver.indexOf( twoBoneSoftIkSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneSoftIkSolver[i].name)
-            break;
-        }
-
-        data[twoBoneSoftIkSolver[i].uuid]=twoBoneSoftIkSolver[i].exportSetup();
-    }
-
-    var twoBoneIkSolver = this.scene.getObjectOfInstance(MM.TwoBoneIkSolver)
-    for( var i = 0, j = twoBoneIkSolver.length; i < j; i++){
-        //  make sure we do not export the same object twice
-        //  this is currently the only way I know how do deal with 
-        //  objects which inherit from the same prototype
-        if( fourBoneIkBlendSolver.indexOf( twoBoneIkSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneIkSolver[i].name)
-            break;
-        }
-        if( twoBoneIkBlendSolver.indexOf( twoBoneIkSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneIkSolver[i].name)
-            break;
-        }
-        if( twoBoneSoftIkSolver.indexOf( twoBoneIkSolver[i] ) !== -1 ){
-            // console.log('\tskipping ', twoBoneIkSolver[i].name)
-            break;
-        }
-
-        data[twoBoneIkSolver[i].uuid]=twoBoneIkSolver[i].exportSetup();
-    }
-
-    //  solver = ikHandle
-    var oneSimpleBoneIkSolver = this.scene.getObjectOfInstance(MM.OneSimpleBoneIkSolver)
-    for( var i = 0, j = oneSimpleBoneIkSolver.length; i < j; i++){
-        thisData = {}
-        // console.log('\texporting', oneSimpleBoneIkSolver[i], 'as OneSimpleBoneIkSolver')
-        thisData.type = 'OneSimpleBoneIkSolver';
-        thisData.name = oneSimpleBoneIkSolver[i].name;
-        thisData.startJoint = oneSimpleBoneIkSolver[i].startJoint.name
-        thisData.endJoint = oneSimpleBoneIkSolver[i].endJoint.name
-        thisData.startPreferedAngle = oneSimpleBoneIkSolver[i].startPreferedAngle.toArray()
-
-        data[ oneSimpleBoneIkSolver[i].uuid ] = thisData;
-    }
-
-    //  CurveSolver
-    var curveSolver = this.scene.getObjectOfInstance(MM.CurveSolver)
-    for( var i = 0, j = curveSolver.length; i < j; i++){
-        data[curveSolver[i].uuid]=curveSolver[i].exportSetup();
     }
 
 //  STEP NODES
@@ -720,7 +642,6 @@ MM.Editor.prototype.exportSetups = function( ){
             data[ this.step2Nodes[i].uuid ] = this.step2Nodes[i].exportData()
         }
     }
-
     // console.log('\texport:', data)
     return data;
 }

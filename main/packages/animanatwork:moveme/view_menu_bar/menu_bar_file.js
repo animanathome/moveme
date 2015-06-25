@@ -9,10 +9,7 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	//	in
 	var input = document.createElement( 'input' );
 	input.type = 'file';
-	input.addEventListener( 'change', function ( event ) {
-
-		// editor.loader.loadFile( input.files[ 0 ] );
-		// console.log('Loading file', input.files[0])
+	input.addEventListener( 'change', function (event){
 		editor.loadScene( input.files[0] )
 	} );	
 
@@ -25,14 +22,8 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	var openItem = new MMUI.MenuItem('Open File').onClick(
 		function () {
 			input.click();
-		})//.addShortcut('Ctrl+o')
-	menuGrp.add( openItem )	
-
-	// var versionItem = new MMUI.MenuItem('Open Version').onClick(
-	// 	function(){
-
-	// })
-	// menuGrp.add( versionItem )
+		})
+	menuGrp.add( openItem )
 
 	var divider = new MMUI.MenuDivider();
 	menuGrp.add( divider )	

@@ -1,5 +1,6 @@
 MM.TwoBoneIkBlendSolver = function(){    
     MM.TwoBoneSoftIkSolver.call(this);
+    this.type = 'TwoBoneIkBlendSolver'
 
     //  object which contains the control channels
     this.customCtrl = undefined
@@ -19,7 +20,7 @@ MM.TwoBoneIkBlendSolver.prototype=Object.create(MM.TwoBoneSoftIkSolver.prototype
 
 MM.TwoBoneIkBlendSolver.prototype.exportData = function(){
     var data = MM.TwoBoneSoftIkSolver.prototype.exportData.call(this);
-    data.type = 'TwoBoneIkBlendSolver'
+    data.type = this.type
     return data
 }
 
@@ -43,7 +44,7 @@ MM.TwoBoneIkBlendSolver.prototype.exportSetup = function(){
 
     var data = MM.TwoBoneSoftIkSolver.prototype.exportSetup.call(this);
 
-    data.type = 'TwoBoneIkBlendSolver';
+    data.type = this.type
     data.startFkCtrl = this.startFkCtrl.name;
     data.middleFkCtrl = this.middleFkCtrl.name;
     data.endFkCtrl = this.endFkCtrl.name;

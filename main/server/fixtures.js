@@ -410,13 +410,22 @@ if ( Meteor.users.find().count() === 0 ) {
   })
 
   //  -----------------------------------------
-  //  Mini jumping kick shot
-  var jumping_kick_shot_id = ShotList.insert({
+  //  Mini unsure shot
+
+  //  Create a shot version scene file
+  var sceneData = Assets.getText('demo/mini_unsure.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
+
+  var unsure_shot_id = ShotList.insert({
     projectId: front_page_project_id,
     author: manu.username,
     userId: manu._id,    
-    title: 'Jumping kick',
-    description: 'No description yet.',
+    title: 'Unsure',
+    description: 'Mini is unsure. He does not know what it is he is standing on.',
     submitted: new Date(now - 2 * 3600 * 1000),
     shotNumber: 1,
     versionCount: 1,
@@ -428,27 +437,33 @@ if ( Meteor.users.find().count() === 0 ) {
   })
 
   //  Mini jumping kick version 1
-  var jumping_kick_shot_version_id = VersionList.insert({
+  var unsure_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
-    shotId: jumping_kick_shot_id,
+    shotId: unsure_shot_id,
     author: manu.username,
     userId: manu._id,
-    description: 'Aaaaaaahhhh!',
+    description: 'What is that?',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
     fps: 24,
     duration: 48,
     commentsCount: 0,
     upvoters: [],
+    fileId: fileId._id,
     votes: 0,
     youTubeId: ''
   })  
 
+  //  Update file to link to shot version
+  FileList.update({
+    _id: fileId._id
+  }, { versionId: unsure_shot_version_id})
+
   //  Update the shot to link to the latest version
   ShotList.update({
-    _id: jumping_kick_shot_id
+    _id: unsure_shot_id
   }, { $set:{
-      latestVersionId: jumping_kick_shot_version_id,
+      latestVersionId: unsure_shot_version_id,
       latestVersionYoutubeId: ''
     }
   })

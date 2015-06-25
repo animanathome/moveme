@@ -58,6 +58,31 @@ THREE.SkinnedMesh.prototype.init = function(useVertexTexture){
 	return this;	
 }
 
+THREE.SkinnedMesh.prototype.exportSetup = function(){
+	var data = {}
+
+    data.type = 'SkinnedMesh';
+    data.name = this.name;
+    data.uuid = this.uuid;
+    data.identityMatrix = this.identityMatrix.elements;
+    data.bones = [];
+
+    for( var k = 0, l = this.bones.length; k < l; k++){
+        data.bones.push( this.bones[k].name )
+    }
+
+    // console.log('boneMatrices:', this.boneMatrices.length)
+    data.boneMatrices = []
+    for( var k = 0, l = this.boneMatrices.length; k < l; k++){
+        data.boneMatrices.push( this.boneMatrices[k] )
+    }   
+    // console.log( 'data:', data.boneMatrices )
+    data.skinWeights = this.geometry.skinWeights;
+    data.skinIndices = this.geometry.skinIndices;
+
+	return data
+}
+
 THREE.SkinnedMesh.prototype.setWeights = function( vertices, influences, weights ) {
 
 	console.log('SkinnedMesh.setWeights')

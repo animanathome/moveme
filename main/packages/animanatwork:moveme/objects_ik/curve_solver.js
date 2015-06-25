@@ -1,6 +1,8 @@
 MM.CurveSolver = function(){
 	MM.Control.call(this);
 
+    this.type = 'CurveSolver'
+
 	this.joints = []
 	this.baseControlPoints = []
 	this.deformedControlPoints = []
@@ -44,7 +46,7 @@ MM.CurveSolver.prototype.exportData = function(){
     // console.log('CurveSolver.exportData')
 
     var data = MM.Control.prototype.exportData.call(this)
-    data.type = 'CurveSolver'
+    data.type = this.type    
     
     data.rootBindMatrix = []
     this.rootBindMatrix.flattenToArray(data.rootBindMatrix)
@@ -66,8 +68,8 @@ MM.CurveSolver.prototype.exportSetup = function(){
     // console.log('CurveSolver.exportSetup')
 
     data = {}
-    data.type = 'CurveSolver'
-
+    data.type = this.type
+    data.name = this.name
     data.joints = []
     for( var i = 0; i < this.joints.length; i++){
         data.joints.push( this.joints[i].name )

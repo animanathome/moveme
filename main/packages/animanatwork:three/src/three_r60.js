@@ -14429,7 +14429,7 @@ THREE.Bone.prototype.update = function ( parentSkinMatrix, forceUpdate ) {
 THREE.SkinnedMesh = function ( geometry, material, useVertexTexture ) {
 
 	THREE.Mesh.call( this, geometry, material );
-
+	this.type = 'SkinnedMesh'
 	//
 
 	this.useVertexTexture = useVertexTexture !== undefined ? useVertexTexture : true;

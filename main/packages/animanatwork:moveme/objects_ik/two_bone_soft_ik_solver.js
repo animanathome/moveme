@@ -1,5 +1,6 @@
 MM.TwoBoneSoftIkSolver=function(){
 	MM.TwoBoneIkSolver.call(this);
+	this.type = 'TwoBoneSoftIkSolver'
 
 	//	initial length
 	this.initA = 1.0;
@@ -16,13 +17,12 @@ MM.TwoBoneSoftIkSolver.prototype=Object.create(MM.TwoBoneIkSolver.prototype);
 
 MM.TwoBoneSoftIkSolver.prototype.exportData = function(){
     var data = MM.TwoBoneIkSolver.prototype.exportData.call(this);
-    data.type = 'TwoBoneSoftIkSolver'
+    data.type = this.type
     return data
 }
 
 MM.TwoBoneSoftIkSolver.prototype.importSetup = function(scene, data){
-	console.log('TwoBoneSoftIkSolver.importSetup', data)
-
+	// console.log('TwoBoneSoftIkSolver.importSetup', data)
     MM.TwoBoneIkSolver.prototype.importSetup.call(this, scene, data);
 
     this.initA = data.initA;
@@ -32,15 +32,14 @@ MM.TwoBoneSoftIkSolver.prototype.importSetup = function(scene, data){
 	this.inputMatrix_ROOT = this.startJoint.matrixWorld;
 
     this.softControl = scene.getObjectByName(data.softControl, true);
+    // console.log('\tsoftControl', this.softControl)
     this.stretchAxis = data.stretchAxis;
 }
 
 MM.TwoBoneSoftIkSolver.prototype.exportSetup = function(){
-	console.log('TwoBoneSoftIkSolver.exportSetup', this.name)
-
+	// console.log('TwoBoneSoftIkSolver.exportSetup', this.name)
     var data = MM.TwoBoneIkSolver.prototype.exportSetup.call(this);
-
-    data.type = 'TwoBoneSoftIkSolver';
+    data.type = this.type
 
     data.initA = this.initA
     data.initB = this.initB
@@ -236,7 +235,7 @@ MM.TwoBoneSoftIkSolver.prototype.updateMatrixWorld=function(force){
 	    // 	console.log('No soft to calculate', this.softControl.custom['useSoft'])
 	    }
 	}else{
-		console.log('No soft ik control is defined. Nothing to calculate.')
+		console.log(this.name, 'No soft ik control is defined.', this)
 	}
 
 	MM.TwoBoneIkSolver.prototype.updateMatrixWorld.call(this, force);

@@ -1,5 +1,6 @@
 MM.FourBoneIkBlendSolver = function(){
     MM.TwoBoneIkBlendSolver.call(this);
+    this.type = 'FourBoneIkBlendSolver'
 
     this.heelJoint = undefined;
     this.ballJoint = undefined;
@@ -28,13 +29,13 @@ MM.FourBoneIkBlendSolver.prototype = Object.create(MM.TwoBoneIkBlendSolver.proto
 
 MM.FourBoneIkBlendSolver.prototype.exportData = function(){
     var data = MM.TwoBoneIkBlendSolver.prototype.exportData.call(this);
-    data.type = 'FourBoneIkBlendSolver'    
+    data.type = this.type
     return data
 }
 
 MM.FourBoneIkBlendSolver.prototype.importSetup = function(scene, data){
-    console.log('FourBoneIkBlendSolver.importSetup', this.name)
-    console.log('\tdata', data)
+    // console.log('FourBoneIkBlendSolver.importSetup', this.name)
+    // console.log('\tdata', data)
 
     MM.TwoBoneIkBlendSolver.prototype.importSetup.call(this, scene, data);
 
@@ -62,7 +63,7 @@ MM.FourBoneIkBlendSolver.prototype.exportSetup = function(){
     console.log('FourBoneIkBlendSolver.exportSetup', this.name)
 
     var data = MM.TwoBoneIkBlendSolver.prototype.exportSetup.call(this);
-    data.type = 'FourBoneIkBlendSolver';
+    data.type = this.type
 
     data.heelJoint = this.heelJoint.name;
     data.ballJoint = this.ballJoint.name;

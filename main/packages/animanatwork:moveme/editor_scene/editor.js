@@ -80,13 +80,27 @@ MM.Editor = function(){
     }
 
 //  PROJECT DATA ( contains project, shot and version id)
-    this.projectObj = undefined;
+    this.projectObj = undefined;    
 
 //  HOTKEYS
     //  turn on the hot keys or shortcuts by default
     this.useHotKeys = true;
 
 //	LOADER ( IO for scene, session, sets, ...)
+    this.transformNodeTypes = [
+          'Control'
+        , 'Constraint' 
+        , 'Spaceswitch'
+        , 'SpaceswitchSplit'
+        , 'ParentMaster' 
+        , 'CurveSolver'
+        , 'OneSimpleBoneIkSolver'        
+        , 'TwoBoneSoftIkSolver'
+        , 'TwoBoneIkSolver'
+        , 'TwoBoneIkBlendSolver'
+        , 'FourBoneIkBlendSolver'
+        , 'TwoStepFourBoneIkBlendSolver'        
+    ]
     this.loader = new MM.Loader( this );
 
 //  GROUPS

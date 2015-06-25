@@ -1,8 +1,7 @@
-MM.TwoBoneIkSolver = function() 
-{
+MM.TwoBoneIkSolver = function(){
 	// console.log('creating TwoBoneIkSolver')
-
 	MM.Control.call(this);
+    this.type = 'TwoBoneIkSolver';
 
 	//	ik solve
 	this.startJoint = undefined;	
@@ -63,7 +62,7 @@ MM.TwoBoneIkSolver.prototype.importData = function( data )
 MM.TwoBoneIkSolver.prototype.exportData = function(){
     var data = {};
 
-    data.type = 'TwoBoneIkSolver';
+    data.type = this.type;
     data.name = this.name;
     data.uuid = this.uuid;
 
@@ -92,7 +91,7 @@ MM.TwoBoneIkSolver.prototype.exportData = function(){
 MM.TwoBoneIkSolver.prototype.exportSetup = function(){
 
     var data={};
-    data.type = 'TwoBoneIkSolver';
+    data.type = this.type;
     data.name = this.name;
     data.startMatrix = this.startMatrix.toArray();
     data.startJoint = this.startJoint.name;
@@ -109,7 +108,7 @@ MM.TwoBoneIkSolver.prototype.exportSetup = function(){
 
 
 MM.TwoBoneIkSolver.prototype.importSetup = function(scene, data){
-    console.log('TwoBoneIkSolver.importSetup', data)
+    // console.log('TwoBoneIkSolver.importSetup', data)
     
     this.poleVector = scene.getObjectByName(data.poleVector, true);
     this.setStartJoint(scene.getObjectByName(data.startJoint, true));

@@ -1,5 +1,6 @@
 MM.JointDisplay = function ( joint ){
-	this.joint = joint	
+	this.joint = joint
+	this.type = 'JointDisplay'
 	
 	this.jointColor = new THREE.Color( 0xffaa00 );
 	this.controlColor = new THREE.Color( 0xff0000 );

@@ -36,7 +36,10 @@ Template.anim.rendered = function(){
 
 		//	get the animation scene data
 		//	NOTE: we don't really have to go through the local storage here
-		var animData = localStorage.threejsEditor;
+		
+		var animData = moveme.editor.loader.saveAsJSON()
+
+		console.log('data', animData)
 
 		//	get shot info
 		var projectData = moveme.editor.exportPTASettings()

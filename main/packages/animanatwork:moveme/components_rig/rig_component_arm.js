@@ -43,13 +43,14 @@ MM.ArmComponent.prototype.build = function(){
     var wristPos = wristJoint.matrixWorld.getPosition();
     // console.log(wristJoint.name, wristPos.x, wristPos.y, wristPos.z)
 
-    var wristIk = new MM.TwoBoneIkSolver();
-    wristIk.name = 'armTwoBoneIkSolver'
+    var wristIk = new MM.TwoBoneIkSolver()
+    shortName = this.name.slice(1, this.name.length)
+    wristIk.name = this.getName(shortName+'IkSolver')
     // wristIk.name=side+'_arm_0_ik'        
-    wristIk.position.set(wristPos.x, wristPos.y, wristPos.z);
-    wristIk.setStartJoint(shoulderJoint);
-    wristIk.middleJoint = elbowJoint;
-    wristIk.endJoint = wristJoint;
+    wristIk.position.set(wristPos.x, wristPos.y, wristPos.z)
+    wristIk.setStartJoint(shoulderJoint)
+    wristIk.middleJoint = elbowJoint
+    wristIk.endJoint = wristJoint
 
     // wristIk.controlSize = 8;
     // wristIk.controlScale.set(1,1,1)

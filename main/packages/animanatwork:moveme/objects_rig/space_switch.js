@@ -1,5 +1,6 @@
 MM.Spaceswitch = function(){
 	MM.Control.call(this);
+    this.type = 'Spaceswitch'
 
 	this.offsetMatrices = [];
 	this.spaces = [];
@@ -42,10 +43,9 @@ MM.Spaceswitch.prototype.importData = function( data ){
 
 MM.Spaceswitch.prototype.exportData = function(){
     // console.log('Spaceswitch.exportData', this.name)
+    var data = MM.Control.prototype.exportData.call(this);    
+    data.type = this.type
 
-    var data = MM.Control.prototype.exportData.call(this);
-    
-    data.type = 'Spaceswitch';
     data.spaceNames = this.spaceNames;
 
     data.offsetMatrices = [];
@@ -92,7 +92,7 @@ MM.Spaceswitch.prototype.exportSetup = function(){
 	// console.log('Spaceswitch.exportSetup')
 	//	nothing to do 
 	var data = {}
-	data.type = this.objectType
+	data.type = this.type
 	data.name = this.name
 
     //  this is only populated when we actually use this as a spaceswitch

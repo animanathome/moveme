@@ -1,5 +1,6 @@
 MM.Control = function(){
     THREE.Object3D.call(this);
+    this.type = 'Control'
 
     //  shape control properties 
     this.controlColor = new THREE.Color( 0xffff00);
@@ -38,7 +39,6 @@ MM.Control.prototype = Object.create( THREE.Object3D.prototype );
 
 MM.Control.prototype.importData = function(data){
     // console.log('Control.importData', data)
-
     THREE.Object3D.prototype.importData.call(this, data);
     
     this.controlColor.setRGB(data.controlColor.r, data.controlColor.g, data.controlColor.b);
@@ -59,9 +59,8 @@ MM.Control.prototype.importData = function(data){
 
 MM.Control.prototype.exportData = function(){
     // console.log('Control.exportData', this.name)
-
     var data = THREE.Object3D.prototype.exportData.call(this);
-    data.type = 'Control'
+    data.type = this.type
 
     data.controlColor = this.controlColor
     data.controlSize = this.controlSize
@@ -79,7 +78,7 @@ MM.Control.prototype.exportData = function(){
         data.displayRotationAxis = true;
     }
 
-    console.log('#\tdata', data)
+    // console.log('#\tdata', data)
     return data;
 }
 

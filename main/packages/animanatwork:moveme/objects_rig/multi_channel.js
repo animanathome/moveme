@@ -2,6 +2,7 @@ MM.MultiChannel = function(){
 	this.id = THREE.Object3DIdCount ++;
 	this.uuid = THREE.Math.generateUUID();
 	this.name = undefined;
+	this.type = 'MultiChannel'
 
 	//	one channel drives multiple ones
 	this.driver = undefined;

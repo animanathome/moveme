@@ -1,8 +1,7 @@
-MM.OneSimpleBoneIkSolver = function()
-{
+MM.OneSimpleBoneIkSolver = function(){
     // console.log('creating TwoBoneIkSolver')
-
     MM.Control.call(this);
+    this.type = 'OneSimpleBoneIkSolver'
 
     //  ik solve
     this.startJoint = undefined;
@@ -50,8 +49,7 @@ MM.OneSimpleBoneIkSolver.prototype.exportData = function()
 
     data.name = this.name
     data.uuid = this.uuid
-
-    data.type = 'OneSimpleBoneIkSolver'
+    data.type = this.type
 
     data.controlColor = this.controlColor
     data.controlSize = this.controlSize
@@ -68,6 +66,27 @@ MM.OneSimpleBoneIkSolver.prototype.exportData = function()
     }   
 
     return data;
+}
+
+MM.OneSimpleBoneIkSolver.prototype.exportSetup = function(){
+    var data = {}
+
+    data.type = 'OneSimpleBoneIkSolver';
+    data.name = this.name;
+    data.startJoint = this.startJoint.name
+    data.endJoint = this.endJoint.name
+    data.startPreferedAngle = this.startPreferedAngle.toArray()
+
+    return data
+}
+
+MM.OneSimpleBoneIkSolver.prototype.importSetup = function(scene, data){
+    var startJoint = scene.getObjectByName(data.startJoint , true)
+    var endJoint = scene.getObjectByName(data.endJoint , true)
+
+    this.setStartJoint(startJoint)             
+    this.endJoint = endJoint
+    this.startPreferedAngle.fromArray(data.startPreferedAngle)
 }
 
 MM.OneSimpleBoneIkSolver.prototype.updateMatrixWorld = function ( force ) {

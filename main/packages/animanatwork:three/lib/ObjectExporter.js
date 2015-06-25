@@ -217,7 +217,7 @@ THREE.ObjectExporter.prototype = {
 			data.uuid = object.uuid;
 
 			if ( object.name !== '' ) data.name = object.name;
-			if ( object.type !== undefined ) data.filterType = object.type;
+			// if ( object.type !== undefined ) data.filterType = object.type;
 			if ( object.asset !== undefined ) data.asset = object.asset;
 			if ( object.animChannels !== undefined ){
 				// console.log(object.name, '----->', object.animChannels)
@@ -336,8 +336,9 @@ THREE.ObjectExporter.prototype = {
 				data = object.exportData();
 
 			} else if ( object instanceof MM.SpaceswitchSplit ) {	
-
+				// console.log('#\texporting SpaceswitchSplit')
 				data = object.exportData();
+				// console.log('#\tdata:', data)
 				
 			} else if ( object instanceof MM.Spaceswitch ) {
 

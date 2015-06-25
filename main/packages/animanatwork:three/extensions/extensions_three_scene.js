@@ -19,3 +19,17 @@ THREE.Scene.prototype.getObjectOfInstance = function( instanceType ){
 	}
 	return array;
 }
+
+THREE.Scene.prototype.getObjectOfType = function(objectType){
+	// console.log('THREE.Scene: getObjectOfType')
+
+	var array = []
+	for(var i = 0; i < this.__objects.length; i++){
+		if(this.__objects[i].hasOwnProperty('type')){
+			if(this.__objects[i].type === objectType){
+				array.push(this.__objects[i])
+			}
+		}
+	}
+	return array;
+}

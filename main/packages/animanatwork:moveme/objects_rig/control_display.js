@@ -1,5 +1,6 @@
 MM.ControlDisplay = function ( control ){
 	this.control = control
+	this.type = 'ControlDisplay'
 	
 	this.name = control.name+'Display'
 	this.geometry = new THREE.Geometry()	

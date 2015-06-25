@@ -227,6 +227,7 @@ MM.AssetBuild.prototype = {
 	},
 	buildRigComponent : function( index ){
 		var component = this.rigComponents[index]
+		var componentName = this.rigComponentsName[index]
 		component.editor = this._editor
 		var scope = this;
 		
@@ -237,6 +238,7 @@ MM.AssetBuild.prototype = {
 			if(scope.assetGroup !== undefined){
 				component.assetGroup = scope.assetGroup
 			}
+			component.name = componentName
 
 			var thisComponent = component.build()
 

@@ -16,8 +16,8 @@ THREE.Object3D.prototype.exportTransformation = function(){
 }
 
 THREE.Object3D.prototype.importTransformation = function(data){
-	console.log('importTransformation', data)
-	console.log('\tscale', data.scale)
+	// console.log('importTransformation', data)
+	// console.log('\tscale', data.scale)
 
 	this.position.fromArray(data.position)
 	this.rotation.fromArray(data.rotation)

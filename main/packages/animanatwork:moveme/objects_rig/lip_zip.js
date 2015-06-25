@@ -1,4 +1,5 @@
 MM.LipZip = function( editor ){
+	this.type = 'LipZip'
 	this.editor = editor;
 	this.tJoints = []
 	this.bJoints = []

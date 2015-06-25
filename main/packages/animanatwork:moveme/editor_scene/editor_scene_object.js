@@ -41,7 +41,7 @@ MM.Editor.prototype.setScene = function ( scene ){
 
 MM.Editor.prototype.saveScene = function(message){
     // console.log('Editor.saveScene', message)
-    var savedData = this.loader.saveLocalStorage()
+    // var savedData = this.loader.saveLocalStorage()
     this.signals.sceneSave.dispatch( message );
 }
 
