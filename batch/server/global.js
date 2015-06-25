@@ -7,12 +7,12 @@ VersionList.allow({
   update: function(){ 
     return true; 
   }
-  // remove: function(){ 
-  //   return true; 
-  // },
-  // insert: function(){
-  //   return true;
-  // }
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  }
 });
 remote.subscribe('versions');
 
@@ -21,12 +21,12 @@ VersionList.allow({
   update: function(){ 
     return true; 
   }
-  // remove: function(){ 
-  //   return true; 
-  // },
-  // insert: function(){
-  //   return true;
-  // }
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  }
 });
 remote.subscribe('shots');
 
@@ -34,6 +34,6 @@ Meteor.methods({
 	hardwareRenderScene: function( renderJob){
   		console.log('hardwareRenderScene', renderJob)  		
 
-  		return MMHWR.renderScene(renderJob);
+  		MMHWR.renderScene(renderJob);
 	}
 })

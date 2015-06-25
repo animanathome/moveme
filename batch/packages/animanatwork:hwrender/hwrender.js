@@ -47,16 +47,13 @@ MMHWR.renderScene = function(options){
 	options['rootPath']=rootPath;
 	console.log('\t!->options', options)
 	
-	MMHWR.renderSequence( options, Meteor.bindEnvironment(function(){		
-		MMHWR.createMovie( options, Meteor.bindEnvironment(function(data){			
-			// MMHWR.cleanupSequence( options );
+	MMHWR.renderSequence(options, Meteor.bindEnvironment(function(){		
+		MMHWR.createMovie(options, Meteor.bindEnvironment(function(data){			
+			MMHWR.cleanupSequence(options);
 			
-			MMHWR.uploadToYouTube( options, data, Meteor.bindEnvironment(function(error, options, ydata){
-				MMHWR.updateVersion(error,options, ydata)
-				
-				MMHWR.onDone(error, ydata)
-
-				return ydata;
+			MMHWR.uploadToYouTube(options, data, Meteor.bindEnvironment(function(error, options, ydata){
+				MMHWR.updateVersion(error, options, ydata)
+				MMHWR.cleanupMovie(options)
 			}));
 		}))
 	}));
@@ -159,7 +156,7 @@ MMHWR.createMovie = function( options, callback ){
 }
 
 MMHWR.cleanupSequence = function( options ){
-	console.log('MMHWR.cleanup', options)
+	console.log('MMHWR.cleanupSequence', options)
 
 	var rootPath = options['rootPath'];
 	var framePath = path.join(rootPath, 'frames');
@@ -176,6 +173,16 @@ MMHWR.cleanupSequence = function( options ){
 				});
 			}
 		}
+	});
+}
+
+MMHWR.cleanupMovie = function( options ){
+	console.log('MMHW.cleanUpMovie', options)
+
+	var rootPath = options['rootPath'];
+	var movieFile = path.join(rootPath, 'movie', options.versionId+'.mp4')
+	fs.unlink(thisFile, function (err) {		  	
+		if(err) throw err;
 	});
 }
 
@@ -250,7 +257,7 @@ MMHWR.uploadToYouTube = function( options, data, callback){
 		description: options.versionDescription
 		},
 		status: { 
-			privacyStatus: 'private' //if you want the video to be private
+			privacyStatus: 'public' //if you want the video to be private
 		}
 	},
 		media: {
@@ -258,8 +265,10 @@ MMHWR.uploadToYouTube = function( options, data, callback){
 		}
 	}, function(error, data){
 		if(error){
+			console.log('Someting went wrong during youtube video upload.')
 			callback(error, null, null);
 		} else {
+			console.log('Succesfully uploaded video. Running callback.')
 			callback(null, options, data);
 		}
 	});  
@@ -272,18 +281,18 @@ MMHWR.updateVersion = function( error, options, data ){
     console.log('updating version', options.versionId)
     VersionList.update(
         {_id: options.versionId },
-        { $set: {
-            youTubeId: data.id 
-        }}        
+        { $set: 
+        	{youTubeId: data.id}
+    	}        
     )
     console.log('done updating version')
 
     console.log('updating shot', options.shotId)
     ShotList.update(
         {_id: options.shotId },
-        { $set: {
-            latestVersionYoutubeId: data.id 
-        }}        
+        { $set: 
+        	{latestVersionYoutubeId: data.id}
+    	}        
     )
     console.log('done updating shot')
 }

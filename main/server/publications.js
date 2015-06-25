@@ -85,7 +85,7 @@ Meteor.publish('singleShot', function(id){
 
 Meteor.publish('numberOfVersions', function( numberOfVersions ){
   // console.log('numberOfVersions', numberOfVersions)  
-  return VersionList.find({},{limit:numberOfVersions})//.limit(numberOfVersions)
+  return VersionList.find({},{sort: {submitted: -1},limit:numberOfVersions})//.limit(numberOfVersions)
 })
 
 Meteor.publish('scenes', function(userId){
