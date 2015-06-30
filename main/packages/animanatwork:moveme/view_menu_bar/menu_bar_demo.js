@@ -178,10 +178,10 @@ MM.Menubar.Demos = function( editor ){
 	})
 	ikSubMenu.add( demo11Item )
 
-	var demo11Item = new MMUI.MenuItem('Spine Ik').onClick(function(){
+	var demo12Item = new MMUI.MenuItem('Spine Ik').onClick(function(){
 		MM.spineIk(editor);
 	})
-	ikSubMenu.add( demo11Item )
+	ikSubMenu.add( demo12Item )
 
 
 	var demo13Item = new MMUI.MenuItem('Arm Ik').onClick( function(){

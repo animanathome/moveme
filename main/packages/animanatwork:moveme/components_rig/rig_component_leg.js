@@ -95,7 +95,7 @@ MM.LegComponent.prototype.build = function(){
 
     //  NOTE: this is not a very clean way to init the solver since we can't cleary tell when we've supplied all the necessary information. 
     var legIk = new MM.TwoBoneSoftIkSolver()
-    shortName = this.name.slice(1, this.name.length)
+    var shortName = this.name.slice(1, this.name.length)
     legIk.name = this.getName(shortName+'IkSolver')
     legIk.position.set(anklePos.x, anklePos.y, anklePos.z);
     legIk.setStartJoint(hipJoint);

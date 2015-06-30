@@ -67,7 +67,7 @@ MM.CurveSolver.prototype.exportData = function(){
 MM.CurveSolver.prototype.exportSetup = function(){
     // console.log('CurveSolver.exportSetup')
 
-    data = {}
+    var data = {}
     data.type = this.type
     data.name = this.name
     data.joints = []
@@ -227,6 +227,7 @@ MM.CurveSolver.prototype.updateMatrixWorld = function(force){
     var blendValues = [0.0, 0.3333333333333333, 0.6666666666666666, 1.0]
 
     spinePositions = [];
+    var i;
     for(i = 0; i < nJoints; i++){
         var wpos = THREE.NURBSUtils.calcBSplinePoint(nurbsDegree, nurbsKnots, this.deformedControlPoints, blendValues[i]);
 

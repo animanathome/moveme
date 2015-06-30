@@ -55,8 +55,7 @@ MM.Editor.prototype.getDescriptionFromAssetObjects = function(){
 
 MM.Editor.prototype.removeAssetObject = function( assetObject ){
     // console.log('Removing assetObject', assetObject)
-    
-    this.signals.showInfo.dispatch('Removed asset '+asset.name)
+    this.signals.showInfo.dispatch('Removed asset '+assetObject.name)
     this.signals.assetRemoved.dispatch( assetObject )
 
     var i, j;

@@ -161,9 +161,9 @@ MM.Editor.prototype.exportSceneSettings = function(){
 //  camera settings
     data.cameraSettings = {}
     var cameras = ['persp', 'front', 'side', 'top']
-    var i, j;
+    var i, j, camera;
     for( i = 0, j = cameras.length; i < j; i++ ){
-        console.log('\texporting data for', camera)
+        // console.log('\texporting data for', camera)
         camera = this.scene.getObjectByName(cameras[i], true)
         if(camera == undefined ){
             console.log('\tskipping ', cameras[i], 'since it can not be found.')
@@ -189,25 +189,25 @@ MM.Editor.prototype.resetSceneSettings = function(){
     data.keyBackgroundColor = new THREE.Color().setRGB( 0.75, 0.75, 0.75 ).toArray();
 
 //  camera settings
-    frontCamera = this.scene.getObjectByName('front', true)
+    var frontCamera = this.scene.getObjectByName('front', true)
     if(frontCamera !== undefined){
         frontCamera.custom = {'near':0.1, 'far':2000}
         frontCamera.position.set( 0.0, 0.0, 100.0)
     }
 
-    sideCamera = this.scene.getObjectByName('side', true)
+    var sideCamera = this.scene.getObjectByName('side', true)
     if(sideCamera !== undefined){
         sideCamera.custom = {'near':0.1, 'far':2000}
         sideCamera.position.set( 100.0, 0.0, 0.0)
     }
 
-    topCamera = this.scene.getObjectByName('top', true)
+    var topCamera = this.scene.getObjectByName('top', true)
     if(topCamera !== undefined){
         topCamera.custom = {'near':0.1, 'far':2000}
         topCamera.position.set( 0.0, 100.0, 0.0)
     }
 
-    perspCamera = this.scene.getObjectByName('persp', true)
+    var perspCamera = this.scene.getObjectByName('persp', true)
     if(perspCamera !== undefined){
         perspCamera.custom = {'focusLength': 35, 'frameHeight':24, 'aspect':1, 'near':0.1, 'far':2000}
         perspCamera.position.set( 0.0, 100.0, 0.0)
@@ -238,6 +238,7 @@ MM.Editor.prototype.importSceneSettings = function(data){
     this.keyBackgroundColor.fromArray(data.keyBackgroundColor)
 
 //  camera settings
+    var scene_camera;
     for( var camera in data.cameraSettings ){
         // console.log('\timporting data for', camera)
         // console.log('\tdata', data.cameraSettings[camera])
@@ -636,7 +637,7 @@ MM.Editor.prototype.exportSetups = function( ){
     }
 
 //  STEP NODES
-    for( var i = 0, j = this.step2Nodes.length; i < j; i++){        
+    for( i = 0, j = this.step2Nodes.length; i < j; i++){        
         if( this.step2Nodes[i] instanceof MM.MultiChannel ){
             // console.log('\texporting MultiChannel', this.step2Nodes[i])
             data[ this.step2Nodes[i].uuid ] = this.step2Nodes[i].exportData()

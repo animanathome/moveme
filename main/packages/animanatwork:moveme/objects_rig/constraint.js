@@ -55,7 +55,7 @@ MM.Constraint.prototype.exportData = function(){
 }
 
 MM.Constraint.prototype.exportSetup = function(){
-    data = {}
+    var data = {}
     // console.log('\texporting', constraint[i])
 
     data.type = this.type

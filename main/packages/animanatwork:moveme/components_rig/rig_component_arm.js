@@ -44,7 +44,7 @@ MM.ArmComponent.prototype.build = function(){
     // console.log(wristJoint.name, wristPos.x, wristPos.y, wristPos.z)
 
     var wristIk = new MM.TwoBoneIkSolver()
-    shortName = this.name.slice(1, this.name.length)
+    var shortName = this.name.slice(1, this.name.length)
     wristIk.name = this.getName(shortName+'IkSolver')
     // wristIk.name=side+'_arm_0_ik'        
     wristIk.position.set(wristPos.x, wristPos.y, wristPos.z)

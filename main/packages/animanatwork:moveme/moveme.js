@@ -48,7 +48,7 @@ MM.App = function( container, options){
         , translate: [{'keyCode':87}] 	// W
         , rotate: [{'keyCode':69}]		// E
         , scale: [{'keyCode':82}]		// R
-        , bigger: [{'keyCode':178},		// +
+        , bigger: [{'keyCode':187},		// +
         		   {'keyCode': 107}]	// + (numeric keypad)
         , smaller: [{'keyCode':189}, 	// -
         			{'keyCode':109}]	// - (numeric keypad)

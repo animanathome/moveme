@@ -57,7 +57,7 @@ MM.insertLegs = function( editor ){
 				'asset' : assetName, 
 				'names' : legNames, 
 				'joints' :  legJoints
-		}));        
+		}), sides[i]+'Leg');
 	}	
 	
 	var cleanup = function(){

@@ -294,14 +294,14 @@ MMUI.Timeline.prototype.dragSelection = function(){
 
 		console.log('dragSelection.mousedown')
 		
-		if( event.button == 2 ){	//	right mouse		
-			scope._drag_selection_mode = false;
+		// if( event.button == 2 ){
+		// 	scope._drag_selection_mode = false;
 
-			document.removeEventListener( 'mousemove', onMouseMove );
-			document.removeEventListener( 'mouseup', onMouseUp );
+		// 	document.removeEventListener( 'mousemove', onMouseMove );
+		// 	document.removeEventListener( 'mouseup', onMouseUp );
 
-			scope._resetSelection();
-		}
+		// 	scope._resetSelection();
+		// }
 
 	}
 }

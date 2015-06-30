@@ -1,4 +1,6 @@
 
+http://stackoverflow.com/questions/29181815/installing-nodejs-0-10-36-on-ubuntu-trusty-64
+
 //	user ssh
 https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-12-04
 
@@ -20,7 +22,7 @@ xvfb-run
 
 http://askubuntu.com/questions/125980/how-do-i-install-xulrunner
 
-scp MoveMe.tar.gz root@104.236.211.246:/home/moveme
+scp main.tar.gz root@104.236.211.246:/home/moveme
 
 tar -zxvf filename.tar
 
@@ -30,7 +32,7 @@ rm -r /home/moveme/bundle/programs/server/npm/npm-bcrypt/node_modules/bcrypt/
 cd /home/moveme/bundle/programs/server
 npm install bcrypt
 cp -r /home/moveme/bundle/programs/server/node_modules/bcrypt /home/moveme/bundle/programs/server/npm/npm-bcrypt/node_modules/
-restart moveme
+restart MoveMe
 
 https://github.com/arunoda/meteor-up/blob/master/README.md
 
@@ -52,3 +54,15 @@ power-queue.js:486 Error: "Queue" failed [404] Not Found [404] [undefined], Erro
 mongo
 use moveme
 db.dropDatabase()
+
+//	issues
+//	Meteor requires Node v0.10.36 or later.
+/var/log/upstart/moveme.log
+/home/todos/todos.log
+/var/log/nginx/error.log
+/var/log/mongodb/mongodb.log
+
+//	ssl
+//	http://rudix.org/packages/libev.html
+ssl_certificate /etc/nginx/ssl/moveme.io.chained.crt; 
+ssl_certificate_key /etc/nginx/ssl/moveme.key;

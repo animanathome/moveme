@@ -309,13 +309,21 @@ if ( Meteor.users.find().count() === 0 ) {
     , isPublic: true
   })
 
+//  Create a shot version scene file
+  var sceneData = Assets.getText('demo/legs_walking.json');
+  var newFile = new FS.File();       
+  newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
+  newFile.userId = manuId;
+  newFile.versionId = -1;
+  var fileId = FileList.insert(newFile);
+
   //  Running legs version 1
   var running_legs_shot_version_id = VersionList.insert({
     projectId: front_page_project_id,
     shotId: running_legs_shot_id,
     author: admin.username,
     userId: admin._id,
-    description: 'Faster! Faster!',
+    description: 'Just walking',
     submitted: new Date(now - 13 * 3600 * 1000),
     versionNumber: 2,
     fps: 24,
@@ -323,15 +331,21 @@ if ( Meteor.users.find().count() === 0 ) {
     commentsCount: 0,
     upvoters: [],
     votes: 0,
-    youTubeId: ''
+    fileId: fileId._id,
+    youTubeId: 'kRHQDbV-Dfs'
   }) 
+
+//  Link scene file to version
+  FileList.update({
+    _id: fileId._id
+  }, { versionId:running_legs_shot_version_id})
 
   //  Update the shot to link to the latest version
   ShotList.update({
     _id: running_legs_shot_id
   }, {$set:{
       latestVersionId: running_legs_shot_version_id,
-      latestVersionYoutubeId: ''
+      latestVersionYoutubeId: 'kRHQDbV-Dfs'
     }
   })
 

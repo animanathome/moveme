@@ -93,9 +93,9 @@ MM.SpineComponent.prototype.build = function(){
 	this.addControl(head.control, this.controlNames[5])
 
 //	back solver
-	allJoints = this.getJointsAsArray()
-	backJoints = allJoints.slice(0, 4)
-	neckJoints = allJoints.slice(4, 8)
+	var allJoints = this.getJointsAsArray()
+	var backJoints = allJoints.slice(0, 4)
+	var neckJoints = allJoints.slice(4, 8)
 
 	var backSolver = new MM.CurveSolver();
 	backSolver.name=this.getName('backSolver')

@@ -78,23 +78,23 @@ Meteor.methods({
   },
   createSceneVersion: function( versionAttributes, sceneData){
     //  create an animation scene version for the given sceneAttributes and attach it's id to the given versionId.
-    // console.log('createSceneVersion')
-    // console.log('\tdata', sceneData)
-    // console.log('\tproject:', versionAttributes.projectId)
-    // console.log('\tshot:', versionAttributes.shotId)
-    // console.log('\tdescription:', versionAttributes.description)
-    // console.log('\tduration:', versionAttributes.duration)
+    console.log('createSceneVersion')
+    console.log('\tdata', sceneData)
+    console.log('\tproject:', versionAttributes.projectId)
+    console.log('\tshot:', versionAttributes.shotId)
+    console.log('\tdescription:', versionAttributes.description)
+    console.log('\tduration:', versionAttributes.duration)
 
     //  create file
-    // console.log('\tcreate file')
+    console.log('\tcreate file')
     var newFile = new FS.File();       
     newFile.attachData(str2ab(sceneData), {type: 'text/plain'});
     newFile.userId = Meteor.userId();
     newFile.versionId = -1;
     
-    // console.log('\tstore file')
+    console.log('\tstore file')
     var fileId = FileList.insert(newFile);
-    // console.log('\tfile id', fileId._id)
+    console.log('\tfile id', fileId._id)
     
     //  create version
     var user = Meteor.user();

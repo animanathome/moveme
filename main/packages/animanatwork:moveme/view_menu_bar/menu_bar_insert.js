@@ -52,7 +52,7 @@ MM.Menubar.Inserts = function( editor ){
 	var characterSubMenu = new MMUI.SubMenuGrp('Character')
 	menuGrp.add( characterSubMenu )
 
-	characterTail = new MMUI.MenuItem('Tail');
+	var characterTail = new MMUI.MenuItem('Tail');
 	characterTail.onClick( function(){
 		console.log('Insert Tail')
 		MM.insertTail( editor )

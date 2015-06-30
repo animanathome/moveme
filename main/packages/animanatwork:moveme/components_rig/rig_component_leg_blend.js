@@ -142,7 +142,9 @@ MM.LegBlendComponent.prototype.build = function(){
 //  ik creation and setup
     var ik = new MM.FourBoneIkBlendSolver();
     ik.endJointEqualsHandleOrientation = true;
-    shortName = this.name.slice(1, this.name.length)
+    
+    console.log('name', this.name)
+    var shortName = this.name.slice(1, this.name.length)
     ik.name = this.getName(shortName+'IkSolver')
 
     console.log('\tik', ik)

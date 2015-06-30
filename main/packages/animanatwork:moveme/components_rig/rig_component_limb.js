@@ -114,7 +114,7 @@ MM.LimbComponent.prototype.build = function(){
     legIk.stretchAxis = this.stretchAxis
     legIk.endJointEqualsHandleOrientation = true
 
-    shortName = this.name.slice(1, this.name.length)
+    var shortName = this.name.slice(1, this.name.length)
     legIk.name = this.getName(shortName+'IkSolver')
 
     legIk.position.set(jointPositions[this.joints[2]].x, 

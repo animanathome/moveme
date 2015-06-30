@@ -1,7 +1,7 @@
 MM.Editor.prototype.getSetupsWithNamespace = function( namespace, level){
 	console.log('getSetupsWithNamespace', namespace, level)
 	
-	setupLevel = 'step'+level+'Nodes';
+	var setupLevel = 'step'+level+'Nodes';
 	var j = this[setupLevel].length;
 	var i = 0;
 	for( i = 0; i < j; i++){

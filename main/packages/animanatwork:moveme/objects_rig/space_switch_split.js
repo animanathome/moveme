@@ -280,7 +280,7 @@ MM.SpaceswitchSplit.prototype.updateMatrixWorld = function (){
 //	set rotation
 	var rIndex = this.custom[this.rChannelName];
 
-    var parentInverse = new THREE.Matrix4()
+    parentInverse = new THREE.Matrix4()
     parentInverse.getInverse(this.parent.matrixWorld);
 
     var rMatrix1 = new THREE.Matrix4();
