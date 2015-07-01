@@ -181,7 +181,7 @@ MMHWR.cleanupMovie = function( options ){
 
 	var rootPath = options['rootPath'];
 	var movieFile = path.join(rootPath, 'movie', options.versionId+'.mp4')
-	fs.unlink(thisFile, function (err) {		  	
+	fs.unlink(movieFile, function (err) {		  	
 		if(err) throw err;
 	});
 }

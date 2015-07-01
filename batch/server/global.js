@@ -1,12 +1,13 @@
 //  108.180.115.126
 // var remote = DDP.connect('http://localhost:3000/');
-var remote = DDP.connect('http://192.168.1.69:3000/');
+// var remote = DDP.connect('http://192.168.1.69:3000/');
+var remote = DDP.connect('https://moveme.io/');
 VersionList = new Mongo.Collection('versions', remote);
 
 VersionList.allow({
   update: function(){ 
     return true; 
-  }
+  },
   remove: function(){ 
     return true; 
   },
@@ -20,7 +21,7 @@ ShotList = new Mongo.Collection('shots', remote);
 VersionList.allow({
   update: function(){ 
     return true; 
-  }
+  },
   remove: function(){ 
     return true; 
   },
