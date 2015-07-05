@@ -57,14 +57,19 @@
           <li class="{{activeRouteClass 'suggest'}}">
           <!-- <li class="dropdown"> -->
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Requests<span class="caret"></span></a>
-
             <ul class="dropdown-menu" role="menu">
               <li><a href="{{pathFor 'bestSuggest'}}">Popular Requests</a></li>
               <li><a href="{{pathFor 'newSuggest'}}">New Requests</a></li>
             </ul>
-
           </li> 
+
+          {{#if isAdmin}}
+          <li class="{{activeRouteClass 'admin'}}">
+              <a href="{{pathFor 'admin'}}">Admin</a>
+          </li>
+          {{/if}}
         </ul>
+        
 
         <ul class="nav navbar-nav navbar-right">
           {{#if currentUser}}

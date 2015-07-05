@@ -256,7 +256,7 @@ MM.SceneView.prototype.resize = function(){
 }
 
 MM.SceneView.prototype.activate = function(){
-    console.log('MM.SceneView.activate', this.prefix)
+    // console.log('MM.SceneView.activate', this.prefix)
 
     this.isActive = true;
     if ( this.manipulator.hovered === false ){        
@@ -274,7 +274,7 @@ MM.SceneView.prototype.activate = function(){
 }
 
 MM.SceneView.prototype.deactivate = function(){
-    console.log('MM.SceneView.deactivate', this.prefix)
+    // console.log('MM.SceneView.deactivate', this.prefix)
 
     this.isActive = false;
     this.viewportCameraControl.enabled = false;

@@ -18,6 +18,10 @@ Meteor.publish("userData", function (){
   }
 });
 
+Meteor.publish('users', function(){
+  return Meteor.users.find();
+});
+
 Meteor.publish('assets', function() {
   return AssetList.find();
 });

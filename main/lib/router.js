@@ -30,6 +30,7 @@ Router.configure({
   }  
 });
 
+//  -------------------------------------------------------------------------
 //	introduction page
 Router.route('/', {
     name: 'intro',
@@ -53,6 +54,31 @@ Router.route('/', {
         }
     }    
 });
+
+//  -------------------------------------------------------------------------
+//  admin
+//  NOTE: the admin link is currently only available through the intro page.
+//  this is become that is currently the only place where we pass on the full
+//  user. All other pages contain the smallest possible representation. Subscribe
+//  to userData to correct this. 
+
+Router.route('/admin', {
+    name: 'admin',
+    waitOn: function(){
+        return [
+            Meteor.subscribe('users')
+        ];
+    },
+    onBeforeAction: function(){
+        this.next();
+    },
+    data: function(){
+        return {
+            users: Meteor.users.find({})
+        }
+    }    
+});
+
 
 //  -------------------------------------------------------------------------
 //  gallery
@@ -183,14 +209,16 @@ Router.route('/animation/project/:projectId/shot/:shotId/version/:_id', {
             Meteor.subscribe('singleProject', this.params.projectId),
             Meteor.subscribe('singleShot', this.params.shotId),
             Meteor.subscribe('singleVersion', this.params._id),
-            Meteor.subscribe('sceneVersion', this.params._id)
+            Meteor.subscribe('sceneVersion', this.params._id),
+            Meteor.subscribe('assets', this.params._id)
         ];
     },
     data: function(){ 
         return {
             projects: [ProjectList.findOne(this.params.projectId)],
             shots: [ShotList.findOne(this.params.shotId)],
-            versions: [VersionList.findOne(this.params._id)]
+            versions: [VersionList.findOne(this.params._id)],
+            assets: AssetList.find({}).fetch()
         }
     }
 });

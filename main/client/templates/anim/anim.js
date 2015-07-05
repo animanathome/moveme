@@ -27,6 +27,19 @@ Template.anim.rendered = function(){
 	moveme = new MM.App(movemeBase, uiOptions);
 	// console.log('moveme', moveme)
 
+	var parent = document.getElementById("movemeanim");
+	var dialog = new MMUI.ItemDialog('Load Asset');
+	dialog.body.style.height = '350px'
+	var assets = AssetList.find({}).fetch() 
+	var i,j;
+	for( i = 0, j = assets.length; i < j; i++){
+		console.log(assets[i].thumbnail, assets[i].title)
+		dialog.addItem(assets[i].thumbnail, assets[i].title)
+	}
+
+
+	parent.appendChild( dialog.dom )
+
 //	CONNECT PLUGS
 //	animation to projects signals
 	//  stubs to allow communication from moveme to meteor

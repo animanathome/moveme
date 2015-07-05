@@ -1,5 +1,7 @@
 /*
-	- move the creation of the key view scene elements to seperate function/file
+	WARNING!!!
+	If the selection box does not appear on the right position the page is probably 
+	scaled (command + + or -)
 */
 
 MM.KeyView = function ( editor, prefix, parentPanel){

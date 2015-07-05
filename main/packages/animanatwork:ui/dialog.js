@@ -242,3 +242,107 @@ MMUI.MessageDialog = function( title, textMessage){
 	}
 	return this;
 }
+
+MMUI.ItemDialog = function( title ){
+	var scope = this;
+
+	var dom = document.createElement('div')
+	dom.className = 'modal'
+	this.dom = dom;
+
+	var dialog = document.createElement('div')
+	dialog.className = "modal-dialog"
+	dom.appendChild( dialog )
+
+	var content = document.createElement('div')
+	content.className = "modal-content"
+	dialog.appendChild( content )
+
+//	HEADER
+	var header = document.createElement('div')
+	header.className = "modal-header"
+	content.appendChild( header )
+	this.header = header
+
+	var hbutton = document.createElement('button')
+	hbutton.setAttribute('type', 'button')
+	hbutton.className = "close"
+	hbutton.setAttribute('data-dismiss', "modal")
+	hbutton.setAttribute('aria-label', "Close")
+	header.appendChild(hbutton)
+
+	hbutton.onclick = function(){	
+		
+		dom.parentNode.removeChild( dom )
+	}
+
+	var hspan = document.createElement('span')
+	hspan.setAttribute('aria-hidden', 'true')
+	hspan.innerHTML = "x"
+	hbutton.appendChild(hspan)
+
+	var hh4 = document.createElement('h4')
+	hh4.className = "modal-title"
+	hh4.innerHTML = title
+	header.appendChild(hh4)
+
+//	BODY
+	var body = document.createElement('div')
+	body.className = "modal-body"
+	content.appendChild(body)
+	this.body = body
+
+	var list = document.createElement('ul')
+	list.className = "modal-body-list"
+	body.appendChild(list)
+	this.list = list
+
+//	FOOTER
+	var footer = document.createElement('div')
+	footer.className = "modal-footer"
+	content.appendChild(footer)
+
+	var footerba = document.createElement('button')
+	footerba.className="btn btn-default"
+	footerba.setAttribute('data-dismiss', 'modal')
+	footerba.setAttribute('type', 'button')
+	footerba.innerHTML = 'Cancel'
+	footer.appendChild(footerba)
+	
+	footerba.onclick = function(){
+		dom.parentNode.removeChild( dom )
+	}
+
+	var footerba = document.createElement('button')
+	footerba.className="btn btn-default"
+	footerba.setAttribute('data-dismiss', 'modal')
+	footerba.setAttribute('type', 'button')
+	footerba.innerHTML = 'OK'
+	footer.appendChild(footerba)
+	
+	footerba.onclick = function(){
+		dom.parentNode.removeChild( dom )
+	}
+
+	return this;	
+}
+
+MMUI.ItemDialog.prototype = Object.create( MMUI.Element.prototype );
+
+MMUI.ItemDialog.prototype.addItem = function(image, title){
+
+	var base = document.createElement('li')
+	this.list.appendChild(base)
+
+	var img = document.createElement('img')
+	img.setAttribute('src', image)
+	base.appendChild(img)
+
+	var div = document.createElement('div')
+	base.appendChild(div)
+
+	var span = document.createElement('span')
+	div.appendChild(span)
+	span.innerHTML = title
+}
+

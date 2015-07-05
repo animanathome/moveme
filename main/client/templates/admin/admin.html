@@ -1,0 +1,37 @@
+<template name="admin">
+	{{> header}} 
+	{{> errors}}
+
+	<div class="user-header">
+		<div class="user-header-content">
+			<h1>Users</h1>
+			<p>Who is doing what and how often.</p>		
+		</div>
+	</div>
+
+	<div class="user-container">
+        <div class="user-container-content">        	
+        	<ul class="user-item-list">
+				{{#each users}}
+					{{> userItem}}
+				{{/each}}
+			</ul>
+       	</div>
+    </div>
+
+	{{> footer}}
+</template>
+
+<template name="userItem">
+	<li class="user-item-container">				
+		<div>
+			<span>
+				<h3><a>{{username}}</a></h3>
+				<h4>First seen on {{seenFirst}}<br>
+				Last seen on {{seenLast}}<br>
+				Logged in using {{usedService}}
+				</h4>
+				</span>
+		</div>
+	</li>
+</template>

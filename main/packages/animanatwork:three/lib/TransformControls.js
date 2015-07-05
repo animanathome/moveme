@@ -1368,7 +1368,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	// }
 
 	function intersectObjects( event, objects ) {
-		// console.log('TransformControls: intersectObjects', objects)
+		console.log('TransformControls: intersectObjects', objects)
 		pointerVector.set(
 			( event.layerX / scope.domElement.offsetWidth ) * 2 - 1,
 			- ( event.layerY / scope.domElement.offsetHeight ) * 2 + 1,
@@ -1407,9 +1407,9 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		// console.log('\tray:', ray)
 
 		var intersections = ray.intersectObjects( objects, true );
-		// if(intersections.length > 0){
-		// 	console.log(intersections[0].object.name)
-		// }
+		if(intersections.length > 0){
+			console.log("\t intersection: "+intersections[0].object.name)
+		}
 		return intersections[0] ? intersections[0] : false;
 
 	}
