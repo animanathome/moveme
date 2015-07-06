@@ -9,8 +9,10 @@ MM.Toolbar = function( editor, parent, options){
 
 	var File = new MM.FileToolBar( editor, container, options )
 	
-	var SceneView = new MM.SceneViewToolBar( editor, container )
+	var SceneView = new MM.SceneViewToolBar( editor, container )	
 	
+	// var View = new MM.ViewToolBar( editor, container )
+
 	var KeyView = new MM.KeyViewToolBar( editor, container )
 
 	SceneView.dom.style.float = 'left'
@@ -69,4 +71,35 @@ MM.FileToolBar = function( editor, parent, options){
 	snapGroup.add(redoUI)
 
 	return panel;
+}
+
+MM.ViewToolBar = function( editor, parent, options ){
+	var signals = editor.signals;
+
+//	build base layout
+	var panel = new MMUI.Panel();
+	panel.setClass( "view-toolbar");
+
+	parent.add( panel )
+
+	var intro = new MMUI.Text().setValue('View').setClass('toolbar-intro')
+	panel.add( intro )		
+
+//	TOGGLE
+	var toolbar = new MMUI.ButtonToolBar;
+	panel.add( toolbar )
+
+	var toggleGroup = new MMUI.ButtonGroup;
+	toolbar.add( toggleGroup )
+
+	var toggleControlsUI = new MMUI.Button().setImage('/ui/control_toggle.png').addToolTip('Toggle Control Visibility').onClick( function(){
+			editor.undo();
+	} );	
+	toggleGroup.add(toggleControlsUI)
+
+	var toogleSkeletonUI = new MMUI.Button().setImage('/ui/joint_toggle.png').addToolTip('Toggle Skeleton Visibility').onClick( function(){
+			editor.redo();
+	} );	
+	toggleGroup.add(toogleSkeletonUI)	
+
 }
