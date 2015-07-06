@@ -25,7 +25,7 @@ MM.SpaceswitchSplit = function(){
 MM.SpaceswitchSplit.prototype = Object.create( MM.Control.prototype );
 
 MM.SpaceswitchSplit.prototype.importData = function( data ){
-	console.log('SpaceswitchSplit.importData', data)
+	// console.log('SpaceswitchSplit.importData', data)
     
     MM.Control.prototype.importData.call(this, data);
     
@@ -50,7 +50,7 @@ MM.SpaceswitchSplit.prototype.importData = function( data ){
 }
 
 MM.SpaceswitchSplit.prototype.exportData = function(){
-	console.log('SpaceswitchSplit.exportData')
+	// console.log('SpaceswitchSplit.exportData')
 
     var data = MM.Control.prototype.exportData.call(this);
 
@@ -82,7 +82,7 @@ MM.SpaceswitchSplit.prototype.exportData = function(){
 }
 
 MM.SpaceswitchSplit.prototype.importSetup = function( scene, data ){
-	console.log('SpaceswitchSplit.importSetup')
+	// console.log('SpaceswitchSplit.importSetup')
 
 	var foundObject;
 
@@ -129,7 +129,7 @@ MM.SpaceswitchSplit.prototype.importSetup = function( scene, data ){
 }
 
 MM.SpaceswitchSplit.prototype.exportSetup = function(){
-	console.log('SpaceswitchSplit.exportSetup')
+	// console.log('SpaceswitchSplit.exportSetup')
 
 	// console.log('Spaceswitch.exportSetup')
 	//	nothing to do 
@@ -179,7 +179,7 @@ MM.SpaceswitchSplit.prototype.hasPositionSpace = function( object ){
 }
 
 MM.SpaceswitchSplit.prototype.addPositionSpaceswitchChannel = function( object ){
-    console.log('addPositionSpaceswitchChannel', object.name)
+    // console.log('addPositionSpaceswitchChannel', object.name)
 
 	//	add the necessary properties to the object so we can have it pass 
 	//	through the value of the spaceSwitch as well as being properly 
@@ -225,7 +225,7 @@ MM.SpaceswitchSplit.prototype.hasRotationSpace = function( object ){
 }
 
 MM.SpaceswitchSplit.prototype.addRotationSpaceswitchChannel = function(object){
-    console.log('addRotationSpaceswitchChannel', object.name)
+    // console.log('addRotationSpaceswitchChannel', object.name)
 
 	//	add the necessary properties to the object so we can have it pass 
 	//	through the value of the spaceSwitch as well as being properly 

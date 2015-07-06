@@ -7,7 +7,7 @@ MM.insertMidi = function( editor ){
 		, control_scale : 1.0
         , control_distance : 1.0
 		//	root data directory
-		,  root_path : '/data/tiny2/'		
+		,  root_path : '/data/midi/'		
 		// model files
 		, models : {
 			  cBody: 'model/cBody.obj'

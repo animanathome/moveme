@@ -181,7 +181,7 @@ MM.Spaceswitch.prototype.updateMatrixWorld = function (){
 }
 
 MM.Spaceswitch.prototype.addSpaceswitchChannel = function( object ){
-    console.log('addSpaceswitchChannel', object.name)
+    // console.log('addSpaceswitchChannel', object.name)
 
 	//	add the necessary properties to the object so we can have it pass 
 	//	through the value of the spaceSwitch as well as being properly 

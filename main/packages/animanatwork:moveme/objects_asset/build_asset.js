@@ -47,11 +47,11 @@ MM.AssetBuild.prototype = {
 		this.materialGroup = this._editor.addGroup( this.namespace , 'material')  
 	},
 	addControls : function( controls ){
-		console.log('addControls', controls)
+		// console.log('addControls', controls)
 		this.controls = MM.extendArrayWithArray(this.controls, controls)
 	},
 	getControl : function( control_name ){
-		console.log('getControl', control_name)
+		// console.log('getControl', control_name)
 		var i, j;
 		for( i = 0, j = this.controls.length; i < j; i++){
 			if( this.controls[i].name === this.namespace+control_name ){
@@ -72,8 +72,7 @@ MM.AssetBuild.prototype = {
 		this.nTasks += 1
 	},
 	loadModel : function( index ){
-		console.log('loading model')
-
+		// console.log('loading model')
 		var scope = this;		
 		var modelName = this.modelFiles[index].replace(/^.*[\\\/]/, '').split('.')[0]
 
@@ -132,8 +131,7 @@ MM.AssetBuild.prototype = {
 		this.nTasks += 1
 	},
 	loadSkin : function( index ){
-		console.log('loading skin', this.weightFiles[index])
-
+		// console.log('loading skin', this.weightFiles[index])
 		var scope = this;
 		var setupWeights = function( data ){
 			var json = JSON.parse( data );
@@ -163,8 +161,7 @@ MM.AssetBuild.prototype = {
 		this.skeletonPostFunction = postFunction
 	},
 	loadSkeleton : function(){
-		console.log('loading skeleton')
-		
+		// console.log('loading skeleton')		
 		var scope = this;
 		var setupSkeleton = function( data ){			
 			var json = JSON.parse( data );		
@@ -185,25 +182,25 @@ MM.AssetBuild.prototype = {
 		this.nTasks += 1
 	},
 	loadTexture : function( index ){
-		console.log('loading texture', this.textureFiles[index], 'on', this.textureModel[index])
+		// console.log('loading texture', this.textureFiles[index], 'on', this.textureModel[index])
 		var scope = this;
 		var texture = scope.textureFiles[index]
 		var model = scope.textureModel[index]
-		var setupTexture = function(){			
-			console.log('loading texture', texture, 'on', model)
+		var setupTexture = function(){
+			// console.log('loading texture', texture, 'on', model)
 			var colorMap = THREE.ImageUtils.loadTexture( texture );
 
 			var modelObj = scope._editor.scene.getObjectByName( model ) 
 			if( modelObj !== undefined ){
-				console.log('assigning texture to', modelObj.name)
-				console.log(modelObj)				
+				// console.log('assigning texture to', modelObj.name)
+				// console.log(modelObj)
 				modelObj.geometry.buffersNeedUpdate = true;
 				modelObj.geometry.uvsNeedUpdate = true;
 				modelObj.material.map = colorMap;
 				modelObj.material.needsUpdate = true;
 				// modelObj.material.wireframe = true;
-			}else{
-				console.log('unable to find', model)
+			// }else{
+			// 	console.log('unable to find', model)
 			}
 			scope.updateProgress()
 		}
@@ -246,8 +243,8 @@ MM.AssetBuild.prototype = {
 				console.error('No rigComponent was returned from the build method.')
 			}
 
-			console.log('--------------------')
-			console.log(thisComponent.controls)
+			// console.log('--------------------')
+			// console.log(thisComponent.controls)
 			scope.addControls( MM.getDictionaryAsArray( thisComponent.controls ))
 
 			scope.updateProgress()
@@ -316,7 +313,7 @@ MM.AssetBuild.prototype = {
 	},
 	build : function(){
 		//	build task list so one task chains into the next
-		console.log('build me the asset')
+		// console.log('build me the asset')
 		var i, l;
 
 		// load all models

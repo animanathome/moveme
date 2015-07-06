@@ -8,9 +8,8 @@ MM.insertLegs = function( editor ){
 	var u = new MM.AssetBuild( editor );
 	u.assetName = assetName
 	u.setNamespace(assetName+':')
-	
-    // var rootPath = '/data/drone';
-    var rootPath = '/data/drone1';
+	    
+    var rootPath = '/data/legs';
 
 	//	load geometry
 	u.addModel(rootPath+'/model/cBody.obj')

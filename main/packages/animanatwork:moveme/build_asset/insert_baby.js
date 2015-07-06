@@ -7,7 +7,7 @@ MM.insertMini = function( editor ){
 		, control_scale : 0.5
 		, control_distance : 0.5
 		//	root data directory
-		,  root_path : '/data/baby/'		
+		,  root_path : '/data/mini/'		
 		// model files
 		, models : {
 			  cBody: 'model/cBody.obj'

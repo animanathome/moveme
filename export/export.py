@@ -313,6 +313,8 @@ class Export( object ):
 	def __call__(self):
 		print 'Exporting all data'
 
+		cmds.loadPlugin('objExport')
+
 		# make sure we do not change the original file
 		cmds.file(f=True, new=True)
 		cmds.file(self.sourceFile, f=True, i=True)
@@ -360,33 +362,30 @@ def exportCube():
 def exportLegs():
 	pass
 
-def exportTiny():
+# updated midi
+def exportMidi():
 	e = Export();
 	e.doShapes = False
-	e.sourceFile = '/Users/ambremaurin/Dropbox/learning/js/three.js/mrdoob-three.js-8673cc8/manu/resources/tiny_002.ma'
-	e.destinationFolder = '/Users/ambremaurin/Dropbox/Public/data/tiny/'
+	e.sourceFile = '/Users/manu/GitHub/moveme/export/resources/midi_005.ma'
+	e.destinationFolder = '/Users/manu/GitHub/moveme/main/public/data/midi/'
 	e();
 
-def exportTiny2():
+# updated
+def exportMini():
 	e = Export();
 	e.doShapes = False
-	e.sourceFile = '/Volumes/Dropbox/Dropbox/learning/js/three.js/mrdoob-three.js-8673cc8/manu/resources/tiny_005.ma'
-	e.destinationFolder = '/Users/manu/Dropbox/MoveMe/public/data/tiny2/'
+	# e.sourceFile = '/Volumes/Dropbox/Dropbox/learning/js/three.js/mrdoob-three.js-8673cc8/manu/resources/tiny_005.ma'
+	e.sourceFile = '/Users/manu/GitHub/moveme/export/resources/mini_001.ma'
+	e.destinationFolder = '/Users/manu/GitHub/moveme/main/public/data/mini/'
 	e();
 
-def exportBaby():	
-	e = Export();
-	e.doShapes = False
-	e.sourceFile = '/Users/manu/Dropbox/learning/js/three.js/mrdoob-three.js-8673cc8/manu/resources/baby_001.ma'
-	e.destinationFolder = '/Users/manu/Dropbox/MoveMe/public/data/baby/'
-	e();
-
+# updated
 def exportMaxi():	
 	e = Export();
 	e.doShapes = False
 	e.sourceFile = '/Users/manu/GitHub/moveme/export/resources/maxi_004.ma'
 	e.destinationFolder = '/Users/manu/GitHub/moveme/main/public/data/maxi/'
-	e();	
+	e();
 
 def exportTunny():
 	e = Export();

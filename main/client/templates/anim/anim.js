@@ -27,19 +27,7 @@ Template.anim.rendered = function(){
 	moveme = new MM.App(movemeBase, uiOptions);
 	// console.log('moveme', moveme)
 
-	var parent = document.getElementById("movemeanim");
-	var dialog = new MMUI.ItemDialog('Load Asset');
-	dialog.body.style.height = '350px'
-	var assets = AssetList.find({}).fetch() 
-	var i,j;
-	for( i = 0, j = assets.length; i < j; i++){
-		console.log(assets[i].thumbnail, assets[i].title)
-		dialog.addItem(assets[i].thumbnail, assets[i].title)
-	}
-
-
-	parent.appendChild( dialog.dom )
-
+	
 //	CONNECT PLUGS
 //	animation to projects signals
 	//  stubs to allow communication from moveme to meteor
@@ -194,6 +182,23 @@ Template.anim.rendered = function(){
 	else if( this.data.hasOwnProperty('try') ){
 		moveme.layout.projectbar.setTryData()
 
+		// load asset browser
+		var i,j;
+		var assets = AssetList.find({}).fetch()
+		var parent = document.getElementById("movemeanim")
+		var dialog = new MMUI.ItemDialog('Insert Asset')
+		dialog.body.style.height = '350px'
+		for( i = 0, j = assets.length; i < j; i++){
+			dialog.addItem(assets[i].thumbnail, assets[i].title)
+		}
+		dialog.onItemselected(function(){
+			var selectedAsset = dialog.getSelected()
+			dialog.hide()
+			moveme.importAsset(selectedAsset)
+		})
+		parent.appendChild(dialog.dom)
+
+		//	load local cache
 		console.log('Loading local cache.')
 		moveme.editor.loadSceneLocal();
 	}

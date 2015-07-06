@@ -245,6 +245,7 @@ MMUI.MessageDialog = function( title, textMessage){
 
 MMUI.ItemDialog = function( title ){
 	var scope = this;
+	this.items = []
 
 	var dom = document.createElement('div')
 	dom.className = 'modal'
@@ -313,25 +314,40 @@ MMUI.ItemDialog = function( title ){
 		dom.parentNode.removeChild( dom )
 	}
 
-	var footerba = document.createElement('button')
-	footerba.className="btn btn-default"
-	footerba.setAttribute('data-dismiss', 'modal')
-	footerba.setAttribute('type', 'button')
-	footerba.innerHTML = 'OK'
-	footer.appendChild(footerba)
-	
-	footerba.onclick = function(){
-		dom.parentNode.removeChild( dom )
-	}
+	this.itemSelectedEvent = document.createEvent('HTMLEvents');
+    this.itemSelectedEvent.initEvent('itemselected', true, true)
 
 	return this;	
 }
 
 MMUI.ItemDialog.prototype = Object.create( MMUI.Element.prototype );
 
+MMUI.ItemDialog.prototype.getItems = function(){
+	return this.items
+}
+
+MMUI.ItemDialog.prototype.hide = function(){
+	this.dom.parentNode.removeChild(this.dom)
+}
+
+MMUI.ItemDialog.prototype.onSelect = function(value){
+	console.log('onSelect', value)
+	this.selectedItem = value
+	this.dom.dispatchEvent(this.itemSelectedEvent)
+	return value;
+}
+
+MMUI.ItemDialog.prototype.getSelected = function(){
+	return this.selectedItem
+}
+
 MMUI.ItemDialog.prototype.addItem = function(image, title){
+	var scope = this
 
 	var base = document.createElement('li')
+	base.onclick = function(){
+		scope.onSelect(title);
+	}
 	this.list.appendChild(base)
 
 	var img = document.createElement('img')
@@ -344,5 +360,16 @@ MMUI.ItemDialog.prototype.addItem = function(image, title){
 	var span = document.createElement('span')
 	div.appendChild(span)
 	span.innerHTML = title
+
+	this.items.push(title)
 }
+
+var id_events = ['Itemselected'];
+id_events.forEach( function ( event ) {
+    var method = 'on' + event;
+    MMUI.ItemDialog.prototype[ method ] = function ( callback ) {
+        this.dom.addEventListener( event.toLowerCase(), callback, false );
+        return this;
+    };
+});
 
