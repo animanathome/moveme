@@ -763,25 +763,39 @@ MM.Editor.prototype.exportAnimationData = function(){
 }
 
 MM.Editor.prototype.exportPoseData = function(){
-    var controls = this.scene.getObjectOfInstance(MM.Control)
-    var ncontrols = controls.length
-
+    
     var channelData;
     var data = {}
-    for( var i = 0; i < ncontrols; i++){            
+    var i, j;
+
+    // export the position of all controls
+    var controls = this.scene.getObjectOfInstance(MM.Control)
+    var ncontrols = controls.length
+    for( i = 0; i < ncontrols; i++){            
         if( controls[i].tag === 'control'){
             // console.log('\t', i, controls[i].name)
-            data[controls[i].name] = controls[i].getChannelValues();                        
+            data[controls[i].name] = controls[i].getChannelValues();
             // controls[i].setChannelValues( channelData );
         }
     }
+
+    //  export all cameras
+    for( i = 0, j = this.cameras.length; i < j; i++){
+        if(this.cameras[i] instanceof THREE.OrthographicCamera)
+            break;
+
+        if(this.cameras[i].tag === 'control'){
+            // console.log('\t', i, this.cameras[i].name)
+            data[this.cameras[i].name] = this.cameras[i].getChannelValues();
+        }
+    }
+
     this.signals.showInfo.dispatch('Export all poses')
     return data;
 }
 
 MM.Editor.prototype.importPoseData = function(data){
     // console.log('importPoseData')
-    
     var control, object;
     for( object in data ){
         // console.log('\t', object)
