@@ -43,7 +43,6 @@ MM.insertTail = function( editor ){
 	var lastFunction = function(){
 		// u.rigComponents[1].controls['BodyCtl'].controlOffset.y = -1.0;
         // u.rigComponents[1].controls['Body2Ctl'].controlOffset.y = 1.0;
-
 		u.rigComponents[0].controls['GlobalCtl'].setParent(
 			u.rigComponents[1].controls['BodyCtl'].parent)
 
@@ -57,6 +56,9 @@ MM.insertTail = function( editor ){
 		var i, j;
 		for( i = 0, j = u.models.length; i < j; i++){
 			// console.log('\t', i, 'model:', u.models[i])
+            u.models[i].addChannel( 'custom', 'color', undefined, 'color')
+            u.models[i].custom={'visibility': u.models[i].visible, 
+                                'color': u.models[i].material.color};
 			switch(u.models[i].name){
 				case u.namespace+'cMain':	
 					u.models[i].material.color.setRGB(85/255,72/255,68/255)

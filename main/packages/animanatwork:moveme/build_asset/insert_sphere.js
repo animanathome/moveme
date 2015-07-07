@@ -31,7 +31,7 @@ MM.insertBall = function( editor ){
 	editor.addGroupContent( assetGroup, [groundControl.control, mainControl.control] )	
 	editor.addGroupContent( materialGroup, [mesh] )
 	
-	mesh.addChannel( 'custom', 'color' )
+	mesh.addChannel( 'custom', 'color', undefined, 'color')
 	mesh.custom={'visibility' : mesh.visible, 'color' : mesh.material.color};
 
 	//	create assetObject

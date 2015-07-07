@@ -324,17 +324,19 @@ MM.insertBiped = function( editor, config ){
 	//	color geometry		
 		var i, j, material;
 		for( i = 0, j = u.models.length; i < j; i++){
-			// expose color attribute to user
-			u.models[i].addChannel( 'custom', 'color' )
-			u.models[i].custom={
-				'visibility' : u.models[i].visible, 
-				'color' : u.models[i].material.color
-			};
+			// expose color attribute to user			
+			u.models[i].addChannel( 'custom', 'color', undefined, 'color')
+			
 			for( material in config['materials']){
 				if(u.models[i].name === u.namespace+material){
 					u.models[i].material.color = config['materials'][material]
 				}
 			}
+
+			u.models[i].custom={
+				'visibility' : u.models[i].visible, 
+				'color' : u.models[i].material.color
+			};
 		}
 	//	undo
 		editor.getUndoDataForAddAsset( u.namespace, 'undo')	

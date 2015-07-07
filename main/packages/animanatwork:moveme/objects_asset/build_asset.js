@@ -109,7 +109,7 @@ MM.AssetBuild.prototype = {
 			
 			//	add visibility attribute
 			object.children[0].setChannelsEmpty()
-			object.children[0].addChannel( 'custom' , 'visibility' )
+			object.children[0].addChannel( 'custom' , 'visibility', undefined, 'boolean' )
     		object.children[0].custom={'visibility' : true}
     		object.children[0].asset=scope.assetName 
 
@@ -141,7 +141,7 @@ MM.AssetBuild.prototype = {
 			scope.models.push( skin )
 
 			//	add visibility attribute
-			skin.addChannel( 'custom' , 'visibility' )
+			skin.addChannel( 'custom' , 'visibility', undefined, 'boolean' )
     		skin.custom={'visibility' : true}
 
 			scope.updateProgress()

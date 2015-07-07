@@ -105,10 +105,9 @@ MM.insertLegs = function( editor ){
 	//	color geometry		
 		var i, j;
 		for( i = 0, j = u.models.length; i < j; i++){
-            u.models[i].addChannel( 'custom', 'color' )
-            u.models[i].custom={'visibility' : u.models[i].visible, 
-                                'color' : u.models[i].material.color};
-                                
+            u.models[i].addChannel( 'custom', 'color', undefined, 'color')
+            u.models[i].custom={'visibility': u.models[i].visible, 
+                                'color': u.models[i].material.color};
 			switch(u.models[i].name){
 				case u.namespace+'cBody':
 					u.models[i].material.color.setRGB(85/255,72/255,68/255)						
