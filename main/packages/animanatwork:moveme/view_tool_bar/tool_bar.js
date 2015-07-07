@@ -7,13 +7,13 @@ MM.Toolbar = function( editor, parent, options){
 	container.setClass( 'toolbar')
 	parent.appendChild( container.dom );
 
-	var File = new MM.FileToolBar( editor, container, options )
+	var File = new MM.FileToolBar(editor, container, options)
 	
-	var SceneView = new MM.SceneViewToolBar( editor, container )	
+	var SceneView = new MM.SceneViewToolBar(editor, container)
 	
-	// var View = new MM.ViewToolBar( editor, container )
+	var View = new MM.ViewToolBar(editor, container)
 
-	var KeyView = new MM.KeyViewToolBar( editor, container )
+	var KeyView = new MM.KeyViewToolBar(editor, container)
 
 	SceneView.dom.style.float = 'left'
 
@@ -89,17 +89,32 @@ MM.ViewToolBar = function( editor, parent, options ){
 	var toolbar = new MMUI.ButtonToolBar;
 	panel.add( toolbar )
 
-	var toggleGroup = new MMUI.ButtonGroup;
-	toolbar.add( toggleGroup )
+	// controls
+	var controlToggleGroup = new MMUI.ButtonGroup;
+	toolbar.add( controlToggleGroup )
 
-	var toggleControlsUI = new MMUI.Button().setImage('/ui/control_toggle.png').addToolTip('Toggle Control Visibility').onClick( function(){
-			editor.undo();
-	} );	
-	toggleGroup.add(toggleControlsUI)
+	var showControlsUI = new MMUI.Button().setImage('/ui/control_show.png').addToolTip('Show All Controls').onClick( function(){
+		editor.controlsVisibility(true);
+	});	
+	controlToggleGroup.add(showControlsUI)
 
-	var toogleSkeletonUI = new MMUI.Button().setImage('/ui/joint_toggle.png').addToolTip('Toggle Skeleton Visibility').onClick( function(){
-			editor.redo();
-	} );	
-	toggleGroup.add(toogleSkeletonUI)	
+	var hideControlsUI = new MMUI.Button().setImage('/ui/control_hide.png').addToolTip('Hide All Controls').onClick( function(){
+		editor.controlsVisibility(false);
+	});	
+	controlToggleGroup.add(hideControlsUI)
+
+	// joints
+	var jointToggleGroup = new MMUI.ButtonGroup;
+	toolbar.add( jointToggleGroup )
+
+	var hideJointsUI = new MMUI.Button().setImage('/ui/joint_hide.png').addToolTip('Hide All Joints').onClick( function(){
+		editor.jointsVisibility(false);
+	});
+	jointToggleGroup.add(hideJointsUI)
+
+	var showJointsUI = new MMUI.Button().setImage('/ui/joint_show.png').addToolTip('Show All Joints').onClick( function(){
+		editor.jointsVisibility(true);
+	});
+	jointToggleGroup.add(showJointsUI)
 
 }
