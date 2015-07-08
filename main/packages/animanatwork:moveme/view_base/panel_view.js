@@ -93,16 +93,30 @@ MM.PanelView = function( editor , prefix){
     this.children.push( this.frameText.dom )
 
 //  aspect ratio gate (16:10 - 4:3)
-    var aspectFrame = new MMUI.Panel().setPosition('absolute')
-    aspectFrame.addClass('aspectview')
-    aspectFrame.setWidth('120px')
-    aspectFrame.setHeight('200px')
-    aspectFrame.dom.id = 'panelview-'+this.prefix
-    aspectFrame.setDisplay('none')
-    this.aspectFrame = aspectFrame;
-    dom.appendChild( aspectFrame.dom ) 
+    // var aspectFrame = new MMUI.Panel().setPosition('absolute')
+    // aspectFrame.addClass('aspectview')
+    // aspectFrame.setWidth('120px')
+    // aspectFrame.setHeight('200px')
+    // aspectFrame.dom.id = 'panelview-'+this.prefix
+    // aspectFrame.setDisplay('none')
+    // this.aspectFrame = aspectFrame;
+    // dom.appendChild( aspectFrame.dom ) 
 
-    this.children.push( this.aspectFrame.dom )
+    // this.children.push( this.aspectFrame.dom )
+
+    //  new aspectFrame
+    var aspectFrame = document.createElement('div')    
+    aspectFrame.className = 'aspectview'
+    aspectFrame.style.position = 'absolute'
+    // aspectFrame.style.width = '120px'
+    // aspectFrame.style.height = '200px'
+    aspectFrame.id = 'panelview-'+this.prefix
+    aspectFrame.style.display = 'none'
+    aspectFrame.style.pointerEvents = 'none'
+    this.aspectFrame = aspectFrame
+    dom.appendChild(aspectFrame)
+
+    this.children.push(this.aspectFrame)
 
 //  CAMERA LOCK
 //  shows us whether or not the camera lock is on. When the lock is on
@@ -264,12 +278,14 @@ MM.PanelView.prototype.toggleAspect = function(){
 }
 
 MM.PanelView.prototype.hideAspect = function(){
-    this.aspectFrame.setDisplay('none')
+    // this.aspectFrame.setDisplay('none')
+    this.aspectFrame.style.display = 'none'
     this.show_aspect = false
 }
 
 MM.PanelView.prototype.showAspect = function(){
-    this.aspectFrame.setDisplay('block')
+    // this.aspectFrame.setDisplay('block')
+    this.aspectFrame.style.display = 'block'
     this.show_aspect = true
 
     //  redraw panel to properly scale the frame
@@ -683,12 +699,12 @@ MM.PanelView.prototype.resize = function(){
             }
 
             var widthOffset = this.dom.offsetWidth - (smallest * 1.6)
-            this.aspectFrame.dom.style.left = widthOffset/2+'px'
-            this.aspectFrame.dom.style.width = (smallest*1.6)+'px'
+            this.aspectFrame.style.left = widthOffset/2+'px'
+            this.aspectFrame.style.width = (smallest*1.6)+'px'
 
             var heightOffset = this.dom.offsetHeight - smallest
-            this.aspectFrame.dom.style.top = heightOffset/2+'px'
-            this.aspectFrame.dom.style.height = smallest+'px'
+            this.aspectFrame.style.top = heightOffset/2+'px'
+            this.aspectFrame.style.height = smallest+'px'
         }
     }    
 }
