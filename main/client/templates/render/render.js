@@ -16,11 +16,11 @@ Template.render.rendered = function(){
       return;
     }
 
-    // console.log('\tfile url', file.url())
+    console.log('\tfile url', file.url())
     var absUrl = Meteor.absoluteUrl(file.url());
-    // console.log('\tabs url', absUrl)
+    console.log('\tabs url', absUrl)
 
-    // var newUrl = 'http://192.168.1.69:3000'+file.url()
+    var newUrl = 'http://192.168.1.69:3000'+file.url()
     // var newUrl = 'http://108.180.115.126:3000'+file.url()
     // console.log('\tnew url', newUrl)
 
@@ -36,8 +36,8 @@ Template.render.rendered = function(){
 		var data = JSON.parse(xhr.responseText)
 		moveme.editor.loader.loadAsJSON(data)		
 	}
-	xhr.open("GET", absUrl);
-	// xhr.open("GET", newUrl);
+	// xhr.open("GET", absUrl);
+	xhr.open("GET", newUrl);
 	xhr.send();
 
 	var overlay = document.createElement('div')

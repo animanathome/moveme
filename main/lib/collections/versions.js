@@ -1,3 +1,4 @@
+//  Collection which contains all of the versions of shots within a given project
 VersionList = new Mongo.Collection('versions');
 
 VersionList.allow({
@@ -12,6 +13,7 @@ VersionList.allow({
   }
 });
 
+//  Collection which contains all of the animation scenes
 FileList = new FS.Collection("scenes", {
   stores: [
     new FS.Store.FileSystem("animation")
@@ -33,7 +35,7 @@ FileList.allow({
   }
 });
 
-
+//  String to array buffer
 function str2ab(str) {
   var buf = new ArrayBuffer(str.length);
   var bufView = new Uint8Array(buf);
@@ -42,6 +44,15 @@ function str2ab(str) {
   }
   return buf;
 }
+
+ThumbnailList = new FS.Collection("thumbnails", {
+  stores: [new FS.Store.FileSystem("image")]
+});
+
+GifList = new FS.Collection("gifs", {
+  stores: [new FS.Store.FileSystem("gif")]
+});
+
 
 Meteor.methods({
   deleteSceneVersion: function( versionAttributes ){

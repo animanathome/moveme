@@ -66,3 +66,12 @@ db.dropDatabase()
 //	http://rudix.org/packages/libev.html
 ssl_certificate /etc/nginx/ssl/moveme.io.chained.crt; 
 ssl_certificate_key /etc/nginx/ssl/moveme.key;
+
+
+//	npm and installing a package globally
+https://docs.npmjs.com/getting-started/installing-npm-packages-globally
+http://stackoverflow.com/questions/13982474/os-x-lion-imagemagick-and-rmagic-how-to-install
+brew install imagemagick
+
+// JSdoc
+//https://github.com/spadgos/sublime-jsdocs

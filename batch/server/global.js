@@ -18,7 +18,7 @@ VersionList.allow({
 remote.subscribe('versions');
 
 ShotList = new Mongo.Collection('shots', remote);
-VersionList.allow({
+ShotList.allow({
   update: function(){ 
     return true; 
   },
@@ -31,10 +31,64 @@ VersionList.allow({
 });
 remote.subscribe('shots');
 
-Meteor.methods({
-	hardwareRenderScene: function( renderJob){
-  		console.log('hardwareRenderScene', renderJob)  		
 
-  		MMHWR.renderScene(renderJob);
-	}
+ThumbnailList = new FS.Collection('thumbnails', {
+  stores: [new FS.Store.FileSystem('image')]
+});
+
+ThumbnailList.allow({
+  update: function(){ 
+    return true; 
+  },
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  },
+  download: function(){
+    return true;
+  }
+});
+
+GifList = new FS.Collection('gifs', {
+    stores: [new FS.Store.FileSystem('gif')]
+})
+
+GifList.allow({
+  update: function(){ 
+    return true; 
+  },
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  },
+  download: function(){
+    return true;
+  }
+});
+
+//  http://www.meteorpedia.com/read/Async_on_server
+var Future = Npm.require('fibers/future');
+
+function async(cb){
+  console.log('async')
+  Meteor.setTimeout(function () {
+    cb(null, 'hello');
+  }, 3000);
+}
+
+Meteor.methods({
+    hardwareRenderScene: function( renderJob){
+    	console.log('hardwareRenderScene', renderJob)  		
+
+        var fut = new Future()
+    	MMHWR.renderScene(renderJob, function(data){
+            console.log('hardwareRenderScene: callback', data)
+            fut.return(data)
+        });
+        return fut.wait();
+    }
 })

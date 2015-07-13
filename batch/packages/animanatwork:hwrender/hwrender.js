@@ -17,8 +17,25 @@ MMHWR = {};
 
 // 	http://stackoverflow.com/questions/28105957/meteor-and-the-private-directory
 // 	http://stackoverflow.com/questions/17740790/dynamically-insert-files-into-meteor-public-folder-without-hiding-it
-MMHWR.renderScene = function(options){
-	console.log('MMHWR.renderScene', options)
+
+/**
+ * renderScene is the main method which should be used when rendering a scene. 
+ * It currently consists of the following steps:
+ * 1. render sequence
+ * 2. once 1 is finished, collect a images to represent the performance 
+ * 3. once 1 is finished, create an animated gif to represent the performance
+ * 4. once 1 is finished, upload video to ? (youtube for now) if requested 
+ * 5. once 2 and 3 are finished we run the call which returns the urls of the 
+ * created content so they can be downloaded and added to the version/shot.
+ * 6. once 4 is finished, we can remove the image sequence
+ * cleanScene should be run once the content from 2 and 3 has been downloaded.
+ * This method will remove all of the created content from rendering this scene.
+ *
+ * To ensure we do not have any clashes the content of each version should be 
+ * created within its own folder!
+ */
+MMHWR.renderScene = function(options, icallback){
+	console.log('MMHWR.renderScene')
 	/*
 	{
 		projectId:this.projectId
@@ -34,29 +51,286 @@ MMHWR.renderScene = function(options){
 	}
 	*/
 
-	//	depending on the environment this will change
-	var posPath = [  '/Users/manu/GitHub/moveme/render'
-					,'/Users/animanatwork/GitHub/moveme/render']
-	var rootPath;
-	for( var i = 0; i < posPath.length; i++){
-		if(fs.existsSync(posPath[i])){
-			rootPath=posPath[i];
-		}
+	//	get the source path
+	var user = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE 
+	console.log('user', user)
+
+	//	get the path to the render command	
+	//	NOTE that render is the name of a moveme sub package!
+	rootPath = path.join(user, 'GitHub/moveme/render')
+	if(! fs.existsSync(rootPath)){
+		throw ("Unable to find path to render command, should be "+rootPath)
 	}
-	// console.log('\trootPath:', rootPath)
-	options['rootPath']=rootPath;
-	console.log('\t!->options', options)
+	console.log('\trender path command:', rootPath)
+	options['rootPath']=rootPath
+
+	//	get the path to the publish directory.
+	//	NOTE: we can not publish to public folder since meteor restarts every time
+	//	the content changes
+	publishPath = path.join(user, 'GitHub/moveme/output/', options.versionId)
+	if(fs.existsSync(publishPath)){
+    	console.log('\t', publishPath, 'already exists')
+    }else{
+    	console.log('\tcreating publish directory folder', publishPath)
+    	fs.mkdirSync(publishPath)
+    }
+    console.log('\tpublish path:', publishPath)
+	options['publishPath']=publishPath
+
+	console.log('full options:')
+	console.log(options)
 	
-	MMHWR.renderSequence(options, Meteor.bindEnvironment(function(){		
-		MMHWR.createMovie(options, Meteor.bindEnvironment(function(data){			
-			MMHWR.cleanupSequence(options);
+	// //	render sequence
+	// MMHWR.renderSequence(options, Meteor.bindEnvironment(function(){		
+		
+	// 	MMHWR.uploadImage(options)
+
+	// 	return 'My result'
+
+	// 	//	create movie
+	// 	// MMHWR.createMovie(options, Meteor.bindEnvironment(function(data){			
 			
-			MMHWR.uploadToYouTube(options, data, Meteor.bindEnvironment(function(error, options, ydata){
-				MMHWR.updateVersion(error, options, ydata)
-				MMHWR.cleanupMovie(options)
-			}));
-		}))
-	}));
+	// 	// 	// delete image sequence
+	// 	// 	// MMHWR.cleanupSequence(options);
+			
+	// 	// 	MMHWR.uploadToYouTube(options, data, Meteor.bindEnvironment(function(error, options, ydata){
+	// 	// 		// update collection
+	// 	// 		MMHWR.updateVersion(error, options, ydata)
+				
+	// 	// 		//	cleanup movie
+	// 	// 		// MMHWR.cleanupMovie(options)
+	// 	// 	}));
+
+	// 	// }))
+	// }));
+
+	//	since renderSequence is run within a sub process we need to run a callback 
+	//	if we want to run a process once it's rendered!
+	MMHWR.renderSequence(options, Meteor.bindEnvironment(
+		function(){
+			// create movie
+			MMHWR.createMovie(options, Meteor.bindEnvironment(
+				function(data){
+					//	only upload to youtube when we actually have a acces token
+					if(options.hasOwnProperty('accessToken')){
+						MMHWR.uploadToYouTube(options, data, Meteor.bindEnvironment(
+							function(error, options, ydata){
+								// update collection
+								MMHWR.updateVersion(error, options, ydata)
+							})
+						);	
+					}					
+				})
+			);
+
+			//	create images
+			MMHWR.image(options, Meteor.bindEnvironment(
+				function(options){
+					MMHWR.gif(options, Meteor.bindEnvironment(
+						function(options){
+							image_url = ThumbnailList.findOne({_id:options.imageId}).url()
+							gif_url = GifList.findOne({_id:options.gifId}).url()
+
+							abs_image_url = Meteor.absoluteUrl(image_url)
+							abs_gif_url = Meteor.absoluteUrl(gif_url)
+
+							icallback({
+								'image_url': abs_image_url,
+								'gif_url': abs_gif_url
+							})
+
+							MMHWR.cleanupSequence(options)
+						})
+					)
+				})
+			)
+		})
+	);
+}
+
+/**
+ *  imag is a wrapper method which combines create and save image into one method
+ *  this to increase readabilty
+ */
+MMHWR.image = function( options, callback){
+	console.log('image')
+
+	MMHWR.createImage(options, Meteor.bindEnvironment(
+		function(options){
+			MMHWR.saveImage(options, Meteor.bindEnvironment(
+				function(options){
+					if(callback !== undefined){
+						callback(options)	
+					}					
+				})
+			)
+		})
+	)
+}
+
+/**
+ * createImage create a resized image from one of the previously rendered images
+ * the current resolution is 1600x900
+ */
+MMHWR.createImage = function( options, callback){
+	var rootPath = options['publishPath']
+	var framePath = path.join(rootPath, 'frames')
+	var imagePath = path.join(rootPath, 'image')
+
+	// create gif directory
+    if(fs.existsSync(imagePath)){
+    	console.log('\t', imagePath, 'already exists')
+    }else{
+    	console.log('\tcreating folder', imagePath)
+    	fs.mkdirSync(imagePath)
+    }
+
+    var command = 'convert -resize 800x450'
+    thisFilename = path.join(framePath, options.versionId+options.startFrame+'.png')
+    command += ' '+thisFilename
+    targetFile = path.join(imagePath, options.versionId+'.png')
+    command += ' '+targetFile
+
+    console.log('running image command', command)
+
+	childProcess.exec(command, function (error, stdout, stderr){
+		if (error !== null) {
+			console.log('exec error: ' + error);
+		}
+
+		console.log('done creating image')
+		options['pathToImage'] = targetFile
+
+		if(callback !== undefined) callback(options);
+	})    
+}
+
+MMHWR.saveImage = function(options, callback){
+	console.log('saveImage', options['pathToImage'])
+
+	var storedImage = ThumbnailList.insert(options['pathToImage'])
+	console.log('saved image in collection', storedImage._id)
+
+	options['imageId'] = storedImage._id
+
+	// only run the callback when the object is actually stored. Otherwise we'll
+	// get null when asking for the url
+	// From ColectionFS gitub comments: XXX Because of the way stores inherit 
+	// from SA, this will emit on every store.
+	storedImage.once('stored', function(storeName){
+		console.log('done', storeName)
+		if(storeName !== 'image')
+			return
+
+		console.log('done saving image')
+		if(callback !== undefined) callback(options);
+	})
+
+	// if(callback !== undefined) callback(options);
+}
+
+
+/**
+ *  gif is a wrapper method which combines create and save gif into one method
+ *  this to increase readabilty
+ */
+MMHWR.gif = function(options, callback){
+	console.log('gif')
+
+	MMHWR.createGif(options, Meteor.bindEnvironment(
+		function(options){
+			MMHWR.saveGif(options, Meteor.bindEnvironment(
+				function(options){
+					if(callback !== undefined){
+						callback(options)
+					}
+				})
+			)
+		})
+	)
+}
+
+/**
+ *	createGif creates an animated gif from the previously rendered image sequence.
+ *	This following the following process: 
+ *	1. get image range
+ *	2. get image frames (based on the range and the number of images we want in our gif)
+ *	3. construct convert command
+ *	4. run convert command
+ *	5. copy animated gif over to public folder for sharing
+ *	The latter is actually done in a seperate method due to scope (Fiber) issues.
+ */
+MMHWR.createGif = function( options, callback){
+	var rootPath = options['publishPath']
+	var framePath = path.join(rootPath, 'frames')
+	var gifPath = path.join(rootPath, 'gif')
+
+	// create gif directory
+    if(fs.existsSync(gifPath)){
+    	console.log('\t', gifPath, 'already exists')
+    }else{
+    	console.log('\tcreating folder', gifPath)
+    	fs.mkdirSync(gifPath)
+    }
+
+	var command = 'convert -resize 400x225'
+
+	//	define the number of samples where are going to take
+	var framesPerSample = 2
+	var duration = parseInt(options.endFrame) - parseInt(options.startFrame)
+	var samples = parseInt(duration/framesPerSample)
+	
+	//	here we are going to take 1 frame for every 6 frames of animation 
+	//	that takes it to about 4 frames per second
+	var i, thisSample, thisFilename;
+	for( i = 0; i < samples; i++){
+		thisSample = options.startFrame + (i * framesPerSample)
+		
+		if(thisSample > options.endFrame){
+			break;
+		}
+
+		thisFilename = path.join(framePath, options.versionId+thisSample+'.png')
+		command += ' '+thisFilename
+	}
+	command += ' '+path.join(gifPath, options.versionId+'.gif')
+	console.log(command)
+
+	childProcess.exec(command, function (error, stdout, stderr){
+		if (error !== null) {
+			console.log('exec error: ' + error);
+		}
+
+		console.log('done creating gif')		
+		pathToGif = path.join(gifPath, options.versionId+'.gif')
+		options['pathToGif'] = pathToGif
+
+		if(callback !== undefined) callback(options);
+	})
+}
+
+MMHWR.saveGif = function(options, callback){
+	console.log('saveGif', options['pathToGif'])
+
+	var storedGif = GifList.insert(options['pathToGif'])
+	console.log('saved gif in collection', storedGif._id)
+
+	options['gifId'] = storedGif._id
+
+	// only run the callback when the object is actually stored. Otherwise we'll
+	// get null when asking for the url
+	// From ColectionFS gitub comments: XXX Because of the way stores inherit 
+	// from SA, this will emit on every store.
+	storedGif.once('stored', function(storeName){
+		console.log('done', storeName)
+
+		if(storeName !== 'gif')
+			return
+
+		if(callback !== undefined) callback(options);
+	})
+
+	// if(callback !== undefined) callback(options);
 }
 
 MMHWR.renderSequence = function( options, callback ){
@@ -69,7 +343,8 @@ MMHWR.renderSequence = function( options, callback ){
     var scriptPath = path.join(rootPath, 'createMovie.js');
 
 //	create frames directory
-    var framePath = path.join(rootPath, 'frames');
+	var publishPath = options['publishPath']
+    var framePath = path.join(publishPath, 'frames');
     if(fs.existsSync(framePath)){
     	console.log('\t', framePath, 'already exists')
     }else{
@@ -112,7 +387,7 @@ MMHWR.renderSequence = function( options, callback ){
 MMHWR.createMovie = function( options, callback ){
 	console.log('MMHWR.createMovie', options)
 
-	var rootPath = options['rootPath'];
+	var rootPath = options['publishPath'];
 	var imagePath = path.join(rootPath, 'frames', options.versionId+'%d.png')
 	var movieFile = path.join(rootPath, 'movie', options.versionId+'.mp4')
 	var mcommand = "ffmpeg -r 24 "
@@ -155,31 +430,37 @@ MMHWR.createMovie = function( options, callback ){
 	});
 }
 
+// http://www.geedew.com/remove-a-directory-that-is-not-empty-in-nodejs/
+MMHWR.removeDirectory = function( path ){	
+	if(fs.existsSync(path))
+	{
+		fs.readdirSync(path).forEach(
+			function(file,index){
+				var curPath = path + "/" + file;
+				if(fs.lstatSync(curPath).isDirectory()) { // recurse
+					MMHWR.removeDirectory(curPath);
+				} else { // delete file
+					fs.unlinkSync(curPath);
+				}
+			}
+		);
+		fs.rmdirSync(path);
+	}
+}
+
 MMHWR.cleanupSequence = function( options ){
 	console.log('MMHWR.cleanupSequence', options)
 
-	var rootPath = options['rootPath'];
-	var framePath = path.join(rootPath, 'frames');
-	
-	fs.readdir(framePath, function(err, files){
-		for( var i = 0; i < files.length; i++){
-			//	make sure we only delete the files of the current sequence
-			if( files[i].indexOf(options.versionId) !== -1){
-				console.log('\tremoving', files[i])
-				
-				var thisFile = path.join(rootPath, 'frames', files[i]);			
-				fs.unlink(thisFile, function (err) {		  	
-			  		if (err) throw err;		  		
-				});
-			}
-		}
-	});
+	var rootPath = options['publishPath']
+	var framePath = path.join(rootPath, 'frames')
+
+	MMHWR.removeDirectory(framePath)
 }
 
 MMHWR.cleanupMovie = function( options ){
 	console.log('MMHW.cleanUpMovie', options)
 
-	var rootPath = options['rootPath'];
+	var rootPath = options['publishPath'];
 	var movieFile = path.join(rootPath, 'movie', options.versionId+'.mp4')
 	fs.unlink(movieFile, function (err) {		  	
 		if(err) throw err;
