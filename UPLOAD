@@ -27,7 +27,7 @@ scp main.tar.gz root@104.236.211.246:/home/moveme
 tar -zxvf filename.tar
 
 cd /home/moveme
-tar -zxvf MoveMe.tar.gz
+tar -zxvf main.tar.gz
 rm -r /home/moveme/bundle/programs/server/npm/npm-bcrypt/node_modules/bcrypt/
 cd /home/moveme/bundle/programs/server
 npm install bcrypt

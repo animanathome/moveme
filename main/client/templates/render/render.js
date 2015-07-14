@@ -16,13 +16,18 @@ Template.render.rendered = function(){
       return;
     }
 
-    console.log('\tfile url', file.url())
-    var absUrl = Meteor.absoluteUrl(file.url());
-    console.log('\tabs url', absUrl)
+    //	same machine testing
+    // console.log('\tfile url', file.url())
+    // var absUrl = Meteor.absoluteUrl(file.url());
+    // console.log('\tabs url', absUrl)
 
-    var newUrl = 'http://192.168.1.69:3000'+file.url()
+    // local network testing
+    // var newUrl = 'http://192.168.1.69:3000'+file.url()
+    
+    var newUrl = 'https://moveme.io'+file.url()
+    
     // var newUrl = 'http://108.180.115.126:3000'+file.url()
-    // console.log('\tnew url', newUrl)
+    console.log('\tnew url', newUrl)
 
 //	load the data once loaded
 	var xhr;

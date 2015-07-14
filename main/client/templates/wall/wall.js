@@ -119,8 +119,8 @@ Template.animWall.rendered = function(){
 		}		
 	
 		var srci = '/ui/imagePlaceHolder.png'
-		if(item.youTubeId.length != 0){
-			srci = 'https://img.youtube.com/vi/'+item.youTubeId+'/'+res+'default.jpg'	
+		if(item.hasOwnProperty('imageUrl')){
+			srci = item.imageUrl
 		}
 
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')

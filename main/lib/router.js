@@ -433,7 +433,7 @@ ShotController = RouteController.extend({
         return parseInt(this.params.versionsLimit) || this.increment;
     },
     findOptions: function(){
-        return {submitted: -1, limit:this.versionsLimit()}
+        return {sort:{submitted: -1}, limit:this.versionsLimit()}
     },    
     waitOn: function() { 
         return [
