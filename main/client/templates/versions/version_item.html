@@ -1,8 +1,8 @@
 <template name="prodShotVersionItem">
     <div class="version" id={{getId}}>
-        <img class="image" src={{youtubeImage youTubeId}} style={{randomColor}}>        
-        <!-- <embed class="image" src={{youtubeVideo youTubeVideoId}}> -->
-        
+        <img class="image" src={{getImage}} onmouseover={{getGifOver}} onmouseout={{getImageOut}} style={{randomColor}}>
+
+
         <div class="version-content">
             <a href="{{pathFor 'anim'}}">{{shortDescription description 50}}</a>
             <h4>{{pluralize votes "Vote"}}, submitted by {{author}}, <a>{{pluralize commentsCount "comment"}}</a>, on {{submittedText}}</h4>

@@ -49,10 +49,39 @@ ThumbnailList = new FS.Collection("thumbnails", {
   stores: [new FS.Store.FileSystem("image")]
 });
 
+ThumbnailList.allow({
+  update: function(){ 
+    return true; 
+  },
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  },
+  download: function(){
+    return true;
+  }
+});
+
 GifList = new FS.Collection("gifs", {
   stores: [new FS.Store.FileSystem("gif")]
 });
 
+GifList.allow({
+  update: function(){ 
+    return true; 
+  },
+  remove: function(){ 
+    return true; 
+  },
+  insert: function(){
+    return true;
+  },
+  download: function(){
+    return true;
+  }
+});
 
 Meteor.methods({
   deleteSceneVersion: function( versionAttributes ){
@@ -90,7 +119,7 @@ Meteor.methods({
   createSceneVersion: function( versionAttributes, sceneData){
     //  create an animation scene version for the given sceneAttributes and attach it's id to the given versionId.
     console.log('createSceneVersion')
-    console.log('\tdata', sceneData)
+    // console.log('\tdata', sceneData)
     console.log('\tproject:', versionAttributes.projectId)
     console.log('\tshot:', versionAttributes.shotId)
     console.log('\tdescription:', versionAttributes.description)
@@ -109,6 +138,11 @@ Meteor.methods({
     
     //  create version
     var user = Meteor.user();
+    if( user === null ){
+      // throw new Meteor.Error('No user logged in. Unable to associate file to user.')
+      return
+    }
+
     var version = {
       userId: user._id, 
       author: user.username,
@@ -128,7 +162,7 @@ Meteor.methods({
     }
 
     var versionId = VersionList.insert(version);
-    // console.log('\tversion id', versionId)
+    console.log('\tversion id', versionId)
 
     //  update file 
     FileList.update({

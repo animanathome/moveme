@@ -19,6 +19,29 @@ MMHWR = {};
 // 	http://stackoverflow.com/questions/17740790/dynamically-insert-files-into-meteor-public-folder-without-hiding-it
 
 /**
+ * reformatFrame reformats an int value like 90 to a string value of '0090'
+ */
+MMHWR.reformatFrame = function(i){
+	console.log('reformatFrame', i)
+	var fas = i.toString() // WARNING - this is a asynchronous call!
+	
+	var frame;
+	if(fas.length === 1){
+	    frame = '000'+fas
+	}else if(fas.length === 2){
+	    frame = '00'+fas
+	}else if(fas.length === 3){
+	    frame = '0'+fas
+	}else if(fas.length === 4){
+	    frame = fas
+	}
+
+	console.log('\treturning', frame)
+
+	return frame
+}
+
+/**
  * renderScene is the main method which should be used when rendering a scene. 
  * It currently consists of the following steps:
  * 1. render sequence
@@ -79,30 +102,6 @@ MMHWR.renderScene = function(options, icallback){
 
 	console.log('full options:')
 	console.log(options)
-	
-	// //	render sequence
-	// MMHWR.renderSequence(options, Meteor.bindEnvironment(function(){		
-		
-	// 	MMHWR.uploadImage(options)
-
-	// 	return 'My result'
-
-	// 	//	create movie
-	// 	// MMHWR.createMovie(options, Meteor.bindEnvironment(function(data){			
-			
-	// 	// 	// delete image sequence
-	// 	// 	// MMHWR.cleanupSequence(options);
-			
-	// 	// 	MMHWR.uploadToYouTube(options, data, Meteor.bindEnvironment(function(error, options, ydata){
-	// 	// 		// update collection
-	// 	// 		MMHWR.updateVersion(error, options, ydata)
-				
-	// 	// 		//	cleanup movie
-	// 	// 		// MMHWR.cleanupMovie(options)
-	// 	// 	}));
-
-	// 	// }))
-	// }));
 
 	//	since renderSequence is run within a sub process we need to run a callback 
 	//	if we want to run a process once it's rendered!
@@ -185,8 +184,20 @@ MMHWR.createImage = function( options, callback){
     	fs.mkdirSync(imagePath)
     }
 
+    // avoiding the use of toString here since it is an asynchronous method
+    var frame = ''
+    if(options.startFrame < 10){
+    	frame = '000'+options.startFrame
+    }else if(options.startFrame < 100){
+    	frame = '00'+options.startFrame
+    }else if(options.startFrame < 1000){
+    	frame = '00'+options.startFrame
+    }else{
+    	frame = options.startFrame
+    }
+
     var command = 'convert -resize 800x450'
-    thisFilename = path.join(framePath, options.versionId+options.startFrame+'.png')
+    thisFilename = path.join(framePath, options.versionId+'-'+frame+'.png')
     command += ' '+thisFilename
     targetFile = path.join(imagePath, options.versionId+'.png')
     command += ' '+targetFile
@@ -202,7 +213,7 @@ MMHWR.createImage = function( options, callback){
 		options['pathToImage'] = targetFile
 
 		if(callback !== undefined) callback(options);
-	})    
+	})
 }
 
 MMHWR.saveImage = function(options, callback){
@@ -213,18 +224,23 @@ MMHWR.saveImage = function(options, callback){
 
 	options['imageId'] = storedImage._id
 
+	//  Update file to link to shot version
 	// only run the callback when the object is actually stored. Otherwise we'll
 	// get null when asking for the url
 	// From ColectionFS gitub comments: XXX Because of the way stores inherit 
 	// from SA, this will emit on every store.
-	storedImage.once('stored', function(storeName){
-		console.log('done', storeName)
-		if(storeName !== 'image')
-			return
-
-		console.log('done saving image')
-		if(callback !== undefined) callback(options);
-	})
+	storedImage.once('stored', Meteor.bindEnvironment(
+		function(storeName){
+			console.log('done', storeName)
+			
+			if(storedImage.url() !== null){
+				console.log('done saving image')			
+				if(callback !== undefined){
+					callback(options);
+				}
+			}
+		})
+	)
 
 	// if(callback !== undefined) callback(options);
 }
@@ -282,16 +298,26 @@ MMHWR.createGif = function( options, callback){
 	
 	//	here we are going to take 1 frame for every 6 frames of animation 
 	//	that takes it to about 4 frames per second
-	var i, thisSample, thisFilename;
+	var i, thisSample, thisFilename, frame;
 	for( i = 0; i < samples; i++){
 		thisSample = options.startFrame + (i * framesPerSample)
 		
-		if(thisSample > options.endFrame){
-			break;
-		}
+		if(thisSample <= options.endFrame){
+		    // avoiding the use of toString here since it is an asynchronous method
+		    frame = ''
+		    if(thisSample < 10){
+		    	frame = '000'+thisSample
+		    }else if(thisSample < 100){
+		    	frame = '00'+thisSample
+		    }else if(thisSample < 1000){
+		    	frame = '00'+thisSample
+		    }else{
+		    	frame = thisSample
+		    }
 
-		thisFilename = path.join(framePath, options.versionId+thisSample+'.png')
-		command += ' '+thisFilename
+			thisFilename = path.join(framePath, options.versionId+'-'+frame+'.png')
+			command += ' '+thisFilename
+		}
 	}
 	command += ' '+path.join(gifPath, options.versionId+'.gif')
 	console.log(command)
@@ -321,14 +347,17 @@ MMHWR.saveGif = function(options, callback){
 	// get null when asking for the url
 	// From ColectionFS gitub comments: XXX Because of the way stores inherit 
 	// from SA, this will emit on every store.
-	storedGif.once('stored', function(storeName){
-		console.log('done', storeName)
+	storedGif.once('stored', Meteor.bindEnvironment(
+		function(storeName){
+			console.log('done', storeName)
 
-		if(storeName !== 'gif')
-			return
-
-		if(callback !== undefined) callback(options);
-	})
+			if(storedGif.url() !== null){
+				if(callback !== undefined){
+					callback(options);
+				}
+			}
+		})
+	)
 
 	// if(callback !== undefined) callback(options);
 }
@@ -388,7 +417,7 @@ MMHWR.createMovie = function( options, callback ){
 	console.log('MMHWR.createMovie', options)
 
 	var rootPath = options['publishPath'];
-	var imagePath = path.join(rootPath, 'frames', options.versionId+'%d.png')
+	var imagePath = path.join(rootPath, 'frames', options.versionId+'-%04d.png')
 	var movieFile = path.join(rootPath, 'movie', options.versionId+'.mp4')
 	var mcommand = "ffmpeg -r 24 "
 	mcommand += " -i "+imagePath

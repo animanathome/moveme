@@ -47,25 +47,21 @@ Meteor.methods({
 				//	currently we directly link the url to the shot and version id
 				//	be sure we also link the version id to both the gif and image file.
 
-				//	upload image
+				//	only upload image when we've been given a valid url
 				if(data.image_url !== null){
 					console.log('downloading image', data.image_url)
 					var storedImage = ThumbnailList.insert(data.image_url)
-					console.log('image_id', storedImage._id)					
+					console.log('image_id', storedImage._id)
+
+					//	link the created image to the shot version
+					ThumbnailList.update({
+					_id: storedImage._id
+					}, { versionId:renderJob.versionId})
 					
 					storedImage.on('stored', Meteor.bindEnvironment(
-						function(data, other){
-							if(data !== 'image')
-								return
-
-							if(storedImage.url() === null)
-								return
-
-							console.log('\tstored image:', data, other)
-
+						function(data){
 							var url = storedImage.url()
 							console.log('\timage url:', url)
-
 							if(url !== null){
 								//	update version
 								VersionList.update(
@@ -73,7 +69,7 @@ Meteor.methods({
 							        { $set: {imageUrl: url}}        
 							    )
 
-							    console.log('\timage: done update version with id ', renderJob.versionId)
+							    console.log('\timage: done updating version with id ', renderJob.versionId)
 
 							    //	update shot
 								ShotList.update(
@@ -81,32 +77,28 @@ Meteor.methods({
 							        { $set: {latestImageUrl: url}}
 							    )
 
-							    console.log('\timage: done update shot with id ', renderJob.shotId)
+							    console.log('\timage: done updating shot with id ', renderJob.shotId)
 							}
 						})
 					)					
 				}
 
-				//	upload gif				
+				//	only upload gif when we've been given a valid url
 				if(data.gif_url !== null){
 					console.log('downloading gif', data.gif_url)
 					
 					var storedGif = GifList.insert(data.gif_url)
 					console.log('gif_id', storedGif._id)
 
+					//	link the created gif to the shot version
+					GifList.update({
+					_id: storedGif._id
+					}, { versionId:renderJob.versionId})
+
 					storedGif.on('stored', Meteor.bindEnvironment(
 						function(data, other){
-							if(data !== 'gif')
-								return
-
-							if(storedGif.url() === null)
-								return
-
-							console.log('\tstored gif:', data, other)
-
 							var url = storedGif.url()
 							console.log('\tgif url:', url)
-
 							if(url !== null){
 								//	update version
 								VersionList.update(
@@ -114,7 +106,7 @@ Meteor.methods({
 							        { $set: {gifUrl: url}}        
 							    )
 
-							    console.log('\tgif: done update version with id ', renderJob.versionId)
+							    console.log('\tgif: done updating version with id ', renderJob.versionId)
 
 							    //	update shot
 								ShotList.update(
@@ -122,7 +114,7 @@ Meteor.methods({
 							        { $set: {latestGifUrl: url}}        
 							    )
 
-							    console.log('\tgif: done update shot with id ', renderJob.shotId)
+							    console.log('\tgif: done updating shot with id ', renderJob.shotId)
 							}
 						})
 					)

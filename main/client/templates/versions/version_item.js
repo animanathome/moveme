@@ -14,17 +14,33 @@ Template.prodShotVersionItem.helpers({
     return time;
   },
   hasRender: function(){
-    console.log('hadRender')
-    console.log('this', this)
-
+    // console.log('hadRender')
+    // console.log('this', this)
     if(this.youTubeVideoId === -1){
       return false
     }else{
       return true
     }
   },
-  getId: function(){
-    return this._id
+  getImage: function(){
+    console.log('getImage', this._id, this)
+    if(this.hasOwnProperty('imageUrl')){
+      console.log('\treturning latestImageUrl')
+      return this.imageUrl
+    }
+    return '/ui/imagePlaceHolder.png';
+  },
+  getGifOver: function(){
+    if(this.hasOwnProperty('gifUrl')){
+      return "this.src='"+this.gifUrl+"'";
+    }
+    return "this.src='/ui/imagePlaceHolder.png'";
+  },
+  getImageOut: function(){
+    if(this.hasOwnProperty('imageUrl')){
+      return "this.src='"+this.imageUrl+"'";
+    }
+    return "this.src='/ui/imagePlaceHolder.png'";
   }
 });
 

@@ -34,7 +34,8 @@
 
 <template name="galleryItem">
 	<li class="gallery-item-container">		
-		<img class="anim" src={{youtubeImage latestVersionYoutubeId 'm'}}>
+		<!-- <img class="anim" src={{youtubeImage latestVersionYoutubeId 'm'}}> -->
+		<img class="anim" src={{getImage}} onmouseover={{getGifOver}} onmouseout={{getImageOut}} style={{randomColor}}>
 		<div>
 			<span>
 				{{title}} by {{author}}

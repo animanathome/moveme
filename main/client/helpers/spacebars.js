@@ -73,13 +73,16 @@ UI.registerHelper('tutorialImage', function(id){
     return 'https://img.youtube.com/vi/'+id+'/maxresdefault.jpg';
 })
 
-UI.registerHelper('randomColor', function(){
+UI.registerHelper('randomColor', function(paramaters){
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
     for (var i = 0; i < 6; i++ ) {
         color += letters[Math.floor(Math.random() * 16)];
     }
-    return "background: "+color;
+    if(paramaters === undefined){
+      paramaters=''
+    }
+    return "background: "+color+paramaters;
 })
 
 UI.registerHelper('activeRouteClass', function(){

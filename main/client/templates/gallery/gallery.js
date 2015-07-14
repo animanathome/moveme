@@ -23,3 +23,26 @@ Template.gallery.events({
     	});
 	}
 });
+
+Template.galleryItem.helpers({
+  getImage: function(){
+    console.log('getImage', this._id, this)
+    if(this.hasOwnProperty('latestImageUrl')){
+      console.log('\treturning latestImageUrl')
+      return this.latestImageUrl
+    }
+    return '/ui/imagePlaceHolder.png';
+  },
+  getGifOver: function(){
+    if(this.hasOwnProperty('latestGifUrl')){
+      return "this.src='"+this.latestGifUrl+"'";
+    }
+    return "this.src='/ui/imagePlaceHolder.png'";
+  },
+  getImageOut: function(){
+    if(this.hasOwnProperty('latestImageUrl')){
+      return "this.src='"+this.latestImageUrl+"'";
+    }
+    return "this.src='/ui/imagePlaceHolder.png'";
+  }
+});

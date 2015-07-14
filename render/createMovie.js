@@ -43,8 +43,22 @@ casper.then(function() {
         }, i)
         // utils.dump(value);
 
-        this.capture(sargs['framesPath']+'/'+sargs['versionId']+i+'.png', 
-            { 
+        //  convert the frame number to a 4 number string (0 -> 0000)
+        var fas = i.toString()
+        var frame;
+        if(fas.length === 1){
+            frame = '000'+fas
+        }else if(fas.length === 2){
+            frame = '00'+fas
+        }else if(fas.length === 3){
+            frame = '0'+fas
+        }else if(fas.length === 4){
+            frame = fas
+        }else{
+            utils.dump('Unsuppored frame number')
+        }
+
+        this.capture(sargs['framesPath']+'/'+sargs['versionId']+'-'+frame+'.png', {
                   top:0, left:0
                 , width:sargs['screenResolutionX']
                 , height:sargs['screenResolutionY']
