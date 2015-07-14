@@ -289,20 +289,21 @@ MMHWR.createGif = function( options, callback){
     	fs.mkdirSync(gifPath)
     }
 
-	var command = 'convert -resize 400x225'
+	var command = 'convert -resize 240x135'
 
 	//	define the number of samples where are going to take
 	var framesPerSample = 2
 	var duration = parseInt(options.endFrame) - parseInt(options.startFrame)
 	var samples = parseInt(duration/framesPerSample)
 	
-	//	here we are going to take 1 frame for every 6 frames of animation 
-	//	that takes it to about 4 frames per second
+	//	here we are going to take 1 frame for every 2 frames of animation 
+	//	that takes it to about 12 frames per second
+	//	NOTE: to keep the file size down we're currently going to reduce the clip length to 2 seconds
 	var i, thisSample, thisFilename, frame;
 	for( i = 0; i < samples; i++){
 		thisSample = options.startFrame + (i * framesPerSample)
 		
-		if(thisSample <= options.endFrame){
+		if(thisSample <= options.endFrame && i <= 24){
 		    // avoiding the use of toString here since it is an asynchronous method
 		    frame = ''
 		    if(thisSample < 10){
@@ -319,6 +320,7 @@ MMHWR.createGif = function( options, callback){
 			command += ' '+thisFilename
 		}
 	}
+	command += ' -compress lzw'
 	command += ' '+path.join(gifPath, options.versionId+'.gif')
 	console.log(command)
 
