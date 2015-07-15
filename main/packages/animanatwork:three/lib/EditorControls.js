@@ -3,6 +3,11 @@
  * @author mrdoob / http://mrdoob.com
  * @author alteredq / http://alteredqualia.com/
  * @author WestLangley / http://github.com/WestLangley
+ *
+ * maya controls:
+ * 	- tumble : alt + left mouse button
+ * 	- pan: alt + middle mouse button
+ * 	- dolly: alt + right mouse button
  */
 
 THREE.EditorControls = function ( object, domElement, prefix) {
@@ -21,7 +26,9 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 	var scope = this;
 
 	var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2 };
+	var MODE = { DEFAULT: 0, MAYA: 1}
 	var state = STATE.NONE;
+	var mode = MODE.MAYA
 
 	var vector = new THREE.Vector3();
 	var center = new THREE.Vector3();
@@ -159,7 +166,7 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 
 	function onMouseDown( event ) {
 
-		// console.log('EditorControls: onMouseDown')		
+		// console.log('EditorControls: onMouseDown')
 		// console.log('\tenabled', scope.enabled)
 		// console.log(scope.object)
 		// console.log('isOrtho', scope.object instanceof THREE.OrthographicCamera)
@@ -176,11 +183,12 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 
 		} else if ( event.button === 1 ) {
 
-			state = STATE.ZOOM;
+			state = STATE.PAN;
 
 		} else if ( event.button === 2 ) {
 
-			state = STATE.PAN;
+			
+			state = STATE.ZOOM;
 
 		}
 
@@ -199,20 +207,22 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 		var movementX = event.movementX || event.webkitMovementX || event.mozMovementX || event.oMovementX || 0;
 		var movementY = event.movementY || event.webkitMovementY || event.mozMovementY || event.oMovementY || 0;
 
-		if ( state === STATE.ROTATE ) {
+		if(state === STATE.ROTATE ){
 
 			scope.rotate( new THREE.Vector3( - movementX * 0.005, - movementY * 0.005, 0 ) );
 
-		} else if ( state === STATE.ZOOM ) {
+		}else if(state === STATE.ZOOM){
 
-			scope.zoom( new THREE.Vector3( 0, 0, movementY ) );
+			var zoom = new THREE.Vector2(movementX, movementY).length()			
+			var posOrNeg = movementX + (-1 * movementY)
+			if(posOrNeg <= 0){
+				zoom *= -1
+			}
+			scope.zoom(new THREE.Vector3( 0, 0, zoom * 5))
 
-		} else if ( state === STATE.PAN ) {
-
-			scope.pan( new THREE.Vector3( - movementX, movementY, 0 ) );
-
+		}else if(state === STATE.PAN){
+			scope.pan( new THREE.Vector3( - movementX, movementY, 0 ));
 		}
-
 	}
 
 	function onMouseUp( event ) {

@@ -1,7 +1,7 @@
 /*
 	WARNING!!!
 	If the selection box does not appear on the right position the page is probably 
-	scaled (command + + or -)
+	because the CSS has been scaled ( by using the command + + or -) 
 */
 
 MM.KeyView = function ( editor, prefix, parentPanel){
@@ -129,8 +129,8 @@ MM.KeyView = function ( editor, prefix, parentPanel){
         globalDistanceInX = 0.0;
         globalDistanceInY = 0.0;
 
-        if(event.button === 0)	// left mouse button
-        {     
+		// left mouse button
+        if(event.button === 0){     
         //	selection logic
 			selectionBoxStartPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
 			selectionBoxStartPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
@@ -176,10 +176,9 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 
     	onMouseUpPosition.set( event.layerX, event.layerY ); 
     	
-    	if(event.button == 0) // left mouse button
-    	{
-	    	if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) > 1 )
-	    	{	    		    	
+    	// left mouse button
+    	if(event.button == 0){
+	    	if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) > 1 ){
 	    		//	get the position in world space
 				selectionBoxEndPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
 				selectionBoxEndPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;

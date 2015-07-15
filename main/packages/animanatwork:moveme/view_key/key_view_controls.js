@@ -15,7 +15,7 @@ MM.KeyframeEditorControls = function ( object, domElement ) {
 	var scope = this;
 	var vector = new THREE.Vector3();
 
-	var STATE = { NONE: -1, ZOOM: 1, PAN: 2 };
+	var STATE = { NONE: -1, ZOOM: 1, PAN: 2 , ZOOMAXIS: 3};
 	var state = STATE.NONE;
 
 	var center = new THREE.Vector3();
@@ -66,7 +66,7 @@ MM.KeyframeEditorControls = function ( object, domElement ) {
 	};
 
 	this.zoom = function ( distance ) {
-		console.log('zoom', object.name, distance)
+		// console.log('zoom', object.name, distance)
 
 		var xValue, yValue;
 		if( distance instanceof THREE.Vector3 ){
@@ -117,17 +117,26 @@ MM.KeyframeEditorControls = function ( object, domElement ) {
 
 	function onMouseDown( event ) {
 
+		console.log('event', event)
+
 		if ( scope.enabled === false ) return;
+
+		if( event.altKey === false) return;
 
 		event.preventDefault();
 
 		if ( event.button === 1 ) {
 			// console.log('KeyframeEditorControls: zoom')
-			state = STATE.ZOOM;
+			state = STATE.PAN;
 
 		} else if ( event.button === 2 ) {
 			// console.log('KeyframeEditorControls: pan')
-			state = STATE.PAN;
+			
+			state = STATE.ZOOM;
+
+			if( event.shiftKey === true){
+				state = STATE.ZOOMAXIS
+			}
 
 		}
 
@@ -158,9 +167,34 @@ MM.KeyframeEditorControls = function ( object, domElement ) {
 			scope.pan( new THREE.Vector3( - movementX, movementY, 0 ) );
 
 		} else if ( state === STATE.ZOOM ){
-			console.log( 'zzzzzzzooom')
 
-			scope.zoom( new THREE.Vector3( - movementX, movementY, 0) );
+			var zoom = new THREE.Vector2(movementX, movementY).length()
+			var posOrNeg = movementX + (-1 * movementY)
+			if(posOrNeg <= 0){
+				zoom *= -1
+			}
+			scope.zoom(new THREE.Vector3( zoom, zoom, 0))
+
+			// scope.zoom( new THREE.Vector3( - movementX, movementY, 0) );
+		} else if ( state === STATE.ZOOMAXIS ){
+			// console.log('ZOOMAXIS')
+			// console.log('movment', movementX, movementY)
+
+			var x = Math.abs(movementX)
+			var y = Math.abs(movementY)
+
+			var zoom = new THREE.Vector2(movementX, movementY).length()
+			var posOrNeg = movementX + (-1 * movementY)
+			if(posOrNeg <= 0){
+				zoom *= -1
+			}
+
+			if(x > y){
+				scope.zoom(new THREE.Vector3( zoom, 0, 0))
+			}else{
+				scope.zoom(new THREE.Vector3( 0, zoom, 0))
+			}
+
 		}
 
 	}
