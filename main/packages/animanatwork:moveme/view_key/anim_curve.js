@@ -880,6 +880,8 @@ MM.AnimCurve.prototype = {
         return this.qcValue(outputValue)
     },
     qcValue: function( value ){
+        // console.log('qcValue', value)
+
         // type correction
         if( this.attrType === 'boolean'){
             // console.log('\tcorrecting type before', outputValue)
@@ -894,13 +896,22 @@ MM.AnimCurve.prototype = {
             value = parseInt(value)
             // console.log('\tcorrecting type after', value)            
         }
+        // console.log('\tafter correction', value)
+        // console.log('\tattr range', this.attrRange)
 
         //  range correction
+        //  
+        if(this.attrRange[0] === null){
+            return value
+        }
+
         if(value < this.attrRange[0]){
             value = this.attrRange[0]
         }else if(value > this.attrRange[1]){
             value = this.attrRange[1]
         }
+
+        // console.log('\tresult', value)
         return value
     }
 }
