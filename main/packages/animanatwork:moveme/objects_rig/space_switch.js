@@ -158,16 +158,24 @@ MM.Spaceswitch.prototype.updateMatrixWorld = function (){
 	// console.log('updateMatrixWorld')
 	MM.Control.prototype.updateMatrixWorld.call(this);
 
-	if( this.spaces.length === 0 ){
+	if(this.spaces.length === 0){
 		return
 	}
 	var index = this.custom[this.channelName];
+    
+    // fail save
+    // if(index > (this.spaces.length -1)){
+    //     index = this.spaces.length -1
+    // }
+    // if(index < 0){
+    //     index = 0
+    // }
 
     var parentInverse = new THREE.Matrix4()
     parentInverse.getInverse(this.parent.matrixWorld);
 
     var matrix1 = new THREE.Matrix4();
-    matrix1.multiplyMatrices(parentInverse, this.spaces[index].matrixWorld)   
+    matrix1.multiplyMatrices(parentInverse, this.spaces[index].matrixWorld)
 
     var matrix2 = new THREE.Matrix4();
     matrix2.multiplyMatrices(matrix1, this.offsetMatrices[index])

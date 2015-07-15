@@ -412,7 +412,11 @@ THREE.Object3D.prototype.getChannelNameIndex = function( channelGroup, channelNa
 	return -1;
 }
 
-
+/**
+ * example:
+ * moveme.editor.selectedObjects[0].getChannelRange('custom', 'spaceSwitch')
+ * ["mini:cGlobalCtl", "mini:cBodyCtl", "mini:rFootIkCtl"]
+ */
 THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName ){
 	var gi = this.getChannelGroupIndex(channelGroup)
 	var index = this.getChannelNameIndex( channelGroup, channelName )
@@ -423,8 +427,54 @@ THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName )
 	return this.animChannels[gi][2][index]
 }
 
-THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, channelRange ){
+/**
+ * Depending on the type of the attribute we require a different value range
+ * example:
+ * moveme.editor.selectedObjects[0].getChannelComputationRange('custom', 'spaceSwitch')
+ * [0, 3]
+ * 
+ * moveme.editor.selectedObjects[0].getChannelComputationRange('position', 'x')
+ * [-Infinity, Infinity]
+ */
+THREE.Object3D.prototype.getChannelComputationRange = function( channelGroup, channelName){
+	channelType = this.getChannelType(channelGroup, channelName)
+	if( channelType === 'boolean' ){
+		return [0,1]
+	}else if(channelType === 'enum'){
+		var options = this.getChannelRange(channelGroup, channelName)
+		return [0, (options.length -1)]
+	}else{
+		return this.getChannelRange(channelGroup, channelName)
+	}
+}
 
+THREE.Object3D.prototype.setChannelKeyable = function( channelGroup, channelName, value){
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var index = this.getChannelNameIndex( channelGroup, channelName )
+	if( index == -1 ){
+		console.log('Unable to find channel name')
+		return;
+	}
+	this.animChannels[gi][4][index] = value
+}
+
+/**
+ * return true when the given channelGroups channelName is keyable
+ * example:
+ * moveme.editor.selectedObjects[0].isChannelKeyable('rotation', 'x')
+ * true
+ */
+THREE.Object3D.prototype.isChannelKeyable = function( channelGroup, channelName){
+	var gi = this.getChannelGroupIndex(channelGroup)
+	var index = this.getChannelNameIndex( channelGroup, channelName )
+	if( index == -1 ){
+		console.log('Unable to find channel name')
+		return false;
+	}	
+	return this.animChannels[gi][4][index]
+}
+
+THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, channelRange){
 	var gi = this.getChannelGroupIndex(channelGroup)
 	var index = this.getChannelNameIndex( channelGroup, channelName )
 	if( index == -1 ){
@@ -434,7 +484,7 @@ THREE.Object3D.prototype.setChannelRange = function( channelGroup, channelName, 
 	this.animChannels[gi][2][index] = channelRange
 }
 
-THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName, channelRange ){
+THREE.Object3D.prototype.addToChannelRange = function( channelGroup, channelName, channelRange){
 	// console.log('addToChannelRange', channelGroup, channelName, channelRange)
 
 	var gi = this.getChannelGroupIndex(channelGroup)
@@ -470,22 +520,6 @@ THREE.Object3D.prototype.setChannelType = function( channelGroup, channelName, c
 	this.animChannels[gi][3][ni] = channelType
 }
 
-// THREE.Object3D.prototype.getChannelRange = function( channelGroup, channelName ){
-// 	// console.log('getChannelRange', channelGroup, channelName)
-
-// 	//	NOTE: not very happy with this implementation 
-// 	//	very dirty and not very scalable
-// 	if( channelGroup === 'rotation' && channelName === 'order'){
-// 		return MM.getArrayAsDictionary( THREE.Euler.RotationOrders )
-// 	}
-// 	if( channelGroup === 'custom'){
-// 		if( channelName === 'spaceSwitch' || channelName === 'parentMaster'){
-// 			console.log('\tresult', MM.getArrayAsDictionary( this.spaceNames ))
-// 			return MM.getArrayAsDictionary( this.spaceNames )
-// 		}
-// 	}
-// }
-
 THREE.Object3D.prototype.getChannelValues = function(){
 	// console.log('getChannelValues')
 
@@ -508,7 +542,7 @@ THREE.Object3D.prototype.getChannelValues = function(){
 		data.push( [animChannels[i][0], animChannels[i][1], channelValueData ])
 	}
 
-	console.log('\tresult:', data)
+	// console.log('\tresult:', data)
 	return data;
 }
 
@@ -557,6 +591,7 @@ THREE.Object3D.prototype._getChannelsTranslate = function (){
 	  		[-Infinity, Infinity]
 	  	 ]
 		,["number", "number", "number"]
+		,[true, true, true]
 	] 
 }
 
@@ -571,6 +606,7 @@ THREE.Object3D.prototype._getChannelsRotate =function (){
 			['XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX']
 		  ]
 		,["number", "number", "number", "enum"]
+		,[true, true, true, false]
 	]
 }
 
@@ -584,6 +620,7 @@ THREE.Object3D.prototype._getChannelsScale = function (){
 	  		[-Infinity, Infinity]
 	  	 ]
 		,["number", "number", "number"]
+		,[true, true, true]
 	] 
 }
 
@@ -615,6 +652,12 @@ THREE.Object3D.prototype.setDefaultChannels =function(){
 	]
 }
 
+/**
+ * return true if the given channelGroup exists 
+ * example:
+ * moveme.editor.selectedObjects[0].hasChannelGroup('rotation')
+ * true
+ */
 THREE.Object3D.prototype.hasChannelGroup = function( channelGroup ){
 	if( this.animChannels === undefined)
 		return false;
@@ -628,6 +671,12 @@ THREE.Object3D.prototype.hasChannelGroup = function( channelGroup ){
 	return false
 }
 
+/**
+ * return an array with the channels which belong to the given group
+ * example:
+ * moveme.editor.selectedObjects[0].getChannelsFromGroup('position')
+ * result: ["x", "y", "z"]
+ */
 THREE.Object3D.prototype.getChannelsFromGroup = function( channelGroup ){
 	if( this.animChannels === undefined)
 		return [];
@@ -704,7 +753,7 @@ THREE.Object3D.prototype.removeChannel = function( channelGroup, channelName ){
 	}
 }
 
-THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, channelRange, channelType ){
+THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, channelRange, channelType, isKeyable){
 	/*
 	Add animatable channel
 	*/
@@ -723,6 +772,10 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, chan
 		channelType = "number"
 	}
 
+	if(isKeyable === undefined){
+		isKeyable = true
+	}
+
 	//	determine if the group exists		
 	var channelIndex = -1;
 	var i, l;
@@ -735,7 +788,7 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, chan
 	//	if not, add channel group with channel
 	if( channelIndex === -1 ){
 		// console.log('\tChannelGroup does not exist. Adding', channelGroup)
-		this.animChannels.push([channelGroup, [channelName], [channelRange], [channelType]])
+		this.animChannels.push([channelGroup, [channelName], [channelRange], [channelType], [isKeyable]])
 	}else{
 		//	determine if we already have the channel within the group
 		var index = -1;
@@ -755,6 +808,7 @@ THREE.Object3D.prototype.addChannel = function ( channelGroup, channelName, chan
 
 			this.animChannels[channelIndex][2].push( channelRange )
 			this.animChannels[channelIndex][3].push( channelType )
+			this.animChannels[channelIndex][4].push( isKeyable )
 		}
 	}
 }
@@ -888,8 +942,11 @@ THREE.Object3D.prototype.keyChannel = function( time, inTangentType, outTangentT
 	Returns:
 		Created animation curve
 	*/
-	var thisAnimCurve = this.getAnimCurveFromChannel( [ channelGroup, 
-		channelName ])
+	var thisAnimCurve = this.getAnimCurveFromChannel([channelGroup, channelName])
+
+	if(this.isChannelKeyable(channelGroup, channelName) === false){
+		return null
+	}
 
 	//	create an animation curve is none exists
 	var createdAnimCurve = false;

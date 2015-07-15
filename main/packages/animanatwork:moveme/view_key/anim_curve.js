@@ -17,24 +17,16 @@ MM.AnimCurve = function ( object, channel ){
     this.attr = channel;     
     this.driven = object;
 
-    this.attrType = typeof(this.driven[channel[0]][channel[1]])
-    // console.log('#\tattribute type', this.attrType)    
+    //  get the attribute value type
+    this.attrType = object.getChannelType(channel[0], channel[1])
 
-    this.nattr = object.getNiceName( channel[0], channel[1])
+    //  get the attribute value range
+    this.attrRange = object.getChannelComputationRange(channel[0], channel[1])
+
+    this.nattr = object.getNiceName(channel[0], channel[1])
 
     //  create a unique name 
     this.name = this.driven.name+'_'+channel[0]+'_'+channel[1]
-    
-    // //  not happy with this implementation but currently we do 
-    // //  not have a way to ask for the 'name' of an attribute
-    // //  
-    // if(channel[0] === 'shapes'){
-    //     this.name = object.name+'.'+channel[1];
-    //     this.nattr = channel[1];
-    // }else{
-    //     this.name = object.name+'.'+channel[0]+channel[1].toUpperCase();    
-    //     this.nattr = channel[0]+channel[1].toUpperCase();
-    // }
 
     this.TANGENT = { STEPPED: 0, LINEAR: 1, BEZIER: 2 };
 
@@ -827,11 +819,11 @@ MM.AnimCurve.prototype = {
         var nKeys = this.getNumberOfKeys()
         if(currentTime <= this.t[0]){
             // console.log('\treturning first value', this.v[0])
-            return this.v[0]
+            return this.qcValue(this.v[0])
         }
         if(currentTime >= this.t[nKeys - 1]){
             // console.log('\treturning last value', this.v[nKeys-1])
-            return this.v[nKeys - 1]
+            return this.qcValue(this.v[nKeys - 1])
         }
 
         //  get the AnimCurve range
@@ -859,13 +851,13 @@ MM.AnimCurve.prototype = {
             var value = currentTime - this.t[nextIndex];
             var percent = value / range;
             // console.log('\tpercent', percent)
-            // console.log('\tstart', this.v[nextIndex])
-            // console.log('\tend', this.v[nextIndex+1])
+            // console.log('\tstart', this.v[nextIndex], Number(this.v[nextIndex]))
+            // console.log('\tend', this.v[nextIndex+1], Number(this.v[nextIndex+1]))
             // console.log('\tend - start', (this.v[nextIndex+1] - this.v[nextIndex]))
             // console.log('\tinbetween', ((this.v[nextIndex+1] - this.v[nextIndex]) * percent))
-            //  here we have to explicitly say that the variables integers... very strange
-            outputValue = parseFloat(this.v[nextIndex]) + parseFloat((this.v[nextIndex+1] - this.v[nextIndex]) * percent);
-        
+            //  here we have to explicitly say that the variables integers... very strang
+            outputValue = Number(this.v[nextIndex]) + (Number(this.v[nextIndex+1]) - Number(this.v[nextIndex])) * percent;
+            
         //  bezier mode
         }else if(this.ot[nextIndex] === this.TANGENT.BEZIER){
             // console.log('\tBezier')
@@ -885,6 +877,30 @@ MM.AnimCurve.prototype = {
 
         // console.log('time', currentTime, 'range', this.t[nextIndex], this.t[nextIndex+1], 'value', outputValue)
         // console.log('\treturn value', outputValue)
-        return outputValue
+        return this.qcValue(outputValue)
+    },
+    qcValue: function( value ){
+        // type correction
+        if( this.attrType === 'boolean'){
+            // console.log('\tcorrecting type before', outputValue)
+            if(value <= 0){
+                value = Boolean(false)
+            }else{
+                value = Boolean(true)
+            }            
+            // console.log('\tcorrecting type after', value)
+        }else if( this.attrType === 'enum'){
+            // console.log('\tcorrecting type before', value)
+            value = parseInt(value)
+            // console.log('\tcorrecting type after', value)            
+        }
+
+        //  range correction
+        if(value < this.attrRange[0]){
+            value = this.attrRange[0]
+        }else if(value > this.attrRange[1]){
+            value = this.attrRange[1]
+        }
+        return value
     }
 }
