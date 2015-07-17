@@ -183,20 +183,22 @@ Template.anim.rendered = function(){
 		moveme.layout.projectbar.setTryData()
 
 		// load asset browser
-		var i,j;
-		var assets = AssetList.find({}).fetch()
-		var parent = document.getElementById("movemeanim")
-		var dialog = new MMUI.ItemDialog('Insert Asset')
-		dialog.body.style.height = '350px'
-		for( i = 0, j = assets.length; i < j; i++){
-			dialog.addItem(assets[i].thumbnail, assets[i].title)
+		if(process.env.NODE_ENV !== "development"){
+			var i,j;
+			var assets = AssetList.find({}).fetch()
+			var parent = document.getElementById("movemeanim")
+			var dialog = new MMUI.ItemDialog('Insert Asset')
+			dialog.body.style.height = '350px'
+			for( i = 0, j = assets.length; i < j; i++){
+				dialog.addItem(assets[i].thumbnail, assets[i].title)
+			}
+			dialog.onItemselected(function(){
+				var selectedAsset = dialog.getSelected()
+				dialog.hide()
+				moveme.importAsset(selectedAsset)
+			})
+			parent.appendChild(dialog.dom)
 		}
-		dialog.onItemselected(function(){
-			var selectedAsset = dialog.getSelected()
-			dialog.hide()
-			moveme.importAsset(selectedAsset)
-		})
-		parent.appendChild(dialog.dom)
 
 		//	load local cache
 		console.log('Loading local cache.')

@@ -21,10 +21,13 @@ MM.Menubar.Inserts = function( editor ){
 	var propSubMenu = new MMUI.SubMenuGrp('Prop')
 	menuGrp.add( propSubMenu )
 
-	// var primitiveGround = new MMUI.MenuItem('Ground').onClick( function(){
-	// 	MM.insertGround( editor );
-	// })
-	// propSubMenu.add( primitiveGround )	
+
+	if(process.env.NODE_ENV === "development"){
+		var qcCube = new MMUI.MenuItem('QCCube').onClick( function(){
+			MM.insertQCCube(editor);
+		})
+		propSubMenu.add(qcCube)
+	}
 
 	var primitivePlane = new MMUI.MenuItem('Plane').onClick( function(){
 		MM.insertPlane( editor);

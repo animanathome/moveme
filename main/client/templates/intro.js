@@ -11,6 +11,8 @@ Template.intro.helpers({
 });
 
 Template.intro.rendered = function(){ 
+  console.log('environment:', process.env.NODE_ENV)
+
 //	ACTIVATE TOOLTIPS
 	//  activate all tooltips for this page
   	$(function (){
