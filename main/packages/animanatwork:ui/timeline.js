@@ -28,6 +28,10 @@ MMUI.Timeline = function(){
 	this._key_offset = 0;
 	this._drag_selection_mode = false;
 
+	//	timeline units
+	this._indent = 0; // the width of the border left and right to the frames
+	this._offset = 0; // the width of 1 frame
+
 	//	color variables
 	this.bgFrameColor = '#999';
 	this.keyFrameColor = '#900';
@@ -312,18 +316,36 @@ MMUI.Timeline.prototype.dragTime = function(){
 		var onMouseMove = function( event ){
 			var movementX = event.movementX | event.webkitMovementX | event.mozMovementX | 0;
 
-			// console.log('moving', movementX)
+			// console.log('Timeline.dragTime.moving', event)
+
+			var x = event.pageX - scope.timeLine.dom.offsetLeft 
+			var y = event.pageY - scope.timeLine.dom.offsetTop
+
+			var width = scope.timeLine.dom.clientWidth
+			var height = scope.timeLine.dom.clientHeight
+			
+			// console.log('timeLine', scope.timeLine)
+			// console.log('position', x, y)
+			// console.log('dimensions', width, height)
+			
+			// console.log('indent', scope._indent)
+			// console.log('offset', scope._offset)
+
+			var activeFrame = Math.floor((x-scope._indent)/(scope._offset+1));
+			// console.log('active frame', activeFrame)
+
 			// console.log(event.target)
-				var stime = parseInt(event.target.innerHTML);
+				// var stime = parseInt(event.target.innerHTML);
+				var stime = activeFrame
 				
 				if(!isNaN(stime)){
 					if(event.shiftKey === true){
 						if(scope._start === -1){
 							scope._start = stime;
-							console.log('_start', scope._start)
+							// console.log('_start', scope._start)
 						}else{
 							scope._end = stime;
-							console.log('_end', scope._end)
+							// console.log('_end', scope._end)
 						}
 						scope._updateSelection()
 						scope._getKeysWithinSelection()
@@ -499,17 +521,21 @@ MMUI.Timeline.prototype.rebuild = function(){
 	var offset = Math.floor(((this.timeLine.dom.offsetWidth) / numberOfLines) - 1); // 1 pixel representing the actual frame
 	// console.log('\toffset', offset)	
 	// console.log('\ttotal', (offset + 1) * numberOfLines )
-	this._frame_width = offset;
+	this._frame_width = Math.floor(offset);
 
 	// console.log('start', this.startTime)
 	var number = this.startTime
 	var increment = 0;
 	var position = 0;
-	var indent = offset / 2;
+	var indent = offset/2;
+
+	this._indent = Math.floor(indent)
+	this._offset = Math.floor(offset)
+
 	while ( this.timeLine.dom.children.length < (numberOfLines * 2) ){
-		position = indent + (increment * (offset + 1));
+		position = this._indent + (increment * (this._offset + 1));
 		// console.log('\tnumber', number)
-		// console.log('\toffset', offset)
+		// console.log('\tthis._offset', this._offset)
 		// console.log('\tposition', position )
 
 	//	bar
@@ -524,9 +550,9 @@ MMUI.Timeline.prototype.rebuild = function(){
 		var frame = document.createElement('span');
 		frame.className = 'timeline-frame'
 		if( this.time === number ){
-			frame.style.cssText = 'width:'+ offset +'px;left:'+(position+1)+'px;background-color:'+this.timeFrameColor;	
+			frame.style.cssText = 'width:'+ this._offset +'px;left:'+(position+1)+'px;background-color:'+this.timeFrameColor;	
 		}else{			
-			frame.style.cssText = 'width:'+ offset +'px;left:'+(position+1)+'px;background-color:'+this.bgFrameColor;
+			frame.style.cssText = 'width:'+ this._offset +'px;left:'+(position+1)+'px;background-color:'+this.bgFrameColor;
 		}
 
 		frame.addEventListener( 'mousedown', this.dragTime());
