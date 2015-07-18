@@ -28,12 +28,8 @@ MM.Menubar = function ( layout, editor , dom, options) {
 	navigation.add( new MM.Menubar.Animates( editor ) );
 	
 	// DEMO
-	var show_demo = true
-	if( options.hasOwnProperty('demo_actions')){
-		show_demo = options['demo_actions']
-	}
-	if(show_demo ){
-		navigation.add( new MM.Menubar.Demos( editor ) );
+	if(process.env.NODE_ENV === "development"){
+		navigation.add( new MM.Menubar.Demos(editor));
 	}	
 
 	if( dom )
