@@ -689,8 +689,11 @@ MM.Editor.prototype.importAnimationData = function( data ){
     }
 
     var object;
+    var thisAnimCurve;
     var minTime = 1000;
     var maxTime = 0;
+    var tMinTime;
+    var tMaxTime;
     for( var i = 0; i < data.animCurves.length; i++){
         object = this.scene.getObjectByName(data.animCurves[i].driven, true)
         // console.log(object)
@@ -702,19 +705,20 @@ MM.Editor.prototype.importAnimationData = function( data ){
         console.log('\t', i, data.animCurves[i].attr)
         
         //  we should only create a new curve if it does not exist yet
-        var thisAnimCurve = new MM.AnimCurve( object, data.animCurves[i].attr);
-        object.addAnimCurve( thisAnimCurve );       
-        this.addAnimCurve( thisAnimCurve );
-        thisAnimCurve.importData( data.animCurves[i] )
+        thisAnimCurve = new MM.AnimCurve(object, data.animCurves[i].attr);
+        if(object.addAnimCurve(thisAnimCurve) === true){
+            this.addAnimCurve(thisAnimCurve);
+            thisAnimCurve.importData( data.animCurves[i] )
 
-    //  get time range
-        var tMinTime = data.animCurves[i].t[0];
-        var tMaxTime = data.animCurves[i].t[(data.animCurves[i].t.length - 1)];
-        if( tMinTime < minTime ){
-            minTime = tMinTime;
-        }
-        if( tMaxTime > maxTime ){
-            maxTime = tMaxTime;
+        //  get time range
+            tMinTime = data.animCurves[i].t[0];
+            tMaxTime = data.animCurves[i].t[(data.animCurves[i].t.length - 1)];
+            if( tMinTime < minTime ){
+                minTime = tMinTime;
+            }
+            if( tMaxTime > maxTime ){
+                maxTime = tMaxTime;
+            }
         }
     }   
     // console.log('\tstart time:', minTime)

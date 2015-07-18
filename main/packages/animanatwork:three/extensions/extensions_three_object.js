@@ -880,21 +880,41 @@ THREE.Object3D.prototype.getAnimCurves = function(){
 	return this.animCurves;
 }
 
-//	this.animCurves is a list which contains the animCurves for the current
-//	object. Here the value of the attr defines which channel or attribute
-//	the curve drives
-THREE.Object3D.prototype.addAnimCurve = function( animCurve){
-	// console.log('Object3D: addAnimCurve')
+
+/**
+ * addAnimCurve Add the given animCurve to the animCurves list. If there already
+ * is an animCurve which drives the same attribute it will not be added. Returns
+ * true is an animCurve is added and false when it hasn't. 
+ * @param {[type]} animCurve [description]
+ */
+THREE.Object3D.prototype.addAnimCurve = function(animCurve){
+	console.log('Object3D.addAnimCurve')
 
 	if(this.animCurves === undefined){
 		this.animCurves = []
 	}
 
-	if( this.animCurves.indexOf( animCurve ) === -1 ){
-		this.animCurves.push( animCurve )
-	// }else{
-	// 	console.log('\tanimCurve is already registered')
+	//	make sure we don't already have an animcurve which is driving
+	//	the same attribute
+	var i;
+	for( i = 0, j = this.animCurves.length; i < j; i++){
+		// console.log(i, this.animCurves[i].attr, '->', animCurve.attr)
+		if(this.animCurves[i].attr[0] === animCurve.attr[0] 
+		&& this.animCurves[i].attr[1] === animCurve.attr[1]){			
+			message = 'We already have an animCurve which is driving '
+			message += 'this attribute. This new animCurve will NOT be added. '
+			console.log(message)
+			return false			
+		}
 	}
+
+	//	make sure the same instance isn't already part of the array
+	if(this.animCurves.indexOf( animCurve ) === -1){
+		this.animCurves.push( animCurve )
+		return true
+	}
+
+	return false
 }
 
 THREE.Object3D.prototype.removeAnimCurve = function( animCurve ){
