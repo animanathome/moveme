@@ -806,6 +806,13 @@ MM.bipedKeyAll = function( namespace, container, editor ){
 		,namespace+':rFootIkCtl'
 
 		,namespace+':rLegSwitch'
+
+	//	eyes
+		, namespace+':rEyeCtl'
+		, namespace+':lEyeCtl'
+		, namespace+':cJawCtl'
+	
+	//	jaw
 	]
 	var all = new MM.AssetKeySelectControls( editor )
 	all.setTitle('All').setControls(controls)
