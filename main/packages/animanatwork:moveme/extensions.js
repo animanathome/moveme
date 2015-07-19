@@ -38,8 +38,41 @@ MM.elementWorldPosition = function(element) {
     return { x: xPosition, y: yPosition };
 }
 
+MM.toWorldXYZ = function(position, element, camera){
+	// console.log('toWorldXYZ')
+	// console.log('\tposition', position.x, position.y, position.z)
+	// console.log('\telement', element.clientWidth, element.clientHeight)
+
+	var vector = new THREE.Vector3();
+	vector.set(
+    	( position.x / element.clientWidth ) * 2 - 1,
+    	- ( position.y / element.clientHeight ) * 2 + 1,
+    	0);
+
+	// console.log('\tvector', vector.x, vector.y, vector.z)
+
+	var projector = new THREE.Projector();
+
+	//	reference code from projector
+	// this.unprojectVector = function ( vector, camera ) {
+	// 	camera.projectionMatrixInverse.getInverse( camera.projectionMatrix );
+	// 	_viewProjectionMatrix.multiplyMatrices( camera.matrixWorld, camera.projectionMatrixInverse );
+	// 	return vector.applyProjection( _viewProjectionMatrix );
+	// };
+
+	projector.unprojectVector(vector, camera);
+
+	var dir = vector.sub( camera.position ).normalize();
+	var distance = - camera.position.z / dir.z;
+	var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+
+	console.log('\tposition', pos.x, pos.y, pos.z)
+
+	return pos	
+}
+
 MM.toScreenXY = function( position, camera, jqdiv ) {
-	//console.log('toScreenXY', position , camera, jqdiv)
+	// console.log('toScreenXY', position , camera, jqdiv)
 
     var pos = position.clone();
     var projScreenMat = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);

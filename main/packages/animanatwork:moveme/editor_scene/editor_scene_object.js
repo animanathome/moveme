@@ -361,6 +361,127 @@ MM.Editor.prototype.removeSelectable = function( object ){
     this.selectableObjects.splice( this.objects.indexOf( object ), 1 );  
 }
 
+/**
+ * getSelectablesWithinSBB get selectables withing screen bounding box
+ * FAULTY: since we currently only project the bounding box min and max
+ * vectors in camera space we miss represent the volume as we more the 
+ * camera around (the voluem grows bigger or smaller)
+ */
+MM.Editor.prototype.getSelectablesWithinSBB = function( boundingBox, camera, element, test, points){
+    // https://gist.github.com/cubicleDowns/7666452
+    // 
+    console.log('getSelectablesWithinBB', boundingBox)
+    console.log('\tmin', boundingBox.min.x, boundingBox.min.y)
+    console.log('\tmax', boundingBox.max.x, boundingBox.max.y)
+    // console.log('\t', camera)
+
+    var i;
+    var j = this.selectableObjects.length
+    // console.log('\tthis', this)
+    // console.log('\tnos', j)
+
+    var projScreenMat = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+
+    var elementWidth = (element.offsetWidth / 2)
+    var elementHeight = (element.offsetHeight / 2)
+
+    console.log('\telement w', elementWidth)
+    console.log('\telement h', elementHeight)
+
+    //  put the bounding box in screen space
+    var putBBinSS = function(bb){
+        var min = bb.min
+        var max = bb.max
+
+        var points = [
+        new THREE.Vector3( max.x, max.y, max.z ),
+        new THREE.Vector3( min.x, max.y, max.z ),
+        new THREE.Vector3( min.x, min.y, max.z ),
+        new THREE.Vector3( max.x, min.y, max.z ),
+        new THREE.Vector3( max.x, max.y, min.z ),
+        new THREE.Vector3( min.x, max.y, min.z ),
+        new THREE.Vector3( min.x, min.y, min.z ),
+        new THREE.Vector3( max.x, min.y, min.z )
+        ]
+
+        var bbpoints = []
+
+        var i, npos;
+        for( i = 0; i < 8; i++){
+            //  put point in camera space
+            npos = points[i].applyProjection(projScreenMat)
+
+            sbbMax = new THREE.Vector2()
+            sbbMax.x = (npos.x+1) * element.offsetWidth / 2
+            sbbMax.y = (-npos.y+1) * element.offsetHeight / 2
+
+            bbpoints.push(sbbMax)
+        }
+
+        tsbb = new THREE.Box2();
+        tsbb.setFromPoints(bbpoints)
+
+        console.log(tsbb)        
+        return tsbb
+    }
+
+    var thisObject;
+    var posMin, posMax;
+    for( i = 0; i < j; i++){
+        thisObject = this.selectableObjects[i]
+        thisObject.updateMatrixWorld()
+        console.log('\t', i, thisObject.name)
+
+        tsbb = putBBinSS(thisObject.boundingBox)
+        
+        // //  min
+        // console.log('\tmin bb', i, thisObject.boundingBox.min)
+        // console.log('\tmax bb', i, thisObject.boundingBox.max)
+
+        // console.log('\tpoint', points[(i*2)])
+        // console.log('\tpoint', points[(i*2)+1])
+
+        // points[(i*2)].position = thisObject.boundingBox.min
+        // points[(i*2)+1].position = thisObject.boundingBox.max
+
+        // posMin = thisObject.boundingBox.min.clone();        
+        // posMin.applyProjection(projScreenMat)
+        // console.log('\tproj', i, posMin.x, posMin.y, posMin.z)
+        
+        // sbbMin = new THREE.Vector2()
+        // sbbMin.x = (posMin.x+1) * element.offsetWidth / 2
+        // sbbMin.y = (-posMin.y+1) * element.offsetHeight / 2
+        // console.log('\tmin sbb: x', sbbMin.x, 'y', sbbMin.y)
+
+        // //  max        
+        // posMax = thisObject.boundingBox.max.clone();        
+        // posMax.applyProjection(projScreenMat)
+        // console.log('\tproj', i, posMax.x, posMax.y, posMax.z)
+        
+        // sbbMax = new THREE.Vector2()
+        // sbbMax.x = (posMax.x+1) * element.offsetWidth / 2
+        // sbbMax.y = (-posMax.y+1) * element.offsetHeight / 2
+        // console.log('\tmax sbb: x', sbbMax.x, 'y', sbbMax.y)
+
+    
+        // points[(i*2)].position = posMin
+        // points[(i*2)+1].position = posMax
+
+        // tsbb = new THREE.Box2();
+        // tsbb.setFromPoints([sbbMin, sbbMax])
+
+        test[i].style.top = tsbb.min.y+'px'
+        test[i].style.left = tsbb.min.x+'px'
+        test[i].style.width = (tsbb.max.x - tsbb.min.x)+'px'
+        test[i].style.height = (tsbb.max.y - tsbb.min.y)+'px'
+
+        if(tsbb.isIntersectionBox(boundingBox)){
+            console.log(thisObject.name+' is being intersected')
+        }
+    }
+
+}
+
 MM.Editor.prototype.addObject = function ( object ){
     if( object.name === "" ){
         console.warn('Object', object, 'has no name.')

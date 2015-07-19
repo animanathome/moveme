@@ -107,12 +107,12 @@ MM.PanelView = function( editor , prefix){
     //  new aspectFrame
     var aspectFrame = document.createElement('div')    
     aspectFrame.className = 'aspectview'
-    aspectFrame.style.position = 'absolute'
+    // aspectFrame.style.position = 'absolute'
     // aspectFrame.style.width = '120px'
     // aspectFrame.style.height = '200px'
     aspectFrame.id = 'panelview-'+this.prefix
-    aspectFrame.style.display = 'none'
-    aspectFrame.style.pointerEvents = 'none'
+    // aspectFrame.style.display = 'none'
+    // aspectFrame.style.pointerEvents = 'none'
     this.aspectFrame = aspectFrame
     dom.appendChild(aspectFrame)
 

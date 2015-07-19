@@ -130,16 +130,14 @@ MM.KeyView = function ( editor, prefix, parentPanel){
         globalDistanceInY = 0.0;
 
 		// left mouse button
-        if(event.button === 0){     
+        if(event.button === 0){
         //	selection logic
 			selectionBoxStartPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
 			selectionBoxStartPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
 			selectionBoxStartPosition.z = 0.5;
 	 
-			projector.unprojectVector( selectionBoxStartPosition, camera );
-
+			projector.unprojectVector(selectionBoxStartPosition, camera);
 			// console.log('world space:', selectionBoxStartPosition.x, selectionBoxStartPosition.y, selectionBoxStartPosition.z)
-
 			selectionBoxPrevPosition.copy(selectionBoxStartPosition);
 
 			if(selectedActiveKeys(event) === true 
@@ -257,7 +255,7 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 						gotTangentSelected = true;
 					}
 
-					selectionBox.visible = false;					
+					selectionBox.visible = false;
 				}else{
 				//	move the keys by the distance traveled
 					if( gotTangentSelected ){						
