@@ -362,31 +362,31 @@ MM.Editor.prototype.removeSelectable = function( object ){
 }
 
 /**
- * getSelectablesWithinSBB get selectables withing screen bounding box
- * FAULTY: since we currently only project the bounding box min and max
- * vectors in camera space we miss represent the volume as we more the 
- * camera around (the voluem grows bigger or smaller)
+ * getSelectablesWithinSBB get selectables withing screen space. We do this
+ * in two steps. First we determine whether or not the bounding box of the 
+ * selectable is within the given bounding box. If so, then we move to the 
+ * second step where we determine whether or not the given bounding box is 
+ * intersecting any of the selectables lines (since they are controls...)
  */
-MM.Editor.prototype.getSelectablesWithinSBB = function( boundingBox, camera, element, test, points){
+MM.Editor.prototype.getSelectablesWithinSBB = function( boundingBox, camera, element){
     // https://gist.github.com/cubicleDowns/7666452
     // 
-    console.log('getSelectablesWithinBB', boundingBox)
-    console.log('\tmin', boundingBox.min.x, boundingBox.min.y)
-    console.log('\tmax', boundingBox.max.x, boundingBox.max.y)
-    // console.log('\t', camera)
-
-    var i;
-    var j = this.selectableObjects.length
+    // console.log('getSelectablesWithinBB', boundingBox)
+    // console.log('\tmin', boundingBox.min.x, boundingBox.min.y)
+    // console.log('\tmax', boundingBox.max.x, boundingBox.max.y)
+    // console.log('\t', camera)    
     // console.log('\tthis', this)
     // console.log('\tnos', j)
+    // 
+    // console.log('\tobjs:', this.selectableObjects)
 
     var projScreenMat = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
 
     var elementWidth = (element.offsetWidth / 2)
     var elementHeight = (element.offsetHeight / 2)
 
-    console.log('\telement w', elementWidth)
-    console.log('\telement h', elementHeight)
+    // console.log('\telement w', elementWidth)
+    // console.log('\telement h', elementHeight)
 
     //  put the bounding box in screen space
     var putBBinSS = function(bb){
@@ -394,92 +394,152 @@ MM.Editor.prototype.getSelectablesWithinSBB = function( boundingBox, camera, ele
         var max = bb.max
 
         var points = [
-        new THREE.Vector3( max.x, max.y, max.z ),
-        new THREE.Vector3( min.x, max.y, max.z ),
-        new THREE.Vector3( min.x, min.y, max.z ),
-        new THREE.Vector3( max.x, min.y, max.z ),
-        new THREE.Vector3( max.x, max.y, min.z ),
-        new THREE.Vector3( min.x, max.y, min.z ),
-        new THREE.Vector3( min.x, min.y, min.z ),
-        new THREE.Vector3( max.x, min.y, min.z )
+            new THREE.Vector3( max.x, max.y, max.z ),
+            new THREE.Vector3( min.x, max.y, max.z ),
+            new THREE.Vector3( min.x, min.y, max.z ),
+            new THREE.Vector3( max.x, min.y, max.z ),
+            new THREE.Vector3( max.x, max.y, min.z ),
+            new THREE.Vector3( min.x, max.y, min.z ),
+            new THREE.Vector3( min.x, min.y, min.z ),
+            new THREE.Vector3( max.x, min.y, min.z )
         ]
 
         var bbpoints = []
 
-        var i, npos;
-        for( i = 0; i < 8; i++){
-            //  put point in camera space
-            npos = points[i].applyProjection(projScreenMat)
-
-            sbbMax = new THREE.Vector2()
-            sbbMax.x = (npos.x+1) * element.offsetWidth / 2
-            sbbMax.y = (-npos.y+1) * element.offsetHeight / 2
-
-            bbpoints.push(sbbMax)
+        var p, npos;
+        for( p = 0; p < 8; p++){
+            bbpoints.push(worldToScreen(points[p]))
         }
 
         tsbb = new THREE.Box2();
         tsbb.setFromPoints(bbpoints)
 
-        console.log(tsbb)        
+        // console.log(tsbb)
         return tsbb
     }
 
-    var thisObject;
-    var posMin, posMax;
-    for( i = 0; i < j; i++){
-        thisObject = this.selectableObjects[i]
-        thisObject.updateMatrixWorld()
-        console.log('\t', i, thisObject.name)
-
-        tsbb = putBBinSS(thisObject.boundingBox)
-        
-        // //  min
-        // console.log('\tmin bb', i, thisObject.boundingBox.min)
-        // console.log('\tmax bb', i, thisObject.boundingBox.max)
-
-        // console.log('\tpoint', points[(i*2)])
-        // console.log('\tpoint', points[(i*2)+1])
-
-        // points[(i*2)].position = thisObject.boundingBox.min
-        // points[(i*2)+1].position = thisObject.boundingBox.max
-
-        // posMin = thisObject.boundingBox.min.clone();        
-        // posMin.applyProjection(projScreenMat)
-        // console.log('\tproj', i, posMin.x, posMin.y, posMin.z)
-        
-        // sbbMin = new THREE.Vector2()
-        // sbbMin.x = (posMin.x+1) * element.offsetWidth / 2
-        // sbbMin.y = (-posMin.y+1) * element.offsetHeight / 2
-        // console.log('\tmin sbb: x', sbbMin.x, 'y', sbbMin.y)
-
-        // //  max        
-        // posMax = thisObject.boundingBox.max.clone();        
-        // posMax.applyProjection(projScreenMat)
-        // console.log('\tproj', i, posMax.x, posMax.y, posMax.z)
-        
-        // sbbMax = new THREE.Vector2()
-        // sbbMax.x = (posMax.x+1) * element.offsetWidth / 2
-        // sbbMax.y = (-posMax.y+1) * element.offsetHeight / 2
-        // console.log('\tmax sbb: x', sbbMax.x, 'y', sbbMax.y)
-
+    // map world space vector into screen space
+    var worldToScreen = function(wp){
+        npos = wp.clone().applyProjection(projScreenMat)
     
-        // points[(i*2)].position = posMin
-        // points[(i*2)+1].position = posMax
+        sp = new THREE.Vector2()
+        sp.x = (npos.x+1) * element.offsetWidth / 2
+        sp.y = (-npos.y+1) * element.offsetHeight / 2
+        return sp
+    }
 
-        // tsbb = new THREE.Box2();
-        // tsbb.setFromPoints([sbbMin, sbbMax])
+    // put the line geometry in screen space and det
+    var putVerticesInSS = function(geo){
+        // console.log('putVerticesInSS')
+        var v, nv;
+        nv = geo.vertices.length
+        // console.log('\tnv', nv)
 
-        test[i].style.top = tsbb.min.y+'px'
-        test[i].style.left = tsbb.min.x+'px'
-        test[i].style.width = (tsbb.max.x - tsbb.min.x)+'px'
-        test[i].style.height = (tsbb.max.y - tsbb.min.y)+'px'
+        var sps = [];
+        for(v = 0; v < nv; v++){
+            sps.push(worldToScreen(geo.vertices[v]))
+        }
+        return sps
+    }
 
+    // determine if the bounding box interesecting any of the screen space 
+    // line geometry
+    var isIntersecting = function(sbb, slgv){
+        // console.log('isIntersecting')
+        // console.log('\tbb', sbb)
+        // console.log('\tslgv', slgv)
+
+        var tnslgv = slgv.length-1
+        var nslgv = slgv.length/2;
+        // console.log('\tnumber of slgv', nslgv*2)
+
+        var bbSegements = [
+            new THREE.Vector2( sbb.min.x, sbb.min.y),
+            new THREE.Vector2( sbb.min.x, sbb.max.y),
+            new THREE.Vector2( sbb.max.x, sbb.max.y),
+            new THREE.Vector2( sbb.max.x, sbb.min.y),
+        ]
+
+        var i, j;
+        var x1, x2, x3, x4;
+        var y1, y2, y3, y4;
+        var si, ei;
+        for( i = 0; i < 4; i++){
+            x1 = bbSegements[i].x
+            y1 = bbSegements[i].y
+
+            if(i !== 3){
+                x2 = bbSegements[i+1].x
+                y2 = bbSegements[i+1].y
+            }else{ // the last one should be the first one
+                x2 = bbSegements[0].x
+                y2 = bbSegements[0].y
+            }
+
+            for(j = 0; j < nslgv; j++){
+                console.log('\tslgv index', (j*2), 'and', (j*2)+1)
+
+                si = (j*2)
+                ei = si+1
+                if(tnslgv < ei){
+                    ei = 0;
+                }
+
+                x3 = slgv[si].x
+                y3 = slgv[si].y
+                x4 = slgv[ei].x
+                y4 = slgv[ei].y
+
+                if(THREE.linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4)){
+                    // console.log('intersecting')
+                    return true
+                // }else{
+                //     console.log('not intersecting')
+                }
+            }
+        }
+        return false
+    }
+
+    // main loop
+    var objectsToSelect = []
+    var thisObject;
+    var posMin, posMax, vertices, tslgv;
+    var s, ns;
+    ns = this.selectableObjects.length
+
+    for( s = 0; s < ns; s++){
+        thisObject = this.selectableObjects[s]
+        thisObject.updateMatrixWorld()
+        // console.log('\tInspecting', s, thisObject.name)
+
+        //  make sure the selectable is visible
+        if(thisObject.visible === false)
+            continue
+        
+        tsbb = putBBinSS(thisObject.boundingBox)
+        if(boundingBox.containsBox(tsbb)){
+            // console.log(thisObject.name+' sits within the boudning box')
+            objectsToSelect.push(thisObject)
+            continue;
+        }
+
+        //  determine if we are intersecting the bounding box
         if(tsbb.isIntersectionBox(boundingBox)){
-            console.log(thisObject.name+' is being intersected')
+            // console.log('\tSBB being intersected. Inspecting lines.')
+            //  determine if we are intersecting the actuall geometry
+            tslgv = putVerticesInSS(thisObject.cd.geometry)
+            if(isIntersecting(boundingBox, tslgv)){
+                // console.log('\tintersecting lines')
+                objectsToSelect.push(thisObject)
+            // }else{
+            //     console.log('\tnot intersecting lines')
+            }
         }
     }
 
+    //  select the objects 
+    this.select(objectsToSelect, false, 'reset')
 }
 
 MM.Editor.prototype.addObject = function ( object ){

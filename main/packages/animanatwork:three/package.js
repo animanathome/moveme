@@ -27,7 +27,7 @@ Package.onUse(function(api) {
 					, 'lib/planeHelper.js'
 					, 'lib/SceneExporter.js'
 
-					//	Move Me Extensions
+					//	Move Me Extensions					
 					,'extensions/extensions_three_object.js'
 					,'extensions/extensions_three_scene.js'
 					,'extensions/extensions_three_ortho.js'
@@ -35,6 +35,7 @@ Package.onUse(function(api) {
 					,'extensions/extensions_three_euler.js'
 					,'extensions/extensions_three_quaternion.js'
 					,'extensions/extensions_three_vector3.js'
+					,'extensions/extensions_three_line.js'
 					,'extensions/extensions_three_skinnedMesh.js'
 				 ], 'client');
 

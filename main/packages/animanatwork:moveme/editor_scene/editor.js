@@ -121,7 +121,8 @@ MM.Editor = function(){
     this.activePanel = 0; 
     this.panels = [];    
     this.viewportCameraControl = null;
-    this.viewportTransformControl = undefined;
+
+    this.viewportTransformControl = undefined; //  this one does not seem to be used???
 
     this.scene = new THREE.Scene(); // sceneObjects
     this.scene.name = 'objectScene'

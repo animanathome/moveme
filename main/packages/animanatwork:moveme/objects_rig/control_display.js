@@ -36,7 +36,6 @@ MM.ControlDisplay.prototype = {
 		}
 
 		// console.log(this.control.name, 'control shape matrix', finalMatrix)
-
 		var scale = this.control.controlScale.clone().multiplyScalar(this.control.controlSize)		
 
 	//	set color
@@ -56,8 +55,7 @@ MM.ControlDisplay.prototype = {
 			this.geometry.vertices.push( new THREE.Vector3( 0, 0, scale.z ).applyMatrix4(finalMatrix) )
 		}
 
-		switch(this.control.controlShape)		
-		{
+		switch(this.control.controlShape){
 			case "triangle": // top or Y
 				this.geometry.vertices.push( new THREE.Vector3( 0, 0, -scale.z ).applyMatrix4(finalMatrix));
 				this.geometry.vertices.push( new THREE.Vector3( scale.x, 0, scale.z ).applyMatrix4(finalMatrix) );	
