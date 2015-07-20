@@ -680,6 +680,10 @@ MM.PanelView.prototype.render = function(){
     }
 }
 
+MM.PanelView.prototype.reinit = function(){
+    this.buildCameraDD()
+}
+
 MM.PanelView.prototype.resize = function(){
     if( this.childPanel ){
         this.childPanel.resize();

@@ -108,6 +108,28 @@ MM.Editor.prototype.matchesPTASettings = function(data){
     return true
 }
 
+MM.Editor.prototype.exportCameras = function(){
+    var data = []
+    var i, j;
+    for( i = 0, j = this.cameras.length; i < j; i++){
+        data.push(this.cameras[i].name)
+    }
+    return data;
+}
+
+MM.Editor.prototype.importCameras = function(data){
+    this.cameras = []
+    var i, j;
+    for( i=0, j=data.length; i < j; i++){        
+        var objectByName = this.scene.getObjectByName(data[i], true)
+        // console.log('\timporting ', data[i], objectByName)
+        if(objectByName){
+            // console.log('\tadding to',objectByName,'list')
+            this.cameras.push(objectByName)
+        }
+    }    
+}
+
 MM.Editor.prototype.exportSelectables = function(){
     // console.log('exportSelectables')
     var data = []

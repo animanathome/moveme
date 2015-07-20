@@ -245,7 +245,7 @@ MM.PanelViewLayout.prototype.focus = function(){
 }
 
 MM.PanelViewLayout.prototype.update = function(){
-	// console.log('MM.PanelViewLayout.update')
+	console.log('MM.PanelViewLayout.update')
 
 	MMUI.PanelLayout.prototype.update.call(this);
 
@@ -257,6 +257,15 @@ MM.PanelViewLayout.prototype.update = function(){
 	for( space in this.layoutElements['view'] ){
 		this.layoutElements['view'][space].resize();		
 	}		
+}
+
+MM.PanelViewLayout.prototype.reinit = function(){
+	console.log('PanelViewLayout.reinit')
+
+	var space;
+	for( space in this.layoutElements['view'] ){
+		this.layoutElements['view'][space].reinit();		
+	}
 }
 
 MM.PanelViewLayout.prototype.resize = function(){

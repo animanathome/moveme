@@ -32,3 +32,5 @@ main/.meteor/.finished-upgraders
 *.mp4
 
 output/
+
+*.mtl

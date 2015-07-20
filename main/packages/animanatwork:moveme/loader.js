@@ -51,6 +51,10 @@ MM.Loader = function ( editor ) {
 				editor.importSelectables(allData['selectable'])	
 			}
 
+			if(allData.hasOwnProperty('cameras') === true){
+				editor.importCameras(allData['cameras'])
+			}
+
 			editor.initDrivenChannels();
 
 		}else{
@@ -77,6 +81,9 @@ MM.Loader = function ( editor ) {
 
 	//	selectable objects
 		allData['selectable'] = editor.exportSelectables();
+
+	//	available cameras
+		allData['cameras'] = editor.exportCameras();
 
 	//	groups
 	//	export custom group structure	

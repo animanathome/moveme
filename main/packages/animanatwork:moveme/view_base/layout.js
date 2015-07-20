@@ -586,8 +586,13 @@ MM.Layout = function( dom, editor, options){
 	})
 
 	this.update = function(){
+		//	the scene or editor settings have changed. Time to reflect these 
+		//	changes in the interface
+
 		// console.log('Layout.update')
 		onTimeRangeChanged();
+
+		this.viewportLayout.reinit()
 	}
 
 //	INIT
