@@ -15,21 +15,26 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     this.isActive = true;
     this.scene = new THREE.Scene();
 
+    //  create selection box
+    this.marquee = document.createElement('div')
+    this.marquee.className = 'marquee'
+    this.parentPanel.dom.appendChild(this.marquee)    
+
     //	both objects get managed on the PanelViewLayout level
     // this.canvas = canvas;
     // this.renderer = renderer;
     
-    this.canvas = parentPanel.parentLayout.canvas;
-    this.renderer = parentPanel.parentLayout.renderer;    
+    this.canvas = parentPanel.parentLayout.canvas
+    this.renderer = parentPanel.parentLayout.renderer
 
     var signals = this.editor.signals
-	var ray = new THREE.Raycaster();
-    var projector = new THREE.Projector();    
+	var ray = new THREE.Raycaster()
+    var projector = new THREE.Projector()
 
     //  only allow objects with the given tag to be selected
     //  if no tag is specified, then all objects can be selected
     // var selectionTag = undefined;
-    var selectionTag = 'control';    
+    var selectionTag = 'control'
 
 //	MANIPULATOR
     // console.log('manipulator', this.camera, this.canvas)
@@ -43,6 +48,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     // this.editor.addHelper( manipulator.gizmo ); 
     this.scene.add( manipulator.gizmo )
     this.manipulator = manipulator
+    this.activeManipulator = false
 
     manipulator.addEventListener( 'start', function(){
         // console.log('SceneView.onStart manipulator')
@@ -51,7 +57,7 @@ MM.SceneView = function( editor, prefix, parentPanel ){
     });
 
     manipulator.addEventListener( 'change', function(){
-    	console.log('SceneView.onChange manipulator')
+    	// console.log('SceneView.onChange manipulator')
     //  pass on the tool settings to the editor
         scope.editor.activeTool = manipulator.mode;
         scope.editor.activeSpace = manipulator.space;
@@ -75,43 +81,155 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 //	MOUSE EVENTS
     var onMouseDownPosition = new THREE.Vector2();
     var onMouseUpPosition = new THREE.Vector2();
+
+    var marqueeStartScreenPosition = new THREE.Vector2();
+    var marqueeEndScreenPosition = new THREE.Vector2();
+
+    var marqueeStartPosition = new THREE.Vector3();
+    var marqueeEndPosition = new THREE.Vector3();
+    var marqueePrevPosition = new THREE.Vector3();
+
+
+    var resetMarquee = function(){
+        scope.marquee.style.display = "none";
+    }
     
     // this.addedEvent = false;
     this.onMouseDown = function ( event ){
         onMouseDownPosition.set( event.layerX, event.layerY );
         
-        console.log('SceneView.onMouseDown')
+        // console.log('SceneView.onMouseDown')
+        // console.log('\tcursor position:', event.layerX, event.layerY)
 
+        //  enable camera control when alt is pressed
         if(event.altKey === true){
             viewportCameraControl.enabled = true;
-        }else{
-            // if(manipulator.hovered === true){
-            //     // manipulator.enabled = true;
-            // }            
+        }else{ 
             viewportCameraControl.enabled = false;
         }
-        // manipulator.enabled = false;
+        
+        // left mouse button pressed and the transform manipulator is not 
+        // active
+        console.log('transform manpulator', scope.manipulator.hovered)
+        if(event.buttons === 1 && event.altKey === false
+            && scope.manipulator.hovered === false){
+            console.log('marquee selection start')
+            // console.log('\t', scope.parentPanel.dom)
+            
+            //  get selection box screen position
+            marqueeStartScreenPosition.x = event.layerX - scope.parentPanel.dom.offsetLeft 
+            marqueeStartScreenPosition.y = event.layerY - scope.parentPanel.dom.offsetTop
+            
+            scope.marquee.style.left = marqueeStartScreenPosition.x+'px'
+            scope.marquee.style.top = marqueeStartScreenPosition.y+'px'
+            scope.marquee.style.width = '0px'
+            scope.marquee.style.height = '0px'
 
-        scope.parentPanel.dom.addEventListener( 'mouseup', onMouseUp, false );
+            scope.parentPanel.dom.addEventListener( 'mousemove', onMouseMove, false);
+        }
+
+        // left mouse is pressed on top of the transform manipulator  
+        if(event.buttons === 1 
+        && scope.manipulator.hovered === true 
+        && scope.manipulator.mode !== 'select'){
+            scope.activeManipulator = true
+        }else{
+            scope.activeManipulator = false
+        }
+        
+        scope.parentPanel.dom.addEventListener( 'mouseup', onMouseUp, false);
     }
     this.parentPanel.dom.addEventListener( 'mousedown', this.onMouseDown, false );
 
+    var onMouseMove = function(event){
+        // console.log('onMouseMove')
+        // console.log('\tbutton', event.buttons)
+
+        event.preventDefault();
+        onMouseUpPosition.set( event.layerX, event.layerY)
+
+        if(event.buttons === 1 && event.altKey === false){
+            //  only start showing the marque the moment the user has dragged
+            //  more the 1 unit
+            if(onMouseDownPosition.distanceTo( onMouseUpPosition ) > 1 ){
+                // console.log('marquee selection move')
+                
+                //  get screen position for selection box
+                marqueeEndScreenPosition.x = event.layerX - scope.parentPanel.dom.offsetLeft 
+                marqueeEndScreenPosition.y = event.layerY - scope.parentPanel.dom.offsetTop
+
+                //  make sure the marque is visible 
+                scope.marquee.style.display='block'
+
+                var marqueeWidth = Math.abs(marqueeEndScreenPosition.x - marqueeStartScreenPosition.x)
+                var marqueeHeight = Math.abs(marqueeEndScreenPosition.y - marqueeStartScreenPosition.y)
+
+                var marqueeLeft = marqueeStartScreenPosition.x
+                if(marqueeEndScreenPosition.x < marqueeLeft) marqueeLeft = marqueeEndScreenPosition.x
+
+                var marqueeTop = marqueeStartScreenPosition.y
+                if(marqueeEndScreenPosition.y < marqueeTop) marqueeTop = marqueeEndScreenPosition.y
+
+                scope.marquee.style.left = marqueeLeft+'px'
+                scope.marquee.style.top = marqueeTop+'px'
+
+                scope.marquee.style.width = marqueeWidth+'px'
+                scope.marquee.style.height = marqueeHeight+'px'
+
+                // console.log('\tscreen space move', marqueeEndScreenPosition.x, marqueeEndScreenPosition.y)
+                // console.log('\tselection box dimensions', (marqueeStartScreenPosition.x - marqueeEndScreenPosition.x), (marqueeStartScreenPosition.y - marqueeEndScreenPosition.y))
+            }
+        }else{
+            resetMarquee()
+        }
+    }
+
     var onMouseUp = function ( event ){
         // console.log('SceneView.onMouseUp')
+        // console.log('\tevent', event)
+        // console.log('\tcursor position:', event.layerX, event.layerY)
+        // console.log('\tcamera', scope.camera)
 
-        //  Determine the selection mode. Are we resetting, adding our removing objects from the selection list
+        //  Determine the selection mode. Are we resetting, adding our 
+        //  removing objects from the selection list. Reset is the default 
+        //  state. This happens when we left mouse click and don't select 
+        //  anything.
         var mode = 'reset'
+
+        //  we're adding something to the selection
         if( event.shiftKey === true ){
             mode = 'add'
-        }else if(event.altKey === true ){
+
+        //  we're removing something from the selection
+        }else if(event.ctrlKey === true ){
             mode = 'remove'
-        }
 
+        // we're manipulating the camera, not making a selection.
+        }else if(event.altKey === true){            
+            resetMarquee()
+
+            //  cleanup
+            scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp );
+            return
+
+        //  we're moving object(s) around
+        }else if(scope.activeManipulator === true){
+            //  reset
+            scope.activeManipulator = false
+
+            //  cleanup
+            scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp );
+            return
+        }        
+
+        //  click select
         onMouseUpPosition.set( event.layerX, event.layerY );
-        if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) < 1 ) {
-            var intersects = getIntersects( event, scope.editor.selectableObjects );
+        if(onMouseDownPosition.distanceTo( onMouseUpPosition ) < 1 ){
+            console.log('distance smaller then 1')
 
-            if ( intersects.length > 0 ){
+            var intersects = getIntersects( event, scope.editor.selectableObjects)
+
+            if(intersects.length > 0){
                 var object = intersects[ 0 ].object;
 
                 //  check if a selection tag is specified 
@@ -127,8 +245,26 @@ MM.SceneView = function( editor, prefix, parentPanel ){
             }else{
                 scope.editor.deselect();
             }
-        }
+
+        //  click draw select or marque select
+        }else{
+            var svDom = scope.parentPanel.dom;
+            var down = new THREE.Vector2(onMouseDownPosition.x - svDom.offsetLeft, onMouseDownPosition.y - svDom.offsetTop)
+            console.log('down', down)
+
+            var up = new THREE.Vector2(onMouseUpPosition.x - svDom.offsetLeft, onMouseUpPosition.y - svDom.offsetTop)            
+            console.log('up', up)
+
+            var SBB = new THREE.Box2();
+            SBB.setFromPoints([down, up])
+            console.log('sbb', SBB)
+            
+            editor.getSelectablesWithinSBB(SBB, scope.camera, svDom)
+
+            resetMarquee()
+        }        
         
+        scope.parentPanel.dom.removeEventListener( 'mousemove', onMouseMove ); 
         scope.parentPanel.dom.removeEventListener( 'mouseup', onMouseUp );  
     }
 
@@ -173,8 +309,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
         // console.log('\tprefix', scope.prefix)
 
         manipulator.setSpace(space);
-
-        signals.objectChanged.dispatch();
+        manipulator.update()
+        // signals.objectChanged.dispatch();
     });
 
     signals.manipModeChange.add( function ( mode ){
@@ -182,8 +318,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
         // console.log('\tprefix', scope.prefix)
 
         manipulator.setMode(mode);
-                
-        signals.objectChanged.dispatch();
+        manipulator.update()        
+        // signals.objectChanged.dispatch();
     });    
 
     signals.manipScaleChange.add( function( value ){
@@ -191,8 +327,8 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 
         manipulator.scale += value;
         manipulator.scale = Math.max( manipulator.scale, 0.1 );
-
-        signals.objectChanged.dispatch();
+        manipulator.update()
+        // signals.objectChanged.dispatch();
     })
 
     signals.objectSelected.add( function (){
@@ -217,11 +353,11 @@ MM.SceneView = function( editor, prefix, parentPanel ){
 
     signals.objectChanged.add( function ( object ) {
         // console.log('Viewport: objectChanged')
-        manipulator.update()
+        // manipulator.update()
     });
 
     signals.sceneGraphChanged.add( function(){
-        manipulator.update()
+        // manipulator.update()
     });
 
     signals.timeChanged.add( function(){

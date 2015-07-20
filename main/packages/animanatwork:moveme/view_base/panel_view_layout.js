@@ -22,31 +22,6 @@ MM.PanelViewLayout = function( editor, mdom ){
 		//	This is to ensure we don't keep focus on the last selected input. Otherwise we can't use the hotkeys since they will be seen as values to the selected input field. Removing the focus solves this issue here.		
 		document.activeElement.blur();
 
-		// console.log('PanelViewLayout.onMouseDown')
-	// 	// event.preventDefault();
-
-	// 	// console.log('\ttarget', event.target)		
-	// 	// console.log('\telements', scope.layoutObject['panels'])
-
-	// 	//	NOTE: make sure the underlaying target is a view panel or a child of one of the panels ( this is done by adding the name of the parent panel to the id )
-	// 	scope.activeLayout = false;
-	// 	for(panelName in scope.layoutObject['panels']){
-	// 		if( event.target.id !== null ){
-	// 			if( event.target.id.indexOf( panelName ) !== -1 ){
-	// 				// console.log('\tPanelViewLayout', scope.prefix, 'is enabled')
-	// 				// console.log('\tActivating', panelName, 'from', event.target.id)
-	// 				scope.setActivePanel('panelview-'+panelName)
-	// 				scope.activeLayout = true;
-	// 			}
-	// 		}
-	// 	}
-	// 	if(! scope.activeLayout ){
-	// 		// console.log('\tPanelViewLayout', scope.prefix, 'is disabled')
-	// 		scope.resetActivePanel();
-	// 	}
-
-	// 	scope.mdom.addEventListener( 'mousemove', onMouseMove, false );
-	// 	scope.mdom.addEventListener( 'mouseup', onMouseUp, false );
 	}
 
 	var onMouseMove = function( event ){
@@ -69,17 +44,7 @@ MM.PanelViewLayout = function( editor, mdom ){
 			// console.log('\tPanelViewLayout', scope.prefix, 'is disabled')
 			scope.resetActivePanel();
 		}
-
 	}
-
-	// var onMouseUp = function( event ){	
-	// 	//	we can't really do this since otherwise we remove the ability
-	// 	//	to manipulate the selected objects
-	// 	// scope.resetActivePanel();	
-
- //        scope.mdom.removeEventListener( 'mouseup', onMouseUp ); 
- //        scope.mdom.removeEventListener( 'mousemove', onMouseMove );    
-	// }	
 
 	//	NOTE: here we need to attach the event on the global document to ensure we can activate/de-actived the necessary panels. 
 	this.mdom.addEventListener( 'mousedown', onMouseDown, false );	

@@ -1,6 +1,6 @@
 //  UNDO
 MM.Editor.prototype.addToUndoStack = function( undoData , mode){
-    console.log('addToUndoStack', undoData, mode)
+    // console.log('addToUndoStack', undoData, mode)
     if( mode === undefined ){
         mode = 'undo'
     }

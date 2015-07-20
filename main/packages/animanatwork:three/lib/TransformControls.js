@@ -20,6 +20,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 	this.active = false;
 	this.hovered = false;
+	this.enabled = false;
 
 	this.mode = 'translate';
 	this.space = 'world';
@@ -394,6 +395,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		this.object = object;
 	 	this.setMode( scope.mode );
+	 	this.enabled = true
 
 		this.domElement.addEventListener( 'mousedown', onMouseDown, false );
 		this.domElement.addEventListener( 'mousemove', onMouseHover, false );
@@ -407,6 +409,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		this.objects = objects;
 	 	this.setMode( scope.mode );
+	 	this.enabled = true;
 
 		this.domElement.addEventListener( 'mousedown', onMouseDown, false );
 		this.domElement.addEventListener( 'mousemove', onMouseHover, false );
@@ -419,6 +422,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		this.object = undefined;
 		this.objects = undefined;
 		this.hovered = false;
+		this.enabled = false
 
 	 	this.hide();
 
@@ -452,7 +456,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	}
 
 	this.update = function () {
-		// console.log('TransformControls: update')
+		console.log('TransformControls: update')
 		// console.log('\tcamera', this.camera)
 
 	//	SINGLE SELECTION
@@ -465,7 +469,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		if ( this.objects === undefined || this.objects.length === 0 ){
 			// console.log('\tNo objects to affect.')
 			return;
-		}
+		}		
 		// console.log('\tobjects', this.objects)
 
 		var objectToUse = []
@@ -1296,7 +1300,10 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 			// console.log('setting isMoving to true')
 			scope.isMoving = true;
 			
-			scope.update();
+			//	this behaves very unstable when dealing with a long hierarchy of controls
+			//	which we are rotating at the same time
+			// scope.update();
+			
 			scope.dispatchEvent( changeEvent );
 		}
 
@@ -1306,6 +1313,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 
 		scope.active = false;
 		scope.isMoving = false;
+		scope.update();
 		scope.document.removeEventListener( 'mousemove', onMouseMove, false );
 		scope.document.removeEventListener( 'mouseup', onMouseUp, false );
 
@@ -1368,7 +1376,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 	// }
 
 	function intersectObjects( event, objects ) {
-		console.log('TransformControls: intersectObjects', objects)
+		// console.log('TransformControls: intersectObjects', objects)
 		pointerVector.set(
 			( event.layerX / scope.domElement.offsetWidth ) * 2 - 1,
 			- ( event.layerY / scope.domElement.offsetHeight ) * 2 + 1,
@@ -1407,9 +1415,9 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 		// console.log('\tray:', ray)
 
 		var intersections = ray.intersectObjects( objects, true );
-		if(intersections.length > 0){
-			console.log("\t intersection: "+intersections[0].object.name)
-		}
+		// if(intersections.length > 0){
+		// 	console.log("\t intersection: "+intersections[0].object.name)
+		// }
 		return intersections[0] ? intersections[0] : false;
 
 	}
