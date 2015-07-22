@@ -206,5 +206,20 @@ MM.Menubar.Views = function( layout, editor ){
 	})
 	settingsSubMenu.add( resetItem )
 
+//	divider
+	sepItem3 = new MMUI.MenuDivider()
+	menuGrp.add( sepItem3 )
+
+//	PATCHES
+	var patchItem = new MMUI.MenuItem('Camera Patch #18').onClick( 
+		function(){
+	        console.log('\tRe-init camera list.')
+	        editor.cameras = []
+	        editor.cameras = editor.scene.getObjectOfInstance(THREE.PerspectiveCamera)
+	        MM.extendArrayWithArray(editor.cameras, editor.scene.getObjectOfInstance(THREE.OrthographicCamera))
+		}
+	)
+	menuGrp.add(patchItem)
+
 	return menuGrp
 }

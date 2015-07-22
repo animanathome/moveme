@@ -64,7 +64,7 @@ MM.Editor.prototype.saveSceneAs = function ()
 MM.Editor.prototype.loadScene = function( file )
 {
     // console.log('Editor.loadScene')
-    this.loader.loadJSONFile( file )
+    this.loader.loadJSONFile(file)
 }
 
 //  HELPERS

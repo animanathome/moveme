@@ -130,12 +130,6 @@ MM.Editor.prototype.importCameras = function(data){
     }    
 }
 
-MM.Editor.prototype.sceneEditorPatch = function(){
-    if(this.cameras.length === 0){
-        console.log('Updating layout content')
-    }
-}
-
 MM.Editor.prototype.exportSelectables = function(){
     // console.log('exportSelectables')
     var data = []
