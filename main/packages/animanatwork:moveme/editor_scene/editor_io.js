@@ -758,8 +758,22 @@ MM.Editor.prototype.importAnimationData = function( data ){
     this.endRange = maxTime; 
     this.signals.showInfo.dispatch('Updating range from '+minTime+' to '+maxTime)
 
-    
-    this.signals.timeRangeChanged.dispatch();    
+    this.signals.timeRangeChanged.dispatch()
+}
+
+MM.Editor.prototype.deleteAnimationData = function(){
+    //  remove all animation curves
+    var nac = this.animCurves.length
+    for( var i = 0; i < nac; i++){
+        //  remove the reference from each object
+        var tobject = this.animCurves[i].driven
+        tobject.animCurves = []
+    }
+    //  remove all references from the editor
+    this.animCurves = []
+
+    this.signals.showInfo.dispatch('Deleted all animation')
+    this.signals.objectSelected.dispatch(null);
 }
 
 MM.Editor.prototype.exportAnimationData = function(){
