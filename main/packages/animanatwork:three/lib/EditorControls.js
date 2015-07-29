@@ -115,15 +115,23 @@ THREE.EditorControls = function ( object, domElement, prefix) {
 			distance.multiplyScalar( vector.copy( center ).sub( this.object.position ).length() * 0.001 );
 			this.object.position.add( distance );
 		}else{
-		// 	// console.log('\tzoom', distance)
+			// console.log('\tzoom', distance)
 		// 	// this.object.scale.addScalar( distance.z * 0.001 )			
 		// 	// // console.log(this.object.scale)
 		// 	// var smallestValue = 0.1 // seems to clip if we use a smaller value
 		// 	// if( this.object.scale.x < smallestValue){
 		// 	// 	this.object.scale.set( smallestValue, smallestValue, smallestValue );				
 		// 	// }
-		// 	// console.log(this.object.scale)			
-			this.object.zoom = this.object.zoom + (-1 * distance.z * .001);
+			// console.log('scale', this.object.scale)
+			// console.log('zoom', this.object.zoom)
+			// console.log('distance', distance.z)
+
+			// console.log('adding', (-1 * distance.z * .001))
+			// console.log('adding', (-1 * (distance.z * this.object.zoom) * .001))
+
+			var offset = (-1 * (distance.z * this.object.zoom) * .001)
+			// var offset = (-1 * distance.z * .001)
+			this.object.zoom = this.object.zoom + offset;
 		}
 
 		scope.dispatchEvent( changeEvent );
