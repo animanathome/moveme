@@ -1302,7 +1302,7 @@ THREE.TransformControls = function ( camera, domElement, doc ) {
 			
 			//	this behaves very unstable when dealing with a long hierarchy of controls
 			//	which we are rotating at the same time
-			// scope.update();
+			scope.update();
 			
 			scope.dispatchEvent( changeEvent );
 		}
