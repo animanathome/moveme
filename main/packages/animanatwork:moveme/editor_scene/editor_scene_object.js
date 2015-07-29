@@ -220,7 +220,7 @@ MM.Editor.prototype.setupDefaultScene =function(){
     fcam.name = 'front';
     fcam.tag = 'control';
     fcam.setChannelsTranslate();
-    fcam.custom = {'near':0.1, 'far':2000}
+    fcam.custom = {'near':0.1, 'far':1000}
     fcam.addChannel('custom', 'near')
     fcam.addChannel('custom', 'far')
     fcam.position.set( 0.0, 0.0, 100.0)
@@ -232,7 +232,7 @@ MM.Editor.prototype.setupDefaultScene =function(){
     scam.name = 'side';
     scam.tag = 'control';
     scam.setChannelsTranslate();
-    scam.custom = {'near':0.1, 'far':2000}
+    scam.custom = {'near':0.1, 'far':1000}
     scam.addChannel('custom', 'near')
     scam.addChannel('custom', 'far')
     scam.position.set( 100.0, 0.0, 0.0)
@@ -244,7 +244,7 @@ MM.Editor.prototype.setupDefaultScene =function(){
     tcam.name = 'top';
     tcam.tag = 'control';
     tcam.setChannelsTranslate();
-    tcam.custom = {'near':0.1, 'far':2000}
+    tcam.custom = {'near':0.1, 'far':1000}
     tcam.addChannel('custom', 'near')
     tcam.addChannel('custom', 'far')
     tcam.position.set( 0.0, 100.0, 0.0)
