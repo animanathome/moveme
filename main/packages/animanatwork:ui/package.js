@@ -13,6 +13,7 @@ Package.onUse(function(api) {
   				  'main.js'
   				, 'basic.js'
   				, 'panel.js'
+          , 'progress_bar.js'
   				, 'timeline.js'
   				, 'range_slider.js'
   				, 'panel_layout.js'
@@ -22,7 +23,7 @@ Package.onUse(function(api) {
           , 'select.js' 
           , 'drop_down.js'   
           , 'input.js'
-          , 'dialog.js'
+          , 'dialog.js'          
   				], 'client');
 
   if (api.export) 

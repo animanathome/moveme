@@ -76,7 +76,8 @@ MM.Editor = function(){
 
     //  interface related signals
         , layoutResized: new SIGNAL()
-        , windowResize: new SIGNAL()        
+        , windowResize: new SIGNAL()
+        , sceneLoadProgress: new SIGNAL()      
     }
 
 //  PROJECT DATA ( contains project, shot and version id)

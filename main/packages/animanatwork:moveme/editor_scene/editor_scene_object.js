@@ -777,7 +777,7 @@ MM.Editor.prototype.selectObjectsByName = function( objectNames ){
 
         MM.extendArrayWithArray( animCurves, theseAnimCurves )
     }        
-    this.displayAnimCurves( animCurves )        
+    this.displayAnimCurves( animCurves )
 
     //  make sure we set all the new data before launching any signals
     this.signals.showInfo.dispatch('Select object(s)')

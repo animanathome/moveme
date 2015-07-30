@@ -17,10 +17,12 @@ MM.App = function( container, options){
 	var scope = this;
     this.dom = container;
 
+    // create editor 
 	this.editor = new MM.Editor();
 	this.editor.setupDefaultScene();
 	this.editor.setupDefaultKeyScene();
 	
+    // connect layout to editor
     if(options.hasOwnProperty('isRenderer')){
 	   this.layout = new MM.NoLayout(container, this.editor)
     }else{
@@ -275,9 +277,25 @@ MM.App.prototype = {
 		this.editor.loadScene( scene )
 		return this;
 	},
-	saveScene: function(){
-		return this;
-	},
+
+//  BEFORE
+	// saveScene: function(){
+	// 	return this;
+	// },
+
+//  AFTER
+    saveScene: function(){
+        console.log('MM.App.saveScene')
+        // Here we save the entire content of the currenlty loaded scene. This
+        // includes both the editor and layout elements.
+        
+        var sceneData = this.editor.loader.saveAsObject()
+        var layoutData = this.layout.saveAsObject()
+
+        console.log('layoutData', layoutData)
+        
+        return this;
+    },
 	importAsset: function( asset ){
 		console.log('Importing asset', asset)
         try {        

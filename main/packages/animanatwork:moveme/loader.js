@@ -4,7 +4,8 @@ MM.Loader = function ( editor ) {
 	var signals = editor.signals;
 
 	this.loadLocalStorage = function () {
-		// console.log('SLoader.loadLocalStorage')
+		console.log('SLoader.loadLocalStorage')
+				
 
 		if ( localStorage.threejsEditor !== undefined ) {
 			// console.log('\tLoading local storage', localStorage.threejsEditor )
@@ -115,6 +116,10 @@ MM.Loader = function ( editor ) {
 		console.log( 'Saved state to LocalStorage.' );
 	};
 
+	// NOTE: save and reset layout are really bad names for these functions
+	// since they do not actually have anything to do with the layout. Would
+	// be good to rename these in the future!
+
 	this.saveLayout = function(){
 		// console.log('SLoader.saveLayout')
 		var allData = {}
@@ -129,28 +134,71 @@ MM.Loader = function ( editor ) {
 		localStorage.threejsEditor = JSON.stringify( allData );
 	}
 
-	this.saveAsJSON = function(){
-		// console.log('SLoader.saveAsJSON')
+	this.saveAsObject = function(){
+		// returns all of the scenes data as an object or dictionary
 		var allData = {}
+		
 		allData['scene'] = exporter.parse( editor.scene );
 		allData['selectable'] = editor.exportSelectables();
 		allData['groups'] = editor.exportGroups();
 		allData['setups'] = editor.exportSetups();
 		allData['settings'] = editor.exportSceneSettings();	
 		allData['assets'] = editor.exportAssetObjects();
-		return JSON.stringify( allData );
+
+		return allData
+	};
+
+	this.saveAsJSON = function(){
+		// console.log('SLoader.saveAsJSON')		
+		return JSON.stringify(this.saveAsObject());
 	};
 
 	this.loadAsJSON = function( data ){
+		console.log('loader.loadAsJSON')
+		// NOTE: here we wrap the different steps into timeout 
+		// functions to ensure the progress can be properly 
+		// displayed.
+
+		signals.sceneLoadProgress.dispatch(0);
+
 		var loader = new THREE.ObjectLoader();			
 		var scene = loader.parse(data['scene'])
-		editor.setScene(scene)
-		editor.importSetups(data['setups'])
-		editor.importGroups(data['groups'])
-		editor.importSceneSettings(data['settings'])
-		editor.importAssetObjects(data['assets'])
-		editor.importSelectables(data['selectable'])
+		
+		//	build in scene hierarchy
+		setTimeout(function(){
+			editor.setScene(scene)
+			signals.sceneLoadProgress.dispatch(60);
+		}, 100)
+
+		//	build the utility nodes
+		setTimeout(function(){
+			editor.importSetups(data['setups'])
+			signals.sceneLoadProgress.dispatch(80);
+		}, 100)
+			
+		//	build the rest
+		setTimeout(function(){
+			editor.importGroups(data['groups'])
+			editor.importSceneSettings(data['settings'])
+			signals.sceneLoadProgress.dispatch(90);
+		}, 100)
+
+		setTimeout(function(){
+			editor.importAssetObjects(data['assets'])
+			editor.importSelectables(data['selectable'])
+			signals.sceneLoadProgress.dispatch(100);
+		}, 100)
 	};
+
+	signals.sceneLoadProgress.add( function(value){
+        // console.log('loaded', value+'% of the scene')
+        scope.onprogress(value)
+    })
+
+	//	stubb
+    this.onprogress = function(value){
+    	console.log('#\trunning stub', value)
+    }
 
 	this.loadJSONFile = function ( file ){
 		var reader = new FileReader();

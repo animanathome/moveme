@@ -119,21 +119,49 @@ Template.anim.rendered = function(){
 				    //console.log('\tabsolute file url', file.url())
 				    var absUrl = file.url();
 
-				//	load the data once loaded
+					// create a progress bar so we can keep track of how fast the data is loading
+				    var progressBar = new MMUI.ProgressBar('Loading scene...')
+
+					// load the data once loaded
 					var xhr;
 					if(window.XMLHttpRequest){
 					    xhr = new XMLHttpRequest()
 					}else if(window.ActiveXObject){
 					    xhr = new ActiveXObject("Microsoft.XMLHTTP")
 					}
+					// update the progress bar as we're getting data from the server
+					// loading data will count for 50% of the progress bar
+					xhr.onprogress = function(evt){						
+						if (evt.lengthComputable){  
+     						var percentComplete = (evt.loaded/evt.total)*50;
+     						console.log('#\tscene loaded:', percentComplete)
+     						progressBar.setPercentage(percentComplete)
+     					}
+					}
+					//	update the progress bar as we're building the scene
+					//	building the scene will count for 50% of the progress bar
+					moveme.editor.loader.onprogress = function( value ){
+						var percentComplete = 50+(value*0.5)
+						console.log('#\tscene loaded:', percentComplete)
+						progressBar.setPercentage(percentComplete)
+					}
+
+					// pass the data on to moveme once we have the entire scene file loaded
 					xhr.onload = function(){
 						// console.log('\tcontent',xhr.responseText)
-						//	load scene file
-						var data = JSON.parse(xhr.responseText)
-						moveme.editor.loader.loadAsJSON(data)			
-					}
+						// NOTE: to ensure we properly communicate our loading process to 
+						// the user we wrapped the building process in a timeout method. 
+						// If we don't do this then we don't see the progress bar to update.
+						// 
+						// load scene file
+						setTimeout(function(){
+							var data = JSON.parse(xhr.responseText)
+							moveme.editor.loader.loadAsJSON(data)
+						}, 1000)
+					}					
+
 					xhr.open("GET", absUrl);
-					xhr.send();	
+					xhr.send();
 				}
 			}
 			versionId=this.data.versions[0]._id;

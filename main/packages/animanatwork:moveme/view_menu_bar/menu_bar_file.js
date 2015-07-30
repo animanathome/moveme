@@ -110,6 +110,12 @@ MM.Menubar.Files = function( editor, showSaveVersion){
 	})
 	animSubMenu.add( animExportItem )
 
+	// delete all animation
+	var animDeleteItem= new MMUI.MenuItem('Delete All').onClick( function(){
+		editor.deleteAnimationData();
+	})
+	animSubMenu.add( animDeleteItem )
+
 
 //	POSE
 	var poseSubMenu = new MMUI.SubMenuGrp('Pose')
