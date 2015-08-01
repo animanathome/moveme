@@ -9,11 +9,11 @@ MM.NoLayout = function( dom, editor, options){
 	this.editor = editor;
 	this.dom = dom;
 
-	this.canvas = document.createElement( 'canvas' );
+	this.canvas = document.createElement('canvas');
 	this.canvas.style.position = 'absolute'
 	this.canvas.style.left = '0px'
 	this.canvas.style.top = '0px'
-	this.canvas.style.top = '0px'
+	this.canvas.style.right = '0px'
 	this.canvas.style.bottom = '0px'
 	this.dom.appendChild( this.canvas )
 
@@ -54,6 +54,43 @@ MM.NoLayout = function( dom, editor, options){
 	}
 
 	onWindowResize();
+
+    return this;
+}
+
+MM.ViewLayout = function( dom, editor ){
+	console.log('MM.ViewLayout', dom)
+	console.log('\twidth', dom.clientWidth)
+	console.log('\theight', dom.clientHeight)
+
+	var width = dom.clientWidth;
+	var height = dom.clientHeight;
+
+	var scope = this;
+	this.editor = editor;
+	this.dom = dom;
+
+	this.canvas = document.createElement('canvas');
+	this.canvas.style.position = 'absolute'
+	this.canvas.style.left = '0px'
+	this.canvas.style.top = '0px'
+	this.canvas.style.width = width+'px'
+	this.canvas.style.height = height+'px'
+	this.dom.appendChild( this.canvas )
+
+	this.renderer = new THREE.WebGLRenderer({ 
+		canvas : this.canvas, 
+		devicePixelRatio : 1, 
+		antialias: true 
+	})
+	this.editor.activeCamera.aspect = width / height;
+    this.editor.activeCamera.updateProjectionMatrix();
+    this.renderer.setSize( width, height);	
+
+    this.viewportLayout = {};
+	this.viewportLayout.render = function(){
+		scope.renderer.render(scope.editor.scene, scope.editor.activeCamera)
+	}
 
     return this;
 }
@@ -163,7 +200,7 @@ MM.Layout = function( dom, editor, options){
 	var baseLayout = {
 		panels : {
 			infoLine:{
-	 			 h: [0,5]
+	 			 h: [0,4]
 				,w: [0,80]
 				,td: ['rangeSlider']
 				,bd: []
@@ -174,7 +211,7 @@ MM.Layout = function( dom, editor, options){
 				,v: true
 			},
 			rangeSlider: {
-	 			 h: [5,10]
+	 			 h: [4,8]
 				,w: [0,80]
 				,td: ['timeLine']
 				,bd: []
@@ -185,7 +222,7 @@ MM.Layout = function( dom, editor, options){
 				,v: true
 			},
 			timeLine: {
-	 			 h: [10,20]
+	 			 h: [8,15]
 				,w: [0,80]
 				,td: ['workspace']
 				,bd: ['rangeSlider']
@@ -196,7 +233,7 @@ MM.Layout = function( dom, editor, options){
 				,v: true
 			},
 			workspace: {
-				 h: [20,100]
+				 h: [15,100]
 				,w: [0,80]
 				,td: []
 				,bd: ['timeLine']
@@ -587,12 +624,24 @@ MM.Layout = function( dom, editor, options){
 
 	this.update = function(){
 		//	the scene or editor settings have changed. Time to reflect these 
-		//	changes in the interface
+		//	changes in the interface. This has been put in place to refresh 
+		//	the content within the panels
 
 		// console.log('Layout.update')
 		onTimeRangeChanged();
 
 		this.viewportLayout.reinit()
+	}
+
+	this.saveAsObject = function(){
+		//	returns all of the data necessary to be able to restore the 
+		//	current layout
+
+		var allData = {}
+
+		allData['viewportLayout'] = this.viewportLayout.saveAsObject()
+
+		return allData;
 	}
 
 //	INIT
