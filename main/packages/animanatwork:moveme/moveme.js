@@ -1,7 +1,103 @@
 MM = {};
 
 /*
-	Meteor Animation Application
+    Static Animation Viewer
+ */
+MM.View = function( container, url){    
+    if( container === undefined ){
+        console.log('No parent dom element defined. Unable to continue.')
+        return
+    }
+    
+    this.parent = container
+    this.file_to_load = url
+
+    //  create an application instance
+    this.moveme = new MM.App(container, {
+        isView: true
+    });
+
+    //  add logo
+    var srci = '/ui/brand_mini.png'
+    var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
+    image.dom.style.backgroundSize='cover';
+    image.dom.style.margin = '5px'
+    image.dom.style.zIndex = '10'
+    image.dom.style.float = 'right'
+    image.dom.style.width = '24px';
+    image.dom.style.height = '24px';    
+    container.appendChild( image.dom )
+
+    container.style.cursor = 'pointer';
+    container.style.backgroundColor = '#BFBFBF';
+    //  create controls
+
+    return this
+}
+
+MM.View.prototype = {
+    load: function(){
+        console.log('loading ', this.file_to_load)
+
+        var scope = this
+
+        // create a progress bar so we can keep track of how fast the data is loading
+        var progressBar = new MMUI.ProgressBar('Loading ...', this.parent, '-mini')
+
+        // load the data once loaded
+        var xhr;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest()
+        }else if(window.ActiveXObject){
+            xhr = new ActiveXObject("Microsoft.XMLHTTP")
+        }
+        // update the progress bar as we're getting data from the server
+        // loading data will count for 50% of the progress bar
+        xhr.onprogress = function(evt){                     
+            if (evt.lengthComputable){  
+                var percentComplete = (evt.loaded/evt.total)*50;
+                console.log('#\tscene loaded:', percentComplete)
+                progressBar.setPercentage(percentComplete)
+            }
+        }
+        //  update the progress bar as we're building the scene
+        //  building the scene will count for 50% of the progress bar
+        this.moveme.editor.loader.onprogress = function( value ){
+            var percentComplete = 50+(value*0.5)
+            console.log('#\tscene loaded:', percentComplete)
+            progressBar.setPercentage(percentComplete)
+        }
+
+        // pass the data on to moveme once we have the entire scene file loaded
+        xhr.onload = function(){
+            // console.log('\tcontent',xhr.responseText)
+            // NOTE: to ensure we properly communicate our loading process to 
+            // the user we wrapped the building process in a timeout method. 
+            // If we don't do this then we don't see the progress bar to update.
+            // 
+            // load scene file
+            setTimeout(function(){
+                var data = JSON.parse(xhr.responseText)
+                scope.moveme.editor.loader.loadAsJSON(data, function(){
+                    scope.moveme.editor.controlsVisibility(false)
+                    scope.moveme.editor.jointsVisibility(false)
+                    scope.moveme.editor.gridVisibility(false)
+                    scope.moveme.editor.stop()
+                    scope.moveme.editor.play()
+                })
+            }, 1000)
+        }                   
+
+        xhr.open("GET", this.file_to_load);
+        xhr.send();        
+    },
+    play: function(){
+        this.moveme.editor.play()
+    }
+}
+
+/*
+	Interactive Animation Application
 */
 MM.App = function( container, options){
 	// console.log('MM.App', container, options)
@@ -24,7 +120,9 @@ MM.App = function( container, options){
 	
     // connect layout to editor
     if(options.hasOwnProperty('isRenderer')){
-	   this.layout = new MM.NoLayout(container, this.editor)
+        this.layout = new MM.NoLayout(container, this.editor)
+    }else if(options.hasOwnProperty('isView')){
+        this.layout = new MM.ViewLayout(container, this.editor)
     }else{
 	   this.layout = new MM.Layout(container, this.editor, options);
     }
@@ -253,8 +351,10 @@ MM.App = function( container, options){
 
     //  hide context menu ( when using right mouse button )
     //  this ensures that we can draw our own menu
-    this.dom.addEventListener( 'contextmenu', function ( event ) { 
-        event.preventDefault(); }, false );
+    if(this.dom.hasOwnProperty('addEventListener')){
+        this.dom.addEventListener( 'contextmenu', function ( event ) { 
+            event.preventDefault(); }, false );
+    }
 
 	// this.editor.loader.loadLocalStorage();
 

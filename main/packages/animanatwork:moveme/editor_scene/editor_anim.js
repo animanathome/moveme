@@ -15,6 +15,10 @@ MM.Editor.prototype.shiftTime = function( time ){
     this.signals.showInfo.dispatch(('Shift to '+ this.time))
 }
 
+MM.Editor.prototype.stop = function(){
+    this.isPlaying = false
+}
+
 MM.Editor.prototype.play = function(){
     // console.log('MM.Editor.play');
     if(this.isPlaying === true ){

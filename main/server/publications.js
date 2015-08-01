@@ -61,6 +61,10 @@ Meteor.publish('numberOfPublicShots', function( number_of_shots ){
   return ShotList.find({isPublic:true}, {limit:number_of_shots})  
 })
 
+Meteor.publish('numberOfFrontPageShots', function( number_of_shots ){
+  return ShotList.find({isFrontPage:true}, {limit:number_of_shots})  
+})
+
 Meteor.publish('numberOfMyShots', function( number_of_shots){
   return ShotList.find({userId:this.userId}, {limit:number_of_shots})  
 })
@@ -98,6 +102,10 @@ Meteor.publish('scenes', function(userId){
 
 Meteor.publish('sceneVersion', function(versionId){
   return FileList.find({versionId:versionId})
+})
+
+Meteor.publish('sceneVersions', function(fileIds){
+  return FileList.find({_id:{$in:fileIds}})
 })
 
 Meteor.publish('versions', function(shotId, options){

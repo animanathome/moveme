@@ -153,7 +153,7 @@ MM.Loader = function ( editor ) {
 		return JSON.stringify(this.saveAsObject());
 	};
 
-	this.loadAsJSON = function( data ){
+	this.loadAsJSON = function( data, callback){
 		console.log('loader.loadAsJSON')
 		// NOTE: here we wrap the different steps into timeout 
 		// functions to ensure the progress can be properly 
@@ -187,7 +187,11 @@ MM.Loader = function ( editor ) {
 			editor.importAssetObjects(data['assets'])
 			editor.importSelectables(data['selectable'])
 			signals.sceneLoadProgress.dispatch(100);
-		}, 100)
+
+			if(callback !== undefined){
+				callback()
+			}
+		}, 100)			
 	};
 
 	signals.sceneLoadProgress.add( function(value){

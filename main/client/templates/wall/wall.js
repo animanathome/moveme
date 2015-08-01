@@ -105,13 +105,17 @@ Template.animWall.rendered = function(){
 //	populate wall with video
 	//	https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
 	var counter = 0;
-	var cursor = this.data.versions;
-	var panelItem, panelItem, image_size, image_extension, width;
+	var cursor = this.data.shots;
+	var image_size, image_extension, width;
 	cursor.forEach(function(item){
-		console.log('version', item)
+		console.log('version', item)		
 
-		panelName = 'view'+counter;
-		panelItem = wallPanel.getPanel(panelName)	
+		var panelName = 'view'+counter;
+		var panelItem = wallPanel.getPanel(panelName)
+		var thisDom = panelItem.dom
+		var fileUrl = item.latestVersionUrl
+
+		console.log('\tfileId', fileUrl)
 
 		var res = 'mq'
 		if(counter === 3){
@@ -119,8 +123,8 @@ Template.animWall.rendered = function(){
 		}		
 	
 		var srci = '/ui/imagePlaceHolder.png'
-		if(item.hasOwnProperty('imageUrl')){
-			srci = item.imageUrl
+		if(item.hasOwnProperty('latestImageUrl')){
+			srci = item.latestImageUrl
 		}
 
 		var image = new MMUI.A().setImage(srci).setClass('btn btn-image')
@@ -129,11 +133,24 @@ Template.animWall.rendered = function(){
 		image.dom.style.backgroundSize='cover';
 		panelItem.dom.appendChild( image.dom )
 
-		//	let's currently link to the animated scene. Might be better to link to the rendered animation? scene?
-		image.dom.href = Router.routes['anim'].url({
-			  'projectId': item.projectId
-			, 'shotId': item.shotId
-			, '_id':item._id
+		//	load scene viewer when clicking on image
+		image.onClick(function(){
+			console.log('clicking')
+			console.log('\tcontainer', thisDom)
+			
+			// hide image and banner
+			image.dom.style.display='none'
+			// banner.dom.style.display='none'
+
+			// load move me viewer
+			var viewer = new MM.View(thisDom, fileUrl)
+			viewer.load()
+
+			//	setup controls
+			var parent = panelItem
+			parent.onClick(function(){
+				viewer.play()
+			})
 		})
 
 	//	banner
@@ -159,7 +176,7 @@ Template.animWall.rendered = function(){
 
 		var title = document.createElement('span')
 		title.className = 'anim-banner-title'
-		title.textContent = item.description;
+		title.textContent = MMUI.shortenString(item.description, 25);
 		banner.dom.appendChild( title )
 
 		counter += 1;

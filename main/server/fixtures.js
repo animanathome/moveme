@@ -185,9 +185,14 @@ if ( Meteor.users.find().count() === 0 ) {
     , versionCount: 1
     , fps: 24
     , duration: 80
+
+    , latestVersionUrl: ''
     , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
     , latestVersionYoutubeId: ''
     , isPublic: true
+    , isFrontPage: true
   })
 
   //  Create a shot version scene file
@@ -227,8 +232,10 @@ if ( Meteor.users.find().count() === 0 ) {
     { _id: jumping_ball_shot_id}, 
     { $set:
       {
-        latestVersionId: jumping_ball_shot_version_id,
-        latestVersionYoutubeId: 'BvbaSNCJ-N0',
+          latestVersionId: jumping_ball_shot_version_id
+        , latestImageUrl: '/shots/ball_jumping.jpg'
+        , latestVersionUrl: fileId.url({brokenIsFine:true})
+        , latestVersionYoutubeId: 'BvbaSNCJ-N0'
       }
     }
   ) 
@@ -246,9 +253,14 @@ if ( Meteor.users.find().count() === 0 ) {
     , versionCount: 1
     , fps: 24
     , duration: 48
+
+    , latestVersionUrl: ''
     , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
     , latestVersionYoutubeId: ''
     , isPublic: true
+    , isFrontPage: true
   })
 
   //  Create a shot version scene file
@@ -286,8 +298,10 @@ if ( Meteor.users.find().count() === 0 ) {
   ShotList.update({
     _id: jumping_tail_shot_id
   }, { $set:{
-      latestVersionId: jumping_tail_shot_version_id,
-      latestVersionYoutubeId: 'SaMGRFxLtdU'
+        latestVersionId: jumping_tail_shot_version_id
+      , latestImageUrl: '/shots/tail_jumping.jpg'
+      , latestVersionUrl: fileId.url({brokenIsFine:true})
+      , latestVersionYoutubeId: 'SaMGRFxLtdU'
     }
   }) 
 
@@ -304,9 +318,14 @@ if ( Meteor.users.find().count() === 0 ) {
     , versionCount: 1
     , fps: 24
     , duration: 48
+
+    , latestVersionUrl: ''
     , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
     , latestVersionYoutubeId: ''
     , isPublic: true
+    , isFrontPage: true
   })
 
 //  Create a shot version scene file
@@ -344,8 +363,10 @@ if ( Meteor.users.find().count() === 0 ) {
   ShotList.update({
     _id: running_legs_shot_id
   }, {$set:{
-      latestVersionId: running_legs_shot_version_id,
-      latestVersionYoutubeId: 'kRHQDbV-Dfs'
+        latestVersionId: running_legs_shot_version_id
+      , latestImageUrl: '/shots/legs_walking.jpg'
+      , latestVersionUrl: fileId.url({brokenIsFine:true})
+      , latestVersionYoutubeId: 'kRHQDbV-Dfs'
     }
   })
 
@@ -362,9 +383,14 @@ if ( Meteor.users.find().count() === 0 ) {
     , versionCount: 1
     , fps: 24
     , duration: 48
+
+    , latestVersionUrl: ''
     , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
     , latestVersionYoutubeId: ''
-    , isPublic: true   
+    , isPublic: true
+    , isFrontPage: true
   })
 
   //  Create a shot version scene file
@@ -402,13 +428,14 @@ if ( Meteor.users.find().count() === 0 ) {
   ShotList.update({
     _id: midi_reflection_shot_id
   }, {$set:{
-      latestVersionId: midi_reflection_shot_version_id,
-      latestVersionYoutubeId: 'E0p1OaE41pA'
+        latestVersionId: midi_reflection_shot_version_id
+      , latestImageUrl: '/shots/midi_kicking.jpg'
+      , latestVersionUrl: fileId.url({brokenIsFine:true})
+      , latestVersionYoutubeId: 'E0p1OaE41pA'
     }
   })
 
-//  MANU submissions
-  
+//  MANU submissions  
   //  -------------------------------------------------------------------------
   //  Front page demo project
   var front_page_project_id = ProjectList.insert({
@@ -435,19 +462,24 @@ if ( Meteor.users.find().count() === 0 ) {
   var fileId = FileList.insert(newFile);
 
   var unsure_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: manu.username,
-    userId: manu._id,    
-    title: 'Unsure',
-    description: 'Mini is unsure. He does not know what it is he is standing on.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-    latestVersionId: '',
-    latestVersionYoutubeId: ''
+      projectId: front_page_project_id
+    , author: manu.username
+    , userId: manu._id
+    , title: 'Unsure'
+    , description: 'Mini is unsure. He does not know what it is he is standing on.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 48
+
+    , latestVersionUrl: ''
+    , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
+    , latestVersionYoutubeId: ''
     , isPublic: true
+    , isFrontPage: true
   })
 
   //  Mini jumping kick version 1
@@ -477,27 +509,34 @@ if ( Meteor.users.find().count() === 0 ) {
   ShotList.update({
     _id: unsure_shot_id
   }, { $set:{
-      latestVersionId: unsure_shot_version_id,
-      latestVersionYoutubeId: 'YRt4cTTnvYw'
+        latestVersionId: unsure_shot_version_id
+      , latestImageUrl: '/shots/mini_unsure.jpg'
+      , latestVersionUrl: fileId.url({brokenIsFine:true})
+      , latestVersionYoutubeId: 'YRt4cTTnvYw'
     }
   })
 
   //  -----------------------------------------
   //  Maxi jump run shot
   var maxi_jump_run_shot_id = ShotList.insert({
-    projectId: front_page_project_id,
-    author: manu.username,
-    userId: manu._id,
-    title: 'Maxi catching a ball',
-    description: 'No description yet.',
-    submitted: new Date(now - 2 * 3600 * 1000),
-    shotNumber: 1,
-    versionCount: 1,
-    fps: 24,
-    duration: 48,
-    latestVersionId: '',
-    latestVersionYoutubeId: ''
+      projectId: front_page_project_id
+    , author: manu.username
+    , userId: manu._id
+    , title: 'Maxi catching a ball'
+    , description: 'No description yet.'
+    , submitted: new Date(now - 2 * 3600 * 1000)
+    , shotNumber: 1
+    , versionCount: 1
+    , fps: 24
+    , duration: 48
+
+    , latestVersionUrl: '' 
+    , latestVersionId: ''
+    , latestImageUrl: ''
+    , latestGifUrl: ''
+    , latestVersionYoutubeId: ''
     , isPublic: true
+    , isFrontPage: true
   })
 
   //  Create a shot version scene file
@@ -529,14 +568,16 @@ if ( Meteor.users.find().count() === 0 ) {
 //  Update file to link to shot version
   FileList.update({
     _id: fileId._id
-  }, { versionId: maxi_jump_run_shot_version_id})
+  }, {versionId: maxi_jump_run_shot_version_id})
 
 //  Update the shot to link to the latest version
   ShotList.update({
     _id: maxi_jump_run_shot_id
   }, {$set:{
-      latestVersionId: maxi_jump_run_shot_version_id,
-      latestVersionYoutubeId: 'NFzz50o2bHY'
+        latestVersionId: maxi_jump_run_shot_version_id      
+      , latestVersionUrl: fileId.url({brokenIsFine:true})
+      , latestImageUrl: '/shots/maxi_catching_ball.jpg'
+      , latestVersionYoutubeId: 'NFzz50o2bHY'
     }
   })  
 

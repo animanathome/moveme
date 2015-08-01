@@ -36,7 +36,7 @@ Router.route('/', {
     name: 'intro',
     waitOn: function(){
         return [
-              Meteor.subscribe('numberOfVersions', 6)
+              Meteor.subscribe('numberOfFrontPageShots', 6)
             , Meteor.subscribe('tutorials')
             , Meteor.subscribe('numberOfAssets', 6)
             , Meteor.subscribe('userData')
@@ -47,7 +47,7 @@ Router.route('/', {
     },
     data: function(){
         return {
-              versions: VersionList.find({})
+              shots: ShotList.find({})
             , tutorials: TutorialList.find({})
             , assets: AssetList.find({})
             , user: Meteor.users.find({})
@@ -152,7 +152,7 @@ Router.route('/assets',{
 learnController = RouteController.extend({
     template: 'learn',
     // categoryToShow: 'tools',
-    subscriptions: function() {
+    subscriptions: function(){
         this.tutorialsSub = Meteor.subscribe('tutorialsByCategory', this.categoryToShow);
     },    
     waitOn: function() {
@@ -222,6 +222,26 @@ Router.route('/animation/project/:projectId/shot/:shotId/version/:_id', {
         }
     }
 });
+
+//  render editor
+Router.route('/view/project/:projectId/shot/:shotId/version/:_id',{
+    name: 'view',
+    waitOn: function() {
+        return [
+            Meteor.subscribe('singleProject', this.params.projectId),
+            Meteor.subscribe('singleShot', this.params.shotId),
+            Meteor.subscribe('singleVersion', this.params._id),
+            Meteor.subscribe('sceneVersion', this.params._id)
+        ];
+    },   
+    data: function(){
+        return {
+            projects: [ProjectList.findOne(this.params.projectId)],
+            shots: [ShotList.findOne(this.params.shotId)],
+            versions: [VersionList.findOne(this.params._id)]
+        }
+    }
+})
 
 //  render editor
 Router.route('/render/project/:projectId/shot/:shotId/version/:_id',{
