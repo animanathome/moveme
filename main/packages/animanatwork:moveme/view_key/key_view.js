@@ -11,6 +11,7 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 	// console.log('\tparentPanel', parentPanel)
 
 	var scope = this;
+	this.editor = editor
 
 	if( prefix === undefined ) prefix = 'view0'
 
@@ -22,7 +23,7 @@ MM.KeyView = function ( editor, prefix, parentPanel){
     this.top = 0;
     this.left = 0;
 
-    this.outlinerWidth = 150;
+    this.outlinerWidth = 200;
 
 	//	both objects get managed on the PanelViewLayout level
     this.canvas = parentPanel.parentLayout.canvas;
@@ -38,7 +39,6 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 
 	var maxNumberOfValue = 50;
 	var valueTextArray = []
-
 
 //	LAYOUT
 	var container = new MMUI.Panel();
@@ -75,7 +75,7 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 
 	//	GRAPH
 	var graph = new MMUI.Panel();
-	graph.setPosition('absolute').setRight('0px').setTop('0px').setBottom('0px').setLeft('150px')
+	graph.setPosition('absolute').setRight('0px').setTop('0px').setBottom('0px').setLeft(this.outlinerWidth+'px')
 	graph.dom.id = 'keyvieweditor-'+this.prefix
 	container.add(graph)
 
@@ -119,7 +119,9 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 	var isMovingTangents = false;
     
     var onMouseDown = function ( event ){
-        // console.log('keyframe editor onMouseDown')
+        console.log('keyframe editor onMouseDown')
+        console.log('\tevent', event)
+        console.log('\tkeyCode', scope.editor.keyCode)
         event.preventDefault();
 
         onMouseDownPosition.set( event.layerX, event.layerY ); 
@@ -165,10 +167,13 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		}
 
         graph.dom.addEventListener( 'mouseup', onMouseUp, false );
-        graph.dom.addEventListener( 'mousemove', onMouseMove, false );
+        graph.dom.addEventListener( 'mousemove', onMouseMove, false );        
     }
 
     var onMouseMove = function ( event ){
+    	console.log('onMouseMove')
+    	console.log('\tkeyCode', scope.editor.keyCode)
+
     	// console.log('move', gotKeySelected)
     	event.preventDefault();
 
@@ -176,41 +181,52 @@ MM.KeyView = function ( editor, prefix, parentPanel){
     	
     	// left mouse button
     	if(event.button == 0){
-	    	if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) > 1 ){
-	    		//	get the position in world space
-				selectionBoxEndPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
-				selectionBoxEndPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
-				selectionBoxEndPosition.z = 0.5;    		
+    		//	get the position in world space
+			selectionBoxEndPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
+			selectionBoxEndPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
+			selectionBoxEndPosition.z = 0.5;    		
 
-				projector.unprojectVector( selectionBoxEndPosition, camera );
+			projector.unprojectVector( selectionBoxEndPosition, camera );
 
-				// console.log('making selection box visible')
-				if(gotKeySelected === true)
-				{
-					// console.log('\tmoving keys')
-					selectionBox.visible = false;
-					
-					//	move the keys by the distance traveled
-					//	if we want to run this during move we have to implement
-					moveActiveKeys( event );			
-				}else if( gotTangentSelected === true ){
-					// console.log('\tmoving tangents')
-					selectionBox.visible = false;
-					
-					//	move the keys by the distance traveled
-					//	if we want to run this during move we have to implement
-					moveActiveTangent( event );
-				}else{
-					// console.log('defining selecion box')			
-		    		selectionBox.visible = true;
+    		if( scope.editor.keyCode === 75 ){
+    			scope.editor.setTime(parseInt(selectionBoxEndPosition.x))
+    		}else{
+		    	if ( onMouseDownPosition.distanceTo( onMouseUpPosition ) > 1 ){
+		    		//	get the position in world space
+					selectionBoxEndPosition.x = ( event.layerX / graph.dom.offsetWidth ) * 2 - 1;
+					selectionBoxEndPosition.y = - ( event.layerY / graph.dom.offsetHeight ) * 2 + 1;
+					selectionBoxEndPosition.z = 0.5;    		
 
-					//	determine the scale of the selection box
-		    		selectionBox.scale.x = selectionBoxEndPosition.x - selectionBoxStartPosition.x ;
-		    		selectionBox.scale.y = selectionBoxEndPosition.y - selectionBoxStartPosition.y;
-		    		selectionBox.position = selectionBoxStartPosition;		    		
-	    		}
+					projector.unprojectVector( selectionBoxEndPosition, camera );
 
-	    		selectionBoxPrevPosition.copy(selectionBoxEndPosition);
+					// console.log('making selection box visible')
+					if(gotKeySelected === true)
+					{
+						// console.log('\tmoving keys')
+						selectionBox.visible = false;
+						
+						//	move the keys by the distance traveled
+						//	if we want to run this during move we have to implement
+						moveActiveKeys( event );			
+					}else if( gotTangentSelected === true ){
+						// console.log('\tmoving tangents')
+						selectionBox.visible = false;
+						
+						//	move the keys by the distance traveled
+						//	if we want to run this during move we have to implement
+						moveActiveTangent( event );
+					}else{
+						// console.log('defining selecion box')			
+			    		selectionBox.visible = true;
+
+						//	determine the scale of the selection box
+			    		selectionBox.scale.x = selectionBoxEndPosition.x - selectionBoxStartPosition.x ;
+			    		selectionBox.scale.y = selectionBoxEndPosition.y - selectionBoxStartPosition.y;
+			    		selectionBox.position = selectionBoxStartPosition;		    		
+		    		}
+
+		    		selectionBoxPrevPosition.copy(selectionBoxEndPosition);
+		    	}
 	    	}
     	}
     	signals.keyframeEditorKeysUpdated.dispatch();
@@ -285,12 +301,11 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		}
     	
 		// editor.viewportCameraControl.enabled = false;
-		graph.dom.removeEventListener( 'mouseup', onMouseUp );  
-		graph.dom.removeEventListener( 'mousemove', onMouseMove );   		
+		graph.dom.removeEventListener( 'mouseup', onMouseUp );
+		graph.dom.removeEventListener( 'mousemove', onMouseMove );
     }
 
 	graph.dom.addEventListener( 'mousedown', onMouseDown, false );
-
 
 	var selectedActiveKeys = function ( event ) {
 		// Determines whether or not we selected any active keys. 		
@@ -787,12 +802,12 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		}
 	}
 
-	prepareValueUnits();
+	// prepareValueUnits();
 
 	var _drawValueText = function ( worldPosition , index, text )
 	{		
 		var screenPosition = MM.toScreenXY( worldPosition , camera, graph.dom )
-		valueTextArray[index].style.left = screenPosition.x+2+'px'
+		valueTextArray[index].style.left = screenPosition.x+5+'px'
 		valueTextArray[index].style.bottom = screenPosition.y+'px'
 		valueTextArray[index].textContent = text;
 	}
@@ -902,8 +917,8 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 	var _drawTimeText = function ( worldPosition , index, text )
 	{		
 		var screenPosition = MM.toScreenXY( worldPosition , camera, graph.dom )
-		timeTextArray[index].style.left = screenPosition.x+'px'
-		timeTextArray[index].style.bottom = screenPosition.y + 2 +'px'
+		timeTextArray[index].style.left = (screenPosition.x-7)+'px'
+		timeTextArray[index].style.bottom = screenPosition.y+'px'
 		timeTextArray[index].textContent = text;
 	}
 
@@ -962,7 +977,9 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		//	draw 0
 		var drawn = 0
 		var valueToDraw = 0
-		worldPosition.setY( upleft.y )
+
+		//	draw the frame at the top of the panel (used upLeft to have them being drawn at the bottom)
+		worldPosition.setY( downRight.y - 20)
 		_drawTimeText( worldPosition, drawn, valueToDraw)
 		drawn += 1
 		
@@ -1167,16 +1184,6 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		scope.renderer.render( scene, camera );
     }
 
-    // function render(){
-    // 	// console.log('keyframeEditor: render')
-    	
-    //     scene.updateMatrixWorld();
-    //     // updateFrameUnitPosition();
-    //     renderer.clear();     
-        
-    //     renderer.render( scene, camera );
-    // }
-
     container.focus = function(){
     	// console.log('MM.KeyView.focus')
     	frameAnimCurves();
@@ -1200,6 +1207,10 @@ MM.KeyView = function ( editor, prefix, parentPanel){
     	NOTE: here we should only run this method when something has changed!
     	*/
     	render();
+    }
+
+    container.toolBar = function(){
+    	MM.KeyViewToolBar(scope.editor, scope.parentPanel)
     }
 
     container.clear = function(){
@@ -1231,20 +1242,6 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 		camera.updateProjectionMatrix();
 	}
 
-	// function resize(){
- //        camera.aspect = graph.dom.offsetWidth / graph.dom.offsetHeight;
- //        camera.updateProjectionMatrix();
- //        renderer.setSize( graph.dom.offsetWidth, graph.dom.offsetHeight);
- //        // frameAnimCurves()
- //        // grid.update();
- //        // updateValueUnitPosition();
- //        // updateFrameUnitPosition();
-        
- //        fullRebuild();
-
- //        render(); 		
-	// }
-
 	container.resize = function(){
 		// console.log('MM.KeyframeEditor.resize')
 
@@ -1273,10 +1270,10 @@ MM.KeyView = function ( editor, prefix, parentPanel){
 
         // console.log('render scene:', editor.sceneAnimCurves)
 
-		updateValueUnitPosition();
+		// updateValueUnitPosition();
         updateFrameUnitPosition();
         grid.update();
-        updateTimeline( editor.time );    
+        updateTimeline( editor.time );
 	   	render();
 	}
 
